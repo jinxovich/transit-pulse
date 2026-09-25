@@ -1,0 +1,28 @@
+{
+  "model": "v1_lgbm",
+  "features": [
+    "lead",
+    "hour",
+    "tgt_manual",
+    "tgt_newtrip",
+    "tgt_gap",
+    "trip_break_between",
+    "max_gap_between",
+    "n_between",
+    "cur_dev",
+    "stale",
+    "spd_last",
+    "spd5",
+    "spd15",
+    "stop5",
+    "dist_tgt",
+    "gps_dev",
+    "gps_dist"
+  ],
+  "test_mae_baseline": 93.36,
+  "test_mae_model": 63.62,
+  "test_improvement": 0.3185,
+  "synthetic_weight": 0.5,
+  "seeds": 5,
+  "rounds": 400
+}
