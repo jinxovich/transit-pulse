@@ -32,6 +32,7 @@ TRIP_GAP = timedelta(minutes=5)
 MODEL_VERSION = "mock-catboost-1"
 UNKNOWN_UNITS = (990001, 990002)
 VEHICLES_TOTAL = 32
+NO_ADDRESS = "Остановка без адреса"
 
 _WS = TypeAdapter(S.WsMessage)
 
@@ -65,7 +66,7 @@ def load_plan() -> pd.DataFrame:
     """Плановое расписание validate с ключами остановок и номерами рейсов."""
     s = pd.read_csv(RAW / "schedule_plan.csv")
     s["tb"] = pd.to_datetime(s["time_begin"])
-    s["building_address"] = s["building_address"].fillna("Остановка без адреса")
+    s["building_address"] = s["building_address"].fillna(NO_ADDRESS)
     xy = s["geom"].str.extract(r"POINT \(([\d.]+) ([\d.]+)\)").astype(float)
     s["lon"], s["lat"] = xy[0], xy[1]
     s["stop_key"] = s["geom"].map(stop_key)

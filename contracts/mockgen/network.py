@@ -6,7 +6,7 @@ from collections import Counter
 
 import pandas as pd
 
-from contracts.mockgen.common import short_name
+from contracts.mockgen.common import NO_ADDRESS, short_name
 from transit_core import schemas as S
 
 ROUTE_COLORS = (
@@ -20,10 +20,14 @@ def route_name(g: pd.DataFrame) -> str:
     trips = [t for _, t in g.groupby("trip") if len(t) > 5] or [g]
     ends: Counter[str] = Counter()
     for t in trips:
-        addresses = t["building_address"]
-        ends.update([short_name(addresses.iloc[0]), short_name(addresses.iloc[-1])])
+        # Конечные без адреса в названии бесполезны — берём ближайшие к краям с адресом.
+        named = t.loc[t["building_address"] != NO_ADDRESS, "building_address"]
+        if len(named):
+            ends.update([short_name(named.iloc[0]), short_name(named.iloc[-1])])
     top = [name for name, _ in ends.most_common(2)]
-    return " ↔ ".join(top)
+    if len(top) == 2:
+        return " ↔ ".join(top)
+    return f"{top[0]} (кольцевой)" if top else NO_ADDRESS
 
 
 def _segments(route_id: str, g: pd.DataFrame) -> dict[str, S.NetworkSegment]:
