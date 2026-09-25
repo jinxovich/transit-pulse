@@ -1,0 +1,2379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransitPulseContract",
+  "description": "Контракт API/WS Transit Pulse, schema_version 1.0",
+  "$defs": {
+    "AckInfo": {
+      "additionalProperties": false,
+      "description": "Реакция диспетчера на инцидент.",
+      "properties": {
+        "action_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Action Code"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Comment"
+        },
+        "at": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action_code",
+        "comment",
+        "at"
+      ],
+      "title": "AckInfo",
+      "type": "object"
+    },
+    "AckRequest": {
+      "additionalProperties": false,
+      "description": "Тело ``POST /api/v1/incidents/{id}/ack``.",
+      "properties": {
+        "action_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Action Code"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "action_code",
+        "comment"
+      ],
+      "title": "AckRequest",
+      "type": "object"
+    },
+    "AppConfig": {
+      "additionalProperties": false,
+      "description": "Ответ ``GET /api/v1/config``.",
+      "properties": {
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "thresholds": {
+          "$ref": "#/$defs/Thresholds",
+          "default": {
+            "red_delay_s": 120.0,
+            "yellow_delay_s": 60.0,
+            "early_delay_s": -60.0,
+            "red_p_late": 0.5,
+            "yellow_p_late": 0.3
+          }
+        },
+        "colors": {
+          "$ref": "#/$defs/RiskColors",
+          "default": {
+            "green": "#2FBF71",
+            "yellow": "#F2B134",
+            "red": "#E5484D",
+            "early": "#3E9BFF",
+            "none": "#8B93A1",
+            "stale": "#6B7280"
+          }
+        },
+        "horizon_min": {
+          "default": [
+            10,
+            15
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "title": "Horizon Min",
+          "type": "array"
+        },
+        "dataset_day": {
+          "default": "2026-01-06",
+          "title": "Dataset Day",
+          "type": "string"
+        },
+        "sim_speed": {
+          "title": "Sim Speed",
+          "type": "number"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "thresholds",
+        "colors",
+        "horizon_min",
+        "dataset_day",
+        "sim_speed",
+        "session_id"
+      ],
+      "title": "AppConfig",
+      "type": "object"
+    },
+    "Cause": {
+      "additionalProperties": false,
+      "description": "Предполагаемая причина задержки.",
+      "properties": {
+        "code": {
+          "enum": [
+            "ACCUMULATED_DELAY",
+            "CONGESTION",
+            "LONG_DWELL",
+            "SHORT_LAYOVER",
+            "EARLY_RUNNING",
+            "GPS_LOSS",
+            "UNKNOWN"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "details": {
+          "title": "Details",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "title",
+        "details",
+        "evidence"
+      ],
+      "title": "Cause",
+      "type": "object"
+    },
+    "DeviationPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "t": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "T",
+          "type": "string"
+        },
+        "dev_s": {
+          "title": "Dev S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "t",
+        "dev_s"
+      ],
+      "title": "DeviationPoint",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "description": "Факт, объясняющий прогноз (вклад признака).",
+      "properties": {
+        "feature": {
+          "title": "Feature",
+          "type": "string"
+        },
+        "label": {
+          "description": "Человекочитаемое название признака",
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "description": "Отформатированное значение, например '4.2 км/ч'",
+          "title": "Value",
+          "type": "string"
+        },
+        "contribution_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Вклад в прогноз, c",
+          "title": "Contribution S"
+        }
+      },
+      "required": [
+        "feature",
+        "label",
+        "value",
+        "contribution_s"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "ForecastPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "t": {
+          "description": "Плановое время целевой остановки",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "T",
+          "type": "string"
+        },
+        "delay_s": {
+          "title": "Delay S",
+          "type": "number"
+        },
+        "lo_s": {
+          "title": "Lo S",
+          "type": "number"
+        },
+        "hi_s": {
+          "title": "Hi S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "t",
+        "delay_s",
+        "lo_s",
+        "hi_s"
+      ],
+      "title": "ForecastPoint",
+      "type": "object"
+    },
+    "Health": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "ok",
+            "degraded",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "checks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Checks",
+          "type": "object"
+        }
+      },
+      "required": [
+        "status",
+        "version",
+        "checks"
+      ],
+      "title": "Health",
+      "type": "object"
+    },
+    "Incident": {
+      "additionalProperties": false,
+      "description": "Карточка инцидента: ТС с высоким риском задержки.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "vehicle_id": {
+          "title": "Vehicle Id",
+          "type": "string"
+        },
+        "tr_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tr Id"
+        },
+        "route_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Route Name"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "ack",
+            "resolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "risk_level": {
+          "enum": [
+            "green",
+            "yellow",
+            "red",
+            "early",
+            "none"
+          ],
+          "title": "Risk Level",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Created At",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "lead_min": {
+          "description": "За сколько минут до события создан алерт",
+          "title": "Lead Min",
+          "type": "number"
+        },
+        "target_stop": {
+          "$ref": "#/$defs/StopRef"
+        },
+        "predicted_delay_s": {
+          "title": "Predicted Delay S",
+          "type": "number"
+        },
+        "p_late": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "P Late",
+          "type": "number"
+        },
+        "interval_s": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Interval S",
+          "type": "array"
+        },
+        "expected_abs_error_s": {
+          "title": "Expected Abs Error S",
+          "type": "number"
+        },
+        "cause": {
+          "$ref": "#/$defs/Cause"
+        },
+        "segment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Segment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommendations": {
+          "items": {
+            "$ref": "#/$defs/Recommendation"
+          },
+          "title": "Recommendations",
+          "type": "array"
+        },
+        "ack": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AckInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_delay_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Фактическая задержка (по GPS) после события",
+          "title": "Actual Delay S"
+        },
+        "outcome": {
+          "enum": [
+            "pending",
+            "hit",
+            "false_alarm",
+            "miss"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "vehicle_id",
+        "tr_id",
+        "route_name",
+        "status",
+        "risk_level",
+        "created_at",
+        "updated_at",
+        "lead_min",
+        "target_stop",
+        "predicted_delay_s",
+        "p_late",
+        "interval_s",
+        "expected_abs_error_s",
+        "cause",
+        "segment",
+        "recommendations",
+        "ack",
+        "actual_delay_s",
+        "outcome"
+      ],
+      "title": "Incident",
+      "type": "object"
+    },
+    "IngestStats": {
+      "additionalProperties": false,
+      "description": "Ответ ``GET /api/v1/ingest/stats``: приём NDTP.",
+      "properties": {
+        "packets_total": {
+          "title": "Packets Total",
+          "type": "integer"
+        },
+        "pps": {
+          "title": "Pps",
+          "type": "number"
+        },
+        "crc_errors": {
+          "title": "Crc Errors",
+          "type": "integer"
+        },
+        "parse_errors": {
+          "title": "Parse Errors",
+          "type": "integer"
+        },
+        "connections": {
+          "title": "Connections",
+          "type": "integer"
+        },
+        "reconnects": {
+          "title": "Reconnects",
+          "type": "integer"
+        },
+        "unknown_units": {
+          "title": "Unknown Units",
+          "type": "integer"
+        },
+        "last_packet": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LastPacket"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "packets_total",
+        "pps",
+        "crc_errors",
+        "parse_errors",
+        "connections",
+        "reconnects",
+        "unknown_units",
+        "last_packet"
+      ],
+      "title": "IngestStats",
+      "type": "object"
+    },
+    "Kpis": {
+      "additionalProperties": false,
+      "description": "Сводка для верхней полосы дашборда.",
+      "properties": {
+        "vehicles_online": {
+          "title": "Vehicles Online",
+          "type": "integer"
+        },
+        "vehicles_total": {
+          "title": "Vehicles Total",
+          "type": "integer"
+        },
+        "by_risk": {
+          "$ref": "#/$defs/RiskCounts"
+        },
+        "incidents_open": {
+          "title": "Incidents Open",
+          "type": "integer"
+        },
+        "avg_predicted_delay_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Avg Predicted Delay S"
+        },
+        "lead_ok_share": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Доля алертов с упреждением ≥ 10 мин",
+          "title": "Lead Ok Share"
+        },
+        "e2e_latency_ms_p95": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "E2E Latency Ms P95"
+        },
+        "ml_latency_ms_p95": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ml Latency Ms P95"
+        },
+        "ingest_pps": {
+          "title": "Ingest Pps",
+          "type": "number"
+        }
+      },
+      "required": [
+        "vehicles_online",
+        "vehicles_total",
+        "by_risk",
+        "incidents_open",
+        "avg_predicted_delay_s",
+        "lead_ok_share",
+        "e2e_latency_ms_p95",
+        "ml_latency_ms_p95",
+        "ingest_pps"
+      ],
+      "title": "Kpis",
+      "type": "object"
+    },
+    "LastPacket": {
+      "additionalProperties": false,
+      "properties": {
+        "received_at": {
+          "description": "Wall-clock время приёма, ISO UTC",
+          "title": "Received At",
+          "type": "string"
+        },
+        "unit_id": {
+          "title": "Unit Id",
+          "type": "integer"
+        },
+        "hex": {
+          "description": "Сырой NDTP-кадр в hex",
+          "title": "Hex",
+          "type": "string"
+        },
+        "fields": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "title": "Fields",
+          "type": "object"
+        }
+      },
+      "required": [
+        "received_at",
+        "unit_id",
+        "hex",
+        "fields"
+      ],
+      "title": "LastPacket",
+      "type": "object"
+    },
+    "LatencyStats": {
+      "additionalProperties": false,
+      "properties": {
+        "p50_ms": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "P50 Ms"
+        },
+        "p95_ms": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "P95 Ms"
+        },
+        "max_ms": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Ms"
+        }
+      },
+      "required": [
+        "p50_ms",
+        "p95_ms",
+        "max_ms"
+      ],
+      "title": "LatencyStats",
+      "type": "object"
+    },
+    "LeadBucket": {
+      "additionalProperties": false,
+      "properties": {
+        "lead_min": {
+          "title": "Lead Min",
+          "type": "integer"
+        },
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lead_min",
+        "count"
+      ],
+      "title": "LeadBucket",
+      "type": "object"
+    },
+    "LineString": {
+      "additionalProperties": false,
+      "description": "GeoJSON LineString, координаты ``[lon, lat]``.",
+      "properties": {
+        "type": {
+          "const": "LineString",
+          "default": "LineString",
+          "title": "Type",
+          "type": "string"
+        },
+        "coordinates": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Coordinates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "title": "LineString",
+      "type": "object"
+    },
+    "MetricsSummary": {
+      "additionalProperties": false,
+      "description": "Ответ ``GET /api/v1/metrics/summary``: производительность.",
+      "properties": {
+        "kpis": {
+          "$ref": "#/$defs/Kpis"
+        },
+        "ingest_to_state": {
+          "$ref": "#/$defs/LatencyStats"
+        },
+        "pass_to_ws": {
+          "$ref": "#/$defs/LatencyStats"
+        },
+        "ml_batch": {
+          "$ref": "#/$defs/LatencyStats"
+        },
+        "queue_lag": {
+          "title": "Queue Lag",
+          "type": "integer"
+        },
+        "dropped_packets": {
+          "title": "Dropped Packets",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kpis",
+        "ingest_to_state",
+        "pass_to_ws",
+        "ml_batch",
+        "queue_lag",
+        "dropped_packets"
+      ],
+      "title": "MetricsSummary",
+      "type": "object"
+    },
+    "Network": {
+      "additionalProperties": false,
+      "description": "Статическая маршрутная сеть дня: ответ ``GET /api/v1/network``.",
+      "properties": {
+        "stops": {
+          "items": {
+            "$ref": "#/$defs/Stop"
+          },
+          "title": "Stops",
+          "type": "array"
+        },
+        "routes": {
+          "items": {
+            "$ref": "#/$defs/Route"
+          },
+          "title": "Routes",
+          "type": "array"
+        },
+        "segments": {
+          "items": {
+            "$ref": "#/$defs/NetworkSegment"
+          },
+          "title": "Segments",
+          "type": "array"
+        },
+        "bbox": {
+          "description": "[minLon, minLat, maxLon, maxLat]",
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Bbox",
+          "type": "array"
+        }
+      },
+      "required": [
+        "stops",
+        "routes",
+        "segments",
+        "bbox"
+      ],
+      "title": "Network",
+      "type": "object"
+    },
+    "NetworkSegment": {
+      "additionalProperties": false,
+      "description": "Перегон между соседними остановками маршрута.",
+      "properties": {
+        "segment_id": {
+          "title": "Segment Id",
+          "type": "string"
+        },
+        "route_id": {
+          "title": "Route Id",
+          "type": "string"
+        },
+        "from_stop_key": {
+          "title": "From Stop Key",
+          "type": "string"
+        },
+        "to_stop_key": {
+          "title": "To Stop Key",
+          "type": "string"
+        },
+        "geometry": {
+          "$ref": "#/$defs/LineString"
+        }
+      },
+      "required": [
+        "segment_id",
+        "route_id",
+        "from_stop_key",
+        "to_stop_key",
+        "geometry"
+      ],
+      "title": "NetworkSegment",
+      "type": "object"
+    },
+    "OfflineMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "cv_mae_baseline_s": {
+          "title": "Cv Mae Baseline S",
+          "type": "number"
+        },
+        "cv_mae_model_s": {
+          "title": "Cv Mae Model S",
+          "type": "number"
+        },
+        "improvement": {
+          "description": "Доля снижения MAE к baseline",
+          "title": "Improvement",
+          "type": "number"
+        }
+      },
+      "required": [
+        "cv_mae_baseline_s",
+        "cv_mae_model_s",
+        "improvement"
+      ],
+      "title": "OfflineMetrics",
+      "type": "object"
+    },
+    "Prediction": {
+      "additionalProperties": false,
+      "description": "Прогноз задержки на целевой остановке в горизонте 10–15 минут.",
+      "properties": {
+        "target_stop": {
+          "$ref": "#/$defs/StopRef"
+        },
+        "predicted_delay_s": {
+          "description": "Прогноз задержки, c (+ опоздание)",
+          "title": "Predicted Delay S",
+          "type": "number"
+        },
+        "p_late": {
+          "description": "Вероятность опоздания > 120 c",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "P Late",
+          "type": "number"
+        },
+        "interval_s": {
+          "description": "Интервал прогноза [q10, q90], c",
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Interval S",
+          "type": "array"
+        },
+        "expected_abs_error_s": {
+          "description": "Ожидаемая абсолютная ошибка, c",
+          "title": "Expected Abs Error S",
+          "type": "number"
+        },
+        "lead_min": {
+          "description": "Минут от generated_at до planned_at цели",
+          "title": "Lead Min",
+          "type": "number"
+        },
+        "generated_at": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "horizon_ok": {
+          "description": "Цель в окне (T+10, T+15]; false — перерыв/конечная",
+          "title": "Horizon Ok",
+          "type": "boolean"
+        },
+        "model_version": {
+          "title": "Model Version",
+          "type": "string"
+        },
+        "model_mode": {
+          "enum": [
+            "ml",
+            "fallback"
+          ],
+          "title": "Model Mode",
+          "type": "string"
+        },
+        "risk_level": {
+          "enum": [
+            "green",
+            "yellow",
+            "red",
+            "early",
+            "none"
+          ],
+          "title": "Risk Level",
+          "type": "string"
+        },
+        "cause_code": {
+          "enum": [
+            "ACCUMULATED_DELAY",
+            "CONGESTION",
+            "LONG_DWELL",
+            "SHORT_LAYOVER",
+            "EARLY_RUNNING",
+            "GPS_LOSS",
+            "UNKNOWN"
+          ],
+          "title": "Cause Code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_stop",
+        "predicted_delay_s",
+        "p_late",
+        "interval_s",
+        "expected_abs_error_s",
+        "lead_min",
+        "generated_at",
+        "horizon_ok",
+        "model_version",
+        "model_mode",
+        "risk_level",
+        "cause_code"
+      ],
+      "title": "Prediction",
+      "type": "object"
+    },
+    "QualityMetrics": {
+      "additionalProperties": false,
+      "description": "Ответ ``GET /api/v1/metrics/quality``: качество прогнозов на потоке.",
+      "properties": {
+        "online_mae_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Online Mae S"
+        },
+        "n_resolved": {
+          "title": "N Resolved",
+          "type": "integer"
+        },
+        "lead_ok_share": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lead Ok Share"
+        },
+        "lead_hist": {
+          "items": {
+            "$ref": "#/$defs/LeadBucket"
+          },
+          "title": "Lead Hist",
+          "type": "array"
+        },
+        "alert_precision": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Alert Precision"
+        },
+        "alert_recall": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Alert Recall"
+        },
+        "offline": {
+          "$ref": "#/$defs/OfflineMetrics"
+        }
+      },
+      "required": [
+        "online_mae_s",
+        "n_resolved",
+        "lead_ok_share",
+        "lead_hist",
+        "alert_precision",
+        "alert_recall",
+        "offline"
+      ],
+      "title": "QualityMetrics",
+      "type": "object"
+    },
+    "Recommendation": {
+      "additionalProperties": false,
+      "description": "Упреждающее действие для диспетчера.",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "title",
+        "description"
+      ],
+      "title": "Recommendation",
+      "type": "object"
+    },
+    "ReplayControl": {
+      "additionalProperties": false,
+      "description": "Тело ``POST /api/v1/replay/control``.",
+      "properties": {
+        "action": {
+          "enum": [
+            "start",
+            "pause",
+            "resume",
+            "speed",
+            "seek"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "speed": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speed"
+        },
+        "seek_to": {
+          "anyOf": [
+            {
+              "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+              "examples": [
+                "2026-01-06T07:14:00"
+              ],
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seek To"
+        }
+      },
+      "required": [
+        "action",
+        "speed",
+        "seek_to"
+      ],
+      "title": "ReplayControl",
+      "type": "object"
+    },
+    "RiskColors": {
+      "additionalProperties": false,
+      "properties": {
+        "green": {
+          "default": "#2FBF71",
+          "title": "Green",
+          "type": "string"
+        },
+        "yellow": {
+          "default": "#F2B134",
+          "title": "Yellow",
+          "type": "string"
+        },
+        "red": {
+          "default": "#E5484D",
+          "title": "Red",
+          "type": "string"
+        },
+        "early": {
+          "default": "#3E9BFF",
+          "title": "Early",
+          "type": "string"
+        },
+        "none": {
+          "default": "#8B93A1",
+          "title": "None",
+          "type": "string"
+        },
+        "stale": {
+          "default": "#6B7280",
+          "title": "Stale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "green",
+        "yellow",
+        "red",
+        "early",
+        "none",
+        "stale"
+      ],
+      "title": "RiskColors",
+      "type": "object"
+    },
+    "RiskCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "green": {
+          "title": "Green",
+          "type": "integer"
+        },
+        "yellow": {
+          "title": "Yellow",
+          "type": "integer"
+        },
+        "red": {
+          "title": "Red",
+          "type": "integer"
+        },
+        "early": {
+          "title": "Early",
+          "type": "integer"
+        },
+        "none": {
+          "title": "None",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "green",
+        "yellow",
+        "red",
+        "early",
+        "none"
+      ],
+      "title": "RiskCounts",
+      "type": "object"
+    },
+    "Route": {
+      "additionalProperties": false,
+      "description": "Маршрут одного ТС за день (объединение его рейсов).",
+      "properties": {
+        "route_id": {
+          "title": "Route Id",
+          "type": "string"
+        },
+        "name": {
+          "description": "«Конечная A ↔ Конечная B»",
+          "title": "Name",
+          "type": "string"
+        },
+        "color": {
+          "description": "Цвет линии маршрута в легенде, hex",
+          "title": "Color",
+          "type": "string"
+        },
+        "vehicle_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Vehicle Ids",
+          "type": "array"
+        },
+        "stop_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Stop Keys",
+          "type": "array"
+        }
+      },
+      "required": [
+        "route_id",
+        "name",
+        "color",
+        "vehicle_ids",
+        "stop_keys"
+      ],
+      "title": "Route",
+      "type": "object"
+    },
+    "Segment": {
+      "additionalProperties": false,
+      "description": "Участок маршрута, на котором ожидается сбой.",
+      "properties": {
+        "segment_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Segment Id"
+        },
+        "from_stop": {
+          "$ref": "#/$defs/StopRef"
+        },
+        "to_stop": {
+          "$ref": "#/$defs/StopRef"
+        },
+        "geometry": {
+          "$ref": "#/$defs/LineString"
+        }
+      },
+      "required": [
+        "segment_id",
+        "from_stop",
+        "to_stop",
+        "geometry"
+      ],
+      "title": "Segment",
+      "type": "object"
+    },
+    "SegmentRisk": {
+      "additionalProperties": false,
+      "description": "Риск на перегоне (для окраски участков на карте).",
+      "properties": {
+        "segment_id": {
+          "title": "Segment Id",
+          "type": "string"
+        },
+        "route_id": {
+          "title": "Route Id",
+          "type": "string"
+        },
+        "risk_level": {
+          "enum": [
+            "green",
+            "yellow",
+            "red",
+            "early",
+            "none"
+          ],
+          "title": "Risk Level",
+          "type": "string"
+        },
+        "vehicle_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Vehicle Ids",
+          "type": "array"
+        },
+        "speed_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Текущая скорость / типичная для перегона",
+          "title": "Speed Ratio"
+        }
+      },
+      "required": [
+        "segment_id",
+        "route_id",
+        "risk_level",
+        "vehicle_ids",
+        "speed_ratio"
+      ],
+      "title": "SegmentRisk",
+      "type": "object"
+    },
+    "SimClock": {
+      "additionalProperties": false,
+      "properties": {
+        "sim_time": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Sim Time",
+          "type": "string"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "speed": {
+          "title": "Speed",
+          "type": "number"
+        },
+        "state": {
+          "enum": [
+            "running",
+            "paused",
+            "stopped"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sim_time",
+        "session_id",
+        "speed",
+        "state"
+      ],
+      "title": "SimClock",
+      "type": "object"
+    },
+    "SnapshotData": {
+      "additionalProperties": false,
+      "properties": {
+        "vehicles": {
+          "items": {
+            "$ref": "#/$defs/VehicleState"
+          },
+          "title": "Vehicles",
+          "type": "array"
+        },
+        "incidents": {
+          "items": {
+            "$ref": "#/$defs/Incident"
+          },
+          "title": "Incidents",
+          "type": "array"
+        },
+        "kpis": {
+          "$ref": "#/$defs/Kpis"
+        },
+        "status": {
+          "$ref": "#/$defs/SystemStatus"
+        }
+      },
+      "required": [
+        "vehicles",
+        "incidents",
+        "kpis",
+        "status"
+      ],
+      "title": "SnapshotData",
+      "type": "object"
+    },
+    "Stop": {
+      "additionalProperties": false,
+      "description": "Остановка (физическая точка), общая для всех плановых прибытий.",
+      "properties": {
+        "stop_key": {
+          "description": "Стабильный ключ остановки",
+          "title": "Stop Key",
+          "type": "string"
+        },
+        "name": {
+          "description": "Адрес остановки из расписания",
+          "title": "Name",
+          "type": "string"
+        },
+        "lon": {
+          "title": "Lon",
+          "type": "number"
+        },
+        "lat": {
+          "title": "Lat",
+          "type": "number"
+        }
+      },
+      "required": [
+        "stop_key",
+        "name",
+        "lon",
+        "lat"
+      ],
+      "title": "Stop",
+      "type": "object"
+    },
+    "StopRef": {
+      "additionalProperties": false,
+      "description": "Ссылка на плановое прибытие ТС на остановку.",
+      "properties": {
+        "visit_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ID планового прибытия (tt_action_item_id)",
+          "title": "Visit Id"
+        },
+        "stop_key": {
+          "title": "Stop Key",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "lon": {
+          "title": "Lon",
+          "type": "number"
+        },
+        "lat": {
+          "title": "Lat",
+          "type": "number"
+        },
+        "planned_at": {
+          "anyOf": [
+            {
+              "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+              "examples": [
+                "2026-01-06T07:14:00"
+              ],
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Planned At"
+        }
+      },
+      "required": [
+        "visit_id",
+        "stop_key",
+        "name",
+        "lon",
+        "lat",
+        "planned_at"
+      ],
+      "title": "StopRef",
+      "type": "object"
+    },
+    "StopTimelineItem": {
+      "additionalProperties": false,
+      "description": "Строка «нитки графика» ТС: план, виртуальный факт по GPS и прогноз.",
+      "properties": {
+        "visit_id": {
+          "title": "Visit Id",
+          "type": "string"
+        },
+        "stop_key": {
+          "title": "Stop Key",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "planned_at": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Planned At",
+          "type": "string"
+        },
+        "actual_at": {
+          "anyOf": [
+            {
+              "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+              "examples": [
+                "2026-01-06T07:14:00"
+              ],
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Прибытие по GPS (для пройденных)",
+          "title": "Actual At"
+        },
+        "actual_delay_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Actual Delay S"
+        },
+        "predicted_delay_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Predicted Delay S"
+        },
+        "is_target": {
+          "title": "Is Target",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "upcoming"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "visit_id",
+        "stop_key",
+        "name",
+        "planned_at",
+        "actual_at",
+        "actual_delay_s",
+        "predicted_delay_s",
+        "is_target",
+        "status"
+      ],
+      "title": "StopTimelineItem",
+      "type": "object"
+    },
+    "SystemStatus": {
+      "additionalProperties": false,
+      "description": "Режим работы системы (баннеры LIVE/DEGRADED/...).",
+      "properties": {
+        "mode": {
+          "enum": [
+            "LIVE",
+            "WARMING_UP",
+            "DEGRADED",
+            "OFFLINE",
+            "PAUSED"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Пояснение для баннера",
+          "title": "Reason"
+        },
+        "last_packet_age_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Секунд (wall-clock) с последнего пакета",
+          "title": "Last Packet Age S"
+        },
+        "units_connected": {
+          "title": "Units Connected",
+          "type": "integer"
+        },
+        "ml_status": {
+          "enum": [
+            "ok",
+            "degraded",
+            "down"
+          ],
+          "title": "Ml Status",
+          "type": "string"
+        },
+        "model_version": {
+          "title": "Model Version",
+          "type": "string"
+        },
+        "model_mode": {
+          "enum": [
+            "ml",
+            "fallback"
+          ],
+          "title": "Model Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "reason",
+        "last_packet_age_s",
+        "units_connected",
+        "ml_status",
+        "model_version",
+        "model_mode"
+      ],
+      "title": "SystemStatus",
+      "type": "object"
+    },
+    "Thresholds": {
+      "additionalProperties": false,
+      "description": "Пороги риска; фронт берёт их только отсюда, не хардкодит.",
+      "properties": {
+        "red_delay_s": {
+          "default": 120,
+          "title": "Red Delay S",
+          "type": "number"
+        },
+        "yellow_delay_s": {
+          "default": 60,
+          "title": "Yellow Delay S",
+          "type": "number"
+        },
+        "early_delay_s": {
+          "default": -60,
+          "title": "Early Delay S",
+          "type": "number"
+        },
+        "red_p_late": {
+          "default": 0.5,
+          "title": "Red P Late",
+          "type": "number"
+        },
+        "yellow_p_late": {
+          "default": 0.3,
+          "title": "Yellow P Late",
+          "type": "number"
+        }
+      },
+      "required": [
+        "red_delay_s",
+        "yellow_delay_s",
+        "early_delay_s",
+        "red_p_late",
+        "yellow_p_late"
+      ],
+      "title": "Thresholds",
+      "type": "object"
+    },
+    "VehicleDetail": {
+      "additionalProperties": false,
+      "description": "Ответ ``GET /api/v1/vehicles/{vehicle_id}``.",
+      "properties": {
+        "vehicle": {
+          "$ref": "#/$defs/VehicleState"
+        },
+        "timeline": {
+          "description": "Остановки в окне ±60 мин",
+          "items": {
+            "$ref": "#/$defs/StopTimelineItem"
+          },
+          "title": "Timeline",
+          "type": "array"
+        },
+        "deviation_series": {
+          "description": "Отклонение за последние 60 мин",
+          "items": {
+            "$ref": "#/$defs/DeviationPoint"
+          },
+          "title": "Deviation Series",
+          "type": "array"
+        },
+        "forecast": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ForecastPoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "incident_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Incident Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "vehicle",
+        "timeline",
+        "deviation_series",
+        "forecast",
+        "incident_ids"
+      ],
+      "title": "VehicleDetail",
+      "type": "object"
+    },
+    "VehicleState": {
+      "additionalProperties": false,
+      "description": "Текущее состояние ТС на карте.",
+      "properties": {
+        "vehicle_id": {
+          "description": "tr_id или 'u:<unit_id>' для неопознанного борта",
+          "title": "Vehicle Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "scheduled",
+            "no_schedule",
+            "unknown"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "tr_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tr Id"
+        },
+        "unit_id": {
+          "title": "Unit Id",
+          "type": "integer"
+        },
+        "route_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Route Id"
+        },
+        "route_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Route Name"
+        },
+        "lon": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "null, пока нет ни одной валидной координаты",
+          "title": "Lon"
+        },
+        "lat": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lat"
+        },
+        "heading": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Курс, градусы 0–360",
+          "title": "Heading"
+        },
+        "speed_kmh": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Speed Kmh"
+        },
+        "last_seen": {
+          "anyOf": [
+            {
+              "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+              "examples": [
+                "2026-01-06T07:14:00"
+              ],
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Seen"
+        },
+        "stale": {
+          "description": "Давно нет данных от ТС",
+          "title": "Stale",
+          "type": "boolean"
+        },
+        "warming_up": {
+          "description": "Мало истории для прогноза, инциденты не создаются",
+          "title": "Warming Up",
+          "type": "boolean"
+        },
+        "current_dev_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Отклонение от графика сейчас, c",
+          "title": "Current Dev S"
+        },
+        "next_stop": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StopRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prediction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Prediction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "risk_level": {
+          "enum": [
+            "green",
+            "yellow",
+            "red",
+            "early",
+            "none"
+          ],
+          "title": "Risk Level",
+          "type": "string"
+        },
+        "open_incident_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Open Incident Id"
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "kind",
+        "tr_id",
+        "unit_id",
+        "route_id",
+        "route_name",
+        "lon",
+        "lat",
+        "heading",
+        "speed_kmh",
+        "last_seen",
+        "stale",
+        "warming_up",
+        "current_dev_s",
+        "next_stop",
+        "prediction",
+        "risk_level",
+        "open_incident_id"
+      ],
+      "title": "VehicleState",
+      "type": "object"
+    },
+    "VehiclesDeltaData": {
+      "additionalProperties": false,
+      "properties": {
+        "vehicles": {
+          "description": "Изменившиеся ТС целиком",
+          "items": {
+            "$ref": "#/$defs/VehicleState"
+          },
+          "title": "Vehicles",
+          "type": "array"
+        },
+        "removed": {
+          "description": "vehicle_id, которые надо убрать с карты",
+          "items": {
+            "type": "string"
+          },
+          "title": "Removed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "vehicles",
+        "removed"
+      ],
+      "title": "VehiclesDeltaData",
+      "type": "object"
+    },
+    "WsIncident": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Меняется при перезапуске/перемотке потока",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "sim_time": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Sim Time",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "incident.opened",
+            "incident.updated",
+            "incident.resolved"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/$defs/Incident"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "sim_time",
+        "type",
+        "data"
+      ],
+      "title": "WsIncident",
+      "type": "object"
+    },
+    "WsKpis": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Меняется при перезапуске/перемотке потока",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "sim_time": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Sim Time",
+          "type": "string"
+        },
+        "type": {
+          "const": "kpis",
+          "default": "kpis",
+          "title": "Type",
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/$defs/Kpis"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "sim_time",
+        "type",
+        "data"
+      ],
+      "title": "WsKpis",
+      "type": "object"
+    },
+    "WsMessage": {
+      "discriminator": {
+        "mapping": {
+          "incident.opened": "#/$defs/WsIncident",
+          "incident.resolved": "#/$defs/WsIncident",
+          "incident.updated": "#/$defs/WsIncident",
+          "kpis": "#/$defs/WsKpis",
+          "ping": "#/$defs/WsPing",
+          "snapshot": "#/$defs/WsSnapshot",
+          "system.status": "#/$defs/WsSystemStatus",
+          "vehicles.delta": "#/$defs/WsVehiclesDelta"
+        },
+        "propertyName": "type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/WsSnapshot"
+        },
+        {
+          "$ref": "#/$defs/WsVehiclesDelta"
+        },
+        {
+          "$ref": "#/$defs/WsIncident"
+        },
+        {
+          "$ref": "#/$defs/WsKpis"
+        },
+        {
+          "$ref": "#/$defs/WsSystemStatus"
+        },
+        {
+          "$ref": "#/$defs/WsPing"
+        }
+      ]
+    },
+    "WsPing": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Меняется при перезапуске/перемотке потока",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "sim_time": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Sim Time",
+          "type": "string"
+        },
+        "type": {
+          "const": "ping",
+          "default": "ping",
+          "title": "Type",
+          "type": "string"
+        },
+        "data": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Data",
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "sim_time",
+        "type",
+        "data"
+      ],
+      "title": "WsPing",
+      "type": "object"
+    },
+    "WsSnapshot": {
+      "additionalProperties": false,
+      "description": "Полное состояние: при подключении и при смене session_id.",
+      "properties": {
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Меняется при перезапуске/перемотке потока",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "sim_time": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Sim Time",
+          "type": "string"
+        },
+        "type": {
+          "const": "snapshot",
+          "default": "snapshot",
+          "title": "Type",
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/$defs/SnapshotData"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "sim_time",
+        "type",
+        "data"
+      ],
+      "title": "WsSnapshot",
+      "type": "object"
+    },
+    "WsSystemStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Меняется при перезапуске/перемотке потока",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "sim_time": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Sim Time",
+          "type": "string"
+        },
+        "type": {
+          "const": "system.status",
+          "default": "system.status",
+          "title": "Type",
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/$defs/SystemStatus"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "sim_time",
+        "type",
+        "data"
+      ],
+      "title": "WsSystemStatus",
+      "type": "object"
+    },
+    "WsVehiclesDelta": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_id": {
+          "description": "Меняется при перезапуске/перемотке потока",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "sim_time": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Sim Time",
+          "type": "string"
+        },
+        "type": {
+          "const": "vehicles.delta",
+          "default": "vehicles.delta",
+          "title": "Type",
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/$defs/VehiclesDeltaData"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "sim_time",
+        "type",
+        "data"
+      ],
+      "title": "WsVehiclesDelta",
+      "type": "object"
+    }
+  }
+}

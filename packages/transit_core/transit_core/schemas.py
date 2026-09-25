@@ -53,7 +53,10 @@ ModelMode = Literal["ml", "fallback"]
 class Contract(BaseModel):
     """База контракта: неизменяемые объекты и запрет лишних полей."""
 
-    model_config = ConfigDict(frozen=True, extra="forbid")
+    # Поля с дефолтами в ответах есть всегда — в TS-типах они обязательные.
+    model_config = ConfigDict(
+        frozen=True, extra="forbid", json_schema_serialization_defaults_required=True
+    )
 
 
 class LineString(Contract):
@@ -144,7 +147,7 @@ class VehicleState(Contract):
     unit_id: int
     route_id: str | None
     route_name: str | None
-    lon: float | None = Field(description="None, пока нет ни одной валидной координаты")
+    lon: float | None = Field(description="null, пока нет ни одной валидной координаты")
     lat: float | None
     heading: float | None = Field(description="Курс, градусы 0–360")
     speed_kmh: float | None
