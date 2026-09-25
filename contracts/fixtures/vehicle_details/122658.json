@@ -1,0 +1,989 @@
+{
+  "vehicle": {
+    "vehicle_id": "122658",
+    "kind": "scheduled",
+    "tr_id": "122658",
+    "unit_id": 786201,
+    "route_id": "r122658",
+    "route_name": "ул. Маршала Василевского ↔ ул. Василия Ботылёва",
+    "lon": 37.355103,
+    "lat": 55.787647,
+    "heading": 177.0,
+    "speed_kmh": 12.0,
+    "last_seen": "2026-01-06T07:14:49",
+    "stale": false,
+    "warming_up": false,
+    "current_dev_s": 18.3,
+    "next_stop": {
+      "visit_id": "53699433891",
+      "stop_key": "st_667dc2b8",
+      "name": "ул. Василия Ботылёва, д.37",
+      "lon": 37.35496245,
+      "lat": 55.78670401,
+      "planned_at": "2026-01-06T07:16:00"
+    },
+    "prediction": {
+      "target_stop": {
+        "visit_id": "53699434030",
+        "stop_key": "st_155c7bca",
+        "name": "Остановка без адреса",
+        "lon": 37.37681395,
+        "lat": 55.79749448,
+        "planned_at": "2026-01-06T07:27:00"
+      },
+      "predicted_delay_s": 21.5,
+      "p_late": 0.057,
+      "interval_s": [
+        -16.7,
+        69.7
+      ],
+      "expected_abs_error_s": 40.6,
+      "lead_min": 12.0,
+      "generated_at": "2026-01-06T07:15:00",
+      "horizon_ok": true,
+      "model_version": "mock-catboost-1",
+      "model_mode": "ml",
+      "risk_level": "green",
+      "cause_code": "UNKNOWN"
+    },
+    "risk_level": "green",
+    "open_incident_id": null
+  },
+  "timeline": [
+    {
+      "visit_id": "53699433958",
+      "stop_key": "st_19f3eff5",
+      "name": "ул. Василия Ботылёва, д.37",
+      "planned_at": "2026-01-06T06:16:00",
+      "actual_at": "2026-01-06T06:16:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433957",
+      "stop_key": "st_af18270c",
+      "name": "ул. Василия Ботылёва, д.12",
+      "planned_at": "2026-01-06T06:16:00",
+      "actual_at": "2026-01-06T06:16:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433959",
+      "stop_key": "st_2f27626f",
+      "name": "ул. Василия Ботылёва, д.20",
+      "planned_at": "2026-01-06T06:17:00",
+      "actual_at": "2026-01-06T06:17:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433964",
+      "stop_key": "st_0b54bd4f",
+      "name": "Новолучанская ул., д.38",
+      "planned_at": "2026-01-06T06:18:00",
+      "actual_at": "2026-01-06T06:18:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433965",
+      "stop_key": "st_5233b7cf",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:20:00",
+      "actual_at": "2026-01-06T06:20:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433966",
+      "stop_key": "st_155c7bca",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:22:00",
+      "actual_at": "2026-01-06T06:22:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433967",
+      "stop_key": "st_e7b54513",
+      "name": "2-я Мякининская ул., д.8",
+      "planned_at": "2026-01-06T06:24:00",
+      "actual_at": "2026-01-06T06:24:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433960",
+      "stop_key": "st_1c55b2a0",
+      "name": "4-я Мякининская ул., д.27",
+      "planned_at": "2026-01-06T06:27:00",
+      "actual_at": "2026-01-06T06:27:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433961",
+      "stop_key": "st_2835be8b",
+      "name": "Строгинский бульв., д.2, к.1",
+      "planned_at": "2026-01-06T06:28:00",
+      "actual_at": "2026-01-06T06:28:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433962",
+      "stop_key": "st_dab8f260",
+      "name": "Строгинский бульв., д.14, к.3",
+      "planned_at": "2026-01-06T06:29:00",
+      "actual_at": "2026-01-06T06:29:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433963",
+      "stop_key": "st_4d7f2fa3",
+      "name": "Строгинский бульв., д.30",
+      "planned_at": "2026-01-06T06:31:00",
+      "actual_at": "2026-01-06T06:31:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433971",
+      "stop_key": "st_b8d92b98",
+      "name": "Таллинская ул., д.34",
+      "planned_at": "2026-01-06T06:33:00",
+      "actual_at": "2026-01-06T06:33:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433968",
+      "stop_key": "st_8e12810b",
+      "name": "ул. Маршала Катукова, д.22",
+      "planned_at": "2026-01-06T06:34:00",
+      "actual_at": "2026-01-06T06:34:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433969",
+      "stop_key": "st_a2e96291",
+      "name": "ул. Исаковского, д.33, к.3",
+      "planned_at": "2026-01-06T06:35:00",
+      "actual_at": "2026-01-06T06:35:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433970",
+      "stop_key": "st_c2234dd3",
+      "name": "Строгинское ш., д.1",
+      "planned_at": "2026-01-06T06:36:00",
+      "actual_at": "2026-01-06T06:36:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433972",
+      "stop_key": "st_ccc7f584",
+      "name": "Новощукинская ул., д.7",
+      "planned_at": "2026-01-06T06:38:00",
+      "actual_at": "2026-01-06T06:38:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433973",
+      "stop_key": "st_5c960512",
+      "name": "Новощукинская ул., д.5",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:39:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433974",
+      "stop_key": "st_afd84aae",
+      "name": "ул. Маршала Василевского, д.17",
+      "planned_at": "2026-01-06T06:41:00",
+      "actual_at": "2026-01-06T06:41:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433892",
+      "stop_key": "st_afd84aae",
+      "name": "ул. Маршала Василевского, д.17",
+      "planned_at": "2026-01-06T06:47:00",
+      "actual_at": "2026-01-06T06:47:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433893",
+      "stop_key": "st_29cae7f0",
+      "name": "ул. Маршала Василевского, д.17",
+      "planned_at": "2026-01-06T06:49:00",
+      "actual_at": "2026-01-06T06:49:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433894",
+      "stop_key": "st_68c15756",
+      "name": "Новощукинская ул., д.18, к.1",
+      "planned_at": "2026-01-06T06:52:00",
+      "actual_at": "2026-01-06T06:52:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433883",
+      "stop_key": "st_10bfa96d",
+      "name": "ул. Исаковского, д.37, к.2, стр. 1",
+      "planned_at": "2026-01-06T06:54:00",
+      "actual_at": "2026-01-06T06:54:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433884",
+      "stop_key": "st_3e91315c",
+      "name": "ул. Исаковского, д.33, к.3",
+      "planned_at": "2026-01-06T06:55:00",
+      "actual_at": "2026-01-06T06:55:13",
+      "actual_delay_s": 13.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433885",
+      "stop_key": "st_45fcab95",
+      "name": "ул. Маршала Катукова, д.25",
+      "planned_at": "2026-01-06T06:56:00",
+      "actual_at": "2026-01-06T06:56:15",
+      "actual_delay_s": 15.4,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433886",
+      "stop_key": "st_b69b3a77",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:59:00",
+      "actual_at": "2026-01-06T06:59:27",
+      "actual_delay_s": 27.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433879",
+      "stop_key": "st_5f5936da",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:00:00",
+      "actual_at": "2026-01-06T07:00:31",
+      "actual_delay_s": 31.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433880",
+      "stop_key": "st_93304e84",
+      "name": "4-я Мякининская ул., д.27",
+      "planned_at": "2026-01-06T07:04:00",
+      "actual_at": "2026-01-06T07:04:39",
+      "actual_delay_s": 39.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433881",
+      "stop_key": "st_e7b54513",
+      "name": "2-я Мякининская ул., д.8",
+      "planned_at": "2026-01-06T07:07:00",
+      "actual_at": "2026-01-06T07:07:32",
+      "actual_delay_s": 32.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433882",
+      "stop_key": "st_155c7bca",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:09:00",
+      "actual_at": "2026-01-06T07:09:25",
+      "actual_delay_s": 25.3,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433888",
+      "stop_key": "st_5d1affb6",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:12:00",
+      "actual_at": "2026-01-06T07:12:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433889",
+      "stop_key": "st_4f65b1dc",
+      "name": "Новолучанская ул., д.38",
+      "planned_at": "2026-01-06T07:14:00",
+      "actual_at": "2026-01-06T07:14:19",
+      "actual_delay_s": 19.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699433890",
+      "stop_key": "st_6fb2a339",
+      "name": "ул. Василия Ботылёва, д.20",
+      "planned_at": "2026-01-06T07:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433891",
+      "stop_key": "st_667dc2b8",
+      "name": "ул. Василия Ботылёва, д.37",
+      "planned_at": "2026-01-06T07:16:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433887",
+      "stop_key": "st_af18270c",
+      "name": "ул. Василия Ботылёва, д.12",
+      "planned_at": "2026-01-06T07:17:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434027",
+      "stop_key": "st_af18270c",
+      "name": "ул. Василия Ботылёва, д.12",
+      "planned_at": "2026-01-06T07:21:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434026",
+      "stop_key": "st_19f3eff5",
+      "name": "ул. Василия Ботылёва, д.37",
+      "planned_at": "2026-01-06T07:21:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434025",
+      "stop_key": "st_2f27626f",
+      "name": "ул. Василия Ботылёва, д.20",
+      "planned_at": "2026-01-06T07:22:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434024",
+      "stop_key": "st_0b54bd4f",
+      "name": "Новолучанская ул., д.38",
+      "planned_at": "2026-01-06T07:23:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434031",
+      "stop_key": "st_5233b7cf",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:25:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434030",
+      "stop_key": "st_155c7bca",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:27:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": true,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434029",
+      "stop_key": "st_e7b54513",
+      "name": "2-я Мякининская ул., д.8",
+      "planned_at": "2026-01-06T07:29:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434028",
+      "stop_key": "st_1c55b2a0",
+      "name": "4-я Мякининская ул., д.27",
+      "planned_at": "2026-01-06T07:32:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434019",
+      "stop_key": "st_2835be8b",
+      "name": "Строгинский бульв., д.2, к.1",
+      "planned_at": "2026-01-06T07:33:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434018",
+      "stop_key": "st_dab8f260",
+      "name": "Строгинский бульв., д.14, к.3",
+      "planned_at": "2026-01-06T07:34:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434017",
+      "stop_key": "st_4d7f2fa3",
+      "name": "Строгинский бульв., д.30",
+      "planned_at": "2026-01-06T07:36:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434016",
+      "stop_key": "st_b8d92b98",
+      "name": "Таллинская ул., д.34",
+      "planned_at": "2026-01-06T07:38:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434023",
+      "stop_key": "st_8e12810b",
+      "name": "ул. Маршала Катукова, д.22",
+      "planned_at": "2026-01-06T07:39:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434022",
+      "stop_key": "st_a2e96291",
+      "name": "ул. Исаковского, д.33, к.3",
+      "planned_at": "2026-01-06T07:40:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434021",
+      "stop_key": "st_c2234dd3",
+      "name": "Строгинское ш., д.1",
+      "planned_at": "2026-01-06T07:41:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434020",
+      "stop_key": "st_ccc7f584",
+      "name": "Новощукинская ул., д.7",
+      "planned_at": "2026-01-06T07:43:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434033",
+      "stop_key": "st_5c960512",
+      "name": "Новощукинская ул., д.5",
+      "planned_at": "2026-01-06T07:44:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699434032",
+      "stop_key": "st_afd84aae",
+      "name": "ул. Маршала Василевского, д.17",
+      "planned_at": "2026-01-06T07:46:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433994",
+      "stop_key": "st_afd84aae",
+      "name": "ул. Маршала Василевского, д.17",
+      "planned_at": "2026-01-06T07:54:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433993",
+      "stop_key": "st_29cae7f0",
+      "name": "ул. Маршала Василевского, д.17",
+      "planned_at": "2026-01-06T07:56:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433992",
+      "stop_key": "st_68c15756",
+      "name": "Новощукинская ул., д.18, к.1",
+      "planned_at": "2026-01-06T07:59:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433991",
+      "stop_key": "st_10bfa96d",
+      "name": "ул. Исаковского, д.37, к.2, стр. 1",
+      "planned_at": "2026-01-06T08:01:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433986",
+      "stop_key": "st_3e91315c",
+      "name": "ул. Исаковского, д.33, к.3",
+      "planned_at": "2026-01-06T08:02:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433985",
+      "stop_key": "st_45fcab95",
+      "name": "ул. Маршала Катукова, д.25",
+      "planned_at": "2026-01-06T08:03:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433984",
+      "stop_key": "st_b69b3a77",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:06:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433983",
+      "stop_key": "st_5f5936da",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:07:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433990",
+      "stop_key": "st_93304e84",
+      "name": "4-я Мякининская ул., д.27",
+      "planned_at": "2026-01-06T08:11:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699433989",
+      "stop_key": "st_e7b54513",
+      "name": "2-я Мякининская ул., д.8",
+      "planned_at": "2026-01-06T08:14:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 21.5,
+      "is_target": false,
+      "status": "upcoming"
+    }
+  ],
+  "deviation_series": [
+    {
+      "t": "2026-01-06T06:15:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:16:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:17:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:18:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:19:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:20:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:21:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:22:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:23:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:24:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:25:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:26:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:27:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:28:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:29:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:30:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:31:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:32:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:33:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:34:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:35:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:36:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:37:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:38:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:39:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:40:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:41:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:42:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:43:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:44:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:45:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:46:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:47:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:48:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:49:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:50:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:51:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:52:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:53:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:54:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:55:00",
+      "dev_s": 11.2
+    },
+    {
+      "t": "2026-01-06T06:56:00",
+      "dev_s": 13.1
+    },
+    {
+      "t": "2026-01-06T06:57:00",
+      "dev_s": 15.9
+    },
+    {
+      "t": "2026-01-06T06:58:00",
+      "dev_s": 19.3
+    },
+    {
+      "t": "2026-01-06T06:59:00",
+      "dev_s": 22.9
+    },
+    {
+      "t": "2026-01-06T07:00:00",
+      "dev_s": 26.4
+    },
+    {
+      "t": "2026-01-06T07:01:00",
+      "dev_s": 29.5
+    },
+    {
+      "t": "2026-01-06T07:02:00",
+      "dev_s": 31.7
+    },
+    {
+      "t": "2026-01-06T07:03:00",
+      "dev_s": 33.0
+    },
+    {
+      "t": "2026-01-06T07:04:00",
+      "dev_s": 33.2
+    },
+    {
+      "t": "2026-01-06T07:05:00",
+      "dev_s": 32.2
+    },
+    {
+      "t": "2026-01-06T07:06:00",
+      "dev_s": 30.3
+    },
+    {
+      "t": "2026-01-06T07:07:00",
+      "dev_s": 27.6
+    },
+    {
+      "t": "2026-01-06T07:08:00",
+      "dev_s": 24.6
+    },
+    {
+      "t": "2026-01-06T07:09:00",
+      "dev_s": 21.5
+    },
+    {
+      "t": "2026-01-06T07:10:00",
+      "dev_s": 18.7
+    },
+    {
+      "t": "2026-01-06T07:11:00",
+      "dev_s": 16.6
+    },
+    {
+      "t": "2026-01-06T07:12:00",
+      "dev_s": 15.4
+    },
+    {
+      "t": "2026-01-06T07:13:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T07:14:00",
+      "dev_s": 16.3
+    },
+    {
+      "t": "2026-01-06T07:15:00",
+      "dev_s": 18.3
+    }
+  ],
+  "forecast": {
+    "t": "2026-01-06T07:27:00",
+    "delay_s": 21.5,
+    "lo_s": -16.7,
+    "hi_s": 69.7
+  },
+  "incident_ids": []
+}

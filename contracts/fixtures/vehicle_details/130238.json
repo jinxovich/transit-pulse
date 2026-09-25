@@ -1,0 +1,945 @@
+{
+  "vehicle": {
+    "vehicle_id": "130238",
+    "kind": "scheduled",
+    "tr_id": "130238",
+    "unit_id": 902577,
+    "route_id": "r130238",
+    "route_name": "пл. Киевского Вокзала ↔ Озёрная ул.",
+    "lon": 37.448547,
+    "lat": 55.670795,
+    "heading": 60.0,
+    "speed_kmh": 0.0,
+    "last_seen": "2026-01-06T07:14:46",
+    "stale": false,
+    "warming_up": false,
+    "current_dev_s": 15.0,
+    "next_stop": {
+      "visit_id": "53698370376",
+      "stop_key": "st_31308f60",
+      "name": "Озёрная ул., д.33, к.1",
+      "lon": 37.44872779,
+      "lat": 55.67114994,
+      "planned_at": "2026-01-06T07:40:00"
+    },
+    "prediction": {
+      "target_stop": {
+        "visit_id": "53698370376",
+        "stop_key": "st_31308f60",
+        "name": "Озёрная ул., д.33, к.1",
+        "lon": 37.44872779,
+        "lat": 55.67114994,
+        "planned_at": "2026-01-06T07:40:00"
+      },
+      "predicted_delay_s": 17.6,
+      "p_late": 0.051,
+      "interval_s": [
+        -20.0,
+        65.2
+      ],
+      "expected_abs_error_s": 40.1,
+      "lead_min": 25.0,
+      "generated_at": "2026-01-06T07:15:00",
+      "horizon_ok": false,
+      "model_version": "mock-catboost-1",
+      "model_mode": "ml",
+      "risk_level": "green",
+      "cause_code": "UNKNOWN"
+    },
+    "risk_level": "green",
+    "open_incident_id": null
+  },
+  "timeline": [
+    {
+      "visit_id": "53698370318",
+      "stop_key": "st_5f791d20",
+      "name": "пл. Киевского Вокзала, д.1",
+      "planned_at": "2026-01-06T06:18:00",
+      "actual_at": "2026-01-06T06:18:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370314",
+      "stop_key": "st_be7f66e6",
+      "name": "пл. Киевского Вокзала, д.1",
+      "planned_at": "2026-01-06T06:18:00",
+      "actual_at": "2026-01-06T06:18:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370306",
+      "stop_key": "st_a418f944",
+      "name": "Бережковская наб., д.8",
+      "planned_at": "2026-01-06T06:20:00",
+      "actual_at": "2026-01-06T06:20:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370302",
+      "stop_key": "st_401cc7b3",
+      "name": "Бережковская наб., д.14",
+      "planned_at": "2026-01-06T06:21:00",
+      "actual_at": "2026-01-06T06:21:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370313",
+      "stop_key": "st_0c28ab2a",
+      "name": "Бережковская наб., д.16",
+      "planned_at": "2026-01-06T06:23:00",
+      "actual_at": "2026-01-06T06:23:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370312",
+      "stop_key": "st_8ef1b378",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:24:00",
+      "actual_at": "2026-01-06T06:24:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370310",
+      "stop_key": "st_2d3f004b",
+      "name": "Воробьёвское ш.",
+      "planned_at": "2026-01-06T06:26:00",
+      "actual_at": "2026-01-06T06:26:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370319",
+      "stop_key": "st_610646b1",
+      "name": "Воробьёвское ш., д.6",
+      "planned_at": "2026-01-06T06:27:00",
+      "actual_at": "2026-01-06T06:27:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370298",
+      "stop_key": "st_d886783f",
+      "name": "Мосфильмовская ул., д.2В",
+      "planned_at": "2026-01-06T06:28:00",
+      "actual_at": "2026-01-06T06:28:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370316",
+      "stop_key": "st_6a5e9ca6",
+      "name": "Мосфильмовская ул., д.8, к.1",
+      "planned_at": "2026-01-06T06:29:00",
+      "actual_at": "2026-01-06T06:29:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370296",
+      "stop_key": "st_15f720f3",
+      "name": "Мосфильмовская ул., д.22",
+      "planned_at": "2026-01-06T06:30:00",
+      "actual_at": "2026-01-06T06:30:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370324",
+      "stop_key": "st_98fe6c29",
+      "name": "Мосфильмовская ул., д.13",
+      "planned_at": "2026-01-06T06:32:00",
+      "actual_at": "2026-01-06T06:32:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370321",
+      "stop_key": "st_48ab7f50",
+      "name": "Мосфильмовская ул., д.60",
+      "planned_at": "2026-01-06T06:33:00",
+      "actual_at": "2026-01-06T06:33:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370315",
+      "stop_key": "st_bfc2fa00",
+      "name": "Мосфильмовская ул., д.72А",
+      "planned_at": "2026-01-06T06:35:00",
+      "actual_at": "2026-01-06T06:35:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370326",
+      "stop_key": "st_c6e0a56c",
+      "name": "Мосфильмовская ул., д.35",
+      "planned_at": "2026-01-06T06:35:00",
+      "actual_at": "2026-01-06T06:35:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370303",
+      "stop_key": "st_8105e33d",
+      "name": "Ломоносовский просп., д.43",
+      "planned_at": "2026-01-06T06:36:00",
+      "actual_at": "2026-01-06T06:36:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370307",
+      "stop_key": "st_851a3fa9",
+      "name": "Мичуринский просп., д.8",
+      "planned_at": "2026-01-06T06:38:00",
+      "actual_at": "2026-01-06T06:38:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370297",
+      "stop_key": "st_df964caa",
+      "name": "Мичуринский просп., д.22, к.1",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:39:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370325",
+      "stop_key": "st_57fa2fff",
+      "name": "Мичуринский просп., д.16",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:39:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370317",
+      "stop_key": "st_4d044eaf",
+      "name": "ул. Пельше, д.26",
+      "planned_at": "2026-01-06T06:40:00",
+      "actual_at": "2026-01-06T06:40:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370305",
+      "stop_key": "st_04d8c280",
+      "name": "Мичуринский просп., д.38",
+      "planned_at": "2026-01-06T06:42:00",
+      "actual_at": "2026-01-06T06:42:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370301",
+      "stop_key": "st_7364c20c",
+      "name": "Мичуринский просп., д.54, к.1",
+      "planned_at": "2026-01-06T06:43:00",
+      "actual_at": "2026-01-06T06:43:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370320",
+      "stop_key": "st_6a679ca6",
+      "name": "Мичуринский просп., д.58, к.1",
+      "planned_at": "2026-01-06T06:44:00",
+      "actual_at": "2026-01-06T06:44:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370311",
+      "stop_key": "st_e1b8133c",
+      "name": "Мичуринский просп., д.62",
+      "planned_at": "2026-01-06T06:45:00",
+      "actual_at": "2026-01-06T06:45:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370308",
+      "stop_key": "st_1d9c0562",
+      "name": "ул. Пельше, д.68, к.1",
+      "planned_at": "2026-01-06T06:47:00",
+      "actual_at": "2026-01-06T06:47:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370309",
+      "stop_key": "st_9ba9e140",
+      "name": "Мичуринский просп., д.70",
+      "planned_at": "2026-01-06T06:48:00",
+      "actual_at": "2026-01-06T06:48:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370300",
+      "stop_key": "st_c221f7e7",
+      "name": "ул. Мичуринский Проспект, Олимпийская Деревня, д.1, к.1",
+      "planned_at": "2026-01-06T06:49:00",
+      "actual_at": "2026-01-06T06:49:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370304",
+      "stop_key": "st_61f5f70a",
+      "name": "ул. Мичуринский Проспект, Олимпийская Деревня, д.3, к.1",
+      "planned_at": "2026-01-06T06:50:00",
+      "actual_at": "2026-01-06T06:50:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370322",
+      "stop_key": "st_7f9d98f3",
+      "name": "ул. Мичуринский Проспект, Олимпийская Деревня, д.19",
+      "planned_at": "2026-01-06T06:52:00",
+      "actual_at": "2026-01-06T06:52:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370323",
+      "stop_key": "st_81cf4066",
+      "name": "Озёрная ул., д.33, к.2",
+      "planned_at": "2026-01-06T06:54:00",
+      "actual_at": "2026-01-06T06:54:09",
+      "actual_delay_s": 9.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370299",
+      "stop_key": "st_31308f60",
+      "name": "Озёрная ул., д.33, к.1",
+      "planned_at": "2026-01-06T06:56:00",
+      "actual_at": "2026-01-06T06:56:11",
+      "actual_delay_s": 11.8,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698370376",
+      "stop_key": "st_31308f60",
+      "name": "Озёрная ул., д.33, к.1",
+      "planned_at": "2026-01-06T07:40:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": true,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370374",
+      "stop_key": "st_06f91db0",
+      "name": "Озёрная ул., д.33, к.2",
+      "planned_at": "2026-01-06T07:41:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370377",
+      "stop_key": "st_3b183524",
+      "name": "ул. Мичуринский Проспект, Олимпийская Деревня, д.19",
+      "planned_at": "2026-01-06T07:43:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370368",
+      "stop_key": "st_2fa39887",
+      "name": "ул. Мичуринский Проспект, Олимпийская Деревня, д.3, к.1",
+      "planned_at": "2026-01-06T07:45:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370369",
+      "stop_key": "st_92b7f799",
+      "name": "ул. Мичуринский Проспект, Олимпийская Деревня, д.1, к.2",
+      "planned_at": "2026-01-06T07:46:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370381",
+      "stop_key": "st_aba536f4",
+      "name": "Мичуринский просп., д.70",
+      "planned_at": "2026-01-06T07:47:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370389",
+      "stop_key": "st_a230d0e0",
+      "name": "Мичуринский просп., д.51",
+      "planned_at": "2026-01-06T07:49:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370391",
+      "stop_key": "st_26841d6c",
+      "name": "ул. Удальцова, д.93",
+      "planned_at": "2026-01-06T07:50:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370373",
+      "stop_key": "st_4113f6b7",
+      "name": "Мичуринский просп., д.58, к.1",
+      "planned_at": "2026-01-06T07:52:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370390",
+      "stop_key": "st_8b83f6af",
+      "name": "ул. Раменки, д.6, к.2",
+      "planned_at": "2026-01-06T07:53:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370392",
+      "stop_key": "st_fae41452",
+      "name": "Мичуринский просп., д.31, к.1",
+      "planned_at": "2026-01-06T07:54:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370375",
+      "stop_key": "st_d530f81c",
+      "name": "Мичуринский просп., д.29",
+      "planned_at": "2026-01-06T07:55:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370384",
+      "stop_key": "st_79229f87",
+      "name": "Мичуринский просп., д.21, к.1",
+      "planned_at": "2026-01-06T07:56:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370394",
+      "stop_key": "st_e501ef41",
+      "name": "Мичуринский просп., д.9",
+      "planned_at": "2026-01-06T07:57:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370383",
+      "stop_key": "st_099f6369",
+      "name": "Мичуринский просп., д.7",
+      "planned_at": "2026-01-06T07:58:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370388",
+      "stop_key": "st_e1941956",
+      "name": "Мичуринский просп., д.3",
+      "planned_at": "2026-01-06T07:59:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370378",
+      "stop_key": "st_c6980d59",
+      "name": "ул. Дружбы, д.10",
+      "planned_at": "2026-01-06T08:02:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370395",
+      "stop_key": "st_5a9cce2d",
+      "name": "Ломоносовский просп., д.38",
+      "planned_at": "2026-01-06T08:03:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370367",
+      "stop_key": "st_965a3c40",
+      "name": "Мосфильмовская ул., д.31",
+      "planned_at": "2026-01-06T08:04:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370370",
+      "stop_key": "st_1ecc0ec2",
+      "name": "Мосфильмовская ул., д.17",
+      "planned_at": "2026-01-06T08:06:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370385",
+      "stop_key": "st_31ddbc92",
+      "name": "Мосфильмовская ул., д.13",
+      "planned_at": "2026-01-06T08:07:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370372",
+      "stop_key": "st_e007706b",
+      "name": "Мосфильмовская ул., д.1",
+      "planned_at": "2026-01-06T08:09:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370380",
+      "stop_key": "st_ccecc796",
+      "name": "Мосфильмовская ул., д.1",
+      "planned_at": "2026-01-06T08:10:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370382",
+      "stop_key": "st_1049129c",
+      "name": "Мосфильмовская ул., д.2В",
+      "planned_at": "2026-01-06T08:11:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370371",
+      "stop_key": "st_998d4d65",
+      "name": "Воробьёвское ш., д.6",
+      "planned_at": "2026-01-06T08:12:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370396",
+      "stop_key": "st_5cd3774a",
+      "name": "Воробьёвское ш., д.2",
+      "planned_at": "2026-01-06T08:13:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698370387",
+      "stop_key": "st_065e591a",
+      "name": "Бережковская наб., д.22",
+      "planned_at": "2026-01-06T08:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 17.6,
+      "is_target": false,
+      "status": "upcoming"
+    }
+  ],
+  "deviation_series": [
+    {
+      "t": "2026-01-06T06:15:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:16:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:17:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:18:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:19:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:20:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:21:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:22:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:23:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:24:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:25:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:26:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:27:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:28:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:29:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:30:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:31:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:32:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:33:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:34:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:35:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:36:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:37:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:38:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:39:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:40:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:41:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:42:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:43:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:44:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:45:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:46:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:47:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:48:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:49:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:50:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:51:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:52:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:53:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:54:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:55:00",
+      "dev_s": 8.2
+    },
+    {
+      "t": "2026-01-06T06:56:00",
+      "dev_s": 10.0
+    },
+    {
+      "t": "2026-01-06T06:57:00",
+      "dev_s": 10.7
+    },
+    {
+      "t": "2026-01-06T06:58:00",
+      "dev_s": 10.3
+    },
+    {
+      "t": "2026-01-06T06:59:00",
+      "dev_s": 8.8
+    },
+    {
+      "t": "2026-01-06T07:00:00",
+      "dev_s": 6.5
+    },
+    {
+      "t": "2026-01-06T07:01:00",
+      "dev_s": 3.6
+    },
+    {
+      "t": "2026-01-06T07:02:00",
+      "dev_s": 0.5
+    },
+    {
+      "t": "2026-01-06T07:03:00",
+      "dev_s": -2.5
+    },
+    {
+      "t": "2026-01-06T07:04:00",
+      "dev_s": -5.0
+    },
+    {
+      "t": "2026-01-06T07:05:00",
+      "dev_s": -6.7
+    },
+    {
+      "t": "2026-01-06T07:06:00",
+      "dev_s": -7.3
+    },
+    {
+      "t": "2026-01-06T07:07:00",
+      "dev_s": -6.9
+    },
+    {
+      "t": "2026-01-06T07:08:00",
+      "dev_s": -5.3
+    },
+    {
+      "t": "2026-01-06T07:09:00",
+      "dev_s": -2.9
+    },
+    {
+      "t": "2026-01-06T07:10:00",
+      "dev_s": 0.3
+    },
+    {
+      "t": "2026-01-06T07:11:00",
+      "dev_s": 3.9
+    },
+    {
+      "t": "2026-01-06T07:12:00",
+      "dev_s": 7.5
+    },
+    {
+      "t": "2026-01-06T07:13:00",
+      "dev_s": 10.8
+    },
+    {
+      "t": "2026-01-06T07:14:00",
+      "dev_s": 13.3
+    },
+    {
+      "t": "2026-01-06T07:15:00",
+      "dev_s": 15.0
+    }
+  ],
+  "forecast": {
+    "t": "2026-01-06T07:40:00",
+    "delay_s": 17.6,
+    "lo_s": -20.0,
+    "hi_s": 65.2
+  },
+  "incident_ids": []
+}

@@ -1,0 +1,8 @@
+{
+  "name": "transit-pulse-mock",
+  "private": true,
+  "description": "Mock-бэкенд Transit Pulse для разработки дашборда (без зависимостей)",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node server.mjs" }
+}

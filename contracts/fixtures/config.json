@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "thresholds": {
+    "red_delay_s": 120.0,
+    "yellow_delay_s": 60.0,
+    "early_delay_s": -60.0,
+    "red_p_late": 0.5,
+    "yellow_p_late": 0.3
+  },
+  "colors": {
+    "green": "#2FBF71",
+    "yellow": "#F2B134",
+    "red": "#E5484D",
+    "early": "#3E9BFF",
+    "none": "#8B93A1",
+    "stale": "#6B7280"
+  },
+  "horizon_min": [
+    10,
+    15
+  ],
+  "dataset_day": "2026-01-06",
+  "sim_speed": 10.0,
+  "session_id": "mock-0001"
+}

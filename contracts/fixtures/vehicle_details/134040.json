@@ -1,0 +1,1110 @@
+{
+  "vehicle": {
+    "vehicle_id": "134040",
+    "kind": "scheduled",
+    "tr_id": "134040",
+    "unit_id": 1105498,
+    "route_id": "r134040",
+    "route_name": "Барвихинская ул. ↔ 2-я Рейсовая ул.",
+    "lon": 37.466343,
+    "lat": 55.696377,
+    "heading": 184.0,
+    "speed_kmh": 1.0,
+    "last_seen": "2026-01-06T07:14:59",
+    "stale": false,
+    "warming_up": false,
+    "current_dev_s": -86.8,
+    "next_stop": {
+      "visit_id": "53698328626",
+      "stop_key": "st_a18595d9",
+      "name": "Матвеевская ул., д.9",
+      "lon": 37.45839888,
+      "lat": 55.70331085,
+      "planned_at": "2026-01-06T07:16:00"
+    },
+    "prediction": {
+      "target_stop": {
+        "visit_id": "53698328623",
+        "stop_key": "st_6203ef7b",
+        "name": "Верейская ул., д.35",
+        "lon": 37.42299797,
+        "lat": 55.71386623,
+        "planned_at": "2026-01-06T07:29:00"
+      },
+      "predicted_delay_s": -102.1,
+      "p_late": 0.002,
+      "interval_s": [
+        -152.4,
+        -41.8
+      ],
+      "expected_abs_error_s": 50.3,
+      "lead_min": 14.0,
+      "generated_at": "2026-01-06T07:15:00",
+      "horizon_ok": true,
+      "model_version": "mock-catboost-1",
+      "model_mode": "ml",
+      "risk_level": "early",
+      "cause_code": "EARLY_RUNNING"
+    },
+    "risk_level": "early",
+    "open_incident_id": null
+  },
+  "timeline": [
+    {
+      "visit_id": "53698328541",
+      "stop_key": "st_9207c2ea",
+      "name": "Барвихинская ул., д.9",
+      "planned_at": "2026-01-06T06:23:00",
+      "actual_at": "2026-01-06T06:21:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328552",
+      "stop_key": "st_2362d24b",
+      "name": "Барвихинская ул., д.9",
+      "planned_at": "2026-01-06T06:24:00",
+      "actual_at": "2026-01-06T06:22:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328534",
+      "stop_key": "st_696d341c",
+      "name": "Барвихинская ул., д.20А",
+      "planned_at": "2026-01-06T06:25:00",
+      "actual_at": "2026-01-06T06:23:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328545",
+      "stop_key": "st_f20025b1",
+      "name": "ул. Говорова, д.18",
+      "planned_at": "2026-01-06T06:26:00",
+      "actual_at": "2026-01-06T06:24:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328555",
+      "stop_key": "st_5d12ecb7",
+      "name": "ул. Толбухина, д.13, к.3",
+      "planned_at": "2026-01-06T06:27:00",
+      "actual_at": "2026-01-06T06:25:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328537",
+      "stop_key": "st_81a0c2b6",
+      "name": "ул. Толбухина, д.9, к.1",
+      "planned_at": "2026-01-06T06:29:00",
+      "actual_at": "2026-01-06T06:27:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328548",
+      "stop_key": "st_a921c9a5",
+      "name": "ул. Толбухина, д.5, к.1",
+      "planned_at": "2026-01-06T06:31:00",
+      "actual_at": "2026-01-06T06:29:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328530",
+      "stop_key": "st_7c2179b1",
+      "name": "Можайское ш., д.45Б",
+      "planned_at": "2026-01-06T06:33:00",
+      "actual_at": "2026-01-06T06:31:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328542",
+      "stop_key": "st_95bf38c8",
+      "name": "Можайское ш., д.39",
+      "planned_at": "2026-01-06T06:34:00",
+      "actual_at": "2026-01-06T06:32:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328553",
+      "stop_key": "st_50644bbd",
+      "name": "Можайское ш., д.29",
+      "planned_at": "2026-01-06T06:37:00",
+      "actual_at": "2026-01-06T06:35:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328535",
+      "stop_key": "st_256c7a5a",
+      "name": "Рябиновая ул., д.8, к.1",
+      "planned_at": "2026-01-06T06:38:00",
+      "actual_at": "2026-01-06T06:36:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328546",
+      "stop_key": "st_8594ec81",
+      "name": "Верейская ул., д.35",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:37:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328556",
+      "stop_key": "st_65a0fe5b",
+      "name": "Верейская ул., д.35",
+      "planned_at": "2026-01-06T06:41:00",
+      "actual_at": "2026-01-06T06:39:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328538",
+      "stop_key": "st_580a9f76",
+      "name": "Верейская ул., д.41",
+      "planned_at": "2026-01-06T06:43:00",
+      "actual_at": "2026-01-06T06:41:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328549",
+      "stop_key": "st_80b872e9",
+      "name": "Верейская ул., д.39",
+      "planned_at": "2026-01-06T06:44:00",
+      "actual_at": "2026-01-06T06:42:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328531",
+      "stop_key": "st_f5c3b690",
+      "name": "Верейская ул., д.23",
+      "planned_at": "2026-01-06T06:45:00",
+      "actual_at": "2026-01-06T06:43:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328543",
+      "stop_key": "st_cf447eee",
+      "name": "Верейская ул., д.7",
+      "planned_at": "2026-01-06T06:46:00",
+      "actual_at": "2026-01-06T06:44:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328554",
+      "stop_key": "st_020296c3",
+      "name": "ул. Генерала Дорохова, д.1",
+      "planned_at": "2026-01-06T06:47:00",
+      "actual_at": "2026-01-06T06:45:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328536",
+      "stop_key": "st_194271a4",
+      "name": "Аминьевское ш., д.9",
+      "planned_at": "2026-01-06T06:49:00",
+      "actual_at": "2026-01-06T06:47:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328547",
+      "stop_key": "st_5f8c67bb",
+      "name": "Аминьевское ш., д.3А",
+      "planned_at": "2026-01-06T06:50:00",
+      "actual_at": "2026-01-06T06:48:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328557",
+      "stop_key": "st_3187b7d1",
+      "name": "Очаковское ш., д.2Б",
+      "planned_at": "2026-01-06T06:51:00",
+      "actual_at": "2026-01-06T06:49:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328539",
+      "stop_key": "st_b8935ee7",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:53:00",
+      "actual_at": "2026-01-06T06:51:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328550",
+      "stop_key": "st_56235742",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:55:00",
+      "actual_at": "2026-01-06T06:53:33",
+      "actual_delay_s": -86.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328532",
+      "stop_key": "st_f8d4d6aa",
+      "name": "Матвеевская ул., д.1, к.2, стр. 1",
+      "planned_at": "2026-01-06T06:57:00",
+      "actual_at": "2026-01-06T06:55:38",
+      "actual_delay_s": -81.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328540",
+      "stop_key": "st_3be9fcf0",
+      "name": "Веерная ул., д.1, к.4",
+      "planned_at": "2026-01-06T06:58:00",
+      "actual_at": "2026-01-06T06:56:38",
+      "actual_delay_s": -81.3,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328551",
+      "stop_key": "st_2feb0ad1",
+      "name": "Веерная ул., д.18А",
+      "planned_at": "2026-01-06T07:00:00",
+      "actual_at": "2026-01-06T06:58:35",
+      "actual_delay_s": -84.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328533",
+      "stop_key": "st_214d3833",
+      "name": "Веерная ул., д.10",
+      "planned_at": "2026-01-06T07:01:00",
+      "actual_at": "2026-01-06T06:59:32",
+      "actual_delay_s": -87.3,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328544",
+      "stop_key": "st_d6ed59dd",
+      "name": "Веерная ул., д.4, к.1",
+      "planned_at": "2026-01-06T07:02:00",
+      "actual_at": "2026-01-06T07:00:28",
+      "actual_delay_s": -91.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328641",
+      "stop_key": "st_d6ed59dd",
+      "name": "Веерная ул., д.4, к.1",
+      "planned_at": "2026-01-06T07:04:00",
+      "actual_at": "2026-01-06T07:02:18",
+      "actual_delay_s": -101.3,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328625",
+      "stop_key": "st_3f915bf1",
+      "name": "Веерная ул., д.6",
+      "planned_at": "2026-01-06T07:05:00",
+      "actual_at": "2026-01-06T07:03:14",
+      "actual_delay_s": -106.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328635",
+      "stop_key": "st_a7aaafc9",
+      "name": "Веерная ул., д.10",
+      "planned_at": "2026-01-06T07:06:00",
+      "actual_at": "2026-01-06T07:04:09",
+      "actual_delay_s": -110.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328619",
+      "stop_key": "st_5c26c78c",
+      "name": "Веерная ул., д.20",
+      "planned_at": "2026-01-06T07:07:00",
+      "actual_at": "2026-01-06T07:05:06",
+      "actual_delay_s": -113.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328629",
+      "stop_key": "st_9ddb5e7e",
+      "name": "Матвеевская ул., д.2",
+      "planned_at": "2026-01-06T07:09:00",
+      "actual_at": "2026-01-06T07:07:04",
+      "actual_delay_s": -115.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328638",
+      "stop_key": "st_0aeaef3a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:11:00",
+      "actual_at": "2026-01-06T07:09:07",
+      "actual_delay_s": -112.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328622",
+      "stop_key": "st_e02c4d5a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:12:00",
+      "actual_at": "2026-01-06T07:10:09",
+      "actual_delay_s": -110.4,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328632",
+      "stop_key": "st_5e91fda2",
+      "name": "Аминьевское ш., д.1",
+      "planned_at": "2026-01-06T07:14:00",
+      "actual_at": "2026-01-06T07:12:15",
+      "actual_delay_s": -104.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328642",
+      "stop_key": "st_9902de55",
+      "name": "Аминьевское ш., д.1",
+      "planned_at": "2026-01-06T07:15:00",
+      "actual_at": "2026-01-06T07:13:17",
+      "actual_delay_s": -102.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328626",
+      "stop_key": "st_a18595d9",
+      "name": "Матвеевская ул., д.9",
+      "planned_at": "2026-01-06T07:16:00",
+      "actual_at": "2026-01-06T07:14:19",
+      "actual_delay_s": -100.6,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698328636",
+      "stop_key": "st_10eaa67a",
+      "name": "Аминьевское ш., д.13",
+      "planned_at": "2026-01-06T07:17:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328620",
+      "stop_key": "st_61268aa1",
+      "name": "Верейская ул., д.11",
+      "planned_at": "2026-01-06T07:21:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328630",
+      "stop_key": "st_0e529465",
+      "name": "Верейская ул., д.27",
+      "planned_at": "2026-01-06T07:23:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328639",
+      "stop_key": "st_8b173ce1",
+      "name": "Верейская ул., д.41",
+      "planned_at": "2026-01-06T07:25:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328623",
+      "stop_key": "st_6203ef7b",
+      "name": "Верейская ул., д.35",
+      "planned_at": "2026-01-06T07:29:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": true,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328633",
+      "stop_key": "st_7a9d492c",
+      "name": "Рябиновая ул., д.9",
+      "planned_at": "2026-01-06T07:30:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328643",
+      "stop_key": "st_74f7ae1a",
+      "name": "Можайское ш., д.28",
+      "planned_at": "2026-01-06T07:32:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328627",
+      "stop_key": "st_a08fe827",
+      "name": "Можайское ш., д.38, к.1",
+      "planned_at": "2026-01-06T07:34:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328637",
+      "stop_key": "st_4c3fb6ef",
+      "name": "Можайское ш., д.48",
+      "planned_at": "2026-01-06T07:36:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328621",
+      "stop_key": "st_30a8dbd7",
+      "name": "ул. Толбухина, д.8, к.1",
+      "planned_at": "2026-01-06T07:38:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328631",
+      "stop_key": "st_06439a70",
+      "name": "ул. Толбухина, д.12, к.1",
+      "planned_at": "2026-01-06T07:39:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328640",
+      "stop_key": "st_5c2d7ee5",
+      "name": "ул. Толбухина, д.13, к.2",
+      "planned_at": "2026-01-06T07:40:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328624",
+      "stop_key": "st_68c099e9",
+      "name": "ул. Говорова, д.18",
+      "planned_at": "2026-01-06T07:42:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328634",
+      "stop_key": "st_05823046",
+      "name": "Барвихинская ул., д.16, к.1",
+      "planned_at": "2026-01-06T07:43:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328644",
+      "stop_key": "st_8d410971",
+      "name": "Барвихинская ул., д.9",
+      "planned_at": "2026-01-06T07:44:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328628",
+      "stop_key": "st_9207c2ea",
+      "name": "Барвихинская ул., д.9",
+      "planned_at": "2026-01-06T07:44:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328662",
+      "stop_key": "st_9207c2ea",
+      "name": "Барвихинская ул., д.9",
+      "planned_at": "2026-01-06T07:49:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328645",
+      "stop_key": "st_2362d24b",
+      "name": "Барвихинская ул., д.9",
+      "planned_at": "2026-01-06T07:50:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328655",
+      "stop_key": "st_696d341c",
+      "name": "Барвихинская ул., д.20А",
+      "planned_at": "2026-01-06T07:51:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328666",
+      "stop_key": "st_f20025b1",
+      "name": "ул. Говорова, д.18",
+      "planned_at": "2026-01-06T07:52:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328649",
+      "stop_key": "st_5d12ecb7",
+      "name": "ул. Толбухина, д.13, к.3",
+      "planned_at": "2026-01-06T07:53:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328659",
+      "stop_key": "st_81a0c2b6",
+      "name": "ул. Толбухина, д.9, к.1",
+      "planned_at": "2026-01-06T07:55:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328670",
+      "stop_key": "st_a921c9a5",
+      "name": "ул. Толбухина, д.5, к.1",
+      "planned_at": "2026-01-06T07:57:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328652",
+      "stop_key": "st_7c2179b1",
+      "name": "Можайское ш., д.45Б",
+      "planned_at": "2026-01-06T07:59:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328663",
+      "stop_key": "st_95bf38c8",
+      "name": "Можайское ш., д.39",
+      "planned_at": "2026-01-06T08:00:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328646",
+      "stop_key": "st_50644bbd",
+      "name": "Можайское ш., д.29",
+      "planned_at": "2026-01-06T08:03:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328656",
+      "stop_key": "st_256c7a5a",
+      "name": "Рябиновая ул., д.8, к.1",
+      "planned_at": "2026-01-06T08:04:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328667",
+      "stop_key": "st_8594ec81",
+      "name": "Верейская ул., д.35",
+      "planned_at": "2026-01-06T08:05:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328650",
+      "stop_key": "st_65a0fe5b",
+      "name": "Верейская ул., д.35",
+      "planned_at": "2026-01-06T08:07:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328660",
+      "stop_key": "st_580a9f76",
+      "name": "Верейская ул., д.41",
+      "planned_at": "2026-01-06T08:09:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328671",
+      "stop_key": "st_80b872e9",
+      "name": "Верейская ул., д.39",
+      "planned_at": "2026-01-06T08:10:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328653",
+      "stop_key": "st_f5c3b690",
+      "name": "Верейская ул., д.23",
+      "planned_at": "2026-01-06T08:11:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328664",
+      "stop_key": "st_cf447eee",
+      "name": "Верейская ул., д.7",
+      "planned_at": "2026-01-06T08:12:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328647",
+      "stop_key": "st_020296c3",
+      "name": "ул. Генерала Дорохова, д.1",
+      "planned_at": "2026-01-06T08:13:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698328657",
+      "stop_key": "st_194271a4",
+      "name": "Аминьевское ш., д.9",
+      "planned_at": "2026-01-06T08:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": -102.1,
+      "is_target": false,
+      "status": "upcoming"
+    }
+  ],
+  "deviation_series": [
+    {
+      "t": "2026-01-06T06:15:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:16:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:17:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:18:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:19:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:20:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:21:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:22:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:23:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:24:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:25:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:26:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:27:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:28:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:29:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:30:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:31:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:32:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:33:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:34:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:35:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:36:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:37:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:38:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:39:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:40:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:41:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:42:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:43:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:44:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:45:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:46:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:47:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:48:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:49:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:50:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:51:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:52:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:53:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:54:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:55:00",
+      "dev_s": -73.2
+    },
+    {
+      "t": "2026-01-06T06:56:00",
+      "dev_s": -71.0
+    },
+    {
+      "t": "2026-01-06T06:57:00",
+      "dev_s": -69.6
+    },
+    {
+      "t": "2026-01-06T06:58:00",
+      "dev_s": -69.1
+    },
+    {
+      "t": "2026-01-06T06:59:00",
+      "dev_s": -69.7
+    },
+    {
+      "t": "2026-01-06T07:00:00",
+      "dev_s": -71.5
+    },
+    {
+      "t": "2026-01-06T07:01:00",
+      "dev_s": -74.2
+    },
+    {
+      "t": "2026-01-06T07:02:00",
+      "dev_s": -77.8
+    },
+    {
+      "t": "2026-01-06T07:03:00",
+      "dev_s": -81.9
+    },
+    {
+      "t": "2026-01-06T07:04:00",
+      "dev_s": -86.1
+    },
+    {
+      "t": "2026-01-06T07:05:00",
+      "dev_s": -90.1
+    },
+    {
+      "t": "2026-01-06T07:06:00",
+      "dev_s": -93.6
+    },
+    {
+      "t": "2026-01-06T07:07:00",
+      "dev_s": -96.2
+    },
+    {
+      "t": "2026-01-06T07:08:00",
+      "dev_s": -97.7
+    },
+    {
+      "t": "2026-01-06T07:09:00",
+      "dev_s": -98.2
+    },
+    {
+      "t": "2026-01-06T07:10:00",
+      "dev_s": -97.5
+    },
+    {
+      "t": "2026-01-06T07:11:00",
+      "dev_s": -96.0
+    },
+    {
+      "t": "2026-01-06T07:12:00",
+      "dev_s": -93.8
+    },
+    {
+      "t": "2026-01-06T07:13:00",
+      "dev_s": -91.3
+    },
+    {
+      "t": "2026-01-06T07:14:00",
+      "dev_s": -88.8
+    },
+    {
+      "t": "2026-01-06T07:15:00",
+      "dev_s": -86.8
+    }
+  ],
+  "forecast": {
+    "t": "2026-01-06T07:29:00",
+    "delay_s": -102.1,
+    "lo_s": -152.4,
+    "hi_s": -41.8
+  },
+  "incident_ids": []
+}

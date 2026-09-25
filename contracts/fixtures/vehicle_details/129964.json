@@ -1,0 +1,1088 @@
+{
+  "vehicle": {
+    "vehicle_id": "129964",
+    "kind": "scheduled",
+    "tr_id": "129964",
+    "unit_id": 894032,
+    "route_id": "r129964",
+    "route_name": "Коломенская ул. (кольцевой)",
+    "lon": 37.682632,
+    "lat": 55.68914,
+    "heading": 61.0,
+    "speed_kmh": 20.0,
+    "last_seen": "2026-01-06T07:14:55",
+    "stale": false,
+    "warming_up": false,
+    "current_dev_s": 11.1,
+    "next_stop": {
+      "visit_id": "53700336487",
+      "stop_key": "st_33f30200",
+      "name": "Судостроительная ул., д.59",
+      "lon": 37.69368236,
+      "lat": 55.68874337,
+      "planned_at": "2026-01-06T07:16:00"
+    },
+    "prediction": {
+      "target_stop": {
+        "visit_id": "53700336481",
+        "stop_key": "st_b23aaf50",
+        "name": "ул. Речников, д.25",
+        "lon": 37.69107562,
+        "lat": 55.67717012,
+        "planned_at": "2026-01-06T07:27:00"
+      },
+      "predicted_delay_s": 13.0,
+      "p_late": 0.045,
+      "interval_s": [
+        -24.0,
+        60.0
+      ],
+      "expected_abs_error_s": 39.6,
+      "lead_min": 12.0,
+      "generated_at": "2026-01-06T07:15:00",
+      "horizon_ok": true,
+      "model_version": "mock-catboost-1",
+      "model_mode": "ml",
+      "risk_level": "green",
+      "cause_code": "UNKNOWN"
+    },
+    "risk_level": "green",
+    "open_incident_id": null
+  },
+  "timeline": [
+    {
+      "visit_id": "53700336475",
+      "stop_key": "st_6015ae99",
+      "name": "Коломенская ул., д.1",
+      "planned_at": "2026-01-06T06:33:00",
+      "actual_at": "2026-01-06T06:33:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336474",
+      "stop_key": "st_d6ee76b0",
+      "name": "Коломенская ул., д.1",
+      "planned_at": "2026-01-06T06:34:00",
+      "actual_at": "2026-01-06T06:34:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336473",
+      "stop_key": "st_9e21cb3a",
+      "name": "Коломенская ул., д.7",
+      "planned_at": "2026-01-06T06:36:00",
+      "actual_at": "2026-01-06T06:36:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336472",
+      "stop_key": "st_54dd8b6e",
+      "name": "Коломенская ул., д.15",
+      "planned_at": "2026-01-06T06:37:00",
+      "actual_at": "2026-01-06T06:37:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336471",
+      "stop_key": "st_7fdaca24",
+      "name": "Коломенская ул., д.16",
+      "planned_at": "2026-01-06T06:38:00",
+      "actual_at": "2026-01-06T06:38:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336470",
+      "stop_key": "st_5fa44611",
+      "name": "ул. Речников, д.25",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:39:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336469",
+      "stop_key": "st_594ef29a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:40:00",
+      "actual_at": "2026-01-06T06:40:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336468",
+      "stop_key": "st_21e06b47",
+      "name": "Затонная ул., д.14, к.2",
+      "planned_at": "2026-01-06T06:41:00",
+      "actual_at": "2026-01-06T06:41:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336467",
+      "stop_key": "st_04cd30f8",
+      "name": "ул. Речников, д.19",
+      "planned_at": "2026-01-06T06:43:00",
+      "actual_at": "2026-01-06T06:43:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336466",
+      "stop_key": "st_c5ee3983",
+      "name": "ул. Речников, д.14, к.1",
+      "planned_at": "2026-01-06T06:45:00",
+      "actual_at": "2026-01-06T06:45:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336465",
+      "stop_key": "st_3e90e7a0",
+      "name": "Судостроительная ул., д.44",
+      "planned_at": "2026-01-06T06:46:00",
+      "actual_at": "2026-01-06T06:46:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336464",
+      "stop_key": "st_f1af38b0",
+      "name": "Судостроительная ул., д.59",
+      "planned_at": "2026-01-06T06:47:00",
+      "actual_at": "2026-01-06T06:47:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336462",
+      "stop_key": "st_a91c0f48",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:48:00",
+      "actual_at": "2026-01-06T06:48:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336463",
+      "stop_key": "st_f7518ecd",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:48:00",
+      "actual_at": "2026-01-06T06:48:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336461",
+      "stop_key": "st_7946b3f5",
+      "name": "Нагатинская наб., д.62",
+      "planned_at": "2026-01-06T06:49:00",
+      "actual_at": "2026-01-06T06:49:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336460",
+      "stop_key": "st_aeb5dbed",
+      "name": "Нагатинская наб., д.54",
+      "planned_at": "2026-01-06T06:51:00",
+      "actual_at": "2026-01-06T06:51:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336459",
+      "stop_key": "st_a3d01aab",
+      "name": "Нагатинская наб., д.48",
+      "planned_at": "2026-01-06T06:52:00",
+      "actual_at": "2026-01-06T06:52:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336458",
+      "stop_key": "st_40fbeaab",
+      "name": "Нагатинская наб., д.40А",
+      "planned_at": "2026-01-06T06:53:00",
+      "actual_at": "2026-01-06T06:53:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336457",
+      "stop_key": "st_8975a638",
+      "name": "просп. Андропова, д.22",
+      "planned_at": "2026-01-06T06:55:00",
+      "actual_at": "2026-01-06T06:55:03",
+      "actual_delay_s": 3.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336456",
+      "stop_key": "st_9f870f3c",
+      "name": "просп. Андропова, д.28",
+      "planned_at": "2026-01-06T06:56:00",
+      "actual_at": "2026-01-06T06:56:06",
+      "actual_delay_s": 6.8,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336455",
+      "stop_key": "st_67b4bc22",
+      "name": "ул. Новинки, д.4",
+      "planned_at": "2026-01-06T06:58:00",
+      "actual_at": "2026-01-06T06:58:15",
+      "actual_delay_s": 15.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336454",
+      "stop_key": "st_0c21cba6",
+      "name": "ул. Новинки, д.21",
+      "planned_at": "2026-01-06T07:00:00",
+      "actual_at": "2026-01-06T07:00:22",
+      "actual_delay_s": 22.4,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336453",
+      "stop_key": "st_7930cc70",
+      "name": "ул. Новинки, д.31",
+      "planned_at": "2026-01-06T07:02:00",
+      "actual_at": "2026-01-06T07:02:25",
+      "actual_delay_s": 25.6,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336452",
+      "stop_key": "st_c0e5307f",
+      "name": "ул. Новинки, д.17",
+      "planned_at": "2026-01-06T07:03:00",
+      "actual_at": "2026-01-06T07:03:25",
+      "actual_delay_s": 25.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336451",
+      "stop_key": "st_7a578ba3",
+      "name": "ул. Новинки, д.1",
+      "planned_at": "2026-01-06T07:05:00",
+      "actual_at": "2026-01-06T07:05:20",
+      "actual_delay_s": 20.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336450",
+      "stop_key": "st_f5b665ea",
+      "name": "ул. Новинки, д.1",
+      "planned_at": "2026-01-06T07:06:00",
+      "actual_at": "2026-01-06T07:06:17",
+      "actual_delay_s": 17.6,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336449",
+      "stop_key": "st_95992054",
+      "name": "просп. Андропова, д.19А",
+      "planned_at": "2026-01-06T07:07:00",
+      "actual_at": "2026-01-06T07:07:13",
+      "actual_delay_s": 13.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336448",
+      "stop_key": "st_4009011b",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:09:00",
+      "actual_at": "2026-01-06T07:09:07",
+      "actual_delay_s": 7.4,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336447",
+      "stop_key": "st_04bb7d73",
+      "name": "Нагатинская наб., д.40А",
+      "planned_at": "2026-01-06T07:11:00",
+      "actual_at": "2026-01-06T07:11:04",
+      "actual_delay_s": 4.4,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336446",
+      "stop_key": "st_c8301d10",
+      "name": "Нагатинская наб., д.48",
+      "planned_at": "2026-01-06T07:12:00",
+      "actual_at": "2026-01-06T07:12:04",
+      "actual_delay_s": 4.8,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336445",
+      "stop_key": "st_da8acaa5",
+      "name": "Нагатинская наб., д.54",
+      "planned_at": "2026-01-06T07:13:00",
+      "actual_at": "2026-01-06T07:13:06",
+      "actual_delay_s": 6.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336444",
+      "stop_key": "st_f34ca619",
+      "name": "Нагатинская наб., д.62",
+      "planned_at": "2026-01-06T07:14:00",
+      "actual_at": "2026-01-06T07:14:09",
+      "actual_delay_s": 9.3,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700336443",
+      "stop_key": "st_c4219362",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336487",
+      "stop_key": "st_33f30200",
+      "name": "Судостроительная ул., д.59",
+      "planned_at": "2026-01-06T07:16:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336486",
+      "stop_key": "st_125d1348",
+      "name": "Судостроительная ул., д.47",
+      "planned_at": "2026-01-06T07:17:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336485",
+      "stop_key": "st_5e830205",
+      "name": "ул. Речников, д.14, к.2, стр. 2",
+      "planned_at": "2026-01-06T07:20:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336484",
+      "stop_key": "st_1fc88b7a",
+      "name": "ул. Речников, д.21",
+      "planned_at": "2026-01-06T07:22:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336483",
+      "stop_key": "st_594ef29a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:24:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336482",
+      "stop_key": "st_21e06b47",
+      "name": "Затонная ул., д.14, к.2",
+      "planned_at": "2026-01-06T07:25:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336481",
+      "stop_key": "st_b23aaf50",
+      "name": "ул. Речников, д.25",
+      "planned_at": "2026-01-06T07:27:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": true,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336480",
+      "stop_key": "st_f7d4da91",
+      "name": "Коломенская ул., д.21",
+      "planned_at": "2026-01-06T07:28:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336479",
+      "stop_key": "st_32a78442",
+      "name": "Коломенская ул., д.11",
+      "planned_at": "2026-01-06T07:29:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336478",
+      "stop_key": "st_1ea734c2",
+      "name": "Коломенская ул., д.7",
+      "planned_at": "2026-01-06T07:30:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336477",
+      "stop_key": "st_77e3075c",
+      "name": "Коломенская ул., д.3",
+      "planned_at": "2026-01-06T07:31:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336476",
+      "stop_key": "st_6015ae99",
+      "name": "Коломенская ул., д.1",
+      "planned_at": "2026-01-06T07:32:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336440",
+      "stop_key": "st_6015ae99",
+      "name": "Коломенская ул., д.1",
+      "planned_at": "2026-01-06T07:42:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336439",
+      "stop_key": "st_d6ee76b0",
+      "name": "Коломенская ул., д.1",
+      "planned_at": "2026-01-06T07:43:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336438",
+      "stop_key": "st_9e21cb3a",
+      "name": "Коломенская ул., д.7",
+      "planned_at": "2026-01-06T07:45:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336437",
+      "stop_key": "st_54dd8b6e",
+      "name": "Коломенская ул., д.15",
+      "planned_at": "2026-01-06T07:46:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336436",
+      "stop_key": "st_7fdaca24",
+      "name": "Коломенская ул., д.16",
+      "planned_at": "2026-01-06T07:47:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336435",
+      "stop_key": "st_5fa44611",
+      "name": "ул. Речников, д.25",
+      "planned_at": "2026-01-06T07:48:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336434",
+      "stop_key": "st_594ef29a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:49:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336433",
+      "stop_key": "st_21e06b47",
+      "name": "Затонная ул., д.14, к.2",
+      "planned_at": "2026-01-06T07:50:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336432",
+      "stop_key": "st_04cd30f8",
+      "name": "ул. Речников, д.19",
+      "planned_at": "2026-01-06T07:52:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336431",
+      "stop_key": "st_c5ee3983",
+      "name": "ул. Речников, д.14, к.1",
+      "planned_at": "2026-01-06T07:54:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336430",
+      "stop_key": "st_3e90e7a0",
+      "name": "Судостроительная ул., д.44",
+      "planned_at": "2026-01-06T07:55:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336429",
+      "stop_key": "st_f1af38b0",
+      "name": "Судостроительная ул., д.59",
+      "planned_at": "2026-01-06T07:56:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336428",
+      "stop_key": "st_f7518ecd",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:57:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336427",
+      "stop_key": "st_a91c0f48",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:57:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336426",
+      "stop_key": "st_7946b3f5",
+      "name": "Нагатинская наб., д.62",
+      "planned_at": "2026-01-06T07:58:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336425",
+      "stop_key": "st_aeb5dbed",
+      "name": "Нагатинская наб., д.54",
+      "planned_at": "2026-01-06T08:00:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336424",
+      "stop_key": "st_a3d01aab",
+      "name": "Нагатинская наб., д.48",
+      "planned_at": "2026-01-06T08:01:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336423",
+      "stop_key": "st_40fbeaab",
+      "name": "Нагатинская наб., д.40А",
+      "planned_at": "2026-01-06T08:02:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336422",
+      "stop_key": "st_8975a638",
+      "name": "просп. Андропова, д.22",
+      "planned_at": "2026-01-06T08:04:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336421",
+      "stop_key": "st_9f870f3c",
+      "name": "просп. Андропова, д.28",
+      "planned_at": "2026-01-06T08:05:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336420",
+      "stop_key": "st_67b4bc22",
+      "name": "ул. Новинки, д.4",
+      "planned_at": "2026-01-06T08:07:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336419",
+      "stop_key": "st_0c21cba6",
+      "name": "ул. Новинки, д.21",
+      "planned_at": "2026-01-06T08:09:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336418",
+      "stop_key": "st_7930cc70",
+      "name": "ул. Новинки, д.31",
+      "planned_at": "2026-01-06T08:11:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336417",
+      "stop_key": "st_c0e5307f",
+      "name": "ул. Новинки, д.17",
+      "planned_at": "2026-01-06T08:12:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336416",
+      "stop_key": "st_7a578ba3",
+      "name": "ул. Новинки, д.1",
+      "planned_at": "2026-01-06T08:14:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700336415",
+      "stop_key": "st_f5b665ea",
+      "name": "ул. Новинки, д.1",
+      "planned_at": "2026-01-06T08:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 13.0,
+      "is_target": false,
+      "status": "upcoming"
+    }
+  ],
+  "deviation_series": [
+    {
+      "t": "2026-01-06T06:15:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:16:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:17:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:18:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:19:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:20:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:21:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:22:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:23:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:24:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:25:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:26:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:27:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:28:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:29:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:30:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:31:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:32:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:33:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:34:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:35:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:36:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:37:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:38:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:39:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:40:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:41:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:42:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:43:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:44:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:45:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:46:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:47:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:48:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:49:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:50:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:51:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:52:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:53:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:54:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:55:00",
+      "dev_s": 2.7
+    },
+    {
+      "t": "2026-01-06T06:56:00",
+      "dev_s": 5.8
+    },
+    {
+      "t": "2026-01-06T06:57:00",
+      "dev_s": 9.3
+    },
+    {
+      "t": "2026-01-06T06:58:00",
+      "dev_s": 12.9
+    },
+    {
+      "t": "2026-01-06T06:59:00",
+      "dev_s": 16.3
+    },
+    {
+      "t": "2026-01-06T07:00:00",
+      "dev_s": 19.0
+    },
+    {
+      "t": "2026-01-06T07:01:00",
+      "dev_s": 20.9
+    },
+    {
+      "t": "2026-01-06T07:02:00",
+      "dev_s": 21.7
+    },
+    {
+      "t": "2026-01-06T07:03:00",
+      "dev_s": 21.4
+    },
+    {
+      "t": "2026-01-06T07:04:00",
+      "dev_s": 20.0
+    },
+    {
+      "t": "2026-01-06T07:05:00",
+      "dev_s": 17.8
+    },
+    {
+      "t": "2026-01-06T07:06:00",
+      "dev_s": 14.9
+    },
+    {
+      "t": "2026-01-06T07:07:00",
+      "dev_s": 11.8
+    },
+    {
+      "t": "2026-01-06T07:08:00",
+      "dev_s": 8.8
+    },
+    {
+      "t": "2026-01-06T07:09:00",
+      "dev_s": 6.3
+    },
+    {
+      "t": "2026-01-06T07:10:00",
+      "dev_s": 4.5
+    },
+    {
+      "t": "2026-01-06T07:11:00",
+      "dev_s": 3.7
+    },
+    {
+      "t": "2026-01-06T07:12:00",
+      "dev_s": 4.1
+    },
+    {
+      "t": "2026-01-06T07:13:00",
+      "dev_s": 5.5
+    },
+    {
+      "t": "2026-01-06T07:14:00",
+      "dev_s": 7.9
+    },
+    {
+      "t": "2026-01-06T07:15:00",
+      "dev_s": 11.1
+    }
+  ],
+  "forecast": {
+    "t": "2026-01-06T07:27:00",
+    "delay_s": 13.0,
+    "lo_s": -24.0,
+    "hi_s": 60.0
+  },
+  "incident_ids": []
+}

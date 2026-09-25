@@ -1,0 +1,1176 @@
+{
+  "vehicle": {
+    "vehicle_id": "133957",
+    "kind": "scheduled",
+    "tr_id": "133957",
+    "unit_id": 1099984,
+    "route_id": "r133957",
+    "route_name": "ул. Миклухо-Маклая ↔ просп. Вернадского",
+    "lon": 37.537235,
+    "lat": 55.638195,
+    "heading": 23.0,
+    "speed_kmh": 10.0,
+    "last_seen": "2026-01-06T07:09:51",
+    "stale": true,
+    "warming_up": false,
+    "current_dev_s": 15.7,
+    "next_stop": {
+      "visit_id": "53699456289",
+      "stop_key": "st_76affdf8",
+      "name": "ул. Миклухо-Маклая, д.22А",
+      "lon": 37.52365282,
+      "lat": 55.64304648,
+      "planned_at": "2026-01-06T07:16:00"
+    },
+    "prediction": {
+      "target_stop": {
+        "visit_id": "53699456312",
+        "stop_key": "st_76affdf8",
+        "name": "ул. Миклухо-Маклая, д.22А",
+        "lon": 37.52365282,
+        "lat": 55.64304648,
+        "planned_at": "2026-01-06T07:26:00"
+      },
+      "predicted_delay_s": 18.5,
+      "p_late": 0.052,
+      "interval_s": [
+        -19.3,
+        66.3
+      ],
+      "expected_abs_error_s": 40.2,
+      "lead_min": 11.0,
+      "generated_at": "2026-01-06T07:15:00",
+      "horizon_ok": true,
+      "model_version": "mock-catboost-1",
+      "model_mode": "fallback",
+      "risk_level": "green",
+      "cause_code": "GPS_LOSS"
+    },
+    "risk_level": "green",
+    "open_incident_id": null
+  },
+  "timeline": [
+    {
+      "visit_id": "53699456233",
+      "stop_key": "st_76affdf8",
+      "name": "ул. Миклухо-Маклая, д.22А",
+      "planned_at": "2026-01-06T06:18:00",
+      "actual_at": "2026-01-06T06:18:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456234",
+      "stop_key": "st_62b50c06",
+      "name": "ул. Миклухо-Маклая, д.22А",
+      "planned_at": "2026-01-06T06:18:00",
+      "actual_at": "2026-01-06T06:18:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456235",
+      "stop_key": "st_181ad28b",
+      "name": "Профсоюзная ул., д.91",
+      "planned_at": "2026-01-06T06:20:00",
+      "actual_at": "2026-01-06T06:20:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456225",
+      "stop_key": "st_f05dc238",
+      "name": "ул. Миклухо-Маклая, д.36А",
+      "planned_at": "2026-01-06T06:21:00",
+      "actual_at": "2026-01-06T06:21:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456226",
+      "stop_key": "st_8eae8f99",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:23:00",
+      "actual_at": "2026-01-06T06:23:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456227",
+      "stop_key": "st_13d65cc8",
+      "name": "ул. Введенского, д.26",
+      "planned_at": "2026-01-06T06:24:00",
+      "actual_at": "2026-01-06T06:24:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456228",
+      "stop_key": "st_076af8cc",
+      "name": "ул. Островитянова, д.37А",
+      "planned_at": "2026-01-06T06:25:00",
+      "actual_at": "2026-01-06T06:25:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456229",
+      "stop_key": "st_a2105115",
+      "name": "ул. Островитянова, д.31",
+      "planned_at": "2026-01-06T06:26:00",
+      "actual_at": "2026-01-06T06:26:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456230",
+      "stop_key": "st_1aae4e8f",
+      "name": "ул. Островитянова, д.27, к.1",
+      "planned_at": "2026-01-06T06:28:00",
+      "actual_at": "2026-01-06T06:28:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456231",
+      "stop_key": "st_b4356b75",
+      "name": "ул. Островитянова, д.27, к.2",
+      "planned_at": "2026-01-06T06:29:00",
+      "actual_at": "2026-01-06T06:29:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456232",
+      "stop_key": "st_64999bbd",
+      "name": "ул. Академика Арцимовича, д.17",
+      "planned_at": "2026-01-06T06:31:00",
+      "actual_at": "2026-01-06T06:31:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456242",
+      "stop_key": "st_bfc58841",
+      "name": "ул. Островитянова, д.15, к.1",
+      "planned_at": "2026-01-06T06:32:00",
+      "actual_at": "2026-01-06T06:32:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456243",
+      "stop_key": "st_09d5394a",
+      "name": "ул. Академика Волгина, д.41",
+      "planned_at": "2026-01-06T06:33:00",
+      "actual_at": "2026-01-06T06:33:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456244",
+      "stop_key": "st_af50f83e",
+      "name": "ул. Академика Опарина, д.4",
+      "planned_at": "2026-01-06T06:35:00",
+      "actual_at": "2026-01-06T06:35:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456245",
+      "stop_key": "st_d871f933",
+      "name": "ул. Островитянова, д.5",
+      "planned_at": "2026-01-06T06:37:00",
+      "actual_at": "2026-01-06T06:37:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456236",
+      "stop_key": "st_2f15e220",
+      "name": "ул. Островитянова, д.4",
+      "planned_at": "2026-01-06T06:38:00",
+      "actual_at": "2026-01-06T06:38:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456237",
+      "stop_key": "st_54554b83",
+      "name": "ул. Островитянова, д.2А",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:39:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456238",
+      "stop_key": "st_bcd9e323",
+      "name": "просп. Вернадского, д.127",
+      "planned_at": "2026-01-06T06:41:00",
+      "actual_at": "2026-01-06T06:41:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456239",
+      "stop_key": "st_db4c6694",
+      "name": "просп. Вернадского, д.121, к.1",
+      "planned_at": "2026-01-06T06:42:00",
+      "actual_at": "2026-01-06T06:42:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456240",
+      "stop_key": "st_278d5b5d",
+      "name": "просп. Вернадского, д.113",
+      "planned_at": "2026-01-06T06:43:00",
+      "actual_at": "2026-01-06T06:43:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456241",
+      "stop_key": "st_0043b5b0",
+      "name": "просп. Вернадского, д.109",
+      "planned_at": "2026-01-06T06:44:00",
+      "actual_at": "2026-01-06T06:44:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456276",
+      "stop_key": "st_0043b5b0",
+      "name": "просп. Вернадского, д.109",
+      "planned_at": "2026-01-06T06:46:00",
+      "actual_at": "2026-01-06T06:46:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456277",
+      "stop_key": "st_08c0c5ba",
+      "name": "просп. Вернадского, д.86Б",
+      "planned_at": "2026-01-06T06:48:00",
+      "actual_at": "2026-01-06T06:48:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456278",
+      "stop_key": "st_3b7d7581",
+      "name": "просп. Вернадского, д.117А",
+      "planned_at": "2026-01-06T06:49:00",
+      "actual_at": "2026-01-06T06:49:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456279",
+      "stop_key": "st_bf3d9345",
+      "name": "просп. Вернадского, д.123",
+      "planned_at": "2026-01-06T06:50:00",
+      "actual_at": "2026-01-06T06:50:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456280",
+      "stop_key": "st_6d9dc6da",
+      "name": "Ленинский просп., д.123Б",
+      "planned_at": "2026-01-06T06:52:00",
+      "actual_at": "2026-01-06T06:52:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456281",
+      "stop_key": "st_b7897f2a",
+      "name": "ул. Островитянова, д.1",
+      "planned_at": "2026-01-06T06:53:00",
+      "actual_at": "2026-01-06T06:53:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456282",
+      "stop_key": "st_23e2ff33",
+      "name": "ул. Островитянова, д.10",
+      "planned_at": "2026-01-06T06:55:00",
+      "actual_at": "2026-01-06T06:55:18",
+      "actual_delay_s": 18.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456283",
+      "stop_key": "st_c6715e31",
+      "name": "ул. Островитянова, д.11, к.1",
+      "planned_at": "2026-01-06T06:57:00",
+      "actual_at": "2026-01-06T06:57:19",
+      "actual_delay_s": 19.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456268",
+      "stop_key": "st_07d5fa14",
+      "name": "ул. Островитянова, д.15, к.1",
+      "planned_at": "2026-01-06T06:59:00",
+      "actual_at": "2026-01-06T06:59:26",
+      "actual_delay_s": 26.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456269",
+      "stop_key": "st_c636dfd9",
+      "name": "ул. Островитянова, д.15, к.1",
+      "planned_at": "2026-01-06T07:00:00",
+      "actual_at": "2026-01-06T07:00:30",
+      "actual_delay_s": 30.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456270",
+      "stop_key": "st_df25201c",
+      "name": "ул. Островитянова, д.18",
+      "planned_at": "2026-01-06T07:01:00",
+      "actual_at": "2026-01-06T07:01:33",
+      "actual_delay_s": 33.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456271",
+      "stop_key": "st_a660c954",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:02:00",
+      "actual_at": "2026-01-06T07:02:37",
+      "actual_delay_s": 37.4,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456272",
+      "stop_key": "st_005ab387",
+      "name": "ул. Островитянова, д.29",
+      "planned_at": "2026-01-06T07:03:00",
+      "actual_at": "2026-01-06T07:03:40",
+      "actual_delay_s": 40.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456273",
+      "stop_key": "st_aef9ec7d",
+      "name": "Профсоюзная ул., д.109В",
+      "planned_at": "2026-01-06T07:05:00",
+      "actual_at": "2026-01-06T07:05:41",
+      "actual_delay_s": 41.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456274",
+      "stop_key": "st_7f7d8b0a",
+      "name": "ул. Островитянова, д.32",
+      "planned_at": "2026-01-06T07:06:00",
+      "actual_at": "2026-01-06T07:06:40",
+      "actual_delay_s": 40.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456275",
+      "stop_key": "st_069e9f79",
+      "name": "ул. Введенского, д.32",
+      "planned_at": "2026-01-06T07:08:00",
+      "actual_at": "2026-01-06T07:08:35",
+      "actual_delay_s": 35.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456284",
+      "stop_key": "st_010eb9cb",
+      "name": "ул. Введенского, д.26",
+      "planned_at": "2026-01-06T07:10:00",
+      "actual_at": "2026-01-06T07:10:27",
+      "actual_delay_s": 27.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456285",
+      "stop_key": "st_b9a63547",
+      "name": "ул. Миклухо-Маклая, д.38",
+      "planned_at": "2026-01-06T07:11:00",
+      "actual_at": "2026-01-06T07:11:24",
+      "actual_delay_s": 24.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456286",
+      "stop_key": "st_5d88461a",
+      "name": "ул. Миклухо-Маклая, д.59",
+      "planned_at": "2026-01-06T07:12:00",
+      "actual_at": "2026-01-06T07:12:20",
+      "actual_delay_s": 20.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456287",
+      "stop_key": "st_1cb87d82",
+      "name": "ул. Миклухо-Маклая, д.53, к.1",
+      "planned_at": "2026-01-06T07:13:00",
+      "actual_at": "2026-01-06T07:13:18",
+      "actual_delay_s": 18.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53699456288",
+      "stop_key": "st_a76c9c25",
+      "name": "ул. Миклухо-Маклая, д.47А",
+      "planned_at": "2026-01-06T07:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456289",
+      "stop_key": "st_76affdf8",
+      "name": "ул. Миклухо-Маклая, д.22А",
+      "planned_at": "2026-01-06T07:16:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456312",
+      "stop_key": "st_76affdf8",
+      "name": "ул. Миклухо-Маклая, д.22А",
+      "planned_at": "2026-01-06T07:26:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": true,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456313",
+      "stop_key": "st_62b50c06",
+      "name": "ул. Миклухо-Маклая, д.22А",
+      "planned_at": "2026-01-06T07:26:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456314",
+      "stop_key": "st_181ad28b",
+      "name": "Профсоюзная ул., д.91",
+      "planned_at": "2026-01-06T07:28:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456315",
+      "stop_key": "st_f05dc238",
+      "name": "ул. Миклухо-Маклая, д.36А",
+      "planned_at": "2026-01-06T07:29:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456316",
+      "stop_key": "st_8eae8f99",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:31:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456317",
+      "stop_key": "st_13d65cc8",
+      "name": "ул. Введенского, д.26",
+      "planned_at": "2026-01-06T07:32:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456318",
+      "stop_key": "st_076af8cc",
+      "name": "ул. Островитянова, д.37А",
+      "planned_at": "2026-01-06T07:33:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456319",
+      "stop_key": "st_a2105115",
+      "name": "ул. Островитянова, д.31",
+      "planned_at": "2026-01-06T07:34:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456304",
+      "stop_key": "st_1aae4e8f",
+      "name": "ул. Островитянова, д.27, к.1",
+      "planned_at": "2026-01-06T07:36:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456305",
+      "stop_key": "st_b4356b75",
+      "name": "ул. Островитянова, д.27, к.2",
+      "planned_at": "2026-01-06T07:37:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456306",
+      "stop_key": "st_64999bbd",
+      "name": "ул. Академика Арцимовича, д.17",
+      "planned_at": "2026-01-06T07:39:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456307",
+      "stop_key": "st_bfc58841",
+      "name": "ул. Островитянова, д.15, к.1",
+      "planned_at": "2026-01-06T07:40:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456308",
+      "stop_key": "st_09d5394a",
+      "name": "ул. Академика Волгина, д.41",
+      "planned_at": "2026-01-06T07:41:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456309",
+      "stop_key": "st_af50f83e",
+      "name": "ул. Академика Опарина, д.4",
+      "planned_at": "2026-01-06T07:43:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456310",
+      "stop_key": "st_d871f933",
+      "name": "ул. Островитянова, д.5",
+      "planned_at": "2026-01-06T07:45:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456311",
+      "stop_key": "st_2f15e220",
+      "name": "ул. Островитянова, д.4",
+      "planned_at": "2026-01-06T07:46:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456299",
+      "stop_key": "st_54554b83",
+      "name": "ул. Островитянова, д.2А",
+      "planned_at": "2026-01-06T07:47:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456300",
+      "stop_key": "st_bcd9e323",
+      "name": "просп. Вернадского, д.127",
+      "planned_at": "2026-01-06T07:49:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456301",
+      "stop_key": "st_db4c6694",
+      "name": "просп. Вернадского, д.121, к.1",
+      "planned_at": "2026-01-06T07:50:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456302",
+      "stop_key": "st_278d5b5d",
+      "name": "просп. Вернадского, д.113",
+      "planned_at": "2026-01-06T07:51:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456303",
+      "stop_key": "st_0043b5b0",
+      "name": "просп. Вернадского, д.109",
+      "planned_at": "2026-01-06T07:52:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456343",
+      "stop_key": "st_0043b5b0",
+      "name": "просп. Вернадского, д.109",
+      "planned_at": "2026-01-06T07:54:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456357",
+      "stop_key": "st_08c0c5ba",
+      "name": "просп. Вернадского, д.86Б",
+      "planned_at": "2026-01-06T07:56:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456358",
+      "stop_key": "st_3b7d7581",
+      "name": "просп. Вернадского, д.117А",
+      "planned_at": "2026-01-06T07:57:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456359",
+      "stop_key": "st_bf3d9345",
+      "name": "просп. Вернадского, д.123",
+      "planned_at": "2026-01-06T07:58:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456360",
+      "stop_key": "st_6d9dc6da",
+      "name": "Ленинский просп., д.123Б",
+      "planned_at": "2026-01-06T08:00:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456361",
+      "stop_key": "st_b7897f2a",
+      "name": "ул. Островитянова, д.1",
+      "planned_at": "2026-01-06T08:01:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456362",
+      "stop_key": "st_23e2ff33",
+      "name": "ул. Островитянова, д.10",
+      "planned_at": "2026-01-06T08:03:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456363",
+      "stop_key": "st_c6715e31",
+      "name": "ул. Островитянова, д.11, к.1",
+      "planned_at": "2026-01-06T08:05:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456364",
+      "stop_key": "st_07d5fa14",
+      "name": "ул. Островитянова, д.15, к.1",
+      "planned_at": "2026-01-06T08:07:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456349",
+      "stop_key": "st_c636dfd9",
+      "name": "ул. Островитянова, д.15, к.1",
+      "planned_at": "2026-01-06T08:08:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456350",
+      "stop_key": "st_df25201c",
+      "name": "ул. Островитянова, д.18",
+      "planned_at": "2026-01-06T08:09:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456351",
+      "stop_key": "st_a660c954",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:10:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456352",
+      "stop_key": "st_005ab387",
+      "name": "ул. Островитянова, д.29",
+      "planned_at": "2026-01-06T08:11:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456353",
+      "stop_key": "st_aef9ec7d",
+      "name": "Профсоюзная ул., д.109В",
+      "planned_at": "2026-01-06T08:13:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53699456354",
+      "stop_key": "st_7f7d8b0a",
+      "name": "ул. Островитянова, д.32",
+      "planned_at": "2026-01-06T08:14:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 18.5,
+      "is_target": false,
+      "status": "upcoming"
+    }
+  ],
+  "deviation_series": [
+    {
+      "t": "2026-01-06T06:15:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:16:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:17:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:18:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:19:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:20:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:21:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:22:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:23:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:24:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:25:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:26:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:27:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:28:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:29:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:30:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:31:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:32:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:33:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:34:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:35:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:36:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:37:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:38:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:39:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:40:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:41:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:42:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:43:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:44:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:45:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:46:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:47:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:48:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:49:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:50:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:51:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:52:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:53:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:54:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:55:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T06:56:00",
+      "dev_s": 15.6
+    },
+    {
+      "t": "2026-01-06T06:57:00",
+      "dev_s": 16.9
+    },
+    {
+      "t": "2026-01-06T06:58:00",
+      "dev_s": 19.2
+    },
+    {
+      "t": "2026-01-06T06:59:00",
+      "dev_s": 22.2
+    },
+    {
+      "t": "2026-01-06T07:00:00",
+      "dev_s": 25.5
+    },
+    {
+      "t": "2026-01-06T07:01:00",
+      "dev_s": 28.8
+    },
+    {
+      "t": "2026-01-06T07:02:00",
+      "dev_s": 31.8
+    },
+    {
+      "t": "2026-01-06T07:03:00",
+      "dev_s": 34.1
+    },
+    {
+      "t": "2026-01-06T07:04:00",
+      "dev_s": 35.4
+    },
+    {
+      "t": "2026-01-06T07:05:00",
+      "dev_s": 35.7
+    },
+    {
+      "t": "2026-01-06T07:06:00",
+      "dev_s": 34.8
+    },
+    {
+      "t": "2026-01-06T07:07:00",
+      "dev_s": 32.9
+    },
+    {
+      "t": "2026-01-06T07:08:00",
+      "dev_s": 30.2
+    },
+    {
+      "t": "2026-01-06T07:09:00",
+      "dev_s": 26.9
+    },
+    {
+      "t": "2026-01-06T07:10:00",
+      "dev_s": 23.6
+    },
+    {
+      "t": "2026-01-06T07:11:00",
+      "dev_s": 20.4
+    },
+    {
+      "t": "2026-01-06T07:12:00",
+      "dev_s": 17.8
+    },
+    {
+      "t": "2026-01-06T07:13:00",
+      "dev_s": 16.0
+    },
+    {
+      "t": "2026-01-06T07:14:00",
+      "dev_s": 15.3
+    },
+    {
+      "t": "2026-01-06T07:15:00",
+      "dev_s": 15.7
+    }
+  ],
+  "forecast": {
+    "t": "2026-01-06T07:26:00",
+    "delay_s": 18.5,
+    "lo_s": -19.3,
+    "hi_s": 66.3
+  },
+  "incident_ids": []
+}

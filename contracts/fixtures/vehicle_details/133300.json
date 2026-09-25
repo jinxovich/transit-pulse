@@ -1,0 +1,1033 @@
+{
+  "vehicle": {
+    "vehicle_id": "133300",
+    "kind": "scheduled",
+    "tr_id": "133300",
+    "unit_id": 1076894,
+    "route_id": "r133300",
+    "route_name": "Ярцевская ул. (кольцевой)",
+    "lon": 37.41725,
+    "lat": 55.72793,
+    "heading": 276.0,
+    "speed_kmh": 0.0,
+    "last_seen": "2026-01-06T07:14:50",
+    "stale": false,
+    "warming_up": false,
+    "current_dev_s": 51.9,
+    "next_stop": {
+      "visit_id": "53700641195",
+      "stop_key": "st_53172e4e",
+      "name": "Кунцевская ул., д.11",
+      "lon": 37.41773889,
+      "lat": 55.7305506,
+      "planned_at": "2026-01-06T07:16:00"
+    },
+    "prediction": {
+      "target_stop": {
+        "visit_id": "53700641202",
+        "stop_key": "st_973ad75d",
+        "name": "Ярцевская ул., д.30",
+        "lon": 37.41606537,
+        "lat": 55.74069333,
+        "planned_at": "2026-01-06T07:26:00"
+      },
+      "predicted_delay_s": 61.0,
+      "p_late": 0.156,
+      "interval_s": [
+        16.9,
+        115.2
+      ],
+      "expected_abs_error_s": 45.3,
+      "lead_min": 11.0,
+      "generated_at": "2026-01-06T07:15:00",
+      "horizon_ok": true,
+      "model_version": "mock-catboost-1",
+      "model_mode": "ml",
+      "risk_level": "yellow",
+      "cause_code": "LONG_DWELL"
+    },
+    "risk_level": "yellow",
+    "open_incident_id": null
+  },
+  "timeline": [
+    {
+      "visit_id": "53700641300",
+      "stop_key": "st_a26102e0",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T06:25:00",
+      "actual_at": "2026-01-06T06:26:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641294",
+      "stop_key": "st_e0e26896",
+      "name": "Ярцевская ул., д.21, к.1",
+      "planned_at": "2026-01-06T06:27:00",
+      "actual_at": "2026-01-06T06:28:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641289",
+      "stop_key": "st_7222f38d",
+      "name": "Ярцевская ул., д.19",
+      "planned_at": "2026-01-06T06:28:00",
+      "actual_at": "2026-01-06T06:29:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641284",
+      "stop_key": "st_5d5da8eb",
+      "name": "Партизанская ул., д.25",
+      "planned_at": "2026-01-06T06:29:00",
+      "actual_at": "2026-01-06T06:30:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641301",
+      "stop_key": "st_6a7d1c4e",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:30:00",
+      "actual_at": "2026-01-06T06:31:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641295",
+      "stop_key": "st_d5a4a4a4",
+      "name": "Молодогвардейская ул., д.25, к.1",
+      "planned_at": "2026-01-06T06:32:00",
+      "actual_at": "2026-01-06T06:33:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641290",
+      "stop_key": "st_d8c90f6f",
+      "name": "Полоцкая ул., д.21",
+      "planned_at": "2026-01-06T06:34:00",
+      "actual_at": "2026-01-06T06:35:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641285",
+      "stop_key": "st_60fa146a",
+      "name": "Кунцевская ул., д.1",
+      "planned_at": "2026-01-06T06:35:00",
+      "actual_at": "2026-01-06T06:36:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641302",
+      "stop_key": "st_ebb7c9e7",
+      "name": "ул. Ивана Франко, д.32, к.1",
+      "planned_at": "2026-01-06T06:36:00",
+      "actual_at": "2026-01-06T06:37:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641296",
+      "stop_key": "st_4e1b983f",
+      "name": "ул. Ивана Франко, д.38, к.1",
+      "planned_at": "2026-01-06T06:37:00",
+      "actual_at": "2026-01-06T06:38:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641291",
+      "stop_key": "st_f7a77d92",
+      "name": "Партизанская ул., д.7, к.1",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:40:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641286",
+      "stop_key": "st_29c3eef9",
+      "name": "Кунцевская ул., д.13",
+      "planned_at": "2026-01-06T06:40:00",
+      "actual_at": "2026-01-06T06:41:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641303",
+      "stop_key": "st_53172e4e",
+      "name": "Кунцевская ул., д.11",
+      "planned_at": "2026-01-06T06:41:00",
+      "actual_at": "2026-01-06T06:42:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641297",
+      "stop_key": "st_20460e3d",
+      "name": "Полоцкая ул., д.10",
+      "planned_at": "2026-01-06T06:43:00",
+      "actual_at": "2026-01-06T06:44:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641292",
+      "stop_key": "st_cc2393e9",
+      "name": "Молодогвардейская ул., д.18",
+      "planned_at": "2026-01-06T06:45:00",
+      "actual_at": "2026-01-06T06:46:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641287",
+      "stop_key": "st_be7ecfda",
+      "name": "Молодогвардейская ул., д.30, к.1",
+      "planned_at": "2026-01-06T06:46:00",
+      "actual_at": "2026-01-06T06:47:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641304",
+      "stop_key": "st_025c7b0f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:46:00",
+      "actual_at": "2026-01-06T06:47:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641298",
+      "stop_key": "st_98c04bdd",
+      "name": "Партизанская ул., д.27",
+      "planned_at": "2026-01-06T06:48:00",
+      "actual_at": "2026-01-06T06:49:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641293",
+      "stop_key": "st_65bc79d9",
+      "name": "Ярцевская ул., д.21, к.1",
+      "planned_at": "2026-01-06T06:50:00",
+      "actual_at": "2026-01-06T06:51:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641288",
+      "stop_key": "st_973ad75d",
+      "name": "Ярцевская ул., д.30",
+      "planned_at": "2026-01-06T06:51:00",
+      "actual_at": "2026-01-06T06:52:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641305",
+      "stop_key": "st_b5a4ee01",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T06:53:00",
+      "actual_at": "2026-01-06T06:54:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641299",
+      "stop_key": "st_a26102e0",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T06:54:00",
+      "actual_at": "2026-01-06T06:55:00",
+      "actual_delay_s": 60.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641192",
+      "stop_key": "st_a26102e0",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T07:00:00",
+      "actual_at": "2026-01-06T07:01:25",
+      "actual_delay_s": 85.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641186",
+      "stop_key": "st_e0e26896",
+      "name": "Ярцевская ул., д.21, к.1",
+      "planned_at": "2026-01-06T07:02:00",
+      "actual_at": "2026-01-06T07:03:40",
+      "actual_delay_s": 100.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641203",
+      "stop_key": "st_7222f38d",
+      "name": "Ярцевская ул., д.19",
+      "planned_at": "2026-01-06T07:03:00",
+      "actual_at": "2026-01-06T07:04:46",
+      "actual_delay_s": 106.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641198",
+      "stop_key": "st_5d5da8eb",
+      "name": "Партизанская ул., д.25",
+      "planned_at": "2026-01-06T07:04:00",
+      "actual_at": "2026-01-06T07:05:49",
+      "actual_delay_s": 109.3,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641193",
+      "stop_key": "st_6a7d1c4e",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:05:00",
+      "actual_at": "2026-01-06T07:06:49",
+      "actual_delay_s": 109.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641187",
+      "stop_key": "st_d5a4a4a4",
+      "name": "Молодогвардейская ул., д.25, к.1",
+      "planned_at": "2026-01-06T07:07:00",
+      "actual_at": "2026-01-06T07:08:43",
+      "actual_delay_s": 103.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641204",
+      "stop_key": "st_d8c90f6f",
+      "name": "Полоцкая ул., д.21",
+      "planned_at": "2026-01-06T07:09:00",
+      "actual_at": "2026-01-06T07:10:28",
+      "actual_delay_s": 88.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641199",
+      "stop_key": "st_60fa146a",
+      "name": "Кунцевская ул., д.1",
+      "planned_at": "2026-01-06T07:10:00",
+      "actual_at": "2026-01-06T07:11:20",
+      "actual_delay_s": 80.2,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641194",
+      "stop_key": "st_ebb7c9e7",
+      "name": "ул. Ивана Франко, д.32, к.1",
+      "planned_at": "2026-01-06T07:11:00",
+      "actual_at": "2026-01-06T07:12:12",
+      "actual_delay_s": 72.5,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641188",
+      "stop_key": "st_4e1b983f",
+      "name": "ул. Ивана Франко, д.38, к.1",
+      "planned_at": "2026-01-06T07:12:00",
+      "actual_at": "2026-01-06T07:13:06",
+      "actual_delay_s": 66.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641205",
+      "stop_key": "st_f7a77d92",
+      "name": "Партизанская ул., д.7, к.1",
+      "planned_at": "2026-01-06T07:14:00",
+      "actual_at": "2026-01-06T07:15:00",
+      "actual_delay_s": 60.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53700641200",
+      "stop_key": "st_29c3eef9",
+      "name": "Кунцевская ул., д.13",
+      "planned_at": "2026-01-06T07:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641195",
+      "stop_key": "st_53172e4e",
+      "name": "Кунцевская ул., д.11",
+      "planned_at": "2026-01-06T07:16:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641189",
+      "stop_key": "st_20460e3d",
+      "name": "Полоцкая ул., д.10",
+      "planned_at": "2026-01-06T07:18:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641206",
+      "stop_key": "st_cc2393e9",
+      "name": "Молодогвардейская ул., д.18",
+      "planned_at": "2026-01-06T07:20:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641196",
+      "stop_key": "st_025c7b0f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:21:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641201",
+      "stop_key": "st_be7ecfda",
+      "name": "Молодогвардейская ул., д.30, к.1",
+      "planned_at": "2026-01-06T07:21:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641190",
+      "stop_key": "st_98c04bdd",
+      "name": "Партизанская ул., д.27",
+      "planned_at": "2026-01-06T07:23:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641207",
+      "stop_key": "st_65bc79d9",
+      "name": "Ярцевская ул., д.21, к.1",
+      "planned_at": "2026-01-06T07:25:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641202",
+      "stop_key": "st_973ad75d",
+      "name": "Ярцевская ул., д.30",
+      "planned_at": "2026-01-06T07:26:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": true,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641197",
+      "stop_key": "st_b5a4ee01",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T07:28:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641191",
+      "stop_key": "st_a26102e0",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T07:29:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641180",
+      "stop_key": "st_a26102e0",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T07:35:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641174",
+      "stop_key": "st_e0e26896",
+      "name": "Ярцевская ул., д.21, к.1",
+      "planned_at": "2026-01-06T07:37:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641169",
+      "stop_key": "st_7222f38d",
+      "name": "Ярцевская ул., д.19",
+      "planned_at": "2026-01-06T07:38:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641164",
+      "stop_key": "st_5d5da8eb",
+      "name": "Партизанская ул., д.25",
+      "planned_at": "2026-01-06T07:39:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641181",
+      "stop_key": "st_6a7d1c4e",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:40:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641175",
+      "stop_key": "st_d5a4a4a4",
+      "name": "Молодогвардейская ул., д.25, к.1",
+      "planned_at": "2026-01-06T07:42:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641170",
+      "stop_key": "st_d8c90f6f",
+      "name": "Полоцкая ул., д.21",
+      "planned_at": "2026-01-06T07:44:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641165",
+      "stop_key": "st_60fa146a",
+      "name": "Кунцевская ул., д.1",
+      "planned_at": "2026-01-06T07:45:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641182",
+      "stop_key": "st_ebb7c9e7",
+      "name": "ул. Ивана Франко, д.32, к.1",
+      "planned_at": "2026-01-06T07:46:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641176",
+      "stop_key": "st_4e1b983f",
+      "name": "ул. Ивана Франко, д.38, к.1",
+      "planned_at": "2026-01-06T07:47:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641171",
+      "stop_key": "st_f7a77d92",
+      "name": "Партизанская ул., д.7, к.1",
+      "planned_at": "2026-01-06T07:49:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641166",
+      "stop_key": "st_29c3eef9",
+      "name": "Кунцевская ул., д.13",
+      "planned_at": "2026-01-06T07:50:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641183",
+      "stop_key": "st_53172e4e",
+      "name": "Кунцевская ул., д.11",
+      "planned_at": "2026-01-06T07:51:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641177",
+      "stop_key": "st_20460e3d",
+      "name": "Полоцкая ул., д.10",
+      "planned_at": "2026-01-06T07:53:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641172",
+      "stop_key": "st_cc2393e9",
+      "name": "Молодогвардейская ул., д.18",
+      "planned_at": "2026-01-06T07:55:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641184",
+      "stop_key": "st_025c7b0f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:56:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641167",
+      "stop_key": "st_be7ecfda",
+      "name": "Молодогвардейская ул., д.30, к.1",
+      "planned_at": "2026-01-06T07:56:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641178",
+      "stop_key": "st_98c04bdd",
+      "name": "Партизанская ул., д.27",
+      "planned_at": "2026-01-06T07:58:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641173",
+      "stop_key": "st_65bc79d9",
+      "name": "Ярцевская ул., д.21, к.1",
+      "planned_at": "2026-01-06T08:00:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641168",
+      "stop_key": "st_973ad75d",
+      "name": "Ярцевская ул., д.30",
+      "planned_at": "2026-01-06T08:01:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641185",
+      "stop_key": "st_b5a4ee01",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T08:03:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53700641179",
+      "stop_key": "st_a26102e0",
+      "name": "Ярцевская ул., д.25, к.3",
+      "planned_at": "2026-01-06T08:12:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 61.0,
+      "is_target": false,
+      "status": "upcoming"
+    }
+  ],
+  "deviation_series": [
+    {
+      "t": "2026-01-06T06:15:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:16:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:17:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:18:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:19:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:20:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:21:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:22:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:23:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:24:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:25:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:26:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:27:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:28:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:29:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:30:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:31:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:32:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:33:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:34:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:35:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:36:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:37:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:38:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:39:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:40:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:41:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:42:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:43:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:44:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:45:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:46:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:47:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:48:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:49:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:50:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:51:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:52:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:53:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:54:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:55:00",
+      "dev_s": 51.1
+    },
+    {
+      "t": "2026-01-06T06:56:00",
+      "dev_s": 51.6
+    },
+    {
+      "t": "2026-01-06T06:57:00",
+      "dev_s": 54.4
+    },
+    {
+      "t": "2026-01-06T06:58:00",
+      "dev_s": 59.1
+    },
+    {
+      "t": "2026-01-06T06:59:00",
+      "dev_s": 65.3
+    },
+    {
+      "t": "2026-01-06T07:00:00",
+      "dev_s": 72.2
+    },
+    {
+      "t": "2026-01-06T07:01:00",
+      "dev_s": 79.2
+    },
+    {
+      "t": "2026-01-06T07:02:00",
+      "dev_s": 85.4
+    },
+    {
+      "t": "2026-01-06T07:03:00",
+      "dev_s": 90.1
+    },
+    {
+      "t": "2026-01-06T07:04:00",
+      "dev_s": 92.9
+    },
+    {
+      "t": "2026-01-06T07:05:00",
+      "dev_s": 93.4
+    },
+    {
+      "t": "2026-01-06T07:06:00",
+      "dev_s": 91.6
+    },
+    {
+      "t": "2026-01-06T07:07:00",
+      "dev_s": 87.6
+    },
+    {
+      "t": "2026-01-06T07:08:00",
+      "dev_s": 82.0
+    },
+    {
+      "t": "2026-01-06T07:09:00",
+      "dev_s": 75.2
+    },
+    {
+      "t": "2026-01-06T07:10:00",
+      "dev_s": 68.2
+    },
+    {
+      "t": "2026-01-06T07:11:00",
+      "dev_s": 61.6
+    },
+    {
+      "t": "2026-01-06T07:12:00",
+      "dev_s": 56.2
+    },
+    {
+      "t": "2026-01-06T07:13:00",
+      "dev_s": 52.5
+    },
+    {
+      "t": "2026-01-06T07:14:00",
+      "dev_s": 51.0
+    },
+    {
+      "t": "2026-01-06T07:15:00",
+      "dev_s": 51.9
+    }
+  ],
+  "forecast": {
+    "t": "2026-01-06T07:26:00",
+    "delay_s": 61.0,
+    "lo_s": 16.9,
+    "hi_s": 115.2
+  },
+  "incident_ids": []
+}
