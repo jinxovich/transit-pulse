@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Данные организаторов не коммитим: кладутся локально в ./data
+data/*
+!data/.gitkeep
+
+# Node
+node_modules/
+dashboard/dist/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Локальные переменные окружения
+.env

@@ -1,0 +1,8 @@
+* text=auto
+# Скрипты запускаются в Linux-контейнерах: CRLF ломает shebang
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.py text eol=lf
+*.bin binary
+*.cbm binary
+*.onnx binary

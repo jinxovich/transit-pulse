@@ -1,0 +1,29 @@
+[project]
+name = "transit-pulse"
+version = "0.1.0"
+description = "Предиктор задержек городского транспорта: NDTP-поток → ML-прогноз на 10–15 минут → дашборд диспетчера"
+requires-python = ">=3.12"
+dependencies = ["transit-core"]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.6"]
+ml = ["lightgbm>=4.5", "catboost>=1.2"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+transit-core = { workspace = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
