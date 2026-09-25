@@ -1,0 +1,24 @@
+{
+  "packets_total": 18432,
+  "pps": 12.5,
+  "crc_errors": 0,
+  "parse_errors": 2,
+  "connections": 15,
+  "reconnects": 3,
+  "unknown_units": 2,
+  "last_packet": {
+    "received_at": "2026-09-26T09:15:02Z",
+    "unit_id": 893159,
+    "hex": "7e7e26000000742002e7a00d0000000100650001002a000000000071b65c6946ce7f1604e72521e0c801000600e100000096000c09",
+    "fields": {
+      "cell": "G6CellNav00",
+      "timestamp": 1767683697,
+      "lon": 37.747463,
+      "lat": 55.61321,
+      "valid": true,
+      "speed_kmh": 1,
+      "course": 225,
+      "nsat": 12
+    }
+  }
+}

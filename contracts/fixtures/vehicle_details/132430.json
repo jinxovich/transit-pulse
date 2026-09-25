@@ -1,0 +1,1002 @@
+{
+  "vehicle": {
+    "vehicle_id": "132430",
+    "kind": "scheduled",
+    "tr_id": "132430",
+    "unit_id": 1012706,
+    "route_id": "r132430",
+    "route_name": "Новоясеневский просп. ↔ ул. Генерала Тюленева",
+    "lon": 37.4506,
+    "lat": 55.523373,
+    "heading": 325.0,
+    "speed_kmh": 38.0,
+    "last_seen": "2026-01-06T07:15:00",
+    "stale": false,
+    "warming_up": false,
+    "current_dev_s": 139.0,
+    "next_stop": {
+      "visit_id": "53698549563",
+      "stop_key": "st_0a2468a2",
+      "name": "Остановка без адреса",
+      "lon": 37.44568716,
+      "lat": 55.54255625,
+      "planned_at": "2026-01-06T07:17:00"
+    },
+    "prediction": {
+      "target_stop": {
+        "visit_id": "53698549575",
+        "stop_key": "st_98dd87cc",
+        "name": "Остановка без адреса",
+        "lon": 37.44117129,
+        "lat": 55.56271324,
+        "planned_at": "2026-01-06T07:26:00"
+      },
+      "predicted_delay_s": 163.5,
+      "p_late": 0.776,
+      "interval_s": [
+        104.0,
+        233.0
+      ],
+      "expected_abs_error_s": 57.6,
+      "lead_min": 11.0,
+      "generated_at": "2026-01-06T07:15:00",
+      "horizon_ok": true,
+      "model_version": "mock-catboost-1",
+      "model_mode": "ml",
+      "risk_level": "red",
+      "cause_code": "CONGESTION"
+    },
+    "risk_level": "red",
+    "open_incident_id": "inc-0002"
+  },
+  "timeline": [
+    {
+      "visit_id": "53698549975",
+      "stop_key": "st_13e9fb88",
+      "name": "Новоясеневский просп., д.4",
+      "planned_at": "2026-01-06T06:25:00",
+      "actual_at": "2026-01-06T06:24:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549972",
+      "stop_key": "st_f274d271",
+      "name": "Профсоюзная ул., д.129А",
+      "planned_at": "2026-01-06T06:27:00",
+      "actual_at": "2026-01-06T06:26:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549974",
+      "stop_key": "st_030c3c9e",
+      "name": "ул. Генерала Тюленева, д.41А",
+      "planned_at": "2026-01-06T06:32:00",
+      "actual_at": "2026-01-06T06:31:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549983",
+      "stop_key": "st_2d89070b",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:34:00",
+      "actual_at": "2026-01-06T06:33:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549980",
+      "stop_key": "st_57222f9f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:35:00",
+      "actual_at": "2026-01-06T06:34:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549981",
+      "stop_key": "st_7c530ca7",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:36:00",
+      "actual_at": "2026-01-06T06:35:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549973",
+      "stop_key": "st_53b398a7",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:38:00",
+      "actual_at": "2026-01-06T06:37:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549978",
+      "stop_key": "st_f325c16a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:39:00",
+      "actual_at": "2026-01-06T06:38:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549976",
+      "stop_key": "st_d78d1837",
+      "name": "ул. Сосенский Стан, д.3",
+      "planned_at": "2026-01-06T06:42:00",
+      "actual_at": "2026-01-06T06:41:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549977",
+      "stop_key": "st_7a986619",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:43:00",
+      "actual_at": "2026-01-06T06:42:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549982",
+      "stop_key": "st_18b6c08d",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:44:00",
+      "actual_at": "2026-01-06T06:43:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549991",
+      "stop_key": "st_7ab9ec89",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:45:00",
+      "actual_at": "2026-01-06T06:44:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549988",
+      "stop_key": "st_ab1f5d9f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:47:00",
+      "actual_at": "2026-01-06T06:46:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549989",
+      "stop_key": "st_fec88200",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:48:00",
+      "actual_at": "2026-01-06T06:47:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549979",
+      "stop_key": "st_bb0c2711",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:49:00",
+      "actual_at": "2026-01-06T06:48:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549987",
+      "stop_key": "st_9ac9bf0f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:52:00",
+      "actual_at": "2026-01-06T06:51:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549984",
+      "stop_key": "st_3453cc1e",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:54:00",
+      "actual_at": "2026-01-06T06:53:43",
+      "actual_delay_s": -16.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549985",
+      "stop_key": "st_3202928b",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:56:00",
+      "actual_at": "2026-01-06T06:55:52",
+      "actual_delay_s": -7.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549993",
+      "stop_key": "st_8106cce2",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:58:00",
+      "actual_at": "2026-01-06T06:58:14",
+      "actual_delay_s": 14.6,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549986",
+      "stop_key": "st_e3d285d1",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T06:59:00",
+      "actual_at": "2026-01-06T06:59:27",
+      "actual_delay_s": 27.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549994",
+      "stop_key": "st_5c0044e6",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:00:00",
+      "actual_at": "2026-01-06T07:00:40",
+      "actual_delay_s": 40.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549992",
+      "stop_key": "st_0699bae6",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:01:00",
+      "actual_at": "2026-01-06T07:01:52",
+      "actual_delay_s": 52.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549990",
+      "stop_key": "st_e81ee864",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:02:00",
+      "actual_at": "2026-01-06T07:03:05",
+      "actual_delay_s": 65.4,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549970",
+      "stop_key": "st_3f6a531f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:03:00",
+      "actual_at": "2026-01-06T07:04:17",
+      "actual_delay_s": 77.1,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549971",
+      "stop_key": "st_433c07fe",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:04:00",
+      "actual_at": "2026-01-06T07:05:27",
+      "actual_delay_s": 87.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549558",
+      "stop_key": "st_433c07fe",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:06:00",
+      "actual_at": "2026-01-06T07:07:44",
+      "actual_delay_s": 104.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549559",
+      "stop_key": "st_9798d9a7",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:09:00",
+      "actual_at": "2026-01-06T07:11:02",
+      "actual_delay_s": 122.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549565",
+      "stop_key": "st_47ac2b9c",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:10:00",
+      "actual_at": "2026-01-06T07:12:07",
+      "actual_delay_s": 127.7,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549566",
+      "stop_key": "st_d2ec62d0",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:11:00",
+      "actual_at": "2026-01-06T07:13:13",
+      "actual_delay_s": 133.0,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549567",
+      "stop_key": "st_d668f757",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:12:00",
+      "actual_at": "2026-01-06T07:14:18",
+      "actual_delay_s": 138.9,
+      "predicted_delay_s": null,
+      "is_target": false,
+      "status": "passed"
+    },
+    {
+      "visit_id": "53698549564",
+      "stop_key": "st_fc5d2b88",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:13:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549573",
+      "stop_key": "st_16735ee1",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:14:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549562",
+      "stop_key": "st_09f8f5b5",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549563",
+      "stop_key": "st_0a2468a2",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:17:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549560",
+      "stop_key": "st_b028da61",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:20:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549569",
+      "stop_key": "st_b7091472",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:22:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549574",
+      "stop_key": "st_9b9198aa",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:24:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549575",
+      "stop_key": "st_98dd87cc",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:26:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": true,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549572",
+      "stop_key": "st_381c0a8c",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:27:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549581",
+      "stop_key": "st_464e039a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:29:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549570",
+      "stop_key": "st_738a6f7e",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:30:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549571",
+      "stop_key": "st_ced501be",
+      "name": "ул. Сосенский Стан, д.5",
+      "planned_at": "2026-01-06T07:31:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549568",
+      "stop_key": "st_d3dacf55",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:32:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549577",
+      "stop_key": "st_ba588068",
+      "name": "ул. Сосенский Стан, д.1",
+      "planned_at": "2026-01-06T07:33:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549582",
+      "stop_key": "st_1d0ad0b8",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:35:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549583",
+      "stop_key": "st_9e9db514",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:36:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549580",
+      "stop_key": "st_6a927cf5",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:37:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549584",
+      "stop_key": "st_e00027ad",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:39:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549578",
+      "stop_key": "st_0ea64e4b",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T07:40:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549579",
+      "stop_key": "st_057575d5",
+      "name": "Профсоюзная ул., д.131Г",
+      "planned_at": "2026-01-06T07:42:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549576",
+      "stop_key": "st_ff9eb03f",
+      "name": "Профсоюзная ул., д.156, к.1",
+      "planned_at": "2026-01-06T07:43:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549585",
+      "stop_key": "st_d2962da7",
+      "name": "Новоясеневский просп., д.2",
+      "planned_at": "2026-01-06T07:45:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549561",
+      "stop_key": "st_13e9fb88",
+      "name": "Новоясеневский просп., д.4",
+      "planned_at": "2026-01-06T07:47:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549928",
+      "stop_key": "st_13e9fb88",
+      "name": "Новоясеневский просп., д.4",
+      "planned_at": "2026-01-06T07:57:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549924",
+      "stop_key": "st_f274d271",
+      "name": "Профсоюзная ул., д.129А",
+      "planned_at": "2026-01-06T07:59:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549921",
+      "stop_key": "st_030c3c9e",
+      "name": "ул. Генерала Тюленева, д.41А",
+      "planned_at": "2026-01-06T08:04:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549922",
+      "stop_key": "st_2d89070b",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:06:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549920",
+      "stop_key": "st_57222f9f",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:07:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549929",
+      "stop_key": "st_7c530ca7",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:08:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549930",
+      "stop_key": "st_53b398a7",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:10:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549927",
+      "stop_key": "st_f325c16a",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:11:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549936",
+      "stop_key": "st_d78d1837",
+      "name": "ул. Сосенский Стан, д.3",
+      "planned_at": "2026-01-06T08:14:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    },
+    {
+      "visit_id": "53698549925",
+      "stop_key": "st_7a986619",
+      "name": "Остановка без адреса",
+      "planned_at": "2026-01-06T08:15:00",
+      "actual_at": null,
+      "actual_delay_s": null,
+      "predicted_delay_s": 163.5,
+      "is_target": false,
+      "status": "upcoming"
+    }
+  ],
+  "deviation_series": [
+    {
+      "t": "2026-01-06T06:15:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:16:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:17:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:18:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:19:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:20:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:21:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:22:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:23:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:24:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:25:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:26:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:27:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:28:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:29:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:30:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:31:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:32:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:33:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:34:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:35:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:36:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:37:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:38:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:39:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:40:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:41:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:42:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:43:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:44:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:45:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:46:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:47:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:48:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:49:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:50:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:51:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:52:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:53:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:54:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:55:00",
+      "dev_s": -14.4
+    },
+    {
+      "t": "2026-01-06T06:56:00",
+      "dev_s": -6.5
+    },
+    {
+      "t": "2026-01-06T06:57:00",
+      "dev_s": 2.5
+    },
+    {
+      "t": "2026-01-06T06:58:00",
+      "dev_s": 12.4
+    },
+    {
+      "t": "2026-01-06T06:59:00",
+      "dev_s": 23.0
+    },
+    {
+      "t": "2026-01-06T07:00:00",
+      "dev_s": 34.0
+    },
+    {
+      "t": "2026-01-06T07:01:00",
+      "dev_s": 45.0
+    },
+    {
+      "t": "2026-01-06T07:02:00",
+      "dev_s": 55.6
+    },
+    {
+      "t": "2026-01-06T07:03:00",
+      "dev_s": 65.5
+    },
+    {
+      "t": "2026-01-06T07:04:00",
+      "dev_s": 74.5
+    },
+    {
+      "t": "2026-01-06T07:05:00",
+      "dev_s": 82.4
+    },
+    {
+      "t": "2026-01-06T07:06:00",
+      "dev_s": 89.2
+    },
+    {
+      "t": "2026-01-06T07:07:00",
+      "dev_s": 94.9
+    },
+    {
+      "t": "2026-01-06T07:08:00",
+      "dev_s": 99.9
+    },
+    {
+      "t": "2026-01-06T07:09:00",
+      "dev_s": 104.3
+    },
+    {
+      "t": "2026-01-06T07:10:00",
+      "dev_s": 108.6
+    },
+    {
+      "t": "2026-01-06T07:11:00",
+      "dev_s": 113.0
+    },
+    {
+      "t": "2026-01-06T07:12:00",
+      "dev_s": 118.1
+    },
+    {
+      "t": "2026-01-06T07:13:00",
+      "dev_s": 124.0
+    },
+    {
+      "t": "2026-01-06T07:14:00",
+      "dev_s": 130.9
+    },
+    {
+      "t": "2026-01-06T07:15:00",
+      "dev_s": 139.0
+    }
+  ],
+  "forecast": {
+    "t": "2026-01-06T07:26:00",
+    "delay_s": 163.5,
+    "lo_s": 104.0,
+    "hi_s": 233.0
+  },
+  "incident_ids": [
+    "inc-0002"
+  ]
+}

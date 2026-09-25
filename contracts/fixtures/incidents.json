@@ -1,0 +1,521 @@
+[
+  {
+    "id": "inc-0001",
+    "vehicle_id": "135081",
+    "tr_id": "135081",
+    "route_name": "Остановка без адреса",
+    "status": "resolved",
+    "risk_level": "red",
+    "created_at": "2026-01-06T07:01:00",
+    "updated_at": "2026-01-06T07:14:50",
+    "lead_min": 11.0,
+    "target_stop": {
+      "visit_id": "53699790962",
+      "stop_key": "st_9aaef0e3",
+      "name": "ул. Гурьянова, д.2Б",
+      "lon": 37.72203748,
+      "lat": 55.6919575,
+      "planned_at": "2026-01-06T07:12:00"
+    },
+    "predicted_delay_s": 164.7,
+    "p_late": 0.782,
+    "interval_s": [
+      105.0,
+      234.4
+    ],
+    "expected_abs_error_s": 57.8,
+    "cause": {
+      "code": "ACCUMULATED_DELAY",
+      "title": "Накопленное опоздание",
+      "details": "ТС уже отстаёт от графика и продолжает терять время — задержка переносится на следующие остановки (эффект домино).",
+      "evidence": [
+        {
+          "feature": "cur_dev",
+          "label": "Отклонение на последней остановке",
+          "value": "+2 мин 20 с",
+          "contribution_s": 98.8
+        },
+        {
+          "feature": "dev_trend",
+          "label": "Тренд отклонения за 15 мин",
+          "value": "+15 с / 5 мин",
+          "contribution_s": 32.9
+        },
+        {
+          "feature": "layover",
+          "label": "Запас на конечной",
+          "value": "нет",
+          "contribution_s": 16.5
+        }
+      ]
+    },
+    "segment": {
+      "segment_id": "r135081:st_06468254>st_9aaef0e3",
+      "from_stop": {
+        "visit_id": "53699790951",
+        "stop_key": "st_06468254",
+        "name": "ул. Гурьянова, д.2",
+        "lon": 37.72661733,
+        "lat": 55.69331442,
+        "planned_at": "2026-01-06T07:11:00"
+      },
+      "to_stop": {
+        "visit_id": "53699790962",
+        "stop_key": "st_9aaef0e3",
+        "name": "ул. Гурьянова, д.2Б",
+        "lon": 37.72203748,
+        "lat": 55.6919575,
+        "planned_at": "2026-01-06T07:12:00"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            37.72661733,
+            55.69331442
+          ],
+          [
+            37.72203748,
+            55.6919575
+          ]
+        ]
+      }
+    },
+    "recommendations": [
+      {
+        "code": "REDUCE_LAYOVER",
+        "title": "Сократить стоянку на конечной",
+        "description": "Отправить ТС в следующий рейс раньше, чтобы вернуть его на график."
+      },
+      {
+        "code": "RESERVE_VEHICLE",
+        "title": "Резервный выпуск",
+        "description": "Подготовить подменное ТС на следующий рейс, чтобы не сорвать интервал."
+      },
+      {
+        "code": "DRIVER_CONTACT",
+        "title": "Связаться с водителем",
+        "description": "Уточнить обстановку и скорректировать режим."
+      }
+    ],
+    "ack": null,
+    "actual_delay_s": 131.0,
+    "outcome": "hit"
+  },
+  {
+    "id": "inc-0002",
+    "vehicle_id": "132430",
+    "tr_id": "132430",
+    "route_name": "Новоясеневский просп. ↔ ул. Генерала Тюленева",
+    "status": "resolved",
+    "risk_level": "red",
+    "created_at": "2026-01-06T07:08:30",
+    "updated_at": "2026-01-06T07:22:10",
+    "lead_min": 11.5,
+    "target_stop": {
+      "visit_id": "53698549560",
+      "stop_key": "st_b028da61",
+      "name": "Остановка без адреса",
+      "lon": 37.44160537,
+      "lat": 55.54901005,
+      "planned_at": "2026-01-06T07:20:00"
+    },
+    "predicted_delay_s": 120.1,
+    "p_late": 0.501,
+    "interval_s": [
+      67.1,
+      183.1
+    ],
+    "expected_abs_error_s": 52.4,
+    "cause": {
+      "code": "CONGESTION",
+      "title": "Затор на перегоне",
+      "details": "Скорость на участке заметно ниже обычной для этого времени суток.",
+      "evidence": [
+        {
+          "feature": "spd5",
+          "label": "Средняя скорость за 5 мин",
+          "value": "6 км/ч",
+          "contribution_s": 54.0
+        },
+        {
+          "feature": "speed_ratio",
+          "label": "Скорость к обычной на перегоне",
+          "value": "0.35",
+          "contribution_s": 36.0
+        },
+        {
+          "feature": "cur_dev",
+          "label": "Отклонение на последней остановке",
+          "value": "+1 мин 12 с",
+          "contribution_s": 24.0
+        }
+      ]
+    },
+    "segment": {
+      "segment_id": "r132430:st_0a2468a2>st_b028da61",
+      "from_stop": {
+        "visit_id": "53698549563",
+        "stop_key": "st_0a2468a2",
+        "name": "Остановка без адреса",
+        "lon": 37.44568716,
+        "lat": 55.54255625,
+        "planned_at": "2026-01-06T07:17:00"
+      },
+      "to_stop": {
+        "visit_id": "53698549560",
+        "stop_key": "st_b028da61",
+        "name": "Остановка без адреса",
+        "lon": 37.44160537,
+        "lat": 55.54901005,
+        "planned_at": "2026-01-06T07:20:00"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            37.44568716,
+            55.54255625
+          ],
+          [
+            37.44160537,
+            55.54901005
+          ]
+        ]
+      }
+    },
+    "recommendations": [
+      {
+        "code": "SIGNAL_PRIORITY",
+        "title": "Приоритет на светофорах",
+        "description": "Запросить у ЦОДД приоритетный проезд на перегоне."
+      },
+      {
+        "code": "DETOUR",
+        "title": "Проверить объезд",
+        "description": "Оценить схему объезда затора и сообщить водителю."
+      },
+      {
+        "code": "DRIVER_CONTACT",
+        "title": "Связаться с водителем",
+        "description": "Уточнить обстановку и скорректировать режим."
+      }
+    ],
+    "ack": null,
+    "actual_delay_s": 61.7,
+    "outcome": "false_alarm"
+  },
+  {
+    "id": "inc-0003",
+    "vehicle_id": "135081",
+    "tr_id": "135081",
+    "route_name": "Остановка без адреса",
+    "status": "resolved",
+    "risk_level": "red",
+    "created_at": "2026-01-06T07:15:00",
+    "updated_at": "2026-01-06T07:29:20",
+    "lead_min": 11.0,
+    "target_stop": {
+      "visit_id": "53699790839",
+      "stop_key": "st_bdc04c4c",
+      "name": "ул. Полбина, д.16",
+      "lon": 37.73258786,
+      "lat": 55.6877525,
+      "planned_at": "2026-01-06T07:26:00"
+    },
+    "predicted_delay_s": 191.6,
+    "p_late": 0.886,
+    "interval_s": [
+      127.9,
+      265.3
+    ],
+    "expected_abs_error_s": 61.0,
+    "cause": {
+      "code": "ACCUMULATED_DELAY",
+      "title": "Накопленное опоздание",
+      "details": "ТС уже отстаёт от графика и продолжает терять время — задержка переносится на следующие остановки (эффект домино).",
+      "evidence": [
+        {
+          "feature": "cur_dev",
+          "label": "Отклонение на последней остановке",
+          "value": "+2 мин 43 с",
+          "contribution_s": 115.0
+        },
+        {
+          "feature": "dev_trend",
+          "label": "Тренд отклонения за 15 мин",
+          "value": "+15 с / 5 мин",
+          "contribution_s": 38.3
+        },
+        {
+          "feature": "layover",
+          "label": "Запас на конечной",
+          "value": "нет",
+          "contribution_s": 19.2
+        }
+      ]
+    },
+    "segment": {
+      "segment_id": "r135081:st_4ee45693>st_bdc04c4c",
+      "from_stop": {
+        "visit_id": "53699790836",
+        "stop_key": "st_4ee45693",
+        "name": "ул. Полбина, д.8",
+        "lon": 37.7311176,
+        "lat": 55.69099569,
+        "planned_at": "2026-01-06T07:24:00"
+      },
+      "to_stop": {
+        "visit_id": "53699790839",
+        "stop_key": "st_bdc04c4c",
+        "name": "ул. Полбина, д.16",
+        "lon": 37.73258786,
+        "lat": 55.6877525,
+        "planned_at": "2026-01-06T07:26:00"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            37.7311176,
+            55.69099569
+          ],
+          [
+            37.73258786,
+            55.6877525
+          ]
+        ]
+      }
+    },
+    "recommendations": [
+      {
+        "code": "REDUCE_LAYOVER",
+        "title": "Сократить стоянку на конечной",
+        "description": "Отправить ТС в следующий рейс раньше, чтобы вернуть его на график."
+      },
+      {
+        "code": "RESERVE_VEHICLE",
+        "title": "Резервный выпуск",
+        "description": "Подготовить подменное ТС на следующий рейс, чтобы не сорвать интервал."
+      },
+      {
+        "code": "DRIVER_CONTACT",
+        "title": "Связаться с водителем",
+        "description": "Уточнить обстановку и скорректировать режим."
+      }
+    ],
+    "ack": null,
+    "actual_delay_s": 208.6,
+    "outcome": "hit"
+  },
+  {
+    "id": "inc-0004",
+    "vehicle_id": "132430",
+    "tr_id": "132430",
+    "route_name": "Новоясеневский просп. ↔ ул. Генерала Тюленева",
+    "status": "ack",
+    "risk_level": "red",
+    "created_at": "2026-01-06T07:23:10",
+    "updated_at": "2026-01-06T07:25:00",
+    "lead_min": 11.83,
+    "target_stop": {
+      "visit_id": "53698549582",
+      "stop_key": "st_1d0ad0b8",
+      "name": "Остановка без адреса",
+      "lon": 37.46886192,
+      "lat": 55.58187826,
+      "planned_at": "2026-01-06T07:35:00"
+    },
+    "predicted_delay_s": 260.4,
+    "p_late": 0.982,
+    "interval_s": [
+      186.3,
+      344.5
+    ],
+    "expected_abs_error_s": 69.2,
+    "cause": {
+      "code": "CONGESTION",
+      "title": "Затор на перегоне",
+      "details": "Скорость на участке заметно ниже обычной для этого времени суток.",
+      "evidence": [
+        {
+          "feature": "spd5",
+          "label": "Средняя скорость за 5 мин",
+          "value": "6 км/ч",
+          "contribution_s": 117.2
+        },
+        {
+          "feature": "speed_ratio",
+          "label": "Скорость к обычной на перегоне",
+          "value": "0.35",
+          "contribution_s": 78.1
+        },
+        {
+          "feature": "cur_dev",
+          "label": "Отклонение на последней остановке",
+          "value": "+2 мин 36 с",
+          "contribution_s": 52.1
+        }
+      ]
+    },
+    "segment": {
+      "segment_id": "r132430:st_ba588068>st_1d0ad0b8",
+      "from_stop": {
+        "visit_id": "53698549577",
+        "stop_key": "st_ba588068",
+        "name": "ул. Сосенский Стан, д.1",
+        "lon": 37.46686144,
+        "lat": 55.57594605,
+        "planned_at": "2026-01-06T07:33:00"
+      },
+      "to_stop": {
+        "visit_id": "53698549582",
+        "stop_key": "st_1d0ad0b8",
+        "name": "Остановка без адреса",
+        "lon": 37.46886192,
+        "lat": 55.58187826,
+        "planned_at": "2026-01-06T07:35:00"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            37.46686144,
+            55.57594605
+          ],
+          [
+            37.46886192,
+            55.58187826
+          ]
+        ]
+      }
+    },
+    "recommendations": [
+      {
+        "code": "SIGNAL_PRIORITY",
+        "title": "Приоритет на светофорах",
+        "description": "Запросить у ЦОДД приоритетный проезд на перегоне."
+      },
+      {
+        "code": "DETOUR",
+        "title": "Проверить объезд",
+        "description": "Оценить схему объезда затора и сообщить водителю."
+      },
+      {
+        "code": "DRIVER_CONTACT",
+        "title": "Связаться с водителем",
+        "description": "Уточнить обстановку и скорректировать режим."
+      }
+    ],
+    "ack": {
+      "action_code": "DRIVER_CONTACT",
+      "comment": "Связались с водителем",
+      "at": "2026-01-06T07:25:00"
+    },
+    "actual_delay_s": null,
+    "outcome": "pending"
+  },
+  {
+    "id": "inc-0005",
+    "vehicle_id": "135081",
+    "tr_id": "135081",
+    "route_name": "Остановка без адреса",
+    "status": "open",
+    "risk_level": "red",
+    "created_at": "2026-01-06T07:29:30",
+    "updated_at": "2026-01-06T07:29:30",
+    "lead_min": 11.5,
+    "target_stop": {
+      "visit_id": "53699790861",
+      "stop_key": "st_82e4d6f8",
+      "name": "Иловайская ул., д.9",
+      "lon": 37.71659698,
+      "lat": 55.65865019,
+      "planned_at": "2026-01-06T07:41:00"
+    },
+    "predicted_delay_s": 226.7,
+    "p_late": 0.955,
+    "interval_s": [
+      157.7,
+      305.7
+    ],
+    "expected_abs_error_s": 65.2,
+    "cause": {
+      "code": "ACCUMULATED_DELAY",
+      "title": "Накопленное опоздание",
+      "details": "ТС уже отстаёт от графика и продолжает терять время — задержка переносится на следующие остановки (эффект домино).",
+      "evidence": [
+        {
+          "feature": "cur_dev",
+          "label": "Отклонение на последней остановке",
+          "value": "+3 мин 13 с",
+          "contribution_s": 136.0
+        },
+        {
+          "feature": "dev_trend",
+          "label": "Тренд отклонения за 15 мин",
+          "value": "+15 с / 5 мин",
+          "contribution_s": 45.3
+        },
+        {
+          "feature": "layover",
+          "label": "Запас на конечной",
+          "value": "нет",
+          "contribution_s": 22.7
+        }
+      ]
+    },
+    "segment": {
+      "segment_id": "r135081:st_2ce6fcd1>st_82e4d6f8",
+      "from_stop": {
+        "visit_id": "53699790845",
+        "stop_key": "st_2ce6fcd1",
+        "name": "Остановка без адреса",
+        "lon": 37.7097793,
+        "lat": 55.65861597,
+        "planned_at": "2026-01-06T07:38:00"
+      },
+      "to_stop": {
+        "visit_id": "53699790861",
+        "stop_key": "st_82e4d6f8",
+        "name": "Иловайская ул., д.9",
+        "lon": 37.71659698,
+        "lat": 55.65865019,
+        "planned_at": "2026-01-06T07:41:00"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            37.7097793,
+            55.65861597
+          ],
+          [
+            37.71659698,
+            55.65865019
+          ]
+        ]
+      }
+    },
+    "recommendations": [
+      {
+        "code": "REDUCE_LAYOVER",
+        "title": "Сократить стоянку на конечной",
+        "description": "Отправить ТС в следующий рейс раньше, чтобы вернуть его на график."
+      },
+      {
+        "code": "RESERVE_VEHICLE",
+        "title": "Резервный выпуск",
+        "description": "Подготовить подменное ТС на следующий рейс, чтобы не сорвать интервал."
+      },
+      {
+        "code": "DRIVER_CONTACT",
+        "title": "Связаться с водителем",
+        "description": "Уточнить обстановку и скорректировать режим."
+      }
+    ],
+    "ack": null,
+    "actual_delay_s": null,
+    "outcome": "pending"
+  }
+]

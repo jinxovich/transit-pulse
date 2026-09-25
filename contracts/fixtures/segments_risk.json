@@ -1,0 +1,74 @@
+[
+  {
+    "segment_id": "r122048:st_2543e16e>st_7ff945fc",
+    "route_id": "r122048",
+    "risk_level": "green",
+    "vehicle_ids": [
+      "122048"
+    ],
+    "speed_ratio": 0.95
+  },
+  {
+    "segment_id": "r122658:st_5233b7cf>st_155c7bca",
+    "route_id": "r122658",
+    "risk_level": "green",
+    "vehicle_ids": [
+      "122658"
+    ],
+    "speed_ratio": 0.95
+  },
+  {
+    "segment_id": "r129964:st_21e06b47>st_b23aaf50",
+    "route_id": "r129964",
+    "risk_level": "green",
+    "vehicle_ids": [
+      "129964"
+    ],
+    "speed_ratio": 0.95
+  },
+  {
+    "segment_id": "r131672:st_bc5f9503>st_6ca5f8aa",
+    "route_id": "r131672",
+    "risk_level": "green",
+    "vehicle_ids": [
+      "131672"
+    ],
+    "speed_ratio": 0.95
+  },
+  {
+    "segment_id": "r132430:st_9b9198aa>st_98dd87cc",
+    "route_id": "r132430",
+    "risk_level": "red",
+    "vehicle_ids": [
+      "132430"
+    ],
+    "speed_ratio": 0.35
+  },
+  {
+    "segment_id": "r133300:st_65bc79d9>st_973ad75d",
+    "route_id": "r133300",
+    "risk_level": "yellow",
+    "vehicle_ids": [
+      "133300"
+    ],
+    "speed_ratio": 0.95
+  },
+  {
+    "segment_id": "r134040:st_8b173ce1>st_6203ef7b",
+    "route_id": "r134040",
+    "risk_level": "early",
+    "vehicle_ids": [
+      "134040"
+    ],
+    "speed_ratio": 0.95
+  },
+  {
+    "segment_id": "r135081:st_4ee45693>st_bdc04c4c",
+    "route_id": "r135081",
+    "risk_level": "red",
+    "vehicle_ids": [
+      "135081"
+    ],
+    "speed_ratio": 0.95
+  }
+]

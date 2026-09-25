@@ -1,0 +1,38 @@
+{
+  "online_mae_s": 61.2,
+  "n_resolved": 3,
+  "lead_ok_share": 1.0,
+  "lead_hist": [
+    {
+      "lead_min": 10,
+      "count": 0
+    },
+    {
+      "lead_min": 11,
+      "count": 5
+    },
+    {
+      "lead_min": 12,
+      "count": 0
+    },
+    {
+      "lead_min": 13,
+      "count": 0
+    },
+    {
+      "lead_min": 14,
+      "count": 0
+    },
+    {
+      "lead_min": 15,
+      "count": 0
+    }
+  ],
+  "alert_precision": 0.78,
+  "alert_recall": 0.71,
+  "offline": {
+    "cv_mae_baseline_s": 93.36,
+    "cv_mae_model_s": 63.62,
+    "improvement": 0.319
+  }
+}
