@@ -43,6 +43,11 @@ def find_archive(data_dir: Path = DEFAULT_DATA_DIR) -> Path | None:
     return archives[0] if archives else None
 
 
+def is_extracted(dest: Path) -> bool:
+    """Проверяет, что все обязательные файлы датасета уже лежат в ``dest``."""
+    return all((dest / name).is_file() for name in REQUIRED_FILES)
+
+
 def _open_dataset(archive: Path) -> zipfile.ZipFile:
     """Открывает ``dataset.zip``: напрямую или изнутри внешнего архива."""
     outer = zipfile.ZipFile(archive)
@@ -108,6 +113,9 @@ def main(argv: list[str] | None = None) -> int:
 
     archive = args.src.expanduser() if args.src else find_archive()
     if archive is None or not archive.exists():
+        if is_extracted(args.dest):
+            print(f"Датасет уже распакован в {args.dest}, архив не нужен")
+            return 0
         print("Архив датасета не найден: положите его в ./data/ или укажите --src", file=sys.stderr)
         return 1
     files = extract_dataset(archive, args.dest, with_emulator=args.with_emulator)
