@@ -141,3 +141,13 @@ GET /model/info → {"features": [...], "metrics": {...из models/metrics.json}
 
 `ML_URL=http://ml:8001`; при недоступности ml — circuit breaker и эвристика `0.7·cur_dev`,
 `model_mode="fallback"`.
+
+Проход прогнозов зовёт `/predict` дважды: `explain=false` для всего батча и `explain=true` только
+для визитов, причину которых видит диспетчер (текущий прогноз red/yellow, первый красный визит,
+цель открытого инцидента). Упал второй вызов — прогнозы остаются, причина по правилам.
+`ml_batch` в `/metrics/summary` — сумма двух вызовов; раздельно — `tp_ml_predict_ms` / `tp_ml_explain_ms`.
+
+`POST /api/v1/whatif` (`WhatIfRequest` → `WhatIfResult`): прогноз ТС без меры и с мерой по
+остановкам `(T, T+60]` (с пометкой окна `(T+10, T+15]`). Меры: `hold_at_stop` (+N мин к отклонению),
+`shorten_dwell` / `skip_layover` (−N / −весь отстой после конечной, не раньше графика),
+`add_reserve` (рейс после конечной по графику). Те же признаки и ML-клиент; 409 — у ТС нет прогноза.

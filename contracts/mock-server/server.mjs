@@ -14,6 +14,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { createServer } from "node:http";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { mockWhatIf } from "./whatif.mjs";
 
 const FIXTURES = join(dirname(fileURLToPath(import.meta.url)), "..", "fixtures");
 const PORT = Number(process.env.MOCK_PORT ?? 8000);
@@ -268,7 +269,7 @@ const HELP = {
     "GET /api/v1/vehicles/{vehicle_id}", "GET /api/v1/incidents?status=open,ack",
     "GET /api/v1/incidents/{id}", "POST /api/v1/incidents/{id}/ack", "GET /api/v1/segments/risk",
     "GET /api/v1/metrics/summary", "GET /api/v1/metrics/quality", "GET /api/v1/ingest/stats",
-    "GET /api/v1/sim/clock", "POST /api/v1/replay/control",
+    "GET /api/v1/sim/clock", "POST /api/v1/replay/control", "POST /api/v1/whatif",
   ],
   ws: WS_PATH,
   mock_only: {
@@ -311,6 +312,10 @@ async function route(req, res) {
       return updated ? send(res, 200, updated) : notFound(res, "Инцидент");
     }
     if (path === "/api/v1/replay/control") return send(res, 200, replayControl(body));
+    if (path === "/api/v1/whatif") {
+      const out = mockWhatIf(state.vehicles.get(body.vehicle_id), body, fixtures.config.thresholds);
+      return out.status ? send(res, out.status, { detail: out.detail }) : send(res, 200, out);
+    }
     if (path === "/mock/status") return send(res, 200, setMockStatus(body));
   }
   return send(res, 404, { detail: `Нет маршрута ${req.method} ${path}` });

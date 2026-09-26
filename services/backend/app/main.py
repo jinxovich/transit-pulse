@@ -22,7 +22,7 @@ from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
-from .api import fleet, incidents, system
+from .api import fleet, incidents, system, whatif
 from .config import VERSION, Settings
 from .ingest.server import IngestServer
 from .ingest.worker import run_worker
@@ -38,8 +38,9 @@ ML_HEALTH_S = 10.0
 
 DESCRIPTION = """
 Бэкенд предиктора задержек: приём NDTP (TCP 9201) → state → прогноз на 10–15 минут
-(ML-сервис с circuit breaker и эвристикой) → инциденты с причинами и рекомендациями →
-REST `/api/v1` и WebSocket `/ws/v1/stream` для дашборда диспетчера.
+(ML-сервис с circuit breaker и эвристикой) → инциденты с причинами, рекомендациями и
+оценкой мер «что если» (`POST /api/v1/whatif`) → REST `/api/v1` и WebSocket
+`/ws/v1/stream` для дашборда диспетчера.
 
 Время везде — naive ISO «времени датасета» (`2026-01-06T07:14:00`), задержка в секундах,
 `+` — опоздание. Контракт: `packages/transit_core/transit_core/schemas.py`.
@@ -132,7 +133,9 @@ def create_app(runtime: Runtime | None = None, background: bool = True) -> FastA
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    for router in (system.router, fleet.router, incidents.router, internal_router, ws_router):
+    routers = (system.router, fleet.router, incidents.router, whatif.router, internal_router,
+               ws_router)  # fmt: skip
+    for router in routers:
         app.include_router(router)
 
     _mount_code_docs(app, settings.code_docs_dir)

@@ -6,6 +6,7 @@ import { useUi } from "../../store/ui";
 import { formatDelay } from "../../lib/format";
 import { formatSimTime, minutesBetween, untilLabel } from "../../lib/time";
 import { RiskGlyph } from "../map/RiskGlyph";
+import { WhatIf } from "./WhatIf";
 
 const STATUS_LABEL = { open: "новый", ack: "принят", resolved: "закрыт" } as const;
 
@@ -179,6 +180,9 @@ export function IncidentCard({ id }: { id: string }) {
           {ack.isError && <p className="error small">Не удалось отправить. Попробуйте ещё раз.</p>}
         </div>
       )}
+
+      {/* 6. Что если: оценка меры до её принятия */}
+      {!resolved && <WhatIf key={inc.id} inc={inc} />}
     </section>
   );
 }

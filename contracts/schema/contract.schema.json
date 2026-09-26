@@ -2080,6 +2080,256 @@
       "title": "VehiclesDeltaData",
       "type": "object"
     },
+    "WhatIfRequest": {
+      "additionalProperties": false,
+      "description": "Тело ``POST /api/v1/whatif``: какую меру применить к ТС.",
+      "properties": {
+        "vehicle_id": {
+          "title": "Vehicle Id",
+          "type": "string"
+        },
+        "action": {
+          "enum": [
+            "hold_at_stop",
+            "shorten_dwell",
+            "skip_layover",
+            "add_reserve"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "maximum": 30,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Минуты меры для hold_at_stop / shorten_dwell (по умолчанию 2 и 3); для skip_layover и add_reserve не используется",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "action",
+        "value"
+      ],
+      "title": "WhatIfRequest",
+      "type": "object"
+    },
+    "WhatIfResult": {
+      "additionalProperties": false,
+      "description": "Ответ ``POST /api/v1/whatif``: оценка влияния меры на график ТС.",
+      "properties": {
+        "vehicle_id": {
+          "title": "Vehicle Id",
+          "type": "string"
+        },
+        "action": {
+          "enum": [
+            "hold_at_stop",
+            "shorten_dwell",
+            "skip_layover",
+            "add_reserve"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "value_min": {
+          "description": "Применённая величина меры, мин",
+          "title": "Value Min",
+          "type": "number"
+        },
+        "title": {
+          "description": "Мера по-русски, например «Придержать на остановке 2 мин»",
+          "title": "Title",
+          "type": "string"
+        },
+        "note": {
+          "description": "Как мера учтена в прогнозе или почему она не влияет",
+          "title": "Note",
+          "type": "string"
+        },
+        "applied": {
+          "description": "Мера меняет прогноз хотя бы одной остановки",
+          "title": "Applied",
+          "type": "boolean"
+        },
+        "generated_at": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "model_version": {
+          "title": "Model Version",
+          "type": "string"
+        },
+        "model_mode": {
+          "enum": [
+            "ml",
+            "fallback"
+          ],
+          "title": "Model Mode",
+          "type": "string"
+        },
+        "current": {
+          "$ref": "#/$defs/Prediction",
+          "description": "Текущий прогноз ТС из последнего прохода"
+        },
+        "target": {
+          "$ref": "#/$defs/WhatIfStop",
+          "description": "Цель: остановка инцидента или текущего прогноза"
+        },
+        "delta_delay_s": {
+          "description": "Изменение прогноза задержки на цели, c (− лучше)",
+          "title": "Delta Delay S",
+          "type": "number"
+        },
+        "delta_p_late": {
+          "description": "Изменение вероятности опоздания на цели",
+          "title": "Delta P Late",
+          "type": "number"
+        },
+        "stops": {
+          "description": "Остановки окна (T+10, T+15] и ближайших 60 мин",
+          "items": {
+            "$ref": "#/$defs/WhatIfStop"
+          },
+          "title": "Stops",
+          "type": "array"
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "action",
+        "value_min",
+        "title",
+        "note",
+        "applied",
+        "generated_at",
+        "model_version",
+        "model_mode",
+        "current",
+        "target",
+        "delta_delay_s",
+        "delta_p_late",
+        "stops"
+      ],
+      "title": "WhatIfResult",
+      "type": "object"
+    },
+    "WhatIfStop": {
+      "additionalProperties": false,
+      "description": "Остановка ТС: прогноз без меры и с мерой.",
+      "properties": {
+        "visit_id": {
+          "title": "Visit Id",
+          "type": "string"
+        },
+        "stop_key": {
+          "title": "Stop Key",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "planned_at": {
+          "description": "Время датасета без часового пояса, например 2026-01-06T07:14:00",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "Planned At",
+          "type": "string"
+        },
+        "lead_min": {
+          "description": "Минут от момента расчёта до планового прибытия",
+          "title": "Lead Min",
+          "type": "number"
+        },
+        "in_window": {
+          "description": "Остановка в окне прогноза (T+10, T+15]",
+          "title": "In Window",
+          "type": "boolean"
+        },
+        "after_break": {
+          "description": "До остановки есть конечная (разрыв рейса)",
+          "title": "After Break",
+          "type": "boolean"
+        },
+        "predicted_before_s": {
+          "description": "Прогноз задержки без меры, c",
+          "title": "Predicted Before S",
+          "type": "number"
+        },
+        "predicted_after_s": {
+          "description": "Прогноз задержки с мерой, c",
+          "title": "Predicted After S",
+          "type": "number"
+        },
+        "p_late_before": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "P Late Before",
+          "type": "number"
+        },
+        "p_late_after": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "P Late After",
+          "type": "number"
+        },
+        "risk_before": {
+          "enum": [
+            "green",
+            "yellow",
+            "red",
+            "early",
+            "none"
+          ],
+          "title": "Risk Before",
+          "type": "string"
+        },
+        "risk_after": {
+          "enum": [
+            "green",
+            "yellow",
+            "red",
+            "early",
+            "none"
+          ],
+          "title": "Risk After",
+          "type": "string"
+        }
+      },
+      "required": [
+        "visit_id",
+        "stop_key",
+        "name",
+        "planned_at",
+        "lead_min",
+        "in_window",
+        "after_break",
+        "predicted_before_s",
+        "predicted_after_s",
+        "p_late_before",
+        "p_late_after",
+        "risk_before",
+        "risk_after"
+      ],
+      "title": "WhatIfStop",
+      "type": "object"
+    },
     "WsIncident": {
       "additionalProperties": false,
       "properties": {

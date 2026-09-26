@@ -47,7 +47,8 @@ class Metrics:
         self.registry = CollectorRegistry()
         r = self.registry
         self.windows = {
-            name: LatencyWindow() for name in ("ingest_to_state", "pass_to_ws", "ml", "e2e")
+            name: LatencyWindow()
+            for name in ("ingest_to_state", "pass_to_ws", "ml", "ml_predict", "ml_explain", "e2e")
         }
         self._hist = {
             "ingest_to_state": Histogram(
@@ -59,7 +60,16 @@ class Metrics:
                 registry=r,
             ),
             "ml": Histogram(
-                "tp_ml_batch_ms", "Латентность батча ML, мс", buckets=LAT_BUCKETS, registry=r
+                "tp_ml_batch_ms", "ML за проход (прогноз + вклады), мс", buckets=LAT_BUCKETS,
+                registry=r,
+            ),
+            "ml_predict": Histogram(
+                "tp_ml_predict_ms", "ML: прогноз всего батча без SHAP, мс", buckets=LAT_BUCKETS,
+                registry=r,
+            ),
+            "ml_explain": Histogram(
+                "tp_ml_explain_ms", "ML: вклады признаков для рискованных, мс",
+                buckets=LAT_BUCKETS, registry=r,
             ),
             "e2e": Histogram(
                 "tp_ingest_to_ws_ms", "Пакет → WS-дельта с этим ТС, мс", buckets=LAT_BUCKETS,
@@ -73,12 +83,30 @@ class Metrics:
             "tp_ml_batch_size", "Размер батча ML", buckets=(1, 5, 10, 25, 50, 100, 250, 500),
             registry=r,
         )  # fmt: skip
+        self.explain_size = Histogram(
+            "tp_ml_explain_size",
+            "Визитов с запросом вкладов признаков",
+            buckets=(0, 1, 5, 10, 25, 50, 100, 250),
+            registry=r,
+        )
         self.ws_clients = Gauge("tp_ws_clients", "Подключённых WS-клиентов", registry=r)
 
     def observe(self, name: str, ms: float) -> None:
         """Пишет латентность ``name`` (мс) в гистограмму и окно."""
         self.windows[name].add(ms)
         self._hist[name].observe(ms)
+
+    def observe_ml(
+        self, predict_ms: float | None, explain_ms: float | None, explained: int
+    ) -> None:
+        """ML в проходе: прогноз и вклады раздельно, сумма — как ``ml`` (ml_batch)."""
+        if predict_ms is None:
+            return
+        self.observe("ml_predict", predict_ms)
+        self.explain_size.observe(explained)
+        if explain_ms is not None:
+            self.observe("ml_explain", explain_ms)
+        self.observe("ml", predict_ms + (explain_ms or 0.0))
 
     def stats(self, name: str) -> S.LatencyStats:
         return self.windows[name].stats()

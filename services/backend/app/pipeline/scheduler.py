@@ -20,6 +20,7 @@ from ..state.matched import matched_now
 from ..state.static import stop_ref
 from ..state.timefmt import floor_minute
 from .assemble import VisitPrediction, assemble, ml_items
+from .mlpass import run_ml
 from .prepare import VehicleInput, VehicleTask, prepare
 
 if TYPE_CHECKING:
@@ -78,19 +79,17 @@ class PipelineRunner:
         ]  # fmt: skip
 
     async def run_pass(self, t: datetime) -> None:
-        """Один проход: подготовка → батч в ml → прогнозы, инциденты, WS."""
+        """Один проход: подготовка → ml (прогноз всем, вклады рискованным) → инциденты, WS."""
         rt, epoch, t0 = self.rt, self.rt.session_epoch, time.perf_counter()
         self._last_pass_wall = rt.wall()
         tasks = await asyncio.to_thread(prepare, rt.static, self.inputs(), t, rt.typical)
-        items = ml_items(tasks)
-        rt.metrics.batch_size.observe(len(items))
-        ml = await rt.ml.predict(items) if items else None
-        if ml is not None and rt.ml.last_latency_ms is not None:
-            rt.metrics.observe("ml", rt.ml.last_latency_ms)
+        rt.metrics.batch_size.observe(len(ml_items(tasks)))
+        res = await run_ml(rt.ml, tasks, rt.book.active_targets())
+        rt.metrics.observe_ml(res.predict_ms, res.explain_ms, res.explained)
         if epoch != rt.session_epoch:
             return  # пока считали, началась новая сессия — результат устарел
         self.last_t = t
-        self.apply(tasks, ml, t)
+        self.apply(tasks, res.items, t)
         rt.emit("pass", t0)
 
     def apply(self, tasks: list[VehicleTask], ml, t: datetime) -> None:

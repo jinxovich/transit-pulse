@@ -53,6 +53,10 @@ class IncidentBook:
     def open_count(self) -> int:
         return len(self.active)
 
+    def active_targets(self) -> dict[str, str]:
+        """ТС → визит-цель активного инцидента."""
+        return {vid: self.meta[inc_id].visit_id for vid, inc_id in self.active.items()}
+
     def _store(self, kind: str, inc: S.Incident) -> Event:
         self.incidents[inc.id] = inc
         return kind, inc

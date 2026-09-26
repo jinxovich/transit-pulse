@@ -98,8 +98,17 @@ def feed_rows(rt: Runtime, rows: pd.DataFrame, wall: FakeWall, t_from: datetime)
         apply_frame(rt, wall.t, frame)
 
 
-def ml_transport(delay_add: float = 0.0, fail: bool = False, calls: list | None = None):
-    """Поддельный ML-сервис INTERFACES §4: ``delay = cur_dev + delay_add``."""
+def ml_transport(
+    delay_add: float = 0.0,
+    fail: bool = False,
+    calls: list | None = None,
+    bodies: list | None = None,
+    fail_explain: bool = False,
+):
+    """Поддельный ML-сервис INTERFACES §4: ``delay = cur_dev + delay_add``.
+
+    ``bodies`` — сюда пишутся тела ``/predict``; ``fail_explain`` — 500 на ``explain=true``.
+    """
 
     def handler(request: httpx.Request) -> httpx.Response:
         if calls is not None:
@@ -109,6 +118,12 @@ def ml_transport(delay_add: float = 0.0, fail: bool = False, calls: list | None 
         if request.url.path == "/health":
             return httpx.Response(200, json={"status": "ok", "model_version": "test-ml"})
         body = json.loads(request.content)
+        explain = body.get("explain", True)
+        if bodies is not None:
+            bodies.append(body)
+        if explain and fail_explain:
+            return httpx.Response(500, json={"detail": "shap boom"})
+        contrib = [{"feature": "cur_dev", "contribution_s": 30.0}] if explain else []
         items = []
         for it in body["items"]:
             cur = it["features"].get("cur_dev")
@@ -121,7 +136,7 @@ def ml_transport(delay_add: float = 0.0, fail: bool = False, calls: list | None 
                     "q90": d + 40,
                     "p_late": 0.9 if d > 120 else 0.1,
                     "expected_abs_error_s": 45.0,
-                    "contributions": [{"feature": "cur_dev", "contribution_s": 30.0}],
+                    "contributions": contrib,
                 }
             )
         return httpx.Response(200, json={"model_version": "test-ml", "latency_ms": 1.0,
