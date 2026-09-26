@@ -59,7 +59,7 @@ def real_traffic() -> pd.DataFrame:
 
 
 def settings(tmp: Path | None = None, **kw) -> Settings:
-    base = {"data_dir": RAW, "ml_url": DEAD_ML, "ndtp_enabled": False}
+    base = {"data_dir": RAW, "ml_url": DEAD_ML, "ndtp_enabled": False, "db_path": Path(":memory:")}
     if tmp is not None:
         base["models_dir"] = tmp
     return Settings(**{**base, **kw})

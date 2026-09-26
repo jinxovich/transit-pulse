@@ -155,3 +155,12 @@ def test_breaker_half_open_failure_reopens():
     assert br.allow()
     br.failure()
     assert not br.allow()
+
+
+@needs_data
+def test_sqlite_journal_records_predictions_and_incidents(red_run):
+    rt, _ = red_run
+    db = rt.db.conn
+    assert db.execute("SELECT count(*) FROM predictions").fetchone()[0] > 0
+    kinds = {k for (k,) in db.execute("SELECT DISTINCT kind FROM incident_events")}
+    assert "incident.opened" in kinds

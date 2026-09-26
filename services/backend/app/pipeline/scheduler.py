@@ -100,6 +100,9 @@ class PipelineRunner:
             for ev in self._incidents(rec, task, preds, t, can_alert):
                 rt.emit(*ev)
             rec.open_incident_id = rt.book.active.get(rec.vehicle_id)
+        rows = [(t.vehicle_id, rec.prediction) for t in tasks
+                if (rec := rt.store.vehicles.get(t.vehicle_id)) and rec.prediction]  # fmt: skip
+        rt.db.predictions(rt.clock.session_id or "", rows)
 
     def _update_record(
         self, rec: VehicleRecord, task: VehicleTask, preds: list[VisitPrediction], t: datetime
