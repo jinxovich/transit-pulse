@@ -1,0 +1,200 @@
+{
+  "run": {
+    "start": "2026-01-06T00:00:00",
+    "end": "2026-01-06T23:59:00",
+    "speed": 30.0,
+    "tr_ids": "all",
+    "path": "validate/traffic.csv → NDTP (replayer.source) → TCP IngestServer → apply_frame → PipelineRunner.run_pass → ML serve (ASGI) → IncidentBook",
+    "ingest": {
+      "frames_sent": 105931,
+      "packets_total": 105931,
+      "crc_errors": 0,
+      "parse_errors": 0,
+      "dropped": 0
+    }
+  },
+  "coverage": {
+    "n_labels": 353,
+    "n_found": 353,
+    "share": 1.0,
+    "n_ml": 353,
+    "n_fallback": 0,
+    "target_is_first_in_window": 0.9717,
+    "miss_reasons": {}
+  },
+  "horizon": {
+    "n_predictions": 28538,
+    "n_horizon_ok": 26336,
+    "horizon_ok_lead_in_window_share": 1.0,
+    "n_outside_window_flagged": 2202,
+    "outside_window_all_flagged_lead_gt_15": true,
+    "generated_before_planned_share": 1.0,
+    "generated_at_equals_pass_minute_share": 1.0,
+    "lead_min": {
+      "n": 26336,
+      "min": 11.0,
+      "p05": 11.0,
+      "p50": 13.0,
+      "mean": 13.0,
+      "p95": 15.0,
+      "max": 15.0
+    },
+    "lead_hist_by_minute": {
+      "(10,11]": 5268,
+      "(11,12]": 5267,
+      "(12,13]": 5269,
+      "(13,14]": 5267,
+      "(14,15]": 5265
+    },
+    "labels_minutes_from_forecast_to_actual_arrival": {
+      "n": 353,
+      "min": 6.7,
+      "p05": 8.83,
+      "p50": 12.12,
+      "mean": 12.49,
+      "p95": 16.89,
+      "max": 24.03
+    },
+    "labels_forecast_before_actual_share": 1.0
+  },
+  "accuracy": {
+    "n": 353,
+    "mae_stream_model": 29.39,
+    "mae_baseline_cur_dev_s": 93.36,
+    "mae_baseline_online_cur_dev": 117.14,
+    "mae_zero": 103.34,
+    "online_cur_dev_available_share": 0.8867
+  },
+  "parity": {
+    "n": 353,
+    "mean_abs_diff_s": 0.026,
+    "max_abs_diff_s": 0.05,
+    "share_within_1s": 1.0,
+    "mae_offline_stream_model": 29.39,
+    "mae_stream_same_points": 29.39,
+    "serving_mean_abs_diff_s": 0.026,
+    "features_mismatch": {},
+    "worst": [
+      {
+        "sample_id": "122048_1767684000",
+        "stream": 398.1,
+        "offline": 398.05
+      },
+      {
+        "sample_id": "122658_1767696900",
+        "stream": 282.8,
+        "offline": 282.75
+      },
+      {
+        "sample_id": "133957_1767685200",
+        "stream": -13.2,
+        "offline": -13.25
+      },
+      {
+        "sample_id": "133300_1767695400",
+        "stream": 31.8,
+        "offline": 31.75
+      },
+      {
+        "sample_id": "133957_1767723300",
+        "stream": 31.8,
+        "offline": 31.75
+      }
+    ]
+  },
+  "alerts": {
+    "incidents_opened": 241,
+    "lead_ge_10_share": 1.0,
+    "lead_in_window_share": 1.0,
+    "lead_min": {
+      "n": 241,
+      "min": 11.0,
+      "p05": 11.0,
+      "p50": 13.0,
+      "mean": 12.64,
+      "p95": 15.0,
+      "max": 15.0
+    },
+    "incident_precision_vs_schedule_fact": 0.5187,
+    "incidents_with_fact": 241,
+    "online_outcomes": {
+      "false_alarm": 125,
+      "hit": 115,
+      "pending": 1
+    },
+    "points_red_vs_late": {
+      "tp": 69,
+      "fp": 0,
+      "fn": 17,
+      "tn": 267,
+      "precision": 1.0,
+      "recall": 0.8023
+    },
+    "late_points_with_incident_on_target": 0.1628,
+    "late_trips_with_incident": 1.0,
+    "n_late_targets": 86,
+    "n_late_trips": 28
+  },
+  "latency": {
+    "passes": 1440,
+    "passes_with_predictions": 1362,
+    "pass_ms": {
+      "n": 1362,
+      "min": 54.07,
+      "p05": 122.15,
+      "p50": 263.83,
+      "mean": 254.02,
+      "p95": 365.95,
+      "max": 644.88
+    },
+    "ml_ms": {
+      "n": 1362,
+      "min": 32.6,
+      "p05": 49.96,
+      "p50": 116.99,
+      "mean": 115.31,
+      "p95": 179.79,
+      "max": 325.13
+    },
+    "preds_per_pass": {
+      "n": 1362,
+      "min": 1.0,
+      "p05": 7.0,
+      "p50": 22.0,
+      "mean": 20.95,
+      "p95": 31.0,
+      "max": 35.0
+    },
+    "run_wall_s": 359.2,
+    "sim_minutes_per_wall_s": 4.01,
+    "max_speed_without_skips": 164.0,
+    "modes": {
+      "LIVE": 1425,
+      "WARMING_UP": 15
+    }
+  },
+  "accuracy_honest": {
+    "scheme": "GroupKFold по (tr_id, 30-мин блок), повтор 0, клоны рядом с валидацией выброшены; признаки — снятые на потоке",
+    "n": 353,
+    "mae_stream_model_honest": 78.36,
+    "mae_stream_model_final_in_sample": 29.39,
+    "mae_baseline_cur_dev_s": 93.36,
+    "mae_baseline_online_cur_dev": 117.14,
+    "points_pred_gt_120_vs_late_honest": {
+      "tp": 38,
+      "fp": 18,
+      "fn": 48,
+      "tn": 249,
+      "precision": 0.6786,
+      "recall": 0.4419
+    },
+    "points_pred_gt_120_vs_late_final": {
+      "tp": 69,
+      "fp": 0,
+      "fn": 17,
+      "tn": 267,
+      "precision": 1.0,
+      "recall": 0.8023
+    }
+  }
+}
