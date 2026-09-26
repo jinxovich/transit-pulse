@@ -57,3 +57,20 @@ def test_find_archive_picks_zip_in_data_dir(tmp_path):
     assert find_archive(tmp_path) is None
     archive = _make_outer_zip(tmp_path / "any-name.zip")
     assert find_archive(tmp_path) == archive
+
+
+def test_main_succeeds_without_archive_when_dataset_already_extracted(tmp_path):
+    from scripts.data_prep import main
+
+    dest = tmp_path / "raw"
+    for name in REQUIRED_FILES:
+        (dest / name).parent.mkdir(parents=True, exist_ok=True)
+        (dest / name).write_text("col\n1\n")
+
+    assert main(["--src", str(tmp_path / "missing.zip"), "--dest", str(dest)]) == 0
+
+
+def test_main_fails_without_archive_and_without_extracted_dataset(tmp_path):
+    from scripts.data_prep import main
+
+    assert main(["--src", str(tmp_path / "missing.zip"), "--dest", str(tmp_path / "raw")]) == 1
