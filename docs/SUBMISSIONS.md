@@ -10,5 +10,6 @@ mae0 ≈ 108.1, baseline `cur_dev_s` ≈ 88.7, MAE_T ≈ 59.6, то есть sco
 |---|---|---|---|---|---|
 | v0 | `submissions/sub_v0_baseline.csv` | `cur_dev_s` (baseline организаторов) | 93.36 | — | 25.09 |
 | v1 | `submissions/sub_v1_lgbm.csv` | LightGBM L1 на остатке, 17 признаков, синтетика с весом 0.5, 5 seed | 63.62 (−31.9%) | — | 25.09 |
+| v1b | `submissions/sub_v1b_gru_lgbm.csv` | 0.6·GRU (последовательности, ONNX) + 0.4·LightGBM v1 | OOF 58.98 (GRU 60.88, LGBM 61.99, baseline 88.38) | — | 27.09 |
 
 Score на платформе вписываем после загрузки.
