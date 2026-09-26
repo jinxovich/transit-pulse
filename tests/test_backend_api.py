@@ -219,3 +219,15 @@ def test_status_not_resent_when_ml_breaker_flaps(tmp_path):
         client.portal.call(hub.check_status)
     statuses = [WS.validate_json(m) for m in sent]
     assert len(statuses) == 1 and statuses[0].data.ml_status == "down"
+
+
+def test_code_docs_served_or_hint(tmp_path):
+    docs = tmp_path / "html"
+    docs.mkdir()
+    (docs / "index.html").write_text("<h1>Transit Pulse docs</h1>", "utf-8")
+    for path, expected in ((docs, "Transit Pulse docs"), (tmp_path / "none", "не собрана")):
+        settings = Settings(data_dir=tmp_path, models_dir=tmp_path, ndtp_enabled=False,
+                            code_docs_dir=path)  # fmt: skip
+        with TestClient(create_app(Runtime(settings), background=False)) as client:
+            resp = client.get("/code-docs/")
+            assert resp.status_code == 200 and expected in resp.text

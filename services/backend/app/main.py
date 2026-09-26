@@ -5,7 +5,7 @@
     uv run uvicorn --app-dir services/backend app.main:app --port 8000
 
 Порты: HTTP ``8000`` (REST ``/api/v1``, WS ``/ws/v1/stream``, Swagger ``/docs``,
-Prometheus ``/metrics``) и NDTP TCP ``9201``.
+документация по коду ``/code-docs``, Prometheus ``/metrics``) и NDTP TCP ``9201``.
 """
 
 from __future__ import annotations
@@ -14,10 +14,12 @@ import asyncio
 import contextlib
 import logging
 from collections.abc import AsyncIterator
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import HTMLResponse, Response
+from fastapi.staticfiles import StaticFiles
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from .api import fleet, incidents, system
@@ -77,6 +79,24 @@ def _background(app: FastAPI, rt: Runtime) -> list[asyncio.Task]:
     return [asyncio.create_task(c) for c in coros]
 
 
+NO_DOCS_HTML = (
+    "<!doctype html><meta charset='utf-8'><title>Transit Pulse</title>"
+    "<p>Документация по коду не собрана: <code>uv run sphinx-build -b html docs/sphinx "
+    "docs/sphinx/_build/html</code>. Swagger API — <a href='/docs'>/docs</a>.</p>"
+)
+
+
+def _mount_code_docs(app: FastAPI, path: Path) -> None:
+    """Sphinx-документация на ``/code-docs`` (или страница-подсказка, если не собрана)."""
+    if (path / "index.html").is_file():
+        app.mount("/code-docs", StaticFiles(directory=path, html=True), name="code-docs")
+        return
+
+    @app.get("/code-docs", include_in_schema=False)
+    def no_docs() -> HTMLResponse:
+        return HTMLResponse(NO_DOCS_HTML)
+
+
 def create_app(runtime: Runtime | None = None, background: bool = True) -> FastAPI:
     """Собирает приложение; ``runtime`` и ``background`` подменяются в тестах."""
 
@@ -114,6 +134,8 @@ def create_app(runtime: Runtime | None = None, background: bool = True) -> FastA
     )
     for router in (system.router, fleet.router, incidents.router, internal_router, ws_router):
         app.include_router(router)
+
+    _mount_code_docs(app, settings.code_docs_dir)
 
     @app.get("/metrics", tags=["Система"], summary="Метрики Prometheus")
     def metrics(request: Request) -> Response:
