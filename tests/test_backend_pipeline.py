@@ -164,3 +164,20 @@ def test_sqlite_journal_records_predictions_and_incidents(red_run):
     assert db.execute("SELECT count(*) FROM predictions").fetchone()[0] > 0
     kinds = {k for (k,) in db.execute("SELECT DISTINCT kind FROM incident_events")}
     assert "incident.opened" in kinds
+
+
+def test_load_offline_reads_stream_model_cv_from_ml_metrics(tmp_path):
+    import json
+
+    from services.backend.app.alerts.quality import load_offline
+
+    (tmp_path / "metrics.json").write_text(json.dumps({
+        "submission": {"baseline_cur_dev": 88.4, "catboost_synthetic_mae": 67.1},
+        "stream": {"baseline_cur_dev": 114.1, "catboost_synthetic_mae": 77.8},
+    }))
+
+    offline = load_offline(tmp_path)
+
+    assert offline.cv_mae_baseline_s == 114.1
+    assert offline.cv_mae_model_s == 77.8
+    assert offline.improvement == round(1 - 77.8 / 114.1, 4)

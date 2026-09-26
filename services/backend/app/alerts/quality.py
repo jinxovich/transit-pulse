@@ -29,10 +29,18 @@ def load_offline(models_dir: Path) -> S.OfflineMetrics:
         data = json.loads(path.read_text("utf-8"))
     except (OSError, ValueError):
         return S.OfflineMetrics(cv_mae_baseline_s=0.0, cv_mae_model_s=0.0, improvement=0.0)
-    src = data.get("offline", data) if isinstance(data, dict) else {}
+    data = data if isinstance(data, dict) else {}
+    # Отчёт ML-сервиса: на потоке работает stream-модель — показываем её честное CV.
+    src = data.get("stream") or data.get("offline") or data
     src = src if isinstance(src, dict) else {}
-    base = _pick(src, "cv_mae_baseline_s", "mae_baseline", "test_mae_baseline", "baseline_mae")
-    model = _pick(src, "cv_mae_model_s", "mae_model", "test_mae_model", "model_mae")
+    base = _pick(
+        src, "baseline_cur_dev", "cv_mae_baseline_s", "mae_baseline", "test_mae_baseline",
+        "baseline_mae",
+    )
+    model = _pick(
+        src, "catboost_synthetic_mae", "cv_mae_model_s", "mae_model", "test_mae_model",
+        "model_mae",
+    )
     impr = _pick(src, "improvement", "test_improvement")
     if impr == 0.0 and base > 0:
         impr = round(1 - model / base, 4)
