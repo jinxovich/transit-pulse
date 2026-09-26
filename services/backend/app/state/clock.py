@@ -21,8 +21,9 @@ from .timefmt import fmt
 ClockState = Literal["running", "paused", "stopped"]
 NO_SESSION = "none"
 AUTO_SPEED = 1.0
-MIN_TOLERANCE_S = 60.0
-TOLERANCE_WALL_S = 5.0
+MIN_TOLERANCE_S = 30.0
+TOLERANCE_WALL_S = 1.0
+REWIND_IGNORE_WALL_S = 1.0
 
 
 @dataclass(frozen=True)
@@ -52,13 +53,20 @@ class SimClock:
     @property
     def has_session(self) -> bool:
         """Есть ли активная (не остановленная) сессия."""
-        return self.session_id is not None
+        return self.session_id is not None and self.state != "stopped"
 
     def now(self, wall: float) -> datetime:
-        """Текущее сим-время по формуле из INTERFACES §2."""
+        """Текущее сим-время по формуле из INTERFACES §2.
+
+        Во время прогрева часы не уходят дальше ``warmup_until``: на ×600 экстраполяция
+        до следующего сообщения replayer'а иначе проскочила бы на минуты вперёд.
+        """
         if self.state != "running":
             return self._wm
-        return self._wm + timedelta(seconds=max(wall - self._wall_at_wm, 0.0) * self.speed)
+        t = self._wm + timedelta(seconds=max(wall - self._wall_at_wm, 0.0) * self.speed)
+        if self.warmup_until is not None and self._wm < self.warmup_until < t:
+            return self.warmup_until
+        return t
 
     def _set_wm(self, sim: datetime, wall: float) -> None:
         self._wm, self._wall_at_wm = sim, wall
@@ -66,9 +74,15 @@ class SimClock:
     def apply(self, upd: SessionUpdate, wall: float) -> bool:
         """Применяет сообщение о сессии; ``True`` — началась новая сессия."""
         is_new = upd.session_id != self.session_id
-        # Часы replayer'а — эталон: экстраполяция на ×600 легко убегает вперёд на десятки
-        # сим-секунд, поэтому водяной знак всегда ставится по его sim_time.
-        self._set_wm(upd.sim_time, wall)
+        # Часы replayer'а — эталон. Мелкий откат (сетевая задержка heartbeat'а) игнорируем,
+        # чтобы sim_time в WS не шёл назад.
+        cur = self.now(wall)
+        small_rewind = timedelta(seconds=REWIND_IGNORE_WALL_S * self.speed)
+        keep = not is_new and self.state == "running" and upd.state == "running"
+        if keep and upd.sim_time <= cur <= upd.sim_time + small_rewind:
+            self._set_wm(cur, wall)
+        else:
+            self._set_wm(upd.sim_time, wall)
         self.session_id, self.speed, self.state = upd.session_id, upd.speed, upd.state
         self.warmup_until = upd.warmup_until
         self.auto = False
@@ -93,8 +107,12 @@ class SimClock:
         return (et - self.now(wall)).total_seconds() <= self.tolerance_s()
 
     def observe(self, et: datetime, wall: float) -> None:
-        """Пакет известного борта подтягивает водяной знак вперёд (никогда назад)."""
-        if self.state != "stopped" and self.accepts(et, wall) and et > self.now(wall):
+        """В авто-сессии (без replayer'а) часы идут за пакетами, вперёд и никогда назад.
+
+        При сессии replayer'а часы двигают только его сообщения: одиночный кадр-хвост
+        прошлой сессии или битое время не должны уводить часы вперёд.
+        """
+        if self.auto and self.state == "running" and et > self.now(wall):
             self._set_wm(et, wall)
 
     def in_warmup(self, wall: float) -> bool:

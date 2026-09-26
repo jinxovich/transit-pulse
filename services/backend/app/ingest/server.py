@@ -18,6 +18,7 @@ from .stats import DropOldestQueue, IngestStats
 
 log = logging.getLogger(__name__)
 READ_CHUNK = 65536
+RESULT_CRC_ERROR = 2
 
 
 class IngestServer:
@@ -74,6 +75,9 @@ class IngestServer:
         replies = []
         for frame in frames:
             self.stats.on_frame(frame, wall)
+            if not frame.crc_ok:  # битые данные в state не пускаем, терминал переотправит
+                replies.append(encode_result(frame, RESULT_CRC_ERROR))
+                continue
             if frame.nph_type == NPH_CONN_REQUEST:
                 self.stats.on_handshake(frame.unit_id)
             elif frame.nav is not None:

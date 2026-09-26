@@ -81,10 +81,15 @@ class VehicleRecord:
 
     def track_frame(self) -> pd.DataFrame:
         """Копия трека для пайплайна: колонки INTERFACES §3, отсортировано по ``et``."""
-        df = pd.DataFrame(list(self.points), columns=TRACK_COLUMNS)
-        df["et"] = pd.to_datetime(df["et"])
-        df["valid"] = df["valid"].astype(bool)
-        return df.sort_values("et", kind="stable").reset_index(drop=True)
+        return track_from_points(list(self.points))
+
+
+def track_from_points(points: list[tuple]) -> pd.DataFrame:
+    """Трек ``et, lon, lat, speed, heading, valid`` из точек буфера (сортировка по ``et``)."""
+    df = pd.DataFrame(points, columns=TRACK_COLUMNS)
+    df["et"] = pd.to_datetime(df["et"]).astype("datetime64[ns]")
+    df["valid"] = df["valid"].astype(bool)
+    return df.sort_values("et", kind="stable").reset_index(drop=True)
 
 
 def in_dataset_window(et: datetime) -> bool:

@@ -77,7 +77,11 @@ def _clean(features: dict[str, float]) -> dict[str, float | None]:
     return {k: (None if isinstance(v, float) and math.isnan(v) else v) for k, v in features.items()}
 
 
-def _parse_item(raw: dict) -> MlItem:
+def _parse_item(raw: dict) -> MlItem | None:
+    """Прогноз визита; ``None``, если в числах NaN/inf (для визита сработает эвристика)."""
+    nums = [raw.get(k) for k in ("delay_s", "q10", "q90", "p_late", "expected_abs_error_s")]
+    if any(v is not None and not math.isfinite(float(v)) for v in nums):
+        return None
     d = float(raw["delay_s"])
     return MlItem(
         id=str(raw["id"]),
@@ -131,7 +135,8 @@ class MlClient:
             resp = await self.http.post(f"{self.url}/predict", json=body)
             resp.raise_for_status()
             data = resp.json()
-            out = {it.id: it for it in map(_parse_item, data["items"])}
+            parsed = (_parse_item(raw) for raw in data["items"])
+            out = {it.id: it for it in parsed if it is not None}
         except (httpx.HTTPError, KeyError, ValueError, TypeError) as exc:
             log.warning("ml /predict не ответил: %s", exc)
             self.breaker.failure()
@@ -150,7 +155,7 @@ class MlClient:
             data = resp.json()
             self.health_ok = data.get("status", "ok") == "ok"
             self.model_version = str(data.get("model_version", self.model_version))
-        except (httpx.HTTPError, ValueError):
+        except Exception:  # noqa: BLE001 — фоновая проверка не должна умирать
             self.health_ok = False
 
     def mode(self) -> S.ModelMode:

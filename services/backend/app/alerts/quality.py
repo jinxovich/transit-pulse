@@ -30,6 +30,7 @@ def load_offline(models_dir: Path) -> S.OfflineMetrics:
     except (OSError, ValueError):
         return S.OfflineMetrics(cv_mae_baseline_s=0.0, cv_mae_model_s=0.0, improvement=0.0)
     src = data.get("offline", data) if isinstance(data, dict) else {}
+    src = src if isinstance(src, dict) else {}
     base = _pick(src, "cv_mae_baseline_s", "mae_baseline", "test_mae_baseline", "baseline_mae")
     model = _pick(src, "cv_mae_model_s", "mae_model", "test_mae_model", "model_mae")
     impr = _pick(src, "improvement", "test_improvement")
@@ -58,7 +59,7 @@ class QualityJournal:
         self.trip_of: dict[tuple[str, str], int] = {}
         self.errors: list[float] = []
         self.evaluated: set[tuple[str, str]] = set()
-        self.late_targets: list[tuple[str, int]] = []
+        self.late_targets: set[tuple[str, int]] = set()
 
     def record(self, vehicle_id: str, visit_id: str, trip: int, predicted_s: float) -> None:
         """Запоминает прогноз по цели (только ``horizon_ok``)."""
@@ -77,7 +78,7 @@ class QualityJournal:
             self.evaluated.add(key)
             self.errors.extend(abs(p - actual) for p in preds)
             if actual > self.th.red_delay_s:
-                self.late_targets.append((vehicle_id, self.trip_of[key]))
+                self.late_targets.add((vehicle_id, self.trip_of[key]))
 
     def contract(self, book: IncidentBook) -> S.QualityMetrics:
         """Ответ ``GET /api/v1/metrics/quality``."""

@@ -34,6 +34,7 @@ class JournalDb:
         try:
             path.parent.mkdir(parents=True, exist_ok=True)
             self.conn = sqlite3.connect(path, check_same_thread=False)
+            self.conn.execute("PRAGMA synchronous=OFF")  # журнал вспомогательный, не fsync
             self.conn.executescript(SCHEMA)
         except (OSError, sqlite3.Error) as exc:
             log.warning("Журнал SQLite %s отключён: %s", path, exc)
