@@ -26,12 +26,23 @@ def real_positions(meta: pd.DataFrame) -> np.ndarray:
     return np.flatnonzero(~meta["synthetic"].to_numpy())
 
 
-def make_folds(meta: pd.DataFrame) -> list[np.ndarray]:
+def make_folds(meta: pd.DataFrame, scheme: str = "block") -> list[np.ndarray]:
     """Номер фолда для каждой реальной точки, по одному массиву на повтор.
 
-    Группы (блоки) перемешиваются своим seed на повтор и раздаются по фолдам по кругу.
+    ``block`` — группы = подряд идущие 5-минутные точки ТС (наша схема, честное CV);
+    ``seq`` — схема GRU-ветки (:func:`services.ml.app.seq_data.fold_ids` по
+    ``(tr_id, floor(T, 30 мин))``), чтобы OOF разных моделей стыковались для ансамбля.
+    Группы перемешиваются своим seed на повтор и раздаются по фолдам по кругу.
     """
-    groups = meta["block"].to_numpy()[real_positions(meta)]
+    real = meta.iloc[real_positions(meta)]
+    if scheme == "seq":
+        from services.ml.app.seq_data import fold_ids, group_key
+
+        groups = group_key(real).reset_index(drop=True)
+        return [fold_ids(groups, r, N_SPLITS) for r in range(REPEATS)]
+    if scheme != "block":
+        raise ValueError(f"неизвестная схема фолдов {scheme}")
+    groups = real["block"].to_numpy()
     uniq = np.unique(groups)
     out = []
     for r in range(REPEATS):
@@ -63,7 +74,8 @@ def allowed_synthetic(meta: pd.DataFrame, val_pos: np.ndarray, sources: dict[int
 
 
 def run_cv(fit_predict: FitPredict, x: pd.DataFrame, y_res: np.ndarray, meta: pd.DataFrame,
-           syn_weight: float, sources: dict[int, int], honest: bool = True) -> np.ndarray:
+           syn_weight: float, sources: dict[int, int], honest: bool = True,
+           scheme: str = "block") -> np.ndarray:
     """OOF-прогнозы остатка на реальных точках: массив (повтор, n_real, ...).
 
     :param fit_predict: ``(x_tr, y_tr, w_tr, x_val) -> прогноз`` (ось 0 — точки).
@@ -71,7 +83,7 @@ def run_cv(fit_predict: FitPredict, x: pd.DataFrame, y_res: np.ndarray, meta: pd
     """
     real = real_positions(meta)
     oof = None
-    for r, fold_ids in enumerate(make_folds(meta)):
+    for r, fold_ids in enumerate(make_folds(meta, scheme)):
         for f in range(N_SPLITS):
             val, tr_real = real[fold_ids == f], real[fold_ids != f]
             syn = allowed_synthetic(meta, val, sources, honest) if syn_weight > 0 else []

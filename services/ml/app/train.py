@@ -5,7 +5,8 @@
     uv run python -m services.ml.app.train
 
 Артефакты в ``models/``: ``catboost_submission.cbm``, ``catboost_stream.cbm``,
-``feature_list.json``, ``metrics.json``, ``oof_catboost.csv``, ``cv_folds.csv``.
+``feature_list.json``, ``metrics.json``, ``oof_catboost_honest.csv``, ``cv_folds.csv``
+(OOF для ансамбля на фолдах GRU — ``services.ml.app.ensemble`` → ``oof_catboost.csv``).
 """
 
 from __future__ import annotations
@@ -58,14 +59,14 @@ def _fold_best_iters(oof, base, y, folds) -> list[int]:
     return out
 
 
-def catboost_cv(x, base, y_all, meta, sources, weight, honest=True) -> dict:
+def catboost_cv(x, base, y_all, meta, sources, weight, honest=True, scheme="block") -> dict:
     """CV CatBoost с данным весом синтетики: MAE, лучшие итерации, OOF на лучшей стадии."""
     real = cv.real_positions(meta)
-    oof = cv.run_cv(_cb_fit_predict, x, y_all - base, meta, weight, sources, honest)
+    oof = cv.run_cv(_cb_fit_predict, x, y_all - base, meta, weight, sources, honest, scheme)
     b, y = base[real], y_all[real]
     curve = _curve(oof, b, y)
     stage = int(np.argmin(curve))
-    best = _fold_best_iters(oof, b, y, cv.make_folds(meta))
+    best = _fold_best_iters(oof, b, y, cv.make_folds(meta, scheme))
     q = oof[:, :, stage, :]
     return {"mae": float(curve[stage]), "iters_common": int(M.stage_iterations(len(curve))[stage]),
             "iters_fold_mean": float(np.mean(best)), "oof": q}
@@ -158,7 +159,7 @@ def save_oof(table, q, lgb_oof, blend_w) -> None:
         folds.append(pd.DataFrame({"sample_id": meta["sample_id"].to_numpy(),
                                    "block": meta["block"].to_numpy(), "repeat": r,
                                    "fold": fold_ids}))
-    pd.concat(rows).round(3).to_csv(MODELS / "oof_catboost.csv", index=False)
+    pd.concat(rows).round(3).to_csv(MODELS / "oof_catboost_honest.csv", index=False)
     pd.concat(folds).to_csv(MODELS / "cv_folds.csv", index=False)
 
 

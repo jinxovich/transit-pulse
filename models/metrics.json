@@ -109,5 +109,57 @@
       "coverage_q10_q90_scaled": 0.8009817045961625
     },
     "final_iterations": 1613
+  },
+  "ensemble": {
+    "folds": "seq_data.fold_ids: GroupKFold(5)x3 по (tr_id, floor(T,30мин))",
+    "mode": "наивный (синтетика 0.5 без clone guard) — как OOF GRU",
+    "n_real_points": 1494,
+    "single_mae": {
+      "catboost": 52.05,
+      "lgbm": 59.17,
+      "gru": 60.88,
+      "lgbm_v1": 61.99
+    },
+    "weights": {
+      "catboost": 0.85,
+      "lgbm": 0.0,
+      "gru": 0.15,
+      "lgbm_v1": 0.0
+    },
+    "ensemble_mae": 51.85,
+    "residual_corr": {
+      "catboost": {
+        "catboost": 1.0,
+        "lgbm": 0.938,
+        "gru": 0.812,
+        "lgbm_v1": 0.908
+      },
+      "lgbm": {
+        "catboost": 0.938,
+        "lgbm": 1.0,
+        "gru": 0.856,
+        "lgbm_v1": 0.969
+      },
+      "gru": {
+        "catboost": 0.812,
+        "lgbm": 0.856,
+        "gru": 1.0,
+        "lgbm_v1": 0.859
+      },
+      "lgbm_v1": {
+        "catboost": 0.908,
+        "lgbm": 0.969,
+        "gru": 0.859,
+        "lgbm_v1": 1.0
+      }
+    },
+    "catboost_gru": {
+      "weights": {
+        "catboost": 0.85,
+        "gru": 0.15
+      },
+      "mae": 51.85
+    },
+    "catboost_iters": 2000
   }
 }

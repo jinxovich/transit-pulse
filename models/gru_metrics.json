@@ -77,7 +77,14 @@
   },
   "ensemble": {
     "catboost": {
-      "status": "oof_catboost.csv не найден — запустите scripts.ensemble_weights позже"
+      "status": "ok",
+      "n_points": 4482,
+      "mae_other": 52.05,
+      "mae_gru": 60.88,
+      "best_w_gru": 0.15,
+      "mae_ensemble": 51.85,
+      "gain_vs_other": 0.2,
+      "corr_residuals": 0.812
     },
     "proxy_lightgbm_quick_v1": {
       "status": "ok",
@@ -91,7 +98,7 @@
     }
   },
   "gain": {
-    "vs_catboost": "не оценён (CatBoost: нет OOF)",
+    "vs_catboost": "дал: CatBoost 52.05 → ансамбль 51.85 (w_gru=0.15)",
     "vs_lightgbm_quick_v1": "дал: LightGBM quick_v1 61.99 → ансамбль 58.98 (w_gru=0.6)"
   },
   "cv_real_only_training": {
