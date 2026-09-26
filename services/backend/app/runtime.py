@@ -73,7 +73,6 @@ class Runtime:
             self.data_error = f"Ошибка чтения данных из {settings.data_dir}: {exc}"
             return None
 
-    # ------------------------------------------------------------------ события
     def emit(self, kind: str, payload: object = None) -> None:
         """Событие для WS-хаба (``session``, ``incident.*``, ``pass``)."""
         for fn in self.listeners:
@@ -83,7 +82,6 @@ class Runtime:
         if kind.startswith("incident.") and isinstance(payload, S.Incident):
             self.db.incident(self.clock.session_id or "", kind, payload, payload.updated_at)
 
-    # ------------------------------------------------------------------ сессии
     def sim_now(self) -> datetime:
         return self.clock.now(self.wall())
 
@@ -111,7 +109,6 @@ class Runtime:
         self.session_wall = self.wall()
         self.session_epoch += 1
 
-    # ------------------------------------------------------------ состояние ТС
     def is_stale(self, rec: VehicleRecord, now: datetime, wall: float) -> bool:
         """Давно нет данных: для неопознанных — по настенным часам, иначе по сим-времени."""
         if rec.kind == "unknown":
@@ -154,7 +151,6 @@ class Runtime:
             if old and vid not in self.book.active:
                 self.store.remove(vid)
 
-    # --------------------------------------------------------- статус и KPI
     def mode(self) -> tuple[S.StreamMode, str | None]:
         """Режим системы и пояснение для баннера."""
         return compute_mode(self.clock, self._mode_inputs())
@@ -206,7 +202,6 @@ class Runtime:
             ingest_pps=self.stats.pps(self.wall()),
         )
 
-    # ------------------------------------------------------------- инциденты
     def ack(self, inc_id: str, req: S.AckRequest) -> S.Incident | None:
         """Реакция диспетчера; событие уходит в WS сразу."""
         ev = self.book.ack(inc_id, req, self.sim_now())

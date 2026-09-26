@@ -2,7 +2,7 @@ import type { Map as MlMap } from "maplibre-gl";
 import type { RiskLevel, RiskColors } from "@contract";
 
 const SIZE = 36; // размер иконки в CSS-пикселях
-const PR = 2; // рисуем в 2 раза детальнее чётко на Retina
+const PR = 2; // двойная плотность пикселей: чёткие иконки на Retina
 
 const SHAPES: Record<RiskLevel, string> = {
     red: "M 0 -10 L 9.5 7.5 L -9.5 7.5 Z",
@@ -23,10 +23,9 @@ const SHAPES: Record<RiskLevel, string> = {
     canvas.width = canvas.height = SIZE * PR;
     const ctx = canvas.getContext("2d")!;
     ctx.scale(PR, PR);
-    ctx.translate(SIZE / 2, SIZE / 2); // (0, 0) - центр холста
-    ctx.globalAlpha = stale ? 0.4 : 1; // нет свежих данных 
+    ctx.translate(SIZE / 2, SIZE / 2);
+    ctx.globalAlpha = stale ? 0.4 : 1; // нет свежих данных
 
-    // Клюв
     if (heading) {
         const top = TOP[risk];
         ctx.beginPath();

@@ -93,8 +93,6 @@ class ReplayEngine:
             return day_end
         return min(day_end, self.preset_start + self.settings.loop_hours * 3600)
 
-    # ------------------------------------------------------------------ жизненный цикл
-
     async def start(self) -> None:
         """Поднимает соединения, воркеры и (при ``REPLAY_AUTOSTART``) воспроизведение."""
         self._tasks = [asyncio.create_task(link.run()) for link in self.links]
@@ -123,8 +121,6 @@ class ReplayEngine:
             with contextlib.suppress(asyncio.CancelledError):
                 await task
         await self.reporter.aclose()
-
-    # ------------------------------------------------------------------ управление
 
     def begin(self, target: float) -> None:
         """Новая сессия: прогрев с ``target − warmup`` до ``target``, затем основная скорость."""
@@ -163,8 +159,6 @@ class ReplayEngine:
         if not self.day_start <= target < self.loop_end:
             raise ValueError(f"seek_to вне [{to_iso(self.day_start)}, {to_iso(self.loop_end)})")
         return target
-
-    # ------------------------------------------------------------------ ход времени
 
     def tick(self) -> int:
         """Отправляет все точки с ``ts <= sim``; возвращает число поставленных в очередь."""
@@ -212,8 +206,6 @@ class ReplayEngine:
             await asyncio.sleep(self.settings.heartbeat_s)
             if self.session_id:
                 self.report()
-
-    # ------------------------------------------------------------------ состояние
 
     def session_payload(self) -> dict[str, Any]:
         """Тело ``POST /internal/sim/session`` (INTERFACES §2)."""

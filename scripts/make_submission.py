@@ -1,8 +1,9 @@
 """Сабмит v2: взвешенный ансамбль по OOF (``models/metrics.json`` → ``ensemble.weights``).
 
 Компоненты: CatBoost (``models/catboost_submission.cbm``), LightGBM на наших признаках
-(обучается здесь на train+test), GRU (``models/pred_validate_gru.csv`` из ветки GRU),
-LightGBM v1 (``submissions/sub_v1_lgbm.csv``). Берутся только компоненты с ненулевым весом.
+(обучается здесь на train+test), GRU (``models/pred_validate_gru.csv`` из
+``scripts/train_gru.py``), LightGBM v1 (``submissions/sub_v1_lgbm.csv``).
+Берутся только компоненты с ненулевым весом.
 
 Для validate используются только ``validate/schedule_plan.csv``, ``validate/traffic.csv``
 (``event_time <= T`` — фильтр внутри ``point_features``) и ``cur_dev_s`` из ``points.csv``.

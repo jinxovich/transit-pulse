@@ -66,9 +66,6 @@ class LineString(Contract):
     coordinates: list[tuple[float, float]]
 
 
-# --------------------------------------------------------------------------- сеть
-
-
 class Stop(Contract):
     """Остановка (физическая точка), общая для всех плановых прибытий."""
 
@@ -105,9 +102,6 @@ class Network(Contract):
     routes: list[Route]
     segments: list[NetworkSegment]
     bbox: tuple[float, float, float, float] = Field(description="[minLon, minLat, maxLon, maxLat]")
-
-
-# ---------------------------------------------------------------------- прогнозы
 
 
 class StopRef(Contract):
@@ -159,9 +153,6 @@ class VehicleState(Contract):
     prediction: Prediction | None
     risk_level: RiskLevel
     open_incident_id: str | None
-
-
-# ---------------------------------------------------------------------- инциденты
 
 
 class Evidence(Contract):
@@ -232,9 +223,6 @@ class Incident(Contract):
     outcome: IncidentOutcome
 
 
-# ------------------------------------------------------------------ KPI и статус
-
-
 class RiskCounts(Contract):
     green: int
     yellow: int
@@ -298,9 +286,6 @@ class AppConfig(Contract):
     dataset_day: str = "2026-01-06"
     sim_speed: float
     session_id: str
-
-
-# --------------------------------------------------------------- детали ТС и метрики
 
 
 class StopTimelineItem(Contract):
@@ -437,8 +422,6 @@ class ReplayControl(Contract):
     seek_to: NaiveTime | None = None
 
 
-# ------------------------------------------------------------------------ what-if
-
 WhatIfAction = Literal["hold_at_stop", "shorten_dwell", "skip_layover", "add_reserve"]
 """Упреждающая мера: ``hold_at_stop`` — придержать на остановке N мин; ``shorten_dwell`` —
 сократить отстой на конечной на N мин; ``skip_layover`` — выпустить без отстоя;
@@ -494,9 +477,6 @@ class WhatIfResult(Contract):
     delta_delay_s: float = Field(description="Изменение прогноза задержки на цели, c (− лучше)")
     delta_p_late: float = Field(description="Изменение вероятности опоздания на цели")
     stops: list[WhatIfStop] = Field(description="Остановки окна (T+10, T+15] и ближайших 60 мин")
-
-
-# --------------------------------------------------------------------- WebSocket
 
 
 class WsBase(Contract):

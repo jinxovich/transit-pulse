@@ -44,7 +44,6 @@ class WsHub:
         self._status_key: tuple | None = None
         rt.listeners.append(self.on_event)
 
-    # --------------------------------------------------------------- конверты
     def _env(self) -> dict:
         return {"session_id": self.rt.clock.session_id or NO_SESSION,
                 "sim_time": fmt(self.rt.sim_now())}  # fmt: skip
@@ -84,7 +83,6 @@ class WsHub:
                     q.get_nowait()
                 q.put_nowait(None)
 
-    # ---------------------------------------------------------------- события
     def on_event(self, kind: str, payload) -> None:
         """Слушатель событий :class:`Runtime`."""
         if kind == "session":
@@ -128,7 +126,6 @@ class WsHub:
             self._status_key = key
             self.broadcast(self.message("system.status", st))
 
-    # ------------------------------------------------------------ фоновый цикл
     async def run(self) -> None:
         """Периодические сообщения: дельты 1 Гц, KPI 2 с, статус, ping 10 с."""
         tick = 0

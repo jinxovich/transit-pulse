@@ -24,9 +24,6 @@ BEFORE = {"cur_dev": 300.0, "gps_dev": 240.0, "eta_dev": float("nan"), "spd5": 1
           "trip_break_between": 1.0, "max_gap_between": 4.0}  # fmt: skip
 
 
-# ---------------------------------------------------------------- меры как признаки
-
-
 def test_measure_defaults_and_explicit_value():
     assert measure_of(S.WhatIfRequest(vehicle_id="1", action="hold_at_stop")).minutes == 2.0
     assert measure_of(S.WhatIfRequest(vehicle_id="1", action="shorten_dwell")).minutes == 3.0
@@ -68,9 +65,6 @@ def test_guard_keeps_measures_monotonic():
     assert guard(cut, (60.0, 0.3), (-40.0, 0.1)) == (0.0, 0.1)  # не раньше графика
     assert guard(cut, (6.0, 0.3), (18.0, 0.4)) == (6.0, 0.3)  # не хуже, чем без меры
     assert guard(cut, (-30.0, 0.1), (-50.0, 0.1)) == (-30.0, 0.1)
-
-
-# ------------------------------------------------------------------------- REST
 
 
 @pytest.fixture(scope="module")

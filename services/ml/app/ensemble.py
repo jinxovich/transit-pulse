@@ -1,6 +1,6 @@
 """Ансамбль для сабмита: веса CatBoost / LightGBM / GRU / LightGBM-v1 по OOF на общих фолдах.
 
-Фолды — схема GRU-ветки (``cv.make_folds(scheme="seq")``), чтобы OOF всех моделей
+Фолды — схема фолдов GRU (``cv.make_folds(scheme="seq")``), чтобы OOF всех моделей
 стыковались по ``(sample_id, fold_repeat)``. Режим — «наивный» (синтетика без clone guard),
 как у OOF GRU: для лидерборда он и релевантен (клоны validate-блоков реально лежат в train,
 организаторы разрешают на них учиться). Честные цифры (clone guard) остаются в

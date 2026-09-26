@@ -30,7 +30,7 @@ def make_folds(meta: pd.DataFrame, scheme: str = "block") -> list[np.ndarray]:
     """Номер фолда для каждой реальной точки, по одному массиву на повтор.
 
     ``block`` — группы = подряд идущие 5-минутные точки ТС (наша схема, честное CV);
-    ``seq`` — схема GRU-ветки (:func:`services.ml.app.seq_data.fold_ids` по
+    ``seq`` — схема фолдов GRU (:func:`services.ml.app.seq_data.fold_ids` по
     ``(tr_id, floor(T, 30 мин))``), чтобы OOF разных моделей стыковались для ансамбля.
     Группы перемешиваются своим seed на повтор и раздаются по фолдам по кругу.
     """

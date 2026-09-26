@@ -36,8 +36,6 @@ const fixtures = {
   ingest: load("ingest_stats.json"),
 };
 const baseSimSpeed = fixtures.config.sim_speed;
-
-// ------------------------------------------------------------------ состояние
 const state = {
   sessionNo: 1,
   sessionId: "mock-0001",
@@ -110,8 +108,6 @@ function schedule() {
   timer = setInterval(() => state.paused || stepFrame(), 1000 / state.speed);
 }
 schedule();
-
-// ------------------------------------------------------------------ WebSocket
 const clients = new Set();
 
 function encodeFrame(text) {
@@ -187,8 +183,6 @@ function upgrade(req, socket) {
   clients.add(socket);
   socket.write(encodeFrame(JSON.stringify(snapshot())));
 }
-
-// ----------------------------------------------------------------------- REST
 function send(res, status, body) {
   res.writeHead(status, {
     "Content-Type": "application/json; charset=utf-8",

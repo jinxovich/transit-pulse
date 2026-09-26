@@ -91,7 +91,6 @@ const DRAW_ORDER: Record<RiskLevel, number> = { red: 5, yellow: 4, early: 3, gre
     const config = useQuery({ queryKey: ["config"], queryFn: fetchConfig, staleTime: Infinity });
     const segments = useQuery({ queryKey: ["segments-risk"], queryFn: fetchSegmentsRisk, refetchInterval: 10_000 });
 
-    //Создаём карту 
     useEffect(() => {
         let cancelled = false;
         let map: maplibregl.Map | null = null;
@@ -129,7 +128,6 @@ const DRAW_ORDER: Record<RiskLevel, number> = { red: 5, yellow: 4, early: 3, gre
         };
     }, []);
 
-    // Рисуем маршруты
     useEffect(() => {
         const map = mapRef.current;
         const net = network.data;
@@ -158,7 +156,6 @@ const DRAW_ORDER: Record<RiskLevel, number> = { red: 5, yellow: 4, early: 3, gre
         const [minLon, minLat, maxLon, maxLat] = net.bbox;
         map.fitBounds([[minLon, minLat], [maxLon, maxLat]], { padding: 40, duration: 0 });
     }, [ready, network.data]);
-    // Слой ТС и подписка на поток
 useEffect(() => {
     const map = mapRef.current;
     const colors = config.data?.colors;
@@ -182,7 +179,6 @@ useEffect(() => {
                 },
             });
         }
-    // Подсказка при наведении
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 14, className: "tt" });
     let hoveredId: string | null = null;
 
@@ -230,7 +226,6 @@ useEffect(() => {
     };
     return unsubscribe;
     }, [ready, config.data]);
-      // Проблемные перегоны
     useEffect(() => {
         const map = mapRef.current;
         const net = network.data;

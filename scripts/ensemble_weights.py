@@ -5,8 +5,6 @@
 повторам и стыкуем по ``sample_id``. Прогноз ансамбля ``w·gru + (1−w)·catboost``,
 ``w`` — по сетке 0..1 с шагом 0.05.
 
-Если ``models/oof_catboost.csv`` нет, скрипт пробует взять его из ветки ``feat/ml``.
-
 Запуск::
 
     uv run python -m scripts.ensemble_weights [--gru models/oof_gru.csv] [--catboost PATH]
@@ -16,9 +14,7 @@
 from __future__ import annotations
 
 import argparse
-import io
 import json
-import subprocess
 import sys
 from pathlib import Path
 
@@ -27,17 +23,11 @@ import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GRID = np.round(np.linspace(0.0, 1.0, 21), 2)
-GIT_SOURCE = "feat/ml:models/oof_catboost.csv"
 
 
 def _read_catboost(path: Path) -> pd.DataFrame | None:
-    """OOF CatBoost из файла или из ветки ``feat/ml`` (``None``, если нигде нет)."""
-    if path.exists():
-        return pd.read_csv(path)
-    res = subprocess.run(
-        ["git", "show", GIT_SOURCE], cwd=REPO_ROOT, capture_output=True, text=True, check=False
-    )
-    return pd.read_csv(io.StringIO(res.stdout)) if res.returncode == 0 else None
+    """OOF CatBoost из файла (``None``, если файла нет)."""
+    return pd.read_csv(path) if path.exists() else None
 
 
 def _align(gru: pd.DataFrame, cb: pd.DataFrame) -> pd.DataFrame:

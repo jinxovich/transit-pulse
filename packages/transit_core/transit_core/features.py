@@ -27,7 +27,7 @@ import pandas as pd
 from transit_core.track import to_xy
 
 FEATURES: list[str] = [
-    # A
+    # расписание и подсказка
     "cur_dev",
     "lead",
     "hour_sin",
@@ -41,7 +41,7 @@ FEATURES: list[str] = [
     "plan_run",
     "since_last_plan",
     "trip_progress",
-    # B
+    # GPS-трек
     "stale",
     "stale_valid",
     "invalid15",
@@ -55,7 +55,7 @@ FEATURES: list[str] = [
     "gps_dist",
     "gps_dev_trend",
     "dist_tgt",
-    # C
+    # ETA
     "remain_m",
     "eta_dev",
 ]

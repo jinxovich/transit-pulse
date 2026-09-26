@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-/** что выбрал диспетчер   */
+/** Выбор диспетчера: открытая карточка инцидента. */
 interface UiState {
     selectedIncidentId: string | null;
     selectIncident: (id: string | null) => void;

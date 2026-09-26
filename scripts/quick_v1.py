@@ -1,7 +1,7 @@
 """Быстрая модель v1 (LightGBM) для первого сабмита.
 
-Временный скрипт: он закрепляет score на лидерборде в первый вечер, пока
-основной пайплайн (``transit_core.features`` + CatBoost) в работе.
+Воспроизводит сабмиты v0 (baseline ``cur_dev_s``) и v1. Основной пайплайн —
+``transit_core.features`` + CatBoost (``services/ml``).
 
 Правило честности соблюдается так:
 
@@ -169,7 +169,6 @@ def main() -> int:
     cols = list(x_train.columns)
     x_test, x_val = x_test.reindex(columns=cols), x_val.reindex(columns=cols)
 
-    # Оценка: учимся на train, проверяем на test (реальные ТС).
     y_train = (lb_train["target_delay_s"] - lb_train["cur_dev_s"]).to_numpy()
     w_train = _weights(lb_train, tr_traffic)
     pred_test = lb_test["cur_dev_s"] + fit_predict(x_train, y_train, w_train, x_test)
@@ -179,7 +178,6 @@ def main() -> int:
     gain = 1 - mae_model / mae_base
     print(f"test: baseline MAE {mae_base:.2f} -> v1 MAE {mae_model:.2f} ({gain:.1%})")
 
-    # Финал: train + test вместе, прогноз на validate.
     x_all = pd.concat([x_train, x_test], ignore_index=True)
     y_all = np.concatenate([y_train, (y_test - lb_test["cur_dev_s"]).to_numpy()])
     w_all = np.concatenate([w_train, np.ones(len(lb_test))])
