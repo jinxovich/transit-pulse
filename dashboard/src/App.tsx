@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import {fetchConfig} from "./api/config"
 import { startStream } from "./api/ws";
 import { TopBar } from "./features/topbar/TopBar";
-import {MapView} from "./features/map/MapView"
-
+import {MapView} from "./features/map/MapView";
+import { IncidentFeed } from "./features/incidents/IncidentFeed";
 
 export default function App() {
   useEffect(() => startStream(), []);
@@ -31,7 +31,7 @@ export default function App() {
           <MapView/>
         </div>
         <aside className="side">
-          <p className="placeholder">Здесь будет лента инцидентов</p>
+          <IncidentFeed/>
         </aside>
       </main>
     </div>

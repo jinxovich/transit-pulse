@@ -167,58 +167,56 @@ useEffect(() => {
     if (!map.getSource("vehicles")) {
         map.addSource("vehicles", { type: "geojson", data: vehiclesToGeoJson(useStream.getState().vehicles) });
         map.addLayer({
-        id: "vehicles",
-        type: "symbol",
-        source: "vehicles",
-        layout: {
-            "icon-image": ["get", "icon"],
-            "icon-rotate": ["get", "heading"],
-            "icon-rotation-alignment": "map",
-            "icon-allow-overlap": true,
-            "icon-ignore-placement": true,
-            "symbol-sort-key": ["get", "order"],
-            "icon-size": ["interpolate", ["linear"], ["zoom"], 9, 0.8, 14, 1.1],
-            },
+            id: "vehicles",
+            type: "symbol",
+            source: "vehicles",
+            layout: {
+                "icon-image": ["get", "icon"],
+                "icon-rotate": ["get", "heading"],
+                "icon-rotation-alignment": "map",
+                "icon-allow-overlap": true,
+                "icon-ignore-placement": true,
+                "symbol-sort-key": ["get", "order"],
+                "icon-size": ["interpolate", ["linear"], ["zoom"], 9, 0.8, 14, 1.1],
+                },
             });
         }
-
-    // Подписка в обход React: новые ТС сразу в карту, без перерисовки компонента
-        // Подсказка при наведении
+    // Подсказка при наведении
     const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 14, className: "tt" });
     let hoveredId: string | null = null;
 
     const showPopup = () => {
-        const { vehicles, simTime } = useStream.getState();
-        const v = hoveredId ? vehicles[hoveredId] : undefined;
-        if (!v || v.lon == null || v.lat == null) return popup.remove();
-        popup.setLngLat([v.lon, v.lat]).setHTML(tooltipHtml(v, simTime)).addTo(map);
+            const { vehicles, simTime } = useStream.getState();
+            const v = hoveredId ? vehicles[hoveredId] : undefined;
+            if (!v || v.lon == null || v.lat == null) return popup.remove();
+            popup.setLngLat([v.lon, v.lat]).setHTML(tooltipHtml(v, simTime)).addTo(map);
         };
         const onMove = (e: maplibregl.MapLayerMouseEvent) => {
-        map.getCanvas().style.cursor = "pointer";
-        hoveredId = e.features?.[0]?.properties?.id ?? null;
-        showPopup();
+            map.getCanvas().style.cursor = "pointer";
+            hoveredId = e.features?.[0]?.properties?.id ?? null;
+            showPopup();
         };
         const onLeave = () => {
-        map.getCanvas().style.cursor = "";
-        hoveredId = null;
-        popup.remove();
+            map.getCanvas().style.cursor = "";
+            hoveredId = null;
+            popup.remove();
         };
         map.on("mousemove", "vehicles", onMove);
         map.on("mouseleave", "vehicles", onLeave);
 
         // Подписка в обход React: новые ТС сразу в карту, без перерисовки компонента
         const unsubscribe = useStream.subscribe((state, prev) => {
-        if (state.vehicles === prev.vehicles) return;
-        const source = map.getSource("vehicles") as maplibregl.GeoJSONSource | undefined;
-        source?.setData(vehiclesToGeoJson(state.vehicles));
-        if (hoveredId) showPopup(); // подсказка едет вместе с ТС и обновляет цифры
+            if (state.vehicles === prev.vehicles) return;
+            const source = map.getSource("vehicles") as maplibregl.GeoJSONSource | undefined;
+            source?.setData(vehiclesToGeoJson(state.vehicles));
+            if (hoveredId) showPopup(); // подсказка едет вместе с ТС и обновляет цифры
         });
 
         return () => {
-        unsubscribe();
-        map.off("mousemove", "vehicles", onMove);
-        map.off("mouseleave", "vehicles", onLeave);
-        popup.remove();
+            unsubscribe();
+            map.off("mousemove", "vehicles", onMove);
+            map.off("mouseleave", "vehicles", onLeave);
+            popup.remove();
     };
     return unsubscribe;
     }, [ready, config.data]);
@@ -233,7 +231,6 @@ useEffect(() => {
         const source = map.getSource("risk-segments") as maplibregl.GeoJSONSource | undefined;
         if (source) return source.setData(data);
         map.addSource("risk-segments", { type: "geojson", data });
-        // Второй аргумент — «вставить под слоем vehicles»: перегоны не должны закрывать маркеры.
         map.addLayer(
             {
             id: "segments-risk",
