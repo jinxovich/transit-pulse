@@ -23,6 +23,7 @@ from contracts.mockgen.common import (
     frame_time,
 )
 from transit_core import schemas as S
+from transit_core.risk import risk_of  # noqa: F401 — реэкспорт
 
 HORIZON = (timedelta(minutes=10), timedelta(minutes=15))
 
@@ -129,18 +130,6 @@ def stop_ref(row) -> S.StopRef:
         lat=row.lat,
         planned_at=fmt(row.tb),
     )
-
-
-def risk_of(delay: float, p_late: float, th: S.Thresholds | None = None) -> S.RiskLevel:
-    """Уровень риска по порогам контракта."""
-    th = th or S.Thresholds()
-    if delay > th.red_delay_s or p_late >= th.red_p_late:
-        return "red"
-    if delay < th.early_delay_s:
-        return "early"
-    if delay >= th.yellow_delay_s or p_late >= th.yellow_p_late:
-        return "yellow"
-    return "green"
 
 
 def _target(plan: pd.DataFrame, t: datetime):
