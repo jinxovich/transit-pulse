@@ -7,6 +7,7 @@ import {MapView} from "./features/map/MapView";
 import { IncidentFeed } from "./features/incidents/IncidentFeed";
 import { IncidentCard } from "./features/incidents/IncidentCard";
 import { useUi } from "./store/ui";
+import { ConnectionBanner, StatusBanner } from "./features/banners/Banners";
 
 export default function App() {
   useEffect(() => startStream(), []);
@@ -40,7 +41,11 @@ export default function App() {
       <TopBar />
       <main className="main">
         <div className="stage">
-          <MapView/>
+          <div className="banners">
+            <ConnectionBanner />
+            <StatusBanner />
+          </div>
+          <MapView />
         </div>
         <aside className="side">
           {selectedId ? <IncidentCard key={selectedId} id={selectedId} /> : <IncidentFeed />}
