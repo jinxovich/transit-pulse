@@ -41,14 +41,32 @@ def test_new_session_resets_clock_even_backwards():
     assert not clock.apply(SessionUpdate("s2", T0 - timedelta(hours=1), 5.0, "running"), 10.0)
 
 
-def test_packets_only_pull_watermark_forward():
+def test_replayer_session_clock_ignores_packets_and_rejects_far_future():
     clock = SimClock()
     clock.apply(SessionUpdate("s1", T0, 1.0, "running"), wall=0.0)
+    clock.observe(T0 + timedelta(seconds=30), wall=0.0)
+    assert clock.now(0.0) == T0  # часы двигает только replayer
+    assert clock.accepts(T0 + timedelta(seconds=20), wall=0.0)
+    assert not clock.accepts(T0 + timedelta(hours=3), wall=0.0)  # хвост чужой сессии
+
+
+def test_auto_session_clock_follows_packets_forward_only():
+    clock = SimClock()
+    clock.start_auto(T0, wall=0.0)
     clock.observe(T0 + timedelta(seconds=30), wall=0.0)
     assert clock.now(0.0) == T0 + timedelta(seconds=30)
     clock.observe(T0, wall=0.0)
     assert clock.now(0.0) == T0 + timedelta(seconds=30)
-    assert not clock.accepts(T0 + timedelta(hours=3), wall=0.0)  # хвост чужой сессии
+
+
+def test_warmup_does_not_overshoot_and_small_rewind_is_ignored():
+    clock = SimClock()
+    until = T0 + timedelta(minutes=30)
+    clock.apply(SessionUpdate("s1", T0, 600.0, "running", until), wall=0.0)
+    assert clock.now(10.0) == until  # на ×600 проскочили бы на 70 минут
+    clock.apply(SessionUpdate("s1", until, 30.0, "running"), wall=10.0)
+    clock.apply(SessionUpdate("s1", until + timedelta(seconds=140), 30.0, "running"), 15.0)
+    assert clock.now(15.0) == until + timedelta(seconds=150)  # не откатываемся на 10 с
 
 
 def _inputs(wall, last=None, session_wall=0.0, warming=False) -> ModeInputs:

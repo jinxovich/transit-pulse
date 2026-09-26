@@ -97,15 +97,16 @@ class Runtime:
     def start_auto_session(self, et: datetime) -> None:
         """Пакеты без replayer'а: сессия создаётся сама, часы идут за пакетами."""
         self.clock.start_auto(et, self.wall())
-        self._reset_session()
+        self._reset_session(drop_queue=False)  # в очереди — кадры этого же потока
         self.emit("session", True)
 
-    def _reset_session(self) -> None:
+    def _reset_session(self, drop_queue: bool = True) -> None:
         if self.store is not None:
             self.store.clear()
         self.book.clear()
         self.journal.clear()
-        self.queue.clear()
+        if drop_queue:
+            self.queue.clear()
         self.session_wall = self.wall()
         self.session_epoch += 1
 
@@ -132,16 +133,23 @@ class Runtime:
         }
 
     def sweep(self, mode: S.StreamMode) -> None:
-        """Убирает с карты ТС, от которых давно нет данных (кроме режима DEGRADED)."""
+        """Убирает с карты ТС, от которых давно нет данных (кроме режима DEGRADED).
+
+        Для известных бортов «давно» отсчитывается от самого свежего пакета флота, а не
+        от сим-часов: при обрыве всего потока ТС остаются на карте (stale), а не исчезают.
+        """
         if self.store is None or mode == "DEGRADED":
             return
-        now, wall = self.sim_now(), self.wall()
+        wall = self.wall()
         gone = timedelta(seconds=self.settings.remove_after_sim_s)
+        known = [r.last_et for r in self.store.vehicles.values()
+                 if r.kind != "unknown" and r.last_et is not None]  # fmt: skip
+        newest = max(known, default=None)
         for vid, rec in list(self.store.vehicles.items()):
             if rec.kind == "unknown":
                 old = wall - rec.last_wall > self.settings.unknown_remove_wall_s
             else:
-                old = rec.last_et is not None and now - rec.last_et > gone
+                old = rec.last_et is not None and newest - rec.last_et > gone
             if old and vid not in self.book.active:
                 self.store.remove(vid)
 

@@ -27,6 +27,7 @@ if TYPE_CHECKING:
 
 log = logging.getLogger(__name__)
 TICK_S = 0.2
+MIN_PASS_INTERVAL_S = 0.5
 ALERT_MODES = ("LIVE",)
 
 
@@ -37,6 +38,7 @@ class PipelineRunner:
         self.rt = rt
         self.last_t: datetime | None = None
         self._epoch = -1
+        self._last_pass_wall = float("-inf")
 
     def due(self) -> datetime | None:
         """Сим-минута, для которой пора делать проход, или ``None``."""
@@ -45,6 +47,8 @@ class PipelineRunner:
             return None
         if self._epoch != rt.session_epoch:
             self.last_t, self._epoch = None, rt.session_epoch
+        if self.last_t is not None and rt.wall() - self._last_pass_wall < MIN_PASS_INTERVAL_S:
+            return None  # на ×600 не чаще двух проходов в секунду
         t = floor_minute(rt.sim_now())
         return t if self.last_t is None or t > self.last_t else None
 
@@ -66,7 +70,7 @@ class PipelineRunner:
         rt = self.rt
         now, wall = rt.sim_now(), rt.wall()
         return [
-            VehicleInput(rec.vehicle_id, rec.tr_id, rec.track_frame(),
+            VehicleInput(rec.vehicle_id, rec.tr_id, list(rec.points),
                          rt.is_stale(rec, now, wall), not rt.is_warming(rec))
             for rec in rt.store.vehicles.values()
             if rec.kind == "scheduled" and rec.points
@@ -75,6 +79,7 @@ class PipelineRunner:
     async def run_pass(self, t: datetime) -> None:
         """Один проход: подготовка → батч в ml → прогнозы, инциденты, WS."""
         rt, epoch, t0 = self.rt, self.rt.session_epoch, time.perf_counter()
+        self._last_pass_wall = rt.wall()
         tasks = await asyncio.to_thread(prepare, rt.static, self.inputs(), t)
         items = ml_items(tasks)
         rt.metrics.batch_size.observe(len(items))
@@ -95,10 +100,13 @@ class PipelineRunner:
             rec = rt.store.vehicles.get(task.vehicle_id)
             if rec is None:
                 continue
-            preds = assemble(task, ml, t, rt.ml.model_version)
-            self._update_record(rec, task, preds, t)
-            for ev in self._incidents(rec, task, preds, t, can_alert):
-                rt.emit(*ev)
+            try:
+                preds = assemble(task, ml, t, rt.ml.model_version)
+                self._update_record(rec, task, preds, t)
+                for ev in self._incidents(rec, task, preds, t, can_alert):
+                    rt.emit(*ev)
+            except Exception:  # noqa: BLE001 — одно ТС не должно срывать проход
+                log.exception("Не удалось применить прогноз ТС %s", task.vehicle_id)
             rec.open_incident_id = rt.book.active.get(rec.vehicle_id)
         rows = [(t.vehicle_id, rec.prediction) for t in tasks
                 if (rec := rt.store.vehicles.get(t.vehicle_id)) and rec.prediction]  # fmt: skip
@@ -109,7 +117,9 @@ class PipelineRunner:
     ) -> None:
         rec.current_dev_s = round(task.cur_dev, 1) if task.cur_dev is not None else None
         rec.next_stop = stop_ref(task.next_row) if task.next_row is not None else None
-        rec.arrivals.update(task.arrivals)
+        for visit_id, arrival in task.arrivals.items():
+            # первое найденное прибытие точнее: позже окно поиска может выйти за буфер
+            rec.arrivals.setdefault(visit_id, arrival)
         if task.cur_dev is not None:
             rec.dev_series.append((t, task.cur_dev))
         rec.prediction = preds[0].prediction if preds else None

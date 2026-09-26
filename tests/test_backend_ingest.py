@@ -6,7 +6,7 @@ import asyncio
 from datetime import datetime, timedelta
 
 import pytest
-from backend_kit import FakeWall, handshake, has_raw, make_runtime, nav_frame, session
+from backend_kit import FakeWall, handshake, has_raw, make_runtime, nav_frame
 
 from services.backend.app.ingest.codec import FrameDecoder
 from services.backend.app.ingest.server import IngestServer
@@ -64,14 +64,14 @@ async def test_reconnect_counted_and_bad_crc_accepted():
     server = IngestServer(stats, queue)
     port = await server.start("127.0.0.1", 0)
     bad = bytearray(nav_frame(UNIT, T0))
-    bad[-1] ^= 0xFF  # порча тела → CRC не сходится
+    bad[-1] ^= 0xFF  # порча тела → CRC не сходится: в очередь не попадает
     try:
         await _send_chunked(port, handshake(UNIT), chunk=100)
         await _send_chunked(port, handshake(UNIT) + bytes(bad), chunk=100)
     finally:
         await server.stop()
     assert stats.reconnects == 1
-    assert stats.crc_errors == 1
+    assert stats.crc_errors == 1 and queue.qsize() == 0
 
 
 @pytest.mark.asyncio
@@ -97,8 +97,7 @@ def test_pps_sliding_window():
 @pytest.mark.asyncio
 async def test_end_to_end_tcp_to_state():
     wall = FakeWall()
-    rt = make_runtime(wall)
-    session(rt, "s1", T0, state="paused")
+    rt = make_runtime(wall)  # без replayer'а: авто-сессия, часы идут за пакетами
     server = IngestServer(rt.stats, rt.queue, wall)
     port = await server.start("127.0.0.1", 0)
     try:

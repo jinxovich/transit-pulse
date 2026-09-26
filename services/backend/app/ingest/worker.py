@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from typing import TYPE_CHECKING
 
@@ -18,6 +19,7 @@ if TYPE_CHECKING:
     from ..runtime import Runtime
 
 log = logging.getLogger(__name__)
+YIELD_EVERY = 200
 
 
 def _point(frame: Frame) -> tuple:
@@ -55,8 +57,12 @@ def apply_frame(rt: Runtime, recv_wall: float, frame: Frame) -> bool:
 
 async def run_worker(rt: Runtime) -> None:
     """Бесконечный цикл разбора очереди ingest."""
+    n = 0
     while True:
         recv_wall, frame = await rt.queue.get()
+        n += 1
+        if n % YIELD_EVERY == 0:
+            await asyncio.sleep(0)  # get() не отдаёт управление, пока очередь не пуста
         rt.metrics.queue_lag.set(rt.queue.qsize())
         try:
             apply_frame(rt, recv_wall, frame)
