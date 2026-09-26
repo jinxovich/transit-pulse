@@ -24,12 +24,13 @@ def test_clock_ticks_by_formula_while_running():
     assert clock.now(102.0) == T0 + timedelta(seconds=60)
 
 
-def test_clock_stops_on_pause_and_never_rewinds_within_session():
+def test_clock_stops_on_pause_and_follows_replayer_time():
     clock = SimClock()
-    clock.apply(SessionUpdate("s1", T0, 10.0, "running"), wall=0.0)
-    clock.apply(SessionUpdate("s1", T0 + timedelta(seconds=5), 10.0, "paused"), wall=1.0)
-    assert clock.now(1.0) == T0 + timedelta(seconds=10)  # replayer отстал — не откатываемся
-    assert clock.now(50.0) == T0 + timedelta(seconds=10)  # пауза: часы стоят
+    clock.apply(SessionUpdate("s1", T0, 600.0, "running"), wall=0.0)
+    assert clock.now(1.0) == T0 + timedelta(seconds=600)
+    clock.apply(SessionUpdate("s1", T0 + timedelta(seconds=570), 30.0, "paused"), wall=1.0)
+    assert clock.now(1.0) == T0 + timedelta(seconds=570)  # эталон — часы replayer'а
+    assert clock.now(50.0) == T0 + timedelta(seconds=570)  # пауза: часы стоят
 
 
 def test_new_session_resets_clock_even_backwards():
