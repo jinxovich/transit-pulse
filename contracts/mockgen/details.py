@@ -8,9 +8,9 @@ from contracts.mockgen.common import fmt, frame_time
 from contracts.mockgen.fleet import VehicleCtx
 from contracts.mockgen.incidents import IncidentBook, incident_segment
 from transit_core import schemas as S
+from transit_core.risk import RISK_ORDER
 
 TIMELINE_WINDOW = timedelta(minutes=60)
-RISK_ORDER = {"none": 0, "green": 1, "early": 2, "yellow": 3, "red": 4}
 
 
 def _timeline(ctx: VehicleCtx, st: S.VehicleState, frame: int) -> list[S.StopTimelineItem]:
