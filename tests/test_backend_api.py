@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 
 import pytest
-from backend_kit import FakeWall, feed_rows, has_raw, make_runtime, ml_transport, real_traffic
+from backend_kit import RAW, FakeWall, feed_rows, has_raw, make_runtime, ml_transport, real_traffic
 from fastapi.testclient import TestClient
 from pydantic import TypeAdapter
 
@@ -13,6 +13,7 @@ from services.backend.app.config import Settings
 from services.backend.app.main import create_app
 from services.backend.app.pipeline.scheduler import PipelineRunner
 from services.backend.app.runtime import Runtime
+from services.backend.app.state.static import load_typical_speeds
 from transit_core import schemas as S
 
 START = datetime(2026, 1, 6, 7, 0, 0)
@@ -29,6 +30,7 @@ def live():
 
     wall = FakeWall()
     rt = make_runtime(wall, transport=ml_transport(delay_add=400.0))
+    rt.typical = load_typical_speeds(RAW, rt.static)
     t_from = START - timedelta(minutes=20)
     client = TestClient(create_app(rt, background=False))
     with client:
@@ -185,3 +187,47 @@ def test_replay_control_reports_replayer_down(tmp_path):
     with TestClient(create_app(Runtime(settings), background=False)) as client:
         resp = client.post("/api/v1/replay/control", json={"action": "pause"})
         assert resp.status_code == 502 and "Replayer" in resp.json()["detail"]
+
+
+@needs_data
+def test_segments_have_speed_ratio_and_incidents_show_dwell_and_segment_speed(live):
+    client, _ = live
+    segs = TypeAdapter(list[S.SegmentRisk]).validate_python(
+        client.get("/api/v1/segments/risk").json()
+    )
+    ratios = [s.speed_ratio for s in segs if s.speed_ratio is not None]
+    assert ratios and all(r >= 0 for r in ratios)
+    incs = TypeAdapter(list[S.Incident]).validate_python(client.get("/api/v1/incidents").json())
+    shown = {e.feature for i in incs for e in i.cause.evidence}
+    assert {"dwell", "seg_speed"} <= shown
+
+
+def test_status_not_resent_when_ml_breaker_flaps(tmp_path):
+    wall = FakeWall()
+    settings = Settings(data_dir=tmp_path, models_dir=tmp_path, ndtp_enabled=False)
+    rt = Runtime(settings, wall=wall)
+    sent: list[str] = []
+    with TestClient(create_app(rt, background=False)) as client:
+        hub = client.app.state.hub
+        hub.broadcast = sent.append
+        for _ in range(3):
+            rt.ml.breaker.failure()
+        client.portal.call(hub.check_status)  # breaker открыт: ml down
+        wall.advance(16.0)
+        client.portal.call(hub.check_status)  # half-open: ml degraded — не смена
+        rt.ml.breaker.failure()
+        client.portal.call(hub.check_status)
+    statuses = [WS.validate_json(m) for m in sent]
+    assert len(statuses) == 1 and statuses[0].data.ml_status == "down"
+
+
+def test_code_docs_served_or_hint(tmp_path):
+    docs = tmp_path / "html"
+    docs.mkdir()
+    (docs / "index.html").write_text("<h1>Transit Pulse docs</h1>", "utf-8")
+    for path, expected in ((docs, "Transit Pulse docs"), (tmp_path / "none", "не собрана")):
+        settings = Settings(data_dir=tmp_path, models_dir=tmp_path, ndtp_enabled=False,
+                            code_docs_dir=path)  # fmt: skip
+        with TestClient(create_app(Runtime(settings), background=False)) as client:
+            resp = client.get("/code-docs/")
+            assert resp.status_code == 200 and expected in resp.text

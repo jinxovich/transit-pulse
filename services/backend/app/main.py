@@ -5,7 +5,7 @@
     uv run uvicorn --app-dir services/backend app.main:app --port 8000
 
 Порты: HTTP ``8000`` (REST ``/api/v1``, WS ``/ws/v1/stream``, Swagger ``/docs``,
-Prometheus ``/metrics``) и NDTP TCP ``9201``.
+документация по коду ``/code-docs``, Prometheus ``/metrics``) и NDTP TCP ``9201``.
 """
 
 from __future__ import annotations
@@ -14,10 +14,12 @@ import asyncio
 import contextlib
 import logging
 from collections.abc import AsyncIterator
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import HTMLResponse, Response
+from fastapi.staticfiles import StaticFiles
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from .api import fleet, incidents, system
@@ -27,6 +29,7 @@ from .ingest.worker import run_worker
 from .internal import router as internal_router
 from .pipeline.scheduler import PipelineRunner
 from .runtime import Runtime
+from .state.static import load_typical_speeds
 from .ws import WsHub
 from .ws import router as ws_router
 
@@ -59,9 +62,39 @@ async def _start_ingest(app: FastAPI, rt: Runtime) -> None:
         log.exception("Не удалось открыть NDTP-порт %s", rt.settings.ndtp_port)
 
 
+async def _load_typical(rt: Runtime) -> None:
+    """Типичные скорости перегонов считаются в фоне: сервис готов, не дожидаясь их."""
+    if rt.static is None:
+        return
+    try:
+        rt.typical = await asyncio.to_thread(load_typical_speeds, rt.settings.data_dir, rt.static)
+        log.info("Типичные скорости: %d перегонов", len(rt.typical))
+    except Exception:  # noqa: BLE001 — без них просто нет speed_ratio
+        log.exception("Не удалось посчитать типичные скорости перегонов")
+
+
 def _background(app: FastAPI, rt: Runtime) -> list[asyncio.Task]:
-    coros = [run_worker(rt), app.state.pipeline.loop(), app.state.hub.run(), _ml_health_loop(rt)]
+    coros = [run_worker(rt), app.state.pipeline.loop(), app.state.hub.run(), _ml_health_loop(rt),
+             _load_typical(rt)]  # fmt: skip
     return [asyncio.create_task(c) for c in coros]
+
+
+NO_DOCS_HTML = (
+    "<!doctype html><meta charset='utf-8'><title>Transit Pulse</title>"
+    "<p>Документация по коду не собрана: <code>uv run sphinx-build -b html docs/sphinx "
+    "docs/sphinx/_build/html</code>. Swagger API — <a href='/docs'>/docs</a>.</p>"
+)
+
+
+def _mount_code_docs(app: FastAPI, path: Path) -> None:
+    """Sphinx-документация на ``/code-docs`` (или страница-подсказка, если не собрана)."""
+    if (path / "index.html").is_file():
+        app.mount("/code-docs", StaticFiles(directory=path, html=True), name="code-docs")
+        return
+
+    @app.get("/code-docs", include_in_schema=False)
+    def no_docs() -> HTMLResponse:
+        return HTMLResponse(NO_DOCS_HTML)
 
 
 def create_app(runtime: Runtime | None = None, background: bool = True) -> FastAPI:
@@ -101,6 +134,8 @@ def create_app(runtime: Runtime | None = None, background: bool = True) -> FastA
     )
     for router in (system.router, fleet.router, incidents.router, internal_router, ws_router):
         app.include_router(router)
+
+    _mount_code_docs(app, settings.code_docs_dir)
 
     @app.get("/metrics", tags=["Система"], summary="Метрики Prometheus")
     def metrics(request: Request) -> Response:

@@ -28,6 +28,7 @@ ALIASES: dict[str, tuple[str, ...]] = {
     "cur_dev": ("cur_dev", "cur_dev_online", "cur_dev_s"),
     "dev_trend": ("gps_dev_trend", "dev_trend", "dev_trend15", "trend"),
     "speed_ratio": ("speed_ratio", "spd_ratio", "eta_speed_ratio"),
+    "seg_speed": ("seg_speed",),
     "spd5": ("spd5", "speed_5m", "spd_5", "speed5"),
     "stop5": ("stop5", "stop_share5", "stop_share_5"),
     "dwell": ("dwell", "dwell_s", "dwell_cur"),
@@ -36,8 +37,11 @@ ALIASES: dict[str, tuple[str, ...]] = {
 }
 UNITS: dict[str, str] = {
     "dist_tgt": "{:.0f} м", "remain_m": "{:.0f} м", "gps_dist": "{:.0f} м",
-    "lead": "{:.1f} мин", "spd1": "{:.1f} км/ч", "spd15": "{:.1f} км/ч", "spd_last": "{:.0f} км/ч",
+    "lead": "{:.1f} мин", "seg_speed": "{:.1f} км/ч", "speed_ratio": "{:.2f}",
+    "spd1": "{:.1f} км/ч", "spd15": "{:.1f} км/ч", "spd_last": "{:.0f} км/ч",
 }  # fmt: skip
+ALWAYS_SHOWN = ("seg_speed", "speed_ratio", "dwell")
+"""Производные признаки бэкенда, которые карточка показывает всегда (если посчитаны)."""
 CONTRIB_CAUSE: dict[str, S.CauseCode] = {
     "cur_dev": "ACCUMULATED_DELAY",
     "dev_trend": "ACCUMULATED_DELAY",
@@ -128,17 +132,23 @@ def _raw_value(f: Mapping[str, float | None], name: str) -> float | None:
 
 
 def _evidence(f: Mapping[str, float | None], contributions: Sequence[Mapping]) -> list[S.Evidence]:
-    """Топ-вкладов ML; без них (fallback) — ключевые признаки правил без вклада."""
+    """Топ вкладов ML (без них — ключевые признаки правил) + скорость на перегоне и простой."""
+    out = []
     if contributions:
-        out = []
         for c in _top(contributions)[:MAX_EVIDENCE]:
             name = str(c["feature"])
             value = format_value(name, _raw_value(f, name))
             out.append(evidence(name, value, round(float(c.get("contribution_s") or 0), 1)))
-        return out
-    keys = ("cur_dev", "dev_trend", "spd5", "speed_ratio", "stop5", "layover")
-    present = [k for k in keys if feature(f, k) is not None]
-    return [evidence(k, format_value(k, feature(f, k)), None) for k in present[:MAX_EVIDENCE]]
+    else:
+        keys = ("cur_dev", "dev_trend", "spd5", "stop5", "layover")
+        present = [k for k in keys if feature(f, k) is not None][:MAX_EVIDENCE]
+        out = [evidence(k, format_value(k, feature(f, k)), None) for k in present]
+    shown = {e.feature for e in out}
+    for k in ALWAYS_SHOWN:
+        v = _raw_value(f, k)
+        if v is not None and k not in shown:
+            out.append(evidence(k, format_value(k, v), None))
+    return out
 
 
 def infer_cause(

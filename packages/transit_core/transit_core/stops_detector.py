@@ -79,7 +79,7 @@ def _departure_time(ts, x, y, sx, sy) -> float | None:
     inside = np.flatnonzero(dist <= DEPART_RADIUS_M)
     if len(inside) == 0:
         return None
-    after = np.flatnonzero(dist[inside[0]:] > DEPART_RADIUS_M)
+    after = np.flatnonzero(dist[inside[0] :] > DEPART_RADIUS_M)
     if len(after) == 0:
         return None
     i = int(inside[0] + after[0])
@@ -125,8 +125,12 @@ def _route_directions(px: np.ndarray, py: np.ndarray) -> np.ndarray:
     return np.stack([nx, ny])
 
 
-def _detect(plan_tr: pd.DataFrame, track: pd.DataFrame, until: np.datetime64,
-            since: np.datetime64 | None = None) -> pd.DataFrame:
+def _detect(
+    plan_tr: pd.DataFrame,
+    track: pd.DataFrame,
+    until: np.datetime64,
+    since: np.datetime64 | None = None,
+) -> pd.DataFrame:
     """Общий обход визитов с ``since < tb <= until``."""
     tb = plan_tr["tb"].to_numpy(dtype="datetime64[ns]")
     sel = tb <= until if since is None else (tb <= until) & (tb > since)
@@ -154,8 +158,13 @@ def _detect(plan_tr: pd.DataFrame, track: pd.DataFrame, until: np.datetime64,
         out_t.append(arr)
         out_d.append(arr - tb_s[k])
     actual = (np.asarray(out_t, dtype=float) * NS).astype(np.int64).astype("datetime64[ns]")
-    return pd.DataFrame({"visit_id": np.asarray(out_v, dtype=np.int64), "actual_at": actual,
-                         "delay_s": np.asarray(out_d, dtype=float)})
+    return pd.DataFrame(
+        {
+            "visit_id": np.asarray(out_v, dtype=np.int64),
+            "actual_at": actual,
+            "delay_s": np.asarray(out_d, dtype=float),
+        }
+    )
 
 
 def detect_arrivals(plan_tr: pd.DataFrame, track: pd.DataFrame, until: datetime) -> pd.DataFrame:
