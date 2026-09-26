@@ -80,7 +80,7 @@ class PipelineRunner:
         """Один проход: подготовка → батч в ml → прогнозы, инциденты, WS."""
         rt, epoch, t0 = self.rt, self.rt.session_epoch, time.perf_counter()
         self._last_pass_wall = rt.wall()
-        tasks = await asyncio.to_thread(prepare, rt.static, self.inputs(), t)
+        tasks = await asyncio.to_thread(prepare, rt.static, self.inputs(), t, rt.typical)
         items = ml_items(tasks)
         rt.metrics.batch_size.observe(len(items))
         ml = await rt.ml.predict(items) if items else None
@@ -122,6 +122,7 @@ class PipelineRunner:
             rec.arrivals.setdefault(visit_id, arrival)
         if task.cur_dev is not None:
             rec.dev_series.append((t, task.cur_dev))
+        rec.segment, rec.dwell_s = task.segment, task.dwell_s
         rec.prediction = preds[0].prediction if preds else None
         rec.window_preds = {vp.visit.visit_id: vp.prediction.predicted_delay_s for vp in preds}
         if rec.dirty_wall is None:

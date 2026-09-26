@@ -37,16 +37,18 @@ def ndtp_normalize(raw: pd.DataFrame) -> pd.DataFrame:
     lat = np.where(valid, np.round(raw["lat"].to_numpy(dtype=float), 7), 0.0)
     speed = np.where(valid, np.nan_to_num(raw["speed"].to_numpy(dtype=float)), 0.0)
     heading = np.where(valid, np.nan_to_num(raw["heading"].to_numpy(dtype=float)), 0.0)
-    return pd.DataFrame({
-        "tr_id": raw["tr_id"].to_numpy(dtype=np.int64),
-        "unit_id": raw["unit_id"].to_numpy(dtype=np.int64),
-        "et": et.to_numpy(dtype="datetime64[ns]"),
-        "lon": lon,
-        "lat": lat,
-        "speed": np.trunc(speed),
-        "heading": np.trunc(heading),
-        "valid": valid,
-    })
+    return pd.DataFrame(
+        {
+            "tr_id": raw["tr_id"].to_numpy(dtype=np.int64),
+            "unit_id": raw["unit_id"].to_numpy(dtype=np.int64),
+            "et": et.to_numpy(dtype="datetime64[ns]"),
+            "lon": lon,
+            "lat": lat,
+            "speed": np.trunc(speed),
+            "heading": np.trunc(heading),
+            "valid": valid,
+        }
+    )
 
 
 def load_traffic(path: Path) -> pd.DataFrame:
