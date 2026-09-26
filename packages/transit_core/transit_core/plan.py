@@ -16,11 +16,25 @@ import pandas as pd
 NO_ADDRESS = "Остановка без адреса"
 TRIP_GAP_MIN = 5.0
 PLAN_USECOLS = [
-    "tt_action_item_id", "tr_id", "time_begin", "manual_fill", "geom", "building_address",
+    "tt_action_item_id",
+    "tr_id",
+    "time_begin",
+    "manual_fill",
+    "geom",
+    "building_address",
 ]
 PLAN_COLUMNS = [
-    "visit_id", "tr_id", "tb", "lon", "lat", "stop_key", "name",
-    "manual_fill", "gap_min", "new_trip", "trip",
+    "visit_id",
+    "tr_id",
+    "tb",
+    "lon",
+    "lat",
+    "stop_key",
+    "name",
+    "manual_fill",
+    "gap_min",
+    "new_trip",
+    "trip",
 ]
 _POINT_RE = r"POINT \(([-\d.]+) ([-\d.]+)\)"
 
@@ -48,13 +62,15 @@ def prepare_plan(raw: pd.DataFrame) -> pd.DataFrame:
     """
     if "time_fact_begin" in raw.columns:
         raise ValueError("план не должен содержать time_fact_begin")
-    s = pd.DataFrame({
-        "visit_id": raw["tt_action_item_id"].astype(np.int64),
-        "tr_id": raw["tr_id"].astype(np.int64),
-        "tb": pd.to_datetime(raw["time_begin"], format="ISO8601").astype("datetime64[ns]"),
-        "manual_fill": _as_bool(raw["manual_fill"]),
-        "name": raw["building_address"].fillna(NO_ADDRESS).astype(str),
-    })
+    s = pd.DataFrame(
+        {
+            "visit_id": raw["tt_action_item_id"].astype(np.int64),
+            "tr_id": raw["tr_id"].astype(np.int64),
+            "tb": pd.to_datetime(raw["time_begin"], format="ISO8601").astype("datetime64[ns]"),
+            "manual_fill": _as_bool(raw["manual_fill"]),
+            "name": raw["building_address"].fillna(NO_ADDRESS).astype(str),
+        }
+    )
     xy = raw["geom"].str.extract(_POINT_RE).astype(float)
     s["lon"], s["lat"] = xy[0].to_numpy(), xy[1].to_numpy()
     s["stop_key"] = raw["geom"].map(stop_key)

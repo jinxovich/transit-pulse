@@ -10,6 +10,7 @@ mae0 ≈ 108.1, baseline `cur_dev_s` ≈ 88.7, MAE_T ≈ 59.6, то есть sco
 |---|---|---|---|---|---|
 | v0 | `submissions/sub_v0_baseline.csv` | `cur_dev_s` (baseline организаторов) | 93.36 | — | 25.09 |
 | v1 | `submissions/sub_v1_lgbm.csv` | LightGBM L1 на остатке, 17 признаков, синтетика с весом 0.5, 5 seed | 63.62 (−31.9%) | — | 25.09 |
+| v1b | `submissions/sub_v1b_gru_lgbm.csv` | 0.6·GRU (последовательности, ONNX) + 0.4·LightGBM v1 | OOF 58.98 (GRU 60.88, LGBM 61.99, baseline 88.38) | — | 27.09 |
 | v2 | `submissions/sub_v2_catboost.csv` | CatBoost MultiQuantile + LightGBM L1 (бленд 0.5/0.5 по OOF) на остатке, 28 признаков `transit_core.features`, синтетика 0.5 | CV 3×5: 66.42 честно (clone guard), CatBoost 52.10 наивно; v1 на тех же фолдах 69.44 / 62.37; baseline 88.38 | — | 27.09 |
 
 Score на платформе вписываем после загрузки.

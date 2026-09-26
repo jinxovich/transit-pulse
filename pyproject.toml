@@ -15,6 +15,7 @@ service = [
     "prometheus-client>=0.21",
 ]
 docs = ["sphinx>=8.0", "furo>=2024.8"]
+gpu = ["torch>=2.5", "onnx>=1.17"]
 
 [tool.uv]
 package = false
@@ -24,6 +25,12 @@ members = ["packages/*"]
 
 [tool.uv.sources]
 transit-core = { workspace = true }
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
 
 [tool.ruff]
 line-length = 100
@@ -37,4 +44,4 @@ known-first-party = ["transit_core", "scripts", "contracts"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = [".", "services/replayer"]
