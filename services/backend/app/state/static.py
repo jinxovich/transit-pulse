@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import pandas as pd
 
 from transit_core import schemas as S
 from transit_core.network import build_network, route_id_of
+from transit_core.segment_speed import Segments, load_history, route_segments, typical_speeds
 
 from ..pipeline.adapters import load_plan
 from .timefmt import fmt
@@ -25,6 +26,7 @@ class StaticData:
     unit_map: dict[int, int]
     network: S.Network
     route_names: dict[str, str]
+    segments: dict[int, Segments] = field(default_factory=dict)
 
     def plan_of(self, tr_id: int | None) -> pd.DataFrame | None:
         """План одного ТС (отсортирован по ``tb``) или ``None``."""
@@ -55,6 +57,7 @@ def load_static(data_dir: Path) -> StaticData:
         unit_map=load_unit_map(data_dir / "validate" / "traffic.csv"),
         network=network,
         route_names={r.route_id: r.name for r in network.routes},
+        segments={tr: route_segments(p) for tr, p in plans.items()},
     )
 
 
@@ -80,3 +83,11 @@ def stop_ref(row) -> S.StopRef:
         lat=float(row.lat),
         planned_at=fmt(row.tb),
     )
+
+
+def load_typical_speeds(data_dir: Path, static: StaticData) -> dict[str, float]:
+    """Типичная скорость перегонов по истории ``train/traffic.csv`` (реальные ТС)."""
+    path = data_dir / "train" / "traffic.csv"
+    if not path.is_file():
+        return {}
+    return typical_speeds(static.plans, load_history(path))

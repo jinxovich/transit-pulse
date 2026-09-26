@@ -28,14 +28,36 @@ from transit_core.track import to_xy
 
 FEATURES: list[str] = [
     # A
-    "cur_dev", "lead", "hour_sin", "hour_cos", "tgt_manual", "tgt_newtrip", "tgt_gap",
-    "n_between", "trip_break_between", "max_gap_between", "plan_run", "since_last_plan",
+    "cur_dev",
+    "lead",
+    "hour_sin",
+    "hour_cos",
+    "tgt_manual",
+    "tgt_newtrip",
+    "tgt_gap",
+    "n_between",
+    "trip_break_between",
+    "max_gap_between",
+    "plan_run",
+    "since_last_plan",
     "trip_progress",
     # B
-    "stale", "stale_valid", "invalid15", "spd_last", "spd1", "spd5", "spd15", "stop5", "dwell",
-    "gps_dev", "gps_dist", "gps_dev_trend", "dist_tgt",
+    "stale",
+    "stale_valid",
+    "invalid15",
+    "spd_last",
+    "spd1",
+    "spd5",
+    "spd15",
+    "stop5",
+    "dwell",
+    "gps_dev",
+    "gps_dist",
+    "gps_dev_trend",
+    "dist_tgt",
     # C
-    "remain_m", "eta_dev",
+    "remain_m",
+    "eta_dev",
 ]
 
 NS = 1_000_000_000
@@ -75,7 +97,8 @@ def _plan_features(plan_tr: pd.DataFrame, tb: np.ndarray, t_s: float, ti: int) -
         "tgt_gap": float(gap[ti]),
         "n_between": float(n_between),
         "trip_break_between": float(new_trip[seg].max()) if n_between else 0.0,
-        "max_gap_between": float(np.nanmax(gaps_between)) if np.isfinite(gaps_between).any()
+        "max_gap_between": float(np.nanmax(gaps_between))
+        if np.isfinite(gaps_between).any()
         else 0.0,
         "plan_run": (tb[ti] - tb[lo - 1]) / 60.0 if lo > 0 else _NAN,
         "since_last_plan": (t_s - tb[lo - 1]) / 60.0 if lo > 0 else _NAN,
@@ -126,12 +149,12 @@ class _Route:
         if b <= a:
             return None
         ax, ay = self.x[a:b], self.y[a:b]
-        dx, dy = self.x[a + 1:b + 1] - ax, self.y[a + 1:b + 1] - ay
+        dx, dy = self.x[a + 1 : b + 1] - ax, self.y[a + 1 : b + 1] - ay
         ll = dx * dx + dy * dy
         with np.errstate(invalid="ignore", divide="ignore"):
             u = np.clip(np.where(ll > 0, ((px - ax) * dx + (py - ay) * dy) / ll, 0.0), 0, 1)
         dist = np.hypot(ax + u * dx - px, ay + u * dy - py)
-        planned = self.tb[a:b] + u * (self.tb[a + 1:b + 1] - self.tb[a:b])
+        planned = self.tb[a:b] + u * (self.tb[a + 1 : b + 1] - self.tb[a:b])
         j = int(np.argmin(dist + DEV_PENALTY_M_PER_S * np.abs(t_s - planned)))
         k = a + j
         return float(planned[j]), float(dist[j]), float(self.cum[k] + u[j] * self.seg[k])
@@ -139,8 +162,9 @@ class _Route:
 
 def _route_features(route: _Route, ti: int, et_s, x, y, spd15: float, t_s: float) -> dict:
     """Группы B (положение на нитке) и C (остаток пути, ETA)."""
-    out = dict.fromkeys(["gps_dev", "gps_dist", "gps_dev_trend", "dist_tgt", "remain_m",
-                         "eta_dev"], _NAN)
+    out = dict.fromkeys(
+        ["gps_dev", "gps_dist", "gps_dev_trend", "dist_tgt", "remain_m", "eta_dev"], _NAN
+    )
     if len(et_s) == 0:
         return out
     out["dist_tgt"] = float(np.hypot(route.x[ti] - x[-1], route.y[ti] - y[-1]))
@@ -176,8 +200,9 @@ def _track_slice(track: pd.DataFrame, t64: np.datetime64) -> tuple[np.ndarray, .
     return et_s, valid, et_s[valid], x, y, spd
 
 
-def point_features(plan_tr: pd.DataFrame, track: pd.DataFrame, t: datetime,
-                   visit_id: int, cur_dev_s: float | None) -> dict[str, float]:
+def point_features(
+    plan_tr: pd.DataFrame, track: pd.DataFrame, t: datetime, visit_id: int, cur_dev_s: float | None
+) -> dict[str, float]:
     """Признаки прогнозной точки ``(ТС, t)`` для целевого визита ``visit_id``.
 
     :param plan_tr: план одного ТС из :func:`transit_core.plan.load_plan` (без факта).

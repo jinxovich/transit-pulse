@@ -27,6 +27,7 @@ from .ingest.worker import run_worker
 from .internal import router as internal_router
 from .pipeline.scheduler import PipelineRunner
 from .runtime import Runtime
+from .state.static import load_typical_speeds
 from .ws import WsHub
 from .ws import router as ws_router
 
@@ -59,8 +60,20 @@ async def _start_ingest(app: FastAPI, rt: Runtime) -> None:
         log.exception("Не удалось открыть NDTP-порт %s", rt.settings.ndtp_port)
 
 
+async def _load_typical(rt: Runtime) -> None:
+    """Типичные скорости перегонов считаются в фоне: сервис готов, не дожидаясь их."""
+    if rt.static is None:
+        return
+    try:
+        rt.typical = await asyncio.to_thread(load_typical_speeds, rt.settings.data_dir, rt.static)
+        log.info("Типичные скорости: %d перегонов", len(rt.typical))
+    except Exception:  # noqa: BLE001 — без них просто нет speed_ratio
+        log.exception("Не удалось посчитать типичные скорости перегонов")
+
+
 def _background(app: FastAPI, rt: Runtime) -> list[asyncio.Task]:
-    coros = [run_worker(rt), app.state.pipeline.loop(), app.state.hub.run(), _ml_health_loop(rt)]
+    coros = [run_worker(rt), app.state.pipeline.loop(), app.state.hub.run(), _ml_health_loop(rt),
+             _load_typical(rt)]  # fmt: skip
     return [asyncio.create_task(c) for c in coros]
 
 

@@ -44,4 +44,5 @@ async def vehicle(vehicle_id: str, rt: Rt) -> S.VehicleDetail:
 async def segments(rt: Rt) -> list[S.SegmentRisk]:
     """Окраска перегонов к целевым остановкам: максимальный риск ТС на перегоне."""
     static = need_static(rt)
-    return segments_risk(static, list(rt.vehicle_states().values()))
+    current = {vid: rec.segment for vid, rec in rt.store.vehicles.items() if rec.segment}
+    return segments_risk(static, list(rt.vehicle_states().values()), current)

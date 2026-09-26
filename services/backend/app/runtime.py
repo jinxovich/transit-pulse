@@ -58,6 +58,7 @@ class Runtime:
         self.metrics = Metrics()
         self.ml = MlClient(settings.ml_url, settings.ml_timeout_s, settings.ml_fail_threshold,
                            settings.ml_open_s, now=wall, transport=ml_transport)  # fmt: skip
+        self.typical: dict[str, float] = {}  # типичная скорость перегонов, км/ч
         self.session_wall = wall()
         self.session_epoch = 0
         self.ingest_listening = False
