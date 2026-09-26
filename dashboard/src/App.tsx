@@ -1,15 +1,10 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { AppConfig } from "@contract";
+import {fetchConfig} from "./api/config"
 import { startStream } from "./api/ws";
 import { TopBar } from "./features/topbar/TopBar";
 import {MapView} from "./features/map/MapView"
 
-async function fetchConfig(): Promise<AppConfig> {
-  const res = await fetch("/api/v1/config");
-  if (!res.ok) throw new Error(`config: ${res.status}`);
-  return res.json();
-}
 
 export default function App() {
   useEffect(() => startStream(), []);
