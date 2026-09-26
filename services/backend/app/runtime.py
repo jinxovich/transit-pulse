@@ -20,6 +20,7 @@ from .alerts.quality import QualityJournal, lead_ok_share, load_offline
 from .config import Settings
 from .degrade import ModeInputs, compute_mode, packet_age
 from .ingest.stats import DropOldestQueue, IngestStats
+from .journal_db import JournalDb
 from .metrics import Metrics
 from .ml_client import FALLBACK_VERSION, MlClient
 from .state.clock import SessionUpdate, SimClock
@@ -60,7 +61,8 @@ class Runtime:
         self.session_wall = wall()
         self.session_epoch = 0
         self.ingest_listening = False
-        self.listeners: list[Callable[[str, object], None]] = []
+        self.listeners: list[Callable[[str, object], None]] = [self._journal_event]
+        self.db = JournalDb(settings.db_path)
 
     def _load(self, settings: Settings) -> StaticData | None:
         try:
@@ -75,6 +77,10 @@ class Runtime:
         """Событие для WS-хаба (``session``, ``incident.*``, ``pass``)."""
         for fn in self.listeners:
             fn(kind, payload)
+
+    def _journal_event(self, kind: str, payload: object) -> None:
+        if kind.startswith("incident.") and isinstance(payload, S.Incident):
+            self.db.incident(self.clock.session_id or "", kind, payload, payload.updated_at)
 
     # ------------------------------------------------------------------ сессии
     def sim_now(self) -> datetime:

@@ -84,6 +84,7 @@ def create_app(runtime: Runtime | None = None, background: bool = True) -> FastA
         if getattr(app.state, "ingest", None) is not None:
             await app.state.ingest.stop()
         await rt.ml.close()
+        rt.db.close()
 
     app = FastAPI(
         title="Transit Pulse — backend",
