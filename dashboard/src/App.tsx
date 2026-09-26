@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { AppConfig } from "@contract";
 import { startStream } from "./api/ws";
 import { TopBar } from "./features/topbar/TopBar";
+import {MapView} from "./features/map/MapView"
 
 async function fetchConfig(): Promise<AppConfig> {
   const res = await fetch("/api/v1/config");
@@ -32,7 +33,7 @@ export default function App() {
       <TopBar />
       <main className="main">
         <div className="stage">
-          <p className="placeholder">Здесь будет карта</p>
+          <MapView/>
         </div>
         <aside className="side">
           <p className="placeholder">Здесь будет лента инцидентов</p>
