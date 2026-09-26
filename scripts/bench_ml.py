@@ -20,7 +20,7 @@ from services.ml.app.dataset import load_split
 REPEATS = 50
 
 
-def _payload(n: int, model: str) -> dict:
+def _payload(n: int, model: str, explain: bool) -> dict:
     """Батч из ``n`` реальных точек validate (по кругу)."""
     val = load_split("validate")
     rows = val.x.to_dict(orient="records")
@@ -28,12 +28,12 @@ def _payload(n: int, model: str) -> dict:
     for i in range(n):
         feats = {k: (None if v != v else float(v)) for k, v in rows[i % len(rows)].items()}
         items.append({"id": f"bench:{i}", "features": feats})
-    return {"model": model, "items": items}
+    return {"model": model, "items": items, "explain": explain}
 
 
-def bench(url: str, n: int, model: str) -> dict:
+def bench(url: str, n: int, model: str, explain: bool) -> dict:
     """p50/p95 серверной (``latency_ms``) и клиентской латентности, мс."""
-    body = _payload(n, model)
+    body = _payload(n, model, explain)
     server, client = [], []
     with httpx.Client(base_url=url, timeout=30) as c:
         c.post("/predict", json=body).raise_for_status()
@@ -44,7 +44,7 @@ def bench(url: str, n: int, model: str) -> dict:
             r.raise_for_status()
             server.append(r.json()["latency_ms"])
     pct = lambda a, q: round(float(np.percentile(a, q)), 2)  # noqa: E731
-    return {"batch": n, "model": model, "server_p50_ms": pct(server, 50),
+    return {"batch": n, "model": model, "explain": explain, "server_p50_ms": pct(server, 50),
             "server_p95_ms": pct(server, 95), "client_p50_ms": pct(client, 50),
             "client_p95_ms": pct(client, 95)}
 
@@ -55,8 +55,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--batches", type=int, nargs="+", default=[30, 300])
     p.add_argument("--model", default="stream")
     args = p.parse_args(argv)
-    for n in args.batches:
-        print(json.dumps(bench(args.url, n, args.model), ensure_ascii=False))
+    for explain in (True, False):
+        for n in args.batches:
+            print(json.dumps(bench(args.url, n, args.model, explain), ensure_ascii=False))
     return 0
 
 

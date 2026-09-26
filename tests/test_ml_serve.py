@@ -92,6 +92,15 @@ def test_delay_shifts_with_cur_dev(client):
     assert r["items"][1]["p_late"] >= r["items"][0]["p_late"]
 
 
+def test_explain_false_skips_contributions_but_keeps_prediction(client):
+    items = _items(4)
+    full = client.post("/predict", json={"items": items}).json()["items"]
+    fast = client.post("/predict", json={"items": items, "explain": False}).json()["items"]
+
+    assert all(p["contributions"] == [] for p in fast)
+    assert [p["delay_s"] for p in fast] == [p["delay_s"] for p in full]
+
+
 def test_empty_batch_and_bad_model(client):
     assert client.post("/predict", json={"items": []}).json()["items"] == []
     assert client.post("/predict", json={"model": "gru", "items": []}).status_code == 422

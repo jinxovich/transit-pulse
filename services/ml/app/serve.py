@@ -45,6 +45,9 @@ class PredictRequest(BaseModel):
         "stream", description="`stream` — cur_dev по GPS (онлайн), `submission` — подсказка "
                               "cur_dev_s из points.csv")
     items: list[Item] = Field(..., description="Точки прогноза")
+    explain: bool = Field(True, description="Считать вклады признаков (точный SHAP CatBoost, "
+                                            "~0.1–0.3 с на батч). false — только прогноз "
+                                            "(~2 мс), contributions пустые")
 
 
 class Contribution(BaseModel):
@@ -111,7 +114,7 @@ def predict_endpoint(req: PredictRequest) -> PredictResponse:
         raise HTTPException(404, f"модель {req.model} не загружена")
     start = time.perf_counter()
     x = to_matrix([it.features for it in req.items], reg.features)
-    preds = predict(lm, x, reg.features) if len(x) else []
+    preds = predict(lm, x, reg.features, with_contributions=req.explain) if len(x) else []
     elapsed = time.perf_counter() - start
     LATENCY.observe(elapsed)
     BATCH.observe(len(req.items))
