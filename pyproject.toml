@@ -37,4 +37,4 @@ known-first-party = ["transit_core", "scripts", "contracts"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = [".", "services/replayer"]
