@@ -1,0 +1,113 @@
+{
+  "n_real_points": 1494,
+  "n_synthetic_points": 3293,
+  "cv": {
+    "scheme": "GroupKFold 3x5 по (tr_id, 30-мин блок), реальные точки",
+    "clone_guard_min": 45.0
+  },
+  "v1_lgbm": {
+    "synthetic_0.5": 69.44,
+    "synthetic_0.5_naive": 62.37,
+    "real_only": 71.28
+  },
+  "submission": {
+    "baseline_cur_dev": 88.37884872824633,
+    "catboost": {
+      "w=0.0": {
+        "mae": 68.59676092077946,
+        "iters_common": 1400,
+        "iters_fold_mean": 1120.0
+      },
+      "w=0.3": {
+        "mae": 67.3162160335196,
+        "iters_common": 1200,
+        "iters_fold_mean": 966.6666666666666
+      },
+      "w=0.5": {
+        "mae": 67.07587498589147,
+        "iters_common": 1600,
+        "iters_fold_mean": 1160.0
+      },
+      "w=1.0": {
+        "mae": 67.81261505276159,
+        "iters_common": 900,
+        "iters_fold_mean": 960.0
+      }
+    },
+    "best_synthetic_weight": 0.5,
+    "catboost_real_only_mae": 68.59676092077946,
+    "catboost_synthetic_mae": 67.07587498589147,
+    "catboost_synthetic_naive_cv_mae": 52.09648611251523,
+    "lgbm_new_features_mae": 67.2597661029195,
+    "blend": {
+      "weight_catboost": 0.5,
+      "mae": 66.42432083593836,
+      "grid": {
+        "0.0": 67.26,
+        "0.1": 66.96,
+        "0.2": 66.73,
+        "0.3": 66.56,
+        "0.4": 66.47,
+        "0.5": 66.42,
+        "0.6": 66.44,
+        "0.7": 66.51,
+        "0.8": 66.65,
+        "0.9": 66.85,
+        "1.0": 67.08
+      }
+    },
+    "calibration": {
+      "half_width_mean": 51.02949685297839,
+      "k": 1.3144529952773052,
+      "coverage_q10_q90_raw": 0.46184738955823296,
+      "interval_scale": 2.75,
+      "coverage_q10_q90_scaled": 0.7985274431057564
+    },
+    "final_iterations": 1276
+  },
+  "stream": {
+    "baseline_cur_dev": 114.08663017954053,
+    "catboost": {
+      "w=0.0": {
+        "mae": 81.20290376127144,
+        "iters_common": 1200,
+        "iters_fold_mean": 1160.0
+      },
+      "w=0.5": {
+        "mae": 77.76660561098036,
+        "iters_common": 1700,
+        "iters_fold_mean": 1466.6666666666667
+      }
+    },
+    "best_synthetic_weight": 0.5,
+    "catboost_real_only_mae": 81.20290376127144,
+    "catboost_synthetic_mae": 77.76660561098036,
+    "catboost_synthetic_naive_cv_mae": null,
+    "lgbm_new_features_mae": 77.55129964305769,
+    "blend": {
+      "weight_catboost": 0.5,
+      "mae": 76.68270711340466,
+      "grid": {
+        "0.0": 77.55,
+        "0.1": 77.18,
+        "0.2": 76.93,
+        "0.3": 76.78,
+        "0.4": 76.7,
+        "0.5": 76.68,
+        "0.6": 76.75,
+        "0.7": 76.9,
+        "0.8": 77.12,
+        "0.9": 77.42,
+        "1.0": 77.77
+      }
+    },
+    "calibration": {
+      "half_width_mean": 57.28640262571653,
+      "k": 1.3575054820438344,
+      "coverage_q10_q90_raw": 0.4393128067826863,
+      "interval_scale": 2.9,
+      "coverage_q10_q90_scaled": 0.8009817045961625
+    },
+    "final_iterations": 1613
+  }
+}
