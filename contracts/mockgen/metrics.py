@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import calendar
 import math
-import struct
 from collections import Counter
 from datetime import datetime
 
@@ -18,6 +17,7 @@ from contracts.mockgen.common import (
 )
 from contracts.mockgen.incidents import IncidentBook
 from transit_core import schemas as S
+from transit_core.ndtp import NavCell, decode_frame, encode_realtime, frame_fields
 
 REASONS: dict[S.StreamMode, str | None] = {
     "WARMING_UP": "Прогрев: копится история телеметрии, инциденты пока не создаются",
@@ -91,46 +91,29 @@ def metrics_quality(book: IncidentBook) -> S.QualityMetrics:
     )
 
 
-def _crc16_modbus(data: bytes) -> int:
-    crc = 0xFFFF
-    for byte in data:
-        crc ^= byte
-        for _ in range(8):
-            crc = (crc >> 1) ^ 0xA001 if crc & 1 else crc >> 1
-    return crc
+def sample_ndtp_frame(
+    unit_id: int, ts: datetime, lon: float, lat: float, speed: int, course: int
+) -> tuple[str, dict[str, float | int | bool | str]]:
+    """Кадр NDTP с одной ячейкой G6CellNav00, собранный боевым кодеком.
 
-
-def sample_ndtp_frame(unit_id: int, ts: datetime, lon: float, lat: float, speed: int, course: int):
-    """Кадр NDTP с одной ячейкой G6CellNav00 по спецификации организаторов.
-
-    Нужен только для витрины «последний пакет» в моках; боевой кодек — в
-    ``transit_core.ndtp``.
+    Нужен для витрины «последний пакет» в моках: hex и поля — ровно то, что
+    backend получит и покажет через ``transit_core.ndtp.frame_fields``.
     """
-    epoch = calendar.timegm(ts.timetuple())
-    flags = 0b1110_0000  # bit5 N, bit6 E, bit7 координаты достоверны
-    nav = struct.pack(
-        "<IIIBBHHHHHBB",
-        epoch, round(abs(lon) * 1e7), round(abs(lat) * 1e7), flags, 200, speed, speed + 5,
-        course, 0, 150, 12, 9,
-    )  # fmt: skip
-    body = bytes([0, 0]) + nav
-    nph = struct.pack("<HHHI", 1, 101, 1, 42)
-    npl = (
-        struct.pack("<HHH", 0x7E7E, len(nph) + len(body), 0)
-        + struct.pack(">H", _crc16_modbus(nph + body))
-        + struct.pack("<BIH", 2, unit_id, 0)
+    nav = NavCell(
+        timestamp=calendar.timegm(ts.timetuple()),
+        lon=lon,
+        lat=lat,
+        valid=True,
+        speed_kmh=speed,
+        speed_max_kmh=speed + 5,
+        course=course,
+        altitude_m=150,
+        nsat=12,
+        pdop=9,
+        bat_voltage=200,
     )
-    fields = {
-        "cell": "G6CellNav00",
-        "timestamp": epoch,
-        "lon": round(lon, 7),
-        "lat": round(lat, 7),
-        "valid": True,
-        "speed_kmh": speed,
-        "course": course,
-        "nsat": 12,
-    }
-    return (npl + nph + body).hex(), fields
+    raw = encode_realtime(unit_id, 42, nav)
+    return raw.hex(), frame_fields(decode_frame(raw))
 
 
 def ingest_stats(state: S.VehicleState, n_units: int) -> S.IngestStats:
