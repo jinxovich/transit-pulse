@@ -2,7 +2,7 @@
 
 Сим-время идёт по формуле ``sim_now = last_wm + (wall − wall_at_wm) × speed``, пока
 сессия в состоянии ``running``; на паузе часы стоят. Пакеты известных бортов лишь
-подтягивают водяной знак вперёд (часы монотонны внутри сессии). Настенное время
+подтягивают водяной знак вперёд; сообщение replayer'а о сессии выставляет его точно. Настенное время
 (``wall``, секунды ``time.monotonic``) всегда передаётся явно — так часы тестируются
 без ``sleep``.
 """
@@ -66,11 +66,9 @@ class SimClock:
     def apply(self, upd: SessionUpdate, wall: float) -> bool:
         """Применяет сообщение о сессии; ``True`` — началась новая сессия."""
         is_new = upd.session_id != self.session_id
-        if is_new:
-            self._set_wm(upd.sim_time, wall)
-        else:
-            # Та же сессия: часы не откатываются назад из-за сетевой задержки.
-            self._set_wm(max(self.now(wall), upd.sim_time), wall)
+        # Часы replayer'а — эталон: экстраполяция на ×600 легко убегает вперёд на десятки
+        # сим-секунд, поэтому водяной знак всегда ставится по его sim_time.
+        self._set_wm(upd.sim_time, wall)
         self.session_id, self.speed, self.state = upd.session_id, upd.speed, upd.state
         self.warmup_until = upd.warmup_until
         self.auto = False
