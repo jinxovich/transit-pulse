@@ -1,0 +1,6 @@
+{"batch": 1, "model": "stream", "explain": true, "server_p50_ms": 30.13, "server_p95_ms": 42.35, "client_p50_ms": 32.1, "client_p95_ms": 46.61}
+{"batch": 30, "model": "stream", "explain": true, "server_p50_ms": 135.11, "server_p95_ms": 181.22, "client_p50_ms": 138.37, "client_p95_ms": 187.37}
+{"batch": 300, "model": "stream", "explain": true, "server_p50_ms": 310.18, "server_p95_ms": 457.06, "client_p50_ms": 327.34, "client_p95_ms": 470.92}
+{"batch": 1, "model": "stream", "explain": false, "server_p50_ms": 0.63, "server_p95_ms": 0.77, "client_p50_ms": 2.21, "client_p95_ms": 2.81}
+{"batch": 30, "model": "stream", "explain": false, "server_p50_ms": 1.5, "server_p95_ms": 1.79, "client_p50_ms": 4.06, "client_p95_ms": 4.91}
+{"batch": 300, "model": "stream", "explain": false, "server_p50_ms": 4.59, "server_p95_ms": 8.89, "client_p50_ms": 15.14, "client_p95_ms": 29.78}

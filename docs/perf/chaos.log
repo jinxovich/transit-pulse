@@ -1,0 +1,64 @@
+== исходное состояние
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 1 прогнозы: {'ml': 4}
+== обрыв потока: stop replayer на 60 c
+ Container transit-pulse-replayer-1  Stopping
+ Container transit-pulse-replayer-1  Stopped
+[поток оборван +10s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 16 прогнозы: {'fallback': 9}
+[поток оборван +20s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 16 прогнозы: {'fallback': 10}
+[поток оборван +30s]
+  health: degraded {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'DEGRADED', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 16 прогнозы: {'fallback': 10}
+[поток оборван +40s]
+  health: degraded {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'DEGRADED', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 16 прогнозы: {'fallback': 10}
+[поток оборван +50s]
+  health: degraded {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'DEGRADED', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 16 прогнозы: {'fallback': 10}
+[поток оборван +60s]
+  health: degraded {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'DEGRADED', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 16 прогнозы: {'fallback': 10}
+ Container transit-pulse-data-init-1  Starting
+ Container transit-pulse-data-init-1  Started
+ Container transit-pulse-data-init-1  Waiting
+ Container transit-pulse-ml-1  Waiting
+ Container transit-pulse-ml-1  Healthy
+ Container transit-pulse-data-init-1  Exited
+ Container transit-pulse-backend-1  Waiting
+ Container transit-pulse-backend-1  Healthy
+ Container transit-pulse-replayer-1  Starting
+ Container transit-pulse-replayer-1  Started
+[поток восстановлен +10s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'ml': 10}
+[поток восстановлен +20s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'ml': 10}
+== падение ML: stop ml на 30 c
+ Container transit-pulse-ml-1  Stopping
+ Container transit-pulse-ml-1  Stopped
+[ml недоступен +10s]
+  health: degraded {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'down', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'fallback': 10}
+[ml недоступен +20s]
+  health: degraded {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'down', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'fallback': 10}
+[ml недоступен +30s]
+  health: degraded {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'down', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'fallback': 10}
+ Container transit-pulse-ml-1  Starting
+ Container transit-pulse-ml-1  Started
+[ml восстановлен +10s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'ml': 10}
+[ml восстановлен +20s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'ml': 10}
+[ml восстановлен +30s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector'}
+  ТС: 16 stale: 0 прогнозы: {'ml': 10}
+== готово
