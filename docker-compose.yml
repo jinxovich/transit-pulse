@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: services/backend/Dockerfile
     image: transit-pulse-backend
-    command: ["python", "-m", "scripts.data_prep", "--dest", "/data/raw"]
+    command: ["python", "-m", "scripts.data_prep", "--dest", "/data/raw", "--with-emulator"]
     working_dir: /app
     volumes:
       - ./data:/app/data
