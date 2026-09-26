@@ -57,6 +57,8 @@ class VehicleRecord:
     arrivals: dict[str, tuple[datetime, float]] = field(default_factory=dict)
     dev_series: deque = field(default_factory=lambda: deque(maxlen=DEV_SERIES_MIN + 1))
     open_incident_id: str | None = None
+    segment: object | None = None  # pipeline.prepare.SegmentNow
+    dwell_s: float | None = None
 
     def add(self, point: tuple, wall: float, history: timedelta) -> None:
         """Дописывает точку ``(et, lon, lat, speed, heading, valid)`` и чистит старые."""

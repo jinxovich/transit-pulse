@@ -44,7 +44,8 @@ def build_prediction(
     version: str,
 ) -> VisitPrediction:
     """Прогноз контракта для визита ``v`` на сим-минуту ``t``."""
-    cause = infer_cause(v.features, item.contributions, item.delay_s, task.stale)
+    features = {**v.features, **task.extras()}
+    cause = infer_cause(features, item.contributions, item.delay_s, task.stale)
     pred = S.Prediction(
         target_stop=stop_ref(v.row),
         predicted_delay_s=round(item.delay_s, 1),

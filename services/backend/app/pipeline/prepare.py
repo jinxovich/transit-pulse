@@ -8,10 +8,13 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
 import pandas as pd
+
+from transit_core.segment_speed import current_segment, dwell_seconds, speed_ratio
 
 from ..state.static import StaticData
 from ..state.store import track_from_points
@@ -46,6 +49,16 @@ class VisitTask:
     features: dict
 
 
+@dataclass(frozen=True)
+class SegmentNow:
+    """Текущий перегон ТС: средняя скорость за 5 мин и отношение к типичной."""
+
+    segment_id: str
+    speed_kmh: float
+    typical_kmh: float | None
+    ratio: float | None
+
+
 @dataclass
 class VehicleTask:
     """Результат подготовки по одному ТС."""
@@ -58,6 +71,20 @@ class VehicleTask:
     arrivals: dict[str, tuple[datetime, float]] = field(default_factory=dict)
     visits: list[VisitTask] = field(default_factory=list)
     horizon_ok: bool = False
+    segment: SegmentNow | None = None
+    dwell_s: float | None = None
+
+    def extras(self) -> dict[str, float]:
+        """Производные признаки бэкенда для причины и evidence (в ML не уходят)."""
+        out: dict[str, float] = {}
+        if self.dwell_s is not None:
+            out["dwell"] = self.dwell_s
+        if self.segment is not None:
+            out["seg_speed"] = self.segment.speed_kmh
+            if self.segment.ratio is not None:
+                out["speed_ratio"] = self.segment.ratio
+        return out
+
     next_row: object | None = None
 
 
@@ -109,7 +136,21 @@ def _visit_tasks(
     return tasks, ok
 
 
-def prepare_vehicle(static: StaticData, vi: VehicleInput, t: datetime) -> VehicleTask:
+def segment_now(
+    static: StaticData, tr_id: int, track: pd.DataFrame, t: datetime, typical: Mapping
+) -> SegmentNow | None:
+    """Где ТС сейчас и насколько медленнее обычного едет по этому перегону."""
+    segs = static.segments.get(tr_id)
+    cur = current_segment(segs, track, t) if segs is not None else None
+    if cur is None:
+        return None
+    typ = typical.get(cur.segment_id)
+    return SegmentNow(cur.segment_id, cur.speed_kmh, typ, speed_ratio(cur.speed_kmh, typ))
+
+
+def prepare_vehicle(
+    static: StaticData, vi: VehicleInput, t: datetime, typical: Mapping | None = None
+) -> VehicleTask:
     """Подготовка одного ТС к проходу на сим-минуту ``t``."""
     plan_tr = static.plans[vi.tr_id]
     task = VehicleTask(vi.vehicle_id, vi.tr_id, vi.stale, vi.ready)
@@ -122,17 +163,21 @@ def prepare_vehicle(static: StaticData, vi: VehicleInput, t: datetime) -> Vehicl
     cur = online_cur_dev(det_plan, track, t)
     task.cur_dev = None if cur is None or pd.isna(cur) else float(cur)
     task.arrivals = _arrivals(det_plan, track, t)
+    task.segment = segment_now(static, vi.tr_id, track, t, typical or {})
+    task.dwell_s = dwell_seconds(track, t)
     if vi.ready:
         task.visits, task.horizon_ok = _visit_tasks(vi, plan_tr, track, t, task.cur_dev)
     return task
 
 
-def prepare(static: StaticData, inputs: list[VehicleInput], t: datetime) -> list[VehicleTask]:
+def prepare(
+    static: StaticData, inputs: list[VehicleInput], t: datetime, typical: Mapping | None = None
+) -> list[VehicleTask]:
     """Подготовка всех ТС; ошибка в одном ТС не ломает проход для остальных."""
     out = []
     for vi in inputs:
         try:
-            out.append(prepare_vehicle(static, vi, t))
+            out.append(prepare_vehicle(static, vi, t, typical))
         except Exception:  # noqa: BLE001
             log.exception("Не удалось подготовить прогноз для ТС %s", vi.vehicle_id)
     return out

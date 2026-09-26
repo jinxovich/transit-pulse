@@ -94,26 +94,54 @@ def vehicle_detail(
     )
 
 
-def segments_risk(static: StaticData, states: list[S.VehicleState]) -> list[S.SegmentRisk]:
-    """Риск на перегонах к целевым остановкам: максимум по ТС на перегоне."""
-    level: dict[str, S.RiskLevel] = {}
-    ids: dict[str, list[str]] = {}
-    route: dict[str, str] = {}
+class _SegAcc:
+    """Накопитель риска по перегону."""
+
+    def __init__(self, route_id: str) -> None:
+        self.route_id = route_id
+        self.level: S.RiskLevel = "none"
+        self.ids: list[str] = []
+        self.ratios: list[float] = []
+
+    def add(self, vehicle_id: str, level: S.RiskLevel, ratio: float | None) -> None:
+        if vehicle_id not in self.ids:
+            self.ids.append(vehicle_id)
+        if RISK_ORDER[level] >= RISK_ORDER[self.level]:
+            self.level = level
+        if ratio is not None:
+            self.ratios.append(ratio)
+
+    def contract(self, sid: str) -> S.SegmentRisk:
+        ratio = round(min(self.ratios), 3) if self.ratios else None
+        return S.SegmentRisk(segment_id=sid, route_id=self.route_id, risk_level=self.level,
+                             vehicle_ids=self.ids, speed_ratio=ratio)  # fmt: skip
+
+
+def segments_risk(
+    static: StaticData, states: list[S.VehicleState], current: dict | None = None
+) -> list[S.SegmentRisk]:
+    """Риск по перегонам для окраски карты.
+
+    * перегон к целевой остановке прогноза — риск прогноза;
+    * текущий перегон ТС (``current``: vehicle_id → SegmentNow) — риск ТС и
+      ``speed_ratio`` = средняя скорость за 5 мин / типичная (минимум по ТС на перегоне).
+    """
+    acc: dict[str, _SegAcc] = {}
+    current = current or {}
     for st in states:
-        p = st.prediction
-        plan_tr = static.plan_of(int(st.tr_id)) if st.tr_id else None
-        if p is None or plan_tr is None or st.route_id is None:
+        if st.route_id is None or st.tr_id is None:
+            continue
+        now = current.get(st.vehicle_id)
+        if now is not None:
+            acc.setdefault(now.segment_id, _SegAcc(st.route_id)).add(
+                st.vehicle_id, st.risk_level, now.ratio
+            )
+        p, plan_tr = st.prediction, static.plan_of(int(st.tr_id))
+        if p is None or plan_tr is None:
             continue
         seg = target_segment(plan_tr, int(st.tr_id), p.target_stop)
-        if seg is None or seg.segment_id is None:
-            continue
-        sid = seg.segment_id
-        ids.setdefault(sid, []).append(st.vehicle_id)
-        route[sid] = st.route_id
-        if RISK_ORDER[p.risk_level] >= RISK_ORDER[level.get(sid, "none")]:
-            level[sid] = p.risk_level
-    return [
-        S.SegmentRisk(segment_id=sid, route_id=route[sid], risk_level=level[sid],
-                      vehicle_ids=ids[sid], speed_ratio=None)
-        for sid in ids
-    ]  # fmt: skip
+        if seg is not None and seg.segment_id is not None:
+            acc.setdefault(seg.segment_id, _SegAcc(st.route_id)).add(
+                st.vehicle_id, p.risk_level, None
+            )
+    return [a.contract(sid) for sid, a in acc.items()]
