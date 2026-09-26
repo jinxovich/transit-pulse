@@ -1,7 +1,7 @@
 """Сим-часы replayer: скорость, прогрев, пауза, смена скорости."""
 
 import pytest
-from replayer.clock import SimClock
+from replayer.clock import ReplayClock
 from replayer.config import Settings
 
 
@@ -19,14 +19,14 @@ def wall():
 
 
 def test_sim_runs_at_speed(wall):
-    clock = SimClock(speed=30, warmup_speed=600, wall=wall)
+    clock = ReplayClock(speed=30, warmup_speed=600, wall=wall)
     clock.start(0, None)
     wall.t += 2
     assert clock.now() == 60
 
 
 def test_warmup_switches_to_main_speed_at_boundary(wall):
-    clock = SimClock(speed=30, warmup_speed=600, wall=wall)
+    clock = ReplayClock(speed=30, warmup_speed=600, wall=wall)
     clock.start(0, 1800)  # 30 мин прогрева на ×600 = 3 с wall
     wall.t += 3
     assert clock.now() == pytest.approx(1800)
@@ -40,7 +40,7 @@ def test_warmup_switches_to_main_speed_at_boundary(wall):
 
 
 def test_pause_freezes_and_resume_continues(wall):
-    clock = SimClock(speed=10, warmup_speed=600, wall=wall)
+    clock = ReplayClock(speed=10, warmup_speed=600, wall=wall)
     clock.start(100, None)
     wall.t += 1
     clock.pause()
@@ -52,7 +52,7 @@ def test_pause_freezes_and_resume_continues(wall):
 
 
 def test_set_speed_applies_immediately_and_cancels_warmup(wall):
-    clock = SimClock(speed=30, warmup_speed=600, wall=wall)
+    clock = ReplayClock(speed=30, warmup_speed=600, wall=wall)
     clock.start(0, 1800)
     wall.t += 1
     clock.set_speed(60)
