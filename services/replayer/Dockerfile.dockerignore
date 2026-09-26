@@ -1,0 +1,9 @@
+# Контекст — корень репо; в образ нужны только манифесты uv, общий пакет и сам сервис.
+*
+!pyproject.toml
+!uv.lock
+!packages/
+!services/replayer/
+**/__pycache__
+**/*.pyc
+**/.venv
