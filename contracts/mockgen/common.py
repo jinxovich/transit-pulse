@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -11,6 +10,7 @@ import pandas as pd
 from pydantic import TypeAdapter
 
 from transit_core import schemas as S
+from transit_core.network import NO_ADDRESS, short_name, stop_key  # noqa: F401 — реэкспорт
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "data" / "raw" / "validate"
@@ -32,7 +32,6 @@ TRIP_GAP = timedelta(minutes=5)
 MODEL_VERSION = "mock-catboost-1"
 UNKNOWN_UNITS = (990001, 990002)
 VEHICLES_TOTAL = 32
-NO_ADDRESS = "Остановка без адреса"
 
 _WS = TypeAdapter(S.WsMessage)
 
@@ -44,16 +43,6 @@ def fmt(t: datetime) -> str:
 
 def frame_time(frame: int) -> datetime:
     return SIM_START + STEP * frame
-
-
-def stop_key(geom: str) -> str:
-    """Стабильный короткий ключ остановки по её координатам."""
-    return "st_" + hashlib.md5(geom.encode()).hexdigest()[:8]
-
-
-def short_name(address: str) -> str:
-    """Адрес без номера дома — для названий маршрутов."""
-    return address.split(", д.")[0].split(", вл.")[0]
 
 
 def ws(kind: str, t: datetime, data: Any) -> dict:
