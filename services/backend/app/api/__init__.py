@@ -1,1 +1,1 @@
-"""Transit Pulse backend."""
+"""REST-роутеры ``/api/v1``."""
