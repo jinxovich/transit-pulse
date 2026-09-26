@@ -200,3 +200,22 @@ def test_segments_have_speed_ratio_and_incidents_show_dwell_and_segment_speed(li
     incs = TypeAdapter(list[S.Incident]).validate_python(client.get("/api/v1/incidents").json())
     shown = {e.feature for i in incs for e in i.cause.evidence}
     assert {"dwell", "seg_speed"} <= shown
+
+
+def test_status_not_resent_when_ml_breaker_flaps(tmp_path):
+    wall = FakeWall()
+    settings = Settings(data_dir=tmp_path, models_dir=tmp_path, ndtp_enabled=False)
+    rt = Runtime(settings, wall=wall)
+    sent: list[str] = []
+    with TestClient(create_app(rt, background=False)) as client:
+        hub = client.app.state.hub
+        hub.broadcast = sent.append
+        for _ in range(3):
+            rt.ml.breaker.failure()
+        client.portal.call(hub.check_status)  # breaker открыт: ml down
+        wall.advance(16.0)
+        client.portal.call(hub.check_status)  # half-open: ml degraded — не смена
+        rt.ml.breaker.failure()
+        client.portal.call(hub.check_status)
+    statuses = [WS.validate_json(m) for m in sent]
+    assert len(statuses) == 1 and statuses[0].data.ml_status == "down"

@@ -121,7 +121,9 @@ class WsHub:
     def check_status(self, force: bool = False) -> None:
         """``system.status`` при смене режима, ML или числа подключений."""
         st = self.rt.system_status()
-        key = (st.mode, st.ml_status, st.model_mode, st.model_version, st.units_connected)
+        # down ↔ degraded при недоступном ML — это breaker в half-open, не смена по смыслу
+        key = (st.mode, st.ml_status == "ok", st.model_mode, st.model_version,
+               st.units_connected)  # fmt: skip
         if force or key != self._status_key:
             self._status_key = key
             self.broadcast(self.message("system.status", st))
