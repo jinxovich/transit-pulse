@@ -12,8 +12,10 @@
     "reacquire_resets": 26
   },
   "latency_us_per_point": {
-    "mean": 34.8,
-    "max_vehicle": 46.8
+    "p50": 28.4,
+    "p99": 101.8,
+    "p999": 158.4,
+    "mean": 33.8
   },
   "arrival_by_crossing": {
     "all": {

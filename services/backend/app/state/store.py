@@ -3,10 +3,15 @@
 Буфер хранит последние ``history_min`` сим-минут точек (``et, lon, lat, speed, heading,
 valid``). Ingest только дописывает точки; пайплайн читает копию трека
 (:meth:`VehicleRecord.track_frame`) в отдельном потоке, поэтому блокировки не нужны.
+
+У ТС с расписанием каждая точка сразу проходит онлайн map matching
+(:class:`transit_core.matching.RouteMatcher`, десятки микросекунд на точку) — последняя
+привязка лежит в :attr:`VehicleRecord.match`.
 """
 
 from __future__ import annotations
 
+import logging
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -14,10 +19,12 @@ from datetime import datetime, timedelta
 import pandas as pd
 
 from transit_core import schemas as S
+from transit_core.matching import MatchResult, RouteMatcher
 
 from ..config import DATASET_DAY
 from .static import StaticData, route_of
 
+log = logging.getLogger(__name__)
 TRACK_COLUMNS = ["et", "lon", "lat", "speed", "heading", "valid"]
 WINDOW_BEFORE = timedelta(hours=1)
 WINDOW_AFTER = timedelta(hours=24 + 6)
@@ -59,6 +66,8 @@ class VehicleRecord:
     open_incident_id: str | None = None
     segment: object | None = None  # pipeline.prepare.SegmentNow
     dwell_s: float | None = None
+    matcher: RouteMatcher | None = None
+    match: MatchResult | None = None
 
     def add(self, point: tuple, wall: float, history: timedelta) -> None:
         """Дописывает точку ``(et, lon, lat, speed, heading, valid)`` и чистит старые."""
@@ -71,9 +80,22 @@ class VehicleRecord:
             self.dirty_wall = wall
         if valid:
             self.fix = Fix(lon, lat, heading, speed)
+        self._match(point)
         edge = self.last_et - history
         while self.points and self.points[0][0] < edge:
             self.points.popleft()
+
+    def _match(self, point: tuple) -> None:
+        """Привязка точки к нитке рейса; сбой матчинга не мешает записи точки."""
+        if self.matcher is None:
+            return
+        try:
+            res = self.matcher.update(*point)
+        except Exception:  # noqa: BLE001
+            log.exception("Map matching упал на точке ТС %s", self.vehicle_id)
+            return
+        if res is not None:
+            self.match = res
 
     def history_min(self) -> float:
         """Сколько сим-минут истории накоплено в сессии."""
@@ -122,6 +144,8 @@ class FleetStore:
         if rec is None:
             route_id, route_name = route_of(self.static, tr_id)
             rec = VehicleRecord(vid, kind, unit_id, tr_id, route_id, route_name)
+            if kind == "scheduled" and tr_id is not None:
+                rec.matcher = RouteMatcher(lines=self.static.lines_of(tr_id))
             self.vehicles[vid] = rec
         return rec
 

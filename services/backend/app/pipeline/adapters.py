@@ -16,5 +16,6 @@ IMPL: dict[str, str] = {
     "plan": "transit_core.plan",
     "features": f"transit_core.features ({len(FEATURES)})",
     "stops_detector": "transit_core.stops_detector",
+    "matching": "transit_core.matching",
 }
 """Какие реализации подключены (видно в ``/api/v1/health``)."""

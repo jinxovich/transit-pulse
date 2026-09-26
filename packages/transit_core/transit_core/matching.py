@@ -20,6 +20,7 @@
 
 from __future__ import annotations
 
+import time
 from collections import Counter
 from dataclasses import dataclass, replace
 from datetime import datetime
@@ -56,6 +57,8 @@ ARRIVE_M = 60.0
 NEXT_PRE_S = 30 * 60.0
 TRIP_OVERDUE_S = 30 * 60.0
 CONF_SCALE_M = 80.0
+COURSE_CONF_W = 0.5
+"""Доля уверенности, которую снимает курс против азимута отрезка (нитка — хорды улиц)."""
 WARM_N = 3
 _EPOCH = datetime(1970, 1, 1)
 
@@ -182,13 +185,20 @@ class RouteMatcher:
         return res
 
     def _screen(self, t_s: float, px: float, py: float, speed: float) -> tuple[str, float | None]:
-        """Фильтр выбросов и стоянки относительно якоря: ``ok``/``outlier``/``still``."""
+        """Фильтр выбросов и стоянки относительно якоря: ``ok``/``outlier``/``still``.
+
+        Точка из прошлого (пришла не по порядку) отбрасывается, но не считается выбросом
+        для смены якоря.
+        """
         if self._anchor is None:
             return "ok", None
         at, ax, ay = self._anchor
         dt, d = t_s - at, float(np.hypot(px - ax, py - ay))
+        if dt < 0:
+            self.stats["late"] += 1
+            return "outlier", None
         vmax = (MAX_KMH if dt <= LONG_GAP_S else TELEPORT_KMH) / 3.6
-        if dt < 0 or d > JITTER_M + vmax * dt:
+        if d > JITTER_M + vmax * dt:
             self._rejects += 1
             if self._rejects < RESYNC_N:
                 return "outlier", None
@@ -276,7 +286,7 @@ class RouteMatcher:
         prev, nxt = line.stops_around(s)
         on = on_route and dist <= ON_ROUTE_M
         conf = np.exp(-dist / CONF_SCALE_M) * min(1.0, (self._since_acq + 1) / WARM_N)
-        conf *= (1.0 + cos_c) / 2.0 if cos_c != 0 else 1.0
+        conf *= 1.0 - COURSE_CONF_W * (1.0 - cos_c) / 2.0 if cos_c != 0 else 1.0
         return MatchResult(
             t_s=t,
             trip=line.trip,
@@ -296,13 +306,15 @@ MATCH_COLUMNS = [
 ]  # fmt: skip
 
 
-def match_track(matcher: RouteMatcher, track: pd.DataFrame) -> pd.DataFrame:
+def match_track(
+    matcher: RouteMatcher, track: pd.DataFrame, timings: list[float] | None = None
+) -> pd.DataFrame:
     """Прогон трека (``et, lon, lat, speed, heading, valid``) через матчер точка за точкой.
 
     :return: кадр :data:`MATCH_COLUMNS` по точкам, получившим привязку (as-of: каждая
         строка зависит только от точек до неё); ``acquired`` — привязка найдена заново
         (первая точка, смена якоря после выбросов, потеря привязки), только тогда прогресс
-        может уменьшиться.
+        может уменьшиться. В ``timings`` (если передан) — секунды на каждую точку.
     """
     cols = ["lon", "lat", "speed", "heading", "valid"]
     et_s = track["et"].to_numpy(dtype="datetime64[ns]").astype(np.int64) / 1e9
@@ -310,8 +322,10 @@ def match_track(matcher: RouteMatcher, track: pd.DataFrame) -> pd.DataFrame:
     for t_s, (lon, lat, spd, crs, ok) in zip(
         et_s, track[cols].itertuples(index=False), strict=True
     ):
-        n_acq = matcher.stats["acquire"]
+        n_acq, t0 = matcher.stats["acquire"], time.perf_counter()
         m = matcher.update(float(t_s), lon, lat, spd, crs, bool(ok))
+        if timings is not None:
+            timings.append(time.perf_counter() - t0)
         if m is not None:
             rows.append((m.t_s, m.trip, m.progress_m, m.segment_idx, m.offset_m,
                          m.on_route, m.confidence, matcher.stats["acquire"] > n_acq))  # fmt: skip

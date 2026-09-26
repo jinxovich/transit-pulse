@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import json
 import sys
-import time
 from pathlib import Path
 
 import numpy as np
@@ -68,13 +67,11 @@ def _crossings(line: TripLine, m: pd.DataFrame) -> list[tuple[int, float]]:
 
 
 def _run_vehicle(
-    plan_tr: pd.DataFrame, track: pd.DataFrame
-) -> tuple[RouteMatcher, pd.DataFrame, float]:
-    """Прогон матчера по треку ТС: (матчер, привязки, секунд на точку)."""
+    plan_tr: pd.DataFrame, track: pd.DataFrame, timings: list[float]
+) -> tuple[RouteMatcher, pd.DataFrame]:
+    """Прогон матчера по треку ТС: (матчер, привязки); время на точку — в ``timings``."""
     matcher = RouteMatcher(plan_tr)
-    t0 = time.perf_counter()
-    m = match_track(matcher, track)
-    return matcher, m, (time.perf_counter() - t0) / max(len(track), 1)
+    return matcher, match_track(matcher, track, timings)
 
 
 def _in_trip_windows(matcher: RouteMatcher, t_s: np.ndarray) -> np.ndarray:
@@ -167,12 +164,11 @@ def main() -> int:
     real = sorted((set(tracks) - synthetic_tr_ids(traffic)) & set(plans))
     q, arr, at, lat, matches = [], [], [], [], {}
     for tr_id in real:
-        matcher, m, sec = _run_vehicle(plans[tr_id], tracks[tr_id])
+        matcher, m = _run_vehicle(plans[tr_id], tracks[tr_id], lat)
         matches[tr_id] = (matcher, m)
         q.append(_quality(matcher, m, tracks[tr_id]))
         arr.append(_arrivals(plans[tr_id], tracks[tr_id], matcher, m, fact))
         at.append(_at_arrival(plans[tr_id], matcher, m, tracks[tr_id], fact))
-        lat.append(sec)
     qs = pd.DataFrame(q).sum()
     allm = pd.concat([mm for _, mm in matches.values()], ignore_index=True)
     on = allm[allm["on_route"]]
@@ -192,9 +188,10 @@ def main() -> int:
             "reacquire_resets": int(qs["reacquire_resets"]),
         },
         "latency_us_per_point": {
-            "mean": round(float(np.mean(lat)) * 1e6, 1),
-            "max_vehicle": round(float(np.max(lat)) * 1e6, 1),
-        },
+            q: round(float(np.percentile(lat, p)) * 1e6, 1)
+            for q, p in (("p50", 50), ("p99", 99), ("p999", 99.9))
+        }
+        | {"mean": round(float(np.mean(lat)) * 1e6, 1)},
         "arrival_by_crossing": _compare(pd.concat(arr, ignore_index=True)),
         "deviation_at_arrival_online": _compare(pd.concat(at, ignore_index=True)),
         "sched_dev_gps_feature": feature_report(RAW, plans, tracks, matches),
