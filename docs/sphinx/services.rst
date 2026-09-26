@@ -10,8 +10,17 @@ Backend (API, ingest NDTP, оркестрация)
 
    app
 
-ML-ядро и replayer
-------------------
+Replayer (воспроизведение истории как NDTP-потока)
+--------------------------------------------------
 
-Модули ML-сервиса (``services/ml/app``) и replayer (``services/replayer/replayer``)
-описаны в их docstring'ах; Swagger ML-сервиса — ``:8001/docs``.
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
+
+   replayer
+
+ML-ядро
+-------
+
+Модули ML-сервиса (``services/ml/app``) описаны в их docstring'ах; Swagger ML-сервиса —
+``:8001/docs``.
