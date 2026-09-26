@@ -96,7 +96,11 @@ async def ingest_stats(rt: Rt) -> S.IngestStats:
 
 @router.get("/metrics/summary", response_model=S.MetricsSummary, summary="Производительность")
 async def metrics_summary(rt: Rt) -> S.MetricsSummary:
-    """KPI и латентности: ingest→state, проход прогнозов→WS, батч ML (p50/p95/max)."""
+    """KPI и латентности: ingest→state, проход прогнозов→WS, ML за проход (p50/p95/max).
+
+    ``ml_batch`` — прогноз всего батча без SHAP плюс вклады признаков только для
+    рискованных визитов; раздельно — в Prometheus ``tp_ml_predict_ms`` / ``tp_ml_explain_ms``.
+    """
     m = rt.metrics
     return S.MetricsSummary(
         kpis=rt.kpis(),

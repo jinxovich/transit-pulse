@@ -125,11 +125,21 @@ class MlClient:
             return "degraded"
         return "ok"
 
-    async def predict(self, items: list[tuple[str, dict]]) -> dict[str, MlItem] | None:
-        """Прогнозы по ``[(id, features)]``; ``None`` — ml недоступен, нужна эвристика."""
+    async def predict(
+        self, items: list[tuple[str, dict]], explain: bool = True
+    ) -> dict[str, MlItem] | None:
+        """Прогнозы по ``[(id, features)]``; ``None`` — ml недоступен, нужна эвристика.
+
+        ``explain=False`` — без вкладов признаков (SHAP): ML отвечает за единицы мс,
+        ``contributions`` пустые. Вклады нужны только там, где нужна причина.
+        """
         if not items or not self.breaker.allow():
             return None
-        body = {"model": "stream", "items": [{"id": i, "features": _clean(f)} for i, f in items]}
+        body = {
+            "model": "stream",
+            "explain": explain,
+            "items": [{"id": i, "features": _clean(f)} for i, f in items],
+        }
         t0 = time.perf_counter()
         try:
             resp = await self.http.post(f"{self.url}/predict", json=body)
