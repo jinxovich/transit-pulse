@@ -1,0 +1,145 @@
+{
+  "vehicles": 13,
+  "on_route_share_in_trip_windows": 0.9073,
+  "offset_m": {
+    "median": 12.9,
+    "p90": 68.0,
+    "median_all_matched": 15.4
+  },
+  "monotonic": {
+    "steps": 66546,
+    "back_steps_tracking": 0,
+    "reacquire_resets": 26
+  },
+  "latency_us_per_point": {
+    "mean": 34.8,
+    "max_vehicle": 46.8
+  },
+  "arrival_by_crossing": {
+    "all": {
+      "n_visits": 5558,
+      "coverage_matching": 0.8156,
+      "coverage_detector": 0.828,
+      "matching_own": {
+        "n": 4533,
+        "mae": 26.92,
+        "median_ae": 2.0,
+        "p90_ae": 40.0,
+        "bias_median": -0.5
+      },
+      "matching_common": {
+        "n": 4439,
+        "mae": 18.03,
+        "median_ae": 2.0,
+        "p90_ae": 35.01,
+        "bias_median": -0.52
+      },
+      "detector_common": {
+        "n": 4439,
+        "mae": 19.65,
+        "median_ae": 4.54,
+        "p90_ae": 28.92,
+        "bias_median": -3.81
+      }
+    },
+    "manual_fill_false_mid_trip": {
+      "n_visits": 4435,
+      "coverage_matching": 0.9231,
+      "coverage_detector": 0.9357,
+      "matching_own": {
+        "n": 4094,
+        "mae": 16.26,
+        "median_ae": 1.62,
+        "p90_ae": 20.0,
+        "bias_median": -0.59
+      },
+      "matching_common": {
+        "n": 4037,
+        "mae": 9.33,
+        "median_ae": 1.57,
+        "p90_ae": 19.0,
+        "bias_median": -0.61
+      },
+      "detector_common": {
+        "n": 4037,
+        "mae": 10.64,
+        "median_ae": 4.15,
+        "p90_ae": 20.85,
+        "bias_median": -3.96
+      }
+    }
+  },
+  "deviation_at_arrival_online": {
+    "all": {
+      "n_visits": 5558,
+      "coverage_matching": 0.837,
+      "coverage_detector": 0.9273,
+      "matching_own": {
+        "n": 4652,
+        "mae": 19.32,
+        "median_ae": 2.18,
+        "p90_ae": 31.59,
+        "bias_median": 0.79
+      },
+      "matching_common": {
+        "n": 4620,
+        "mae": 19.37,
+        "median_ae": 2.18,
+        "p90_ae": 31.51,
+        "bias_median": 0.81
+      },
+      "detector_common": {
+        "n": 4620,
+        "mae": 36.63,
+        "median_ae": 18.17,
+        "p90_ae": 74.17,
+        "bias_median": -4.78
+      }
+    },
+    "manual_fill_false_mid_trip": {
+      "n_visits": 4435,
+      "coverage_matching": 0.9443,
+      "coverage_detector": 0.9775,
+      "matching_own": {
+        "n": 4188,
+        "mae": 11.48,
+        "median_ae": 1.77,
+        "p90_ae": 18.5,
+        "bias_median": 0.78
+      },
+      "matching_common": {
+        "n": 4176,
+        "mae": 11.49,
+        "median_ae": 1.76,
+        "p90_ae": 18.48,
+        "bias_median": 0.78
+      },
+      "detector_common": {
+        "n": 4176,
+        "mae": 27.94,
+        "median_ae": 16.49,
+        "p90_ae": 60.57,
+        "bias_median": -4.96
+      }
+    }
+  },
+  "sched_dev_gps_feature": {
+    "n_points": 1494,
+    "coverage": 0.8012,
+    "n_common": 1136,
+    "mae_vs_target_common": {
+      "cur_dev_s": 92.56,
+      "online_cur_dev": 112.96,
+      "gps_dev": 127.3,
+      "sched_dev_gps": 124.76
+    },
+    "mae_vs_cur_dev_s": 86.13,
+    "corr_with_target": 0.3,
+    "blend_with_catboost_oof": {
+      "n": 1197,
+      "mae_oof": 69.21,
+      "mae_blend_loto": 69.21,
+      "corr_resid_vs_sched_minus_oof": -0.026
+    }
+  }
+}
