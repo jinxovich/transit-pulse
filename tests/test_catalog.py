@@ -22,3 +22,12 @@ def test_format_delay_is_human_readable():
     assert format_delay(-45) == "−45 с"
     assert format_delay(120) == "+2 мин"
     assert format_delay(0) == "+0 с"
+
+
+def test_every_model_feature_has_russian_label():
+    from transit_core.catalog import FEATURE_LABELS
+    from transit_core.features import FEATURES
+
+    missing = [f for f in FEATURES if f not in FEATURE_LABELS]
+
+    assert missing == []

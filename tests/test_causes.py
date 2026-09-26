@@ -54,3 +54,14 @@ def test_format_value_units():
     assert format_value("dist_tgt", 512.4) == "512 м"
     assert format_value("stop5", 0.5) == "50%"
     assert format_value("cur_dev", None) == "нет данных"
+
+
+def test_format_value_for_schedule_and_quality_features():
+    from transit_core.causes import format_value
+
+    assert format_value("n_between", 3.0) == "3"
+    assert format_value("trip_break_between", 1.0) == "да"
+    assert format_value("tgt_manual", 0.0) == "нет"
+    assert format_value("invalid15", 0.07) == "7%"
+    assert format_value("trip_progress", 0.5) == "50%"
+    assert format_value("tgt_gap", 12.0) == "12 мин"

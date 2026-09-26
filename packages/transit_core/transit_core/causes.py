@@ -39,7 +39,12 @@ UNITS: dict[str, str] = {
     "dist_tgt": "{:.0f} м", "remain_m": "{:.0f} м", "gps_dist": "{:.0f} м",
     "lead": "{:.1f} мин", "seg_speed": "{:.1f} км/ч", "speed_ratio": "{:.2f}",
     "spd1": "{:.1f} км/ч", "spd15": "{:.1f} км/ч", "spd_last": "{:.0f} км/ч",
+    "n_between": "{:.0f}", "invalid15": "{:.0%}", "trip_progress": "{:.0%}",
+    "tgt_gap": "{:.0f} мин", "plan_run": "{:.0f} мин", "since_last_plan": "{:.0f} мин",
+    "stale_valid": "{:.0f} с", "hour_sin": "{:.2f}", "hour_cos": "{:.2f}",
 }  # fmt: skip
+FLAGS = ("tgt_manual", "tgt_newtrip", "trip_break_between")
+"""Признаки-флаги 0/1: в карточке — «да»/«нет»."""
 ALWAYS_SHOWN = ("seg_speed", "speed_ratio", "dwell")
 """Производные признаки бэкенда, которые карточка показывает всегда (если посчитаны)."""
 CONTRIB_CAUSE: dict[str, S.CauseCode] = {
@@ -76,6 +81,8 @@ def format_value(name: str, value: float | None) -> str:
     if value is None:
         return "нет данных"
     canon = _canon(name) or name
+    if name in FLAGS:
+        return "да" if value >= 0.5 else "нет"
     if name in UNITS:
         return UNITS[name].format(value)
     if canon == "cur_dev" or name in ("gps_dev", "eta_dev", "stale"):
