@@ -1,1 +1,1 @@
-"""Transit Pulse backend."""
+"""Приём NDTP по TCP: сервер, статистика, запись кадров в state."""
