@@ -46,6 +46,7 @@ class Settings:
     ml_fail_threshold: int = 3
     ml_open_s: float = 15.0
     db_path: Path = Path("/tmp/transit_pulse_journal.sqlite")
+    code_docs_dir: Path = Path("docs/sphinx/_build/html")
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -65,4 +66,5 @@ class Settings:
             degraded_after_wall_s=_env_float("DEGRADED_AFTER_S", 30.0),
             ml_timeout_s=_env_float("ML_TIMEOUT_S", 1.0),
             db_path=Path(os.environ.get("JOURNAL_DB", "/tmp/transit_pulse_journal.sqlite")),
+            code_docs_dir=Path(os.environ.get("CODE_DOCS_DIR", "docs/sphinx/_build/html")),
         )
