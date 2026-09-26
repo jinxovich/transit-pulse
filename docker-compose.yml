@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: services/ml/Dockerfile
     image: transit-pulse-ml
-    ports: ["8001:8001"]
+    ports: ["${ML_PORT:-8001}:8001"]
     environment:
       MODELS_DIR: /app/models
     healthcheck:
@@ -40,7 +40,7 @@ services:
 
   backend:
     image: transit-pulse-backend
-    ports: ["8000:8000", "9201:9201"]
+    ports: ["${BACKEND_PORT:-8000}:8000", "${NDTP_PORT:-9201}:9201"]
     environment:
       DATA_DIR: /data/raw
       MODELS_DIR: /app/models
@@ -62,7 +62,7 @@ services:
       context: .
       dockerfile: services/replayer/Dockerfile
     image: transit-pulse-replayer
-    ports: ["8090:8090"]
+    ports: ["${REPLAYER_PORT:-8090}:8090"]
     environment:
       DATA_DIR: /data/raw
       BACKEND_NDTP: backend:9201
@@ -87,7 +87,7 @@ services:
       context: .
       dockerfile: dashboard/Dockerfile
     image: transit-pulse-dashboard
-    ports: ["8080:8080"]
+    ports: ["${DASHBOARD_PORT:-8080}:8080"]
     environment:
       BACKEND_UPSTREAM: backend:8000
     depends_on:
