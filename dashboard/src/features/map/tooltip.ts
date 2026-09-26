@@ -2,11 +2,11 @@ import type { VehicleState } from "@contract";
 import { formatDelay } from "../../lib/format";
 import { formatSimTime, minutesBetween } from "../../lib/time";
 
-/** Защита от HTML внутри данных: названия остановок вставляем как текст, а не как разметку. */
+/** Защита от HTML внутри данных*/
 const esc = (s: string) =>
     s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
-    /** HTML подсказки при наведении на ТС. */
+    /** при наведении на ТС. */
     export function tooltipHtml(v: VehicleState, simTime: string | null): string {
     const rows: string[] = [];
 

@@ -1,6 +1,5 @@
 import type { Incident } from "@contract";
 
-/** Диспетчер принял рекомендацию. Сервер возвращает обновлённый инцидент. */
 export async function ackIncident(id: string, actionCode: string): Promise<Incident> {
   const res = await fetch(`/api/v1/incidents/${encodeURIComponent(id)}/ack`, {
     method: "POST",

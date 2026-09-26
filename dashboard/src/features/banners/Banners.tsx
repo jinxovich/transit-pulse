@@ -1,6 +1,5 @@
 import { useStream } from "../../store/stream";
 
-/** Баннер связи браузер ↔ сервер. Показывается, когда WebSocket отвалился. */
 export function ConnectionBanner() {
   const connected = useStream((s) => s.connected);
   const everConnected = useStream((s) => s.simTime !== null);
@@ -21,8 +20,6 @@ export function ConnectionBanner() {
     </div>
   );
 }
-
-/** Баннер режима потока от бэкенда: сервер жив, но с телеметрией что-то не так. */
 export function StatusBanner() {
   const connected = useStream((s) => s.connected);
   const status = useStream((s) => s.status);

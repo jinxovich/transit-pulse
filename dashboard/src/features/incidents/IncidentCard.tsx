@@ -16,12 +16,10 @@ const OUTCOME_TEXT = {
   miss: "пропуск",
 } as const;
 
-/** Прибавить секунды к времени без пояса и вернуть в том же формате. */
 function addSeconds(naive: string, sec: number): string {
   return new Date(new Date(naive + "Z").getTime() + sec * 1000).toISOString().slice(0, 19);
 }
 
-/** Полоса горизонта: когда создан алерт → где «сейчас» → когда событие. */
 function HorizonStrip({ inc, simTime }: { inc: Incident; simTime: string | null }) {
   const planned = inc.target_stop.planned_at;
   if (!planned) return null;
@@ -46,7 +44,6 @@ function HorizonStrip({ inc, simTime }: { inc: Incident; simTime: string | null 
   );
 }
 
-/** «Почему так считаем»: вклад каждого признака в прогноз полосками. */
 function EvidenceBars({ items }: { items: Evidence[] }) {
   const max = Math.max(1, ...items.map((e) => Math.abs(e.contribution_s ?? 0)));
   return (
@@ -76,7 +73,6 @@ export function IncidentCard({ id }: { id: string }) {
     onSuccess: (updated) => useStream.getState().upsertIncident(updated),
   });
 
-  // Инцидент мог исчезнуть: поток начался заново.
   if (!inc) {
     return (
       <section className="card">
@@ -129,7 +125,6 @@ export function IncidentCard({ id }: { id: string }) {
         <HorizonStrip inc={inc} simTime={simTime} />
       </div>
 
-      {/* Итог, когда событие наступило */}
       {resolved && inc.outcome !== "pending" && (
         <div className={`card-block outcome outcome-${inc.outcome}`}>
           Факт: <b className="num">{formatDelay(inc.actual_delay_s ?? 0)}</b> — {OUTCOME_TEXT[inc.outcome]}

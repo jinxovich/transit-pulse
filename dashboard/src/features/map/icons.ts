@@ -4,7 +4,6 @@ import type { RiskLevel, RiskColors } from "@contract";
 const SIZE = 36; // размер иконки в CSS-пикселях
 const PR = 2; // рисуем в 2 раза детальнее чётко на Retina
 
-// Те же фигуры, что в RiskGlyph, только крупнее. Центр в (0, 0).
 const SHAPES: Record<RiskLevel, string> = {
     red: "M 0 -10 L 9.5 7.5 L -9.5 7.5 Z",
     yellow: "M 0 -9 L 7.5 0 L 0 9 L -7.5 0 Z",
@@ -13,10 +12,8 @@ const SHAPES: Record<RiskLevel, string> = {
     none: "M -4 0 A 4 4 0 1 0 4 0 A 4 4 0 1 0 -4 0 Z",
     };
 
-    // Насколько фигура выступает вверх - туда ставим «клюв» курса.
     const TOP: Record<RiskLevel, number> = { red: 10, yellow: 9, green: 6.5, early: 5.5, none: 4 };
 
-    /** Имя иконки, по которому слой карты её найдёт. */
     export function iconName(risk: RiskLevel, stale: boolean, unknown: boolean, heading: boolean) {
     return `${risk}-${stale ? "stale" : "live"}-${unknown ? "u" : "k"}-${heading ? "h" : "n"}`;
     }
@@ -29,7 +26,7 @@ const SHAPES: Record<RiskLevel, string> = {
     ctx.translate(SIZE / 2, SIZE / 2); // (0, 0) - центр холста
     ctx.globalAlpha = stale ? 0.4 : 1; // нет свежих данных 
 
-    // «Клюв» — маленький треугольник над фигурой, показывает направление движения.
+    // Клюв
     if (heading) {
         const top = TOP[risk];
         ctx.beginPath();
@@ -55,7 +52,6 @@ const SHAPES: Record<RiskLevel, string> = {
         ctx.fill(shape);
     }
 
-    // Пунктирное кольцо: борт не найден в справочнике или нет свежих данных.
     if (unknown || stale) {
         ctx.globalAlpha = 1;
         ctx.setLineDash([2.5, 2]);
@@ -72,7 +68,6 @@ const SHAPES: Record<RiskLevel, string> = {
     const RISKS: RiskLevel[] = ["red", "yellow", "green", "early", "none"];
     const FLAGS = [false, true];
 
-    /** Нарисовать и зарегистрировать в карте все варианты иконок. */
     export function registerIcons(map: MlMap, colors: RiskColors) {
     for (const risk of RISKS)
         for (const stale of FLAGS)
