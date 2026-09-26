@@ -16,6 +16,7 @@ from typing import TYPE_CHECKING
 
 from ..alerts.engine import Event
 from ..alerts.segment import target_segment
+from ..state.matched import matched_now
 from ..state.static import stop_ref
 from ..state.timefmt import floor_minute
 from .assemble import VisitPrediction, assemble, ml_items
@@ -115,13 +116,16 @@ class PipelineRunner:
     def _update_record(
         self, rec: VehicleRecord, task: VehicleTask, preds: list[VisitPrediction], t: datetime
     ) -> None:
-        rec.current_dev_s = round(task.cur_dev, 1) if task.cur_dev is not None else None
-        rec.next_stop = stop_ref(task.next_row) if task.next_row is not None else None
+        mn = matched_now(self.rt.static, rec, t)
+        cur_dev = mn.dev_s if mn is not None else task.cur_dev
+        next_row = mn.next_row if mn is not None and mn.next_row is not None else task.next_row
+        rec.current_dev_s = round(cur_dev, 1) if cur_dev is not None else None
+        rec.next_stop = stop_ref(next_row) if next_row is not None else None
         for visit_id, arrival in task.arrivals.items():
             # первое найденное прибытие точнее: позже окно поиска может выйти за буфер
             rec.arrivals.setdefault(visit_id, arrival)
-        if task.cur_dev is not None:
-            rec.dev_series.append((t, task.cur_dev))
+        if cur_dev is not None:
+            rec.dev_series.append((t, cur_dev))
         rec.segment, rec.dwell_s = task.segment, task.dwell_s
         rec.prediction = preds[0].prediction if preds else None
         rec.window_preds = {vp.visit.visit_id: vp.prediction.predicted_delay_s for vp in preds}

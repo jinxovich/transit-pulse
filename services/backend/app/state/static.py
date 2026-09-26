@@ -9,6 +9,7 @@ import pandas as pd
 
 from transit_core import schemas as S
 from transit_core.network import build_network, route_id_of
+from transit_core.route_line import TripLine, build_lines
 from transit_core.segment_speed import Segments, load_history, route_segments, typical_speeds
 
 from ..pipeline.adapters import load_plan
@@ -27,10 +28,16 @@ class StaticData:
     network: S.Network
     route_names: dict[str, str]
     segments: dict[int, Segments] = field(default_factory=dict)
+    lines: dict[int, list[TripLine]] = field(default_factory=dict)
 
     def plan_of(self, tr_id: int | None) -> pd.DataFrame | None:
         """План одного ТС (отсортирован по ``tb``) или ``None``."""
         return self.plans.get(tr_id) if tr_id is not None else None
+
+    def lines_of(self, tr_id: int) -> list[TripLine]:
+        """Нитки рейсов ТС для map matching (строятся по плану, если не посчитаны заранее)."""
+        lines = self.lines.get(tr_id)
+        return lines if lines is not None else build_lines(self.plans[tr_id])
 
 
 def missing_data(data_dir: Path) -> str | None:
@@ -58,6 +65,7 @@ def load_static(data_dir: Path) -> StaticData:
         network=network,
         route_names={r.route_id: r.name for r in network.routes},
         segments={tr: route_segments(p) for tr, p in plans.items()},
+        lines={tr: build_lines(p) for tr, p in plans.items()},
     )
 
 
