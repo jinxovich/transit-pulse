@@ -11,7 +11,7 @@ State = Literal["running", "paused", "stopped"]
 
 
 @dataclass
-class SimClock:
+class ReplayClock:
     """Часы симуляции в unix-секундах (наивное время истории как UTC).
 
     Пока ``sim < warmup_until`` часы идут со скоростью ``warmup_speed``, затем

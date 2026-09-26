@@ -9,7 +9,7 @@ import math
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from replayer.clock import SimClock
+from replayer.clock import ReplayClock
 from replayer.config import Settings
 from replayer.link import LinkStats, UnitLink
 from replayer.session import SessionReporter
@@ -40,12 +40,12 @@ class ReplayEngine:
         settings: Settings,
         track: Track,
         reporter: SessionReporter,
-        clock: SimClock | None = None,
+        clock: ReplayClock | None = None,
     ) -> None:
         self.settings = settings
         self.track = track
         self.reporter = reporter
-        self.clock = clock or SimClock(settings.speed, settings.warmup_speed)
+        self.clock = clock or ReplayClock(settings.speed, settings.warmup_speed)
         self.stats = LinkStats()
         self.session_id = ""
         self.loops = 0
