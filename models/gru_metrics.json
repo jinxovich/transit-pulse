@@ -1,0 +1,145 @@
+{
+  "model": "gru_seq",
+  "config": {
+    "hidden": 64,
+    "layers": 2,
+    "dropout": 0.1,
+    "static_hidden": 32,
+    "epochs": 40,
+    "batch": 128,
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "seeds_per_fold": 3,
+    "synth_weight": 0.5
+  },
+  "features": {
+    "sequence": [
+      "speed",
+      "is_stop",
+      "valid_share",
+      "no_data",
+      "dx",
+      "dy",
+      "stop_dist",
+      "gps_dev"
+    ],
+    "static": [
+      "cur_dev",
+      "lead",
+      "hour_sin",
+      "hour_cos",
+      "tgt_manual",
+      "tgt_new_trip",
+      "tgt_gap",
+      "tgt_gap_missing",
+      "trip_break_between",
+      "max_gap_between",
+      "n_between",
+      "dist_tgt",
+      "stale"
+    ]
+  },
+  "cv": {
+    "scheme": "GroupKFold(5) x 3 по (tr_id, floor(T,30мин))",
+    "n_real_points": 1494,
+    "oof_mae_baseline_cur_dev": 88.38,
+    "oof_mae_gru": 60.88,
+    "oof_mae_gru_per_repeat": [
+      60.56,
+      60.59,
+      61.48
+    ],
+    "oof_mae_gru_std": 0.43,
+    "improvement_vs_baseline": 0.3112
+  },
+  "onnx": {
+    "path": "models/gru.onnx",
+    "opset": 17,
+    "inputs": {
+      "seq": [
+        "batch",
+        80,
+        8
+      ],
+      "static": [
+        "batch",
+        13
+      ]
+    },
+    "output": "delay_s (абсолютная задержка, сек)",
+    "n_models_averaged": 5,
+    "parity_max_abs_diff_s": 6.103515625e-05,
+    "torch_vs_onnx_validate_max_abs_diff_s": 0.009218215942382812
+  },
+  "validate": {
+    "n": 151,
+    "mean_pred_s": 61.64
+  },
+  "ensemble": {
+    "catboost": {
+      "status": "oof_catboost.csv не найден — запустите scripts.ensemble_weights позже"
+    },
+    "proxy_lightgbm_quick_v1": {
+      "status": "ok",
+      "n_points": 4482,
+      "mae_other": 61.99,
+      "mae_gru": 60.88,
+      "best_w_gru": 0.6,
+      "mae_ensemble": 58.98,
+      "gain_vs_other": 3.02,
+      "corr_residuals": 0.859
+    }
+  },
+  "gain": {
+    "vs_catboost": "не оценён (CatBoost: нет OOF)",
+    "vs_lightgbm_quick_v1": "дал: LightGBM quick_v1 61.99 → ансамбль 58.98 (w_gru=0.6)"
+  },
+  "cv_real_only_training": {
+    "synth_weight": 0.0,
+    "n_real_points": 1494,
+    "oof_mae_baseline_cur_dev": 88.38,
+    "oof_mae_gru": 71.47,
+    "oof_mae_gru_per_repeat": [
+      70.51,
+      72.5,
+      71.4
+    ],
+    "oof_mae_gru_std": 0.81,
+    "improvement_vs_baseline": 0.1913
+  },
+  "latency_onnxruntime": {
+    "cpu_1thread": {
+      "1": {
+        "p50_ms": 2.031,
+        "p95_ms": 2.539
+      },
+      "30": {
+        "p50_ms": 31.964,
+        "p95_ms": 36.667
+      },
+      "300": {
+        "p50_ms": 365.12,
+        "p95_ms": 394.549
+      }
+    },
+    "cpu_all_threads": {
+      "1": {
+        "p50_ms": 2.057,
+        "p95_ms": 3.675
+      },
+      "30": {
+        "p50_ms": 42.877,
+        "p95_ms": 97.617
+      },
+      "300": {
+        "p50_ms": 276.867,
+        "p95_ms": 370.325
+      }
+    }
+  },
+  "notes": {
+    "synthetic_clones": "Синтетические ТС — сдвинутые во времени копии треков реальных ТС на весь день (включая блоки validate). GRU с синтетикой частично запоминает клоны: на повторе 0 при 60 эпохах OOF-MAE 52.26, при весе синтетики 1.0 — 57.88 (против 60.56 у зафиксированной конфигурации 40 эпох, вес 0.5). Конфиг не подгонялся под это; консервативная оценка — обучение только на реальных (cv_real_only_training).",
+    "ensemble_weight_stability": "w_gru, выбранный на одном повторе, на двух других: 0.60/0.60/0.55, MAE ансамбля 59.0/59.1/58.84 против LightGBM 61.95/61.99/62.03.",
+    "latency": "Замер на нагруженной машине (load average 14–22 на 12 ядрах), 5 моделей в одном графе; латентность растёт почти линейно с батчем (GRU-оператор onnxruntime на CPU)."
+  }
+}
