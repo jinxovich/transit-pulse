@@ -1,75 +1,81 @@
-# React + TypeScript + Vite
+# Transit Pulse — дашборд диспетчера
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-интерфейс диспетчера наземного транспорта: карта маршрутной сети с текущим положением ТС и уровнем риска, лента алертов с прогнозом опоздания за 10–15 минут до события и карточка инцидента с причиной, участком и рекомендациями.
 
-Currently, two official plugins are available:
+Стек: React 19, TypeScript, Vite, MapLibre GL, Zustand, TanStack Query. Данные — по REST и WebSocket из бэкенда; типы берутся из общего контракта `contracts/ts/contract.ts`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Быстрый старт на моке
 
-## React Compiler
+Нужен только Node.js 20+. Мок-сервер отдаёт тот же REST и WebSocket, что настоящий бэкенд.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# из корня репозитория, в отдельном окне
+node contracts/mock-server/server.mjs
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+# в папке dashboard
+cd dashboard
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Открыть http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Подключение к живому бэкенду
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Адрес бэкенда задаётся переменной `VITE_BACKEND` (по умолчанию `http://localhost:8000`). Код менять не нужно: Vite проксирует `/api` и `/ws` на указанный адрес.
 
+```bash
+# Linux / macOS
+VITE_BACKEND=http://<адрес>:8000 npm run dev
+
+# Windows, cmd
+set VITE_BACKEND=http://<адрес>:8000
+npm run dev
+
+# Windows, PowerShell
+$env:VITE_BACKEND="http://<адрес>:8000"; npm run dev
+```
+
+## Сборка и Docker
+
+```bash
+npm run build          # проверка типов + сборка в dist/
+npx tsc -b             # только проверка типов
+```
+
+Docker-образ собирается **из корня репозитория**, потому что фронту нужен контракт:
+
+```bash
+docker build -f dashboard/Dockerfile -t transit-pulse-dashboard .
+docker run -p 8080:8080 -e BACKEND_UPSTREAM=backend:8000 transit-pulse-dashboard
+```
+
+Внутри — nginx: раздаёт собранный фронт и проксирует `/api`, `/ws` и `/docs` на `BACKEND_UPSTREAM`. Всё открывается с одного адреса http://localhost:8080.
+
+## Что проверить за минуту
+
+1. Сверху — сим-время, бейдж «Поток идёт», счётчики ТС по уровню риска.
+2. На карте — маршрутная сеть и маркеры ТС: форма и цвет = уровень риска, «клюв» = направление движения. Наведение — подсказка с прогнозом.
+3. Справа — лента алертов. Клик по алерту открывает карточку: прогноз опоздания, «алерт создан за N мин до события», причина, участок (обведён на карте), рекомендации с кнопкой «Принять».
+4. Обрыв потока (на моке):
+   ```bash
+   curl -X POST localhost:8000/mock/status -H "Content-Type: application/json" -d '{"mode":"DEGRADED"}'
+   ```
+   Появится красный баннер, маркеры станут полупрозрачными. Вернуть: `{"mode":"AUTO"}`.
+5. Остановить сервер — баннер «Нет связи с сервером», после перезапуска дашборд восстановится сам.
+
+## Структура
+
+```text
+src/
+├── main.tsx, App.tsx      точка входа и раскладка экрана
+├── api/                   WebSocket с переподключением, REST-запросы
+├── store/                 данные потока (stream.ts) и выбор диспетчера (ui.ts)
+├── lib/                   время датасета и форматирование задержек
+├── styles/                дизайн-токены и стили
+└── features/
+    ├── topbar/            верхняя панель: время, режим потока, счётчики
+    ├── map/               карта, слои, иконки маркеров, подсказка
+    ├── incidents/         лента и карточка инцидента
+    └── banners/           баннеры обрыва потока и потери связи
 ```
