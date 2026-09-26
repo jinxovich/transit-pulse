@@ -1,0 +1,14 @@
+# Контекст сборки — корень репо: данные и тяжёлое не отправляем в демон
+data
+**/node_modules
+**/dist
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+.git
+.idea
+.vscode
+submissions
+docs/sphinx/_build
+.claude

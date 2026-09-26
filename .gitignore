@@ -24,3 +24,6 @@ Thumbs.db
 
 # Локальные переменные окружения
 .env
+
+# Локальные worktree агентов Claude Code
+.claude/
