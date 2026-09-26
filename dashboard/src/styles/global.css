@@ -345,3 +345,35 @@ button {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes banner-in { from { transform: translateY(-100%); opacity: 0; } }
+
+/* ---------- что если */
+.whatif-actions { display: flex; flex-wrap: wrap; gap: var(--gap-2); }
+.whatif-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 13px;
+  transition: background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.whatif-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--text) 8%, var(--surface-2)); }
+.whatif-btn:disabled { opacity: 0.5; cursor: progress; }
+.whatif-btn.is-recommended { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--risk-early) 55%, var(--line)); }
+.whatif-btn.is-active { background: var(--text); color: var(--bg); box-shadow: none; }
+.whatif-result {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border-radius: var(--radius-m);
+  animation: feed-in var(--dur) var(--ease);
+}
+.whatif-result.is-better { box-shadow: inset 3px 0 0 var(--risk-green); }
+.whatif-result.is-worse { box-shadow: inset 3px 0 0 var(--risk-yellow); }
+.whatif-result.is-same { box-shadow: inset 3px 0 0 var(--text-faint); }
+.whatif-title { font-weight: 500; font-size: 13.5px; }
+.whatif-row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--gap-2); font-size: 13px; }
+.whatif-change { display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+.whatif-change b { font-weight: 600; }
+.whatif-arrow { color: var(--text-faint); }
+.whatif-risk { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-sans); }
