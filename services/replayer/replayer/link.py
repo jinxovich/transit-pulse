@@ -75,7 +75,10 @@ class UnitLink:
                 log.debug("unit %d: нет соединения (%s)", self.unit_id, exc)
             else:
                 backoff = BACKOFF_MIN_S
-                await self._serve(reader, writer)
+                try:
+                    await self._serve(reader, writer)
+                except Exception:  # noqa: BLE001 — соединение не должно умирать навсегда
+                    log.exception("unit %d: сбой сессии, переподключаемся", self.unit_id)
                 self.stats.reconnects += 1
             await asyncio.sleep(backoff * random.uniform(0.8, 1.2))
             backoff = min(backoff * 2, BACKOFF_MAX_S)
@@ -106,11 +109,12 @@ class UnitLink:
         while True:
             get = asyncio.create_task(self._queue.get())
             try:
-                await asyncio.wait({get, eof}, return_when=asyncio.FIRST_COMPLETED)
+                done, _ = await asyncio.wait({get, eof}, return_when=asyncio.FIRST_COMPLETED)
             finally:
                 if not get.done():
                     get.cancel()
-            if get.cancelled():
+            # cancel() лишь запрашивает отмену: судим по тому, что успело завершиться.
+            if get not in done:
                 raise ConnectionError("сервер закрыл соединение")
             frame = encode_realtime(self.unit_id, self._next_request_id(), get.result())
             writer.write(frame)

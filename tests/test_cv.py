@@ -14,7 +14,7 @@ def _meta() -> pd.DataFrame:
             for k in range(6):
                 rows.append({"tr_id": tr, "T": t0 + pd.Timedelta(minutes=60 * b + 5 * k),
                              "block": f"r{tr}-{b}", "synthetic": False})
-    for clone, src in ((101, 1), (102, 2)):
+    for clone, _src in ((101, 1), (102, 2)):
         for k in range(24):
             rows.append({"tr_id": clone, "T": t0 + pd.Timedelta(minutes=15 * k),
                          "block": f"s{clone}", "synthetic": True})
