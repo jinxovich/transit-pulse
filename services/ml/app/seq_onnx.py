@@ -53,12 +53,12 @@ def export(models: list[SeqRegressor], example: tuple[np.ndarray, np.ndarray], p
     return ens
 
 
-def session(path: Path):
-    """CPU-сессия onnxruntime для файла модели."""
+def session(path: Path, threads: int = 1):
+    """CPU-сессия onnxruntime для файла модели (``threads=0`` — все ядра по умолчанию)."""
     import onnxruntime as ort
 
     opts = ort.SessionOptions()
-    opts.intra_op_num_threads = 1
+    opts.intra_op_num_threads = threads
     return ort.InferenceSession(str(path), opts, providers=["CPUExecutionProvider"])
 
 
@@ -92,3 +92,11 @@ def latency(sess, seq: np.ndarray, static: np.ndarray, batches=(1, 30, 300), rep
             "p95_ms": round(float(np.percentile(times, 95)), 3),
         }
     return out
+
+
+def bench(path: Path, seq: np.ndarray, static: np.ndarray) -> dict:
+    """Латентность в двух режимах: один поток и все потоки onnxruntime."""
+    return {
+        "cpu_1thread": latency(session(path, 1), seq, static),
+        "cpu_all_threads": latency(session(path, 0), seq, static),
+    }
