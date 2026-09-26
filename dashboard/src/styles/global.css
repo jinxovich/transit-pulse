@@ -131,3 +131,21 @@ button {
 }
 
 .stage > .map { position: absolute; inset: 0; }
+/* ---------- подсказка ТС */
+.tt .maplibregl-popup-content {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    padding: 10px 12px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.45;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+.tt .maplibregl-popup-tip { display: none; }
+.tt b { font-family: var(--font-mono); font-weight: 500; }
+.tt-title { font-weight: 600; }
+.tt-sub { color: var(--text-dim); font-size: 12px; margin-bottom: 4px; }
+.tt-warn { color: var(--risk-yellow); }
+.tt-dim { color: var(--text-dim); }
