@@ -9,6 +9,7 @@ for extra in ("", "packages/transit_core", "services/backend", "services/ml", "s
 
 project = "Transit Pulse"
 author = "Команда Transit Pulse"
+copyright = "2026, команда Transit Pulse"
 language = "ru"
 extensions = [
     "sphinx.ext.autodoc",
