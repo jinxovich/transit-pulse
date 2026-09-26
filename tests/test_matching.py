@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from transit_core.matching import RouteMatcher, schedule_deviation_s, to_seconds
+from transit_core.matching import RESYNC_N, RouteMatcher, schedule_deviation_s, to_seconds
 from transit_core.route_line import build_lines
 from transit_core.track import M_PER_DEG_LAT, M_PER_DEG_LON
 
@@ -150,3 +150,12 @@ def test_build_lines_skips_single_stop_trips():
     lines = build_lines(plan)
     assert [ln.trip for ln in lines] == [1, 3]
     assert lines[1].rows.tolist() == [3, 4]
+
+
+def test_out_of_order_points_do_not_trigger_resync(l_line):
+    m = RouteMatcher(l_line)
+    res, t = _drive_east(m, 400.0)
+    for _ in range(RESYNC_N + 1):
+        assert _feed(m, t - 30.0, 100.0, 0.0) is None
+    assert m.stats["late"] == RESYNC_N + 1 and m.stats["resync"] == 0
+    assert _feed(m, t, 500.0, 0.0).progress_m == pytest.approx(500.0, abs=5.0)
