@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { startStream } from "./api/ws";
 import { useStream } from "./store/stream";
 import { formatSimTime } from "./lib/time";
-import { RiskGlyph } from "./features/map/RiskGlyph";
+import {TopBar} from "./features/topbar/TopBar"
 
 export default function App() {
   useEffect(() => startStream(), []);
@@ -14,7 +14,7 @@ export default function App() {
 
   return (
     <>
-      <RiskGlyph risk="red" size={40} />
+      <TopBar />
     <pre>
       {`связь: ${connected ? "есть" : "нет"}
         время: ${simTime ? formatSimTime(simTime, true) : "—"}
