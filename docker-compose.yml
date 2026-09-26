@@ -1,0 +1,129 @@
+# Transit Pulse: поток NDTP → backend → ML → дашборд диспетчера.
+#
+#   1) положите архив датасета (*.zip) в ./data
+#   2) docker compose up -d --build
+#   3) откройте http://localhost:8080
+#
+# Профили: `emulator` — официальный эмулятор NDTP (нужен `docker load -i data/raw/ndtp-telemetry-emulator.tar`).
+
+x-healthcheck: &healthcheck
+  interval: 5s
+  timeout: 3s
+  retries: 30
+  start_period: 10s
+
+services:
+  data-init:
+    build:
+      context: .
+      dockerfile: services/backend/Dockerfile
+    image: transit-pulse-backend
+    command: ["python", "-m", "scripts.data_prep", "--dest", "/data/raw"]
+    working_dir: /app
+    volumes:
+      - ./data:/app/data
+      - ./data/raw:/data/raw
+    restart: "no"
+
+  ml:
+    build:
+      context: .
+      dockerfile: services/ml/Dockerfile
+    image: transit-pulse-ml
+    ports: ["8001:8001"]
+    environment:
+      MODELS_DIR: /app/models
+    healthcheck:
+      <<: *healthcheck
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=2)"]
+    restart: unless-stopped
+
+  backend:
+    image: transit-pulse-backend
+    ports: ["8000:8000", "9201:9201"]
+    environment:
+      DATA_DIR: /data/raw
+      MODELS_DIR: /app/models
+      ML_URL: http://ml:8001
+      REPLAYER_URL: http://replayer:8090
+      NDTP_PORT: "9201"
+    volumes:
+      - ./data/raw:/data/raw:ro
+    depends_on:
+      data-init: { condition: service_completed_successfully }
+      ml: { condition: service_healthy }
+    healthcheck:
+      <<: *healthcheck
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health', timeout=2)"]
+    restart: unless-stopped
+
+  replayer:
+    build:
+      context: .
+      dockerfile: services/replayer/Dockerfile
+    image: transit-pulse-replayer
+    ports: ["8090:8090"]
+    environment:
+      DATA_DIR: /data/raw
+      BACKEND_NDTP: backend:9201
+      BACKEND_HTTP: http://backend:8000
+      REPLAY_START: ${REPLAY_START:-07:00}
+      REPLAY_SPEED: ${REPLAY_SPEED:-30}
+      REPLAY_LOOP: ${REPLAY_LOOP:-1}
+      REPLAY_WARMUP_MIN: ${REPLAY_WARMUP_MIN:-30}
+      REPLAY_AUTOSTART: ${REPLAY_AUTOSTART:-1}
+      FLEET_MULTIPLIER: ${FLEET_MULTIPLIER:-1}
+    volumes:
+      - ./data/raw:/data/raw:ro
+    depends_on:
+      backend: { condition: service_healthy }
+    healthcheck:
+      <<: *healthcheck
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8090/health', timeout=2)"]
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    image: transit-pulse-dashboard
+    ports: ["8080:8080"]
+    environment:
+      BACKEND_UPSTREAM: backend:8000
+    depends_on:
+      backend: { condition: service_healthy }
+    healthcheck:
+      <<: *healthcheck
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8080/"]
+    restart: unless-stopped
+
+  emulator:
+    profiles: ["emulator"]
+    image: ndtp-telemetry-emulator:1.0
+    pull_policy: never
+    ports: ["18080:18080"]
+    depends_on:
+      backend: { condition: service_healthy }
+
+  emulator-config:
+    profiles: ["emulator"]
+    image: transit-pulse-replayer
+    restart: "no"
+    command:
+      - python
+      - -c
+      - |
+        import json, time, urllib.request
+        cfg = open('/cfg/emulator_config.json', 'rb').read()
+        for _ in range(60):
+            try:
+                req = urllib.request.Request('http://emulator:18080/api/config', data=cfg,
+                                             headers={'Content-Type': 'application/json'})
+                print(urllib.request.urlopen(req, timeout=3).status, 'эмулятор настроен')
+                break
+            except Exception as exc:
+                print('ждём эмулятор:', exc); time.sleep(2)
+    volumes:
+      - ./scripts/emulator_config.json:/cfg/emulator_config.json:ro
+    depends_on:
+      emulator: { condition: service_started }
