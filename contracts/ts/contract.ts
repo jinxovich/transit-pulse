@@ -12,6 +12,7 @@ export type CauseCode = "ACCUMULATED_DELAY" | "CONGESTION" | "LONG_DWELL" | "SHO
 export type IncidentStatus = "open" | "ack" | "resolved";
 export type IncidentOutcome = "pending" | "hit" | "false_alarm" | "miss";
 export type ModelMode = "ml" | "fallback";
+export type WhatIfAction = "hold_at_stop" | "shorten_dwell" | "skip_layover" | "add_reserve";
 
 /** Реакция диспетчера на инцидент. */
 export interface AckInfo {
@@ -403,6 +404,65 @@ export interface VehiclesDeltaData {
   vehicles: VehicleState[];
   /** vehicle_id, которые надо убрать с карты */
   removed: string[];
+}
+
+/** Тело `POST /api/v1/whatif`: какую меру применить к ТС. */
+export interface WhatIfRequest {
+  vehicle_id: string;
+  action: WhatIfAction;
+  /** Минуты меры для hold_at_stop / shorten_dwell (по умолчанию 2 и 3); для skip_layover и add_reserve не используется */
+  value: number | null;
+}
+
+/** Ответ `POST /api/v1/whatif`: оценка влияния меры на график ТС. */
+export interface WhatIfResult {
+  vehicle_id: string;
+  action: WhatIfAction;
+  /** Применённая величина меры, мин */
+  value_min: number;
+  /** Мера по-русски, например «Придержать на остановке 2 мин» */
+  title: string;
+  /** Как мера учтена в прогнозе или почему она не влияет */
+  note: string;
+  /** Мера меняет прогноз хотя бы одной остановки */
+  applied: boolean;
+  /** Время датасета без часового пояса, например 2026-01-06T07:14:00 */
+  generated_at: NaiveTime;
+  model_version: string;
+  model_mode: ModelMode;
+  /** Текущий прогноз ТС из последнего прохода */
+  current: Prediction;
+  /** Цель: остановка инцидента или текущего прогноза */
+  target: WhatIfStop;
+  /** Изменение прогноза задержки на цели, c (− лучше) */
+  delta_delay_s: number;
+  /** Изменение вероятности опоздания на цели */
+  delta_p_late: number;
+  /** Остановки окна (T+10, T+15] и ближайших 60 мин */
+  stops: WhatIfStop[];
+}
+
+/** Остановка ТС: прогноз без меры и с мерой. */
+export interface WhatIfStop {
+  visit_id: string;
+  stop_key: string;
+  name: string;
+  /** Время датасета без часового пояса, например 2026-01-06T07:14:00 */
+  planned_at: NaiveTime;
+  /** Минут от момента расчёта до планового прибытия */
+  lead_min: number;
+  /** Остановка в окне прогноза (T+10, T+15] */
+  in_window: boolean;
+  /** До остановки есть конечная (разрыв рейса) */
+  after_break: boolean;
+  /** Прогноз задержки без меры, c */
+  predicted_before_s: number;
+  /** Прогноз задержки с мерой, c */
+  predicted_after_s: number;
+  p_late_before: number;
+  p_late_after: number;
+  risk_before: RiskLevel;
+  risk_after: RiskLevel;
 }
 
 export interface WsIncident {

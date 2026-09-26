@@ -437,6 +437,65 @@ class ReplayControl(Contract):
     seek_to: NaiveTime | None = None
 
 
+# ------------------------------------------------------------------------ what-if
+
+WhatIfAction = Literal["hold_at_stop", "shorten_dwell", "skip_layover", "add_reserve"]
+"""Упреждающая мера: ``hold_at_stop`` — придержать на остановке N мин; ``shorten_dwell`` —
+сократить отстой на конечной на N мин; ``skip_layover`` — выпустить без отстоя;
+``add_reserve`` — подменный выпуск резервного ТС на рейс после конечной."""
+
+
+class WhatIfRequest(Contract):
+    """Тело ``POST /api/v1/whatif``: какую меру применить к ТС."""
+
+    vehicle_id: str
+    action: WhatIfAction
+    value: float | None = Field(
+        default=None,
+        ge=0,
+        le=30,
+        description="Минуты меры для hold_at_stop / shorten_dwell (по умолчанию 2 и 3); "
+        "для skip_layover и add_reserve не используется",
+    )
+
+
+class WhatIfStop(Contract):
+    """Остановка ТС: прогноз без меры и с мерой."""
+
+    visit_id: str
+    stop_key: str
+    name: str
+    planned_at: NaiveTime
+    lead_min: float = Field(description="Минут от момента расчёта до планового прибытия")
+    in_window: bool = Field(description="Остановка в окне прогноза (T+10, T+15]")
+    after_break: bool = Field(description="До остановки есть конечная (разрыв рейса)")
+    predicted_before_s: float = Field(description="Прогноз задержки без меры, c")
+    predicted_after_s: float = Field(description="Прогноз задержки с мерой, c")
+    p_late_before: float = Field(ge=0, le=1)
+    p_late_after: float = Field(ge=0, le=1)
+    risk_before: RiskLevel
+    risk_after: RiskLevel
+
+
+class WhatIfResult(Contract):
+    """Ответ ``POST /api/v1/whatif``: оценка влияния меры на график ТС."""
+
+    vehicle_id: str
+    action: WhatIfAction
+    value_min: float = Field(description="Применённая величина меры, мин")
+    title: str = Field(description="Мера по-русски, например «Придержать на остановке 2 мин»")
+    note: str = Field(description="Как мера учтена в прогнозе или почему она не влияет")
+    applied: bool = Field(description="Мера меняет прогноз хотя бы одной остановки")
+    generated_at: NaiveTime
+    model_version: str
+    model_mode: ModelMode
+    current: Prediction = Field(description="Текущий прогноз ТС из последнего прохода")
+    target: WhatIfStop = Field(description="Цель: остановка инцидента или текущего прогноза")
+    delta_delay_s: float = Field(description="Изменение прогноза задержки на цели, c (− лучше)")
+    delta_p_late: float = Field(description="Изменение вероятности опоздания на цели")
+    stops: list[WhatIfStop] = Field(description="Остановки окна (T+10, T+15] и ближайших 60 мин")
+
+
 # --------------------------------------------------------------------- WebSocket
 
 
@@ -510,4 +569,6 @@ REST_MODELS: tuple[type[BaseModel], ...] = (
     SimClock,
     AckRequest,
     ReplayControl,
+    WhatIfRequest,
+    WhatIfResult,
 )
