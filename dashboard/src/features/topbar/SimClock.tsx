@@ -55,7 +55,6 @@ export function SimClock() {
     return (
         <div className="clock num" title="Время датасета (сим-время потока)">
             {text}
-            {speed > 1 && <span className="clock-speed" title="День проигрывается ускоренно">×{speed}</span>}
         </div>
     );
 }

@@ -53,6 +53,8 @@ class ReplayEngine:
         self._cursor = 0
         self._links = self._make_links()
         self._tasks: list[asyncio.Task[Any]] = []
+        self._links_up = False
+        self._backend_lost = False
         day = datetime.fromtimestamp(int(track.ts[0]), UTC).replace(hour=0, minute=0, second=0)
         self.day_start = day.timestamp()
         self.clock.park(self.preset_start)
@@ -191,11 +193,33 @@ class ReplayEngine:
             self.clock.stop()
             self.report()
 
+    def watch_backend(self) -> None:
+        """Перезапуск backend: все соединения оборвались разом, затем вернулись.
+
+        Новый backend не знает истории ТС и не прогнозирует, пока она не накопится (15 сим-мин,
+        на ×1 — 15 реальных минут). Поэтому сессия начинается заново с текущего сим-времени:
+        прогрев на ``warmup_speed`` восстанавливает историю за секунды.
+        """
+        links = self.links
+        up = sum(link.connected for link in links)
+        if up == 0 and self._links_up:
+            self._backend_lost = True
+            log.warning("все соединения оборвались — backend недоступен")
+        self._links_up = up > 0
+        if not (self._backend_lost and up * 10 >= len(links) * 9):
+            return
+        self._backend_lost = False
+        running = self.clock.state == "running" and self.clock.warmup_until is None
+        if self.session_id and running:
+            log.info("backend вернулся — сессия заново с текущего времени, с прогревом")
+            self.begin(min(self.clock.now(), self.loop_end - 1))
+
     async def _tick_loop(self) -> None:
         """Тикает движок с шагом ``tick_s`` настенного времени."""
         while True:
             await asyncio.sleep(self.settings.tick_s)
             try:
+                self.watch_backend()
                 self.tick()
             except Exception:  # движок не должен умирать из-за одной строки
                 log.exception("ошибка тика")

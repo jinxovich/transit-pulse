@@ -63,7 +63,7 @@ class Settings:
             ndtp_port=port,
             backend_http=env.get("BACKEND_HTTP", "http://backend:8000").rstrip("/"),
             start=time.fromisoformat(env.get("REPLAY_START", "07:00")),
-            speed=float(env.get("REPLAY_SPEED", "30")),
+            speed=float(env.get("REPLAY_SPEED", "1")),
             loop=_flag(env.get("REPLAY_LOOP", "1")),
             loop_hours=float(loop_hours) if loop_hours else None,
             warmup_min=float(env.get("REPLAY_WARMUP_MIN", "30")),

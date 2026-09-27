@@ -76,6 +76,12 @@ def test_settings_from_env():
     assert s.fleet_multiplier == 3 and s.warmup_speed == 600 and s.autostart
 
 
+
+def test_default_speed_is_real_time():
+    """По умолчанию день идёт в реальном времени; ускорение — кнопками на дашборде."""
+    assert Settings.from_env({}).speed == 1.0
+
+
 def test_settings_reject_bad_hostport():
     with pytest.raises(ValueError):
         Settings.from_env({"BACKEND_NDTP": "backend"})

@@ -65,12 +65,29 @@ button {
 }
 .brand { font-weight: 600; white-space: nowrap; }
 .clock { font-size: 22px; font-weight: 500; }
-.clock-speed {
-    margin-left: 6px;
-    font-size: 12px;
-    color: var(--text-dim);
-    vertical-align: super;
+.speed-ctl {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border-radius: var(--radius-m);
+    background: var(--surface-2);
 }
+.speed-btn {
+    min-width: 34px;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: var(--radius-s);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 12px;
+    cursor: pointer;
+    transition: color var(--dur-fast), background var(--dur-fast);
+}
+.speed-btn:hover:not(:disabled) { color: var(--text); background: var(--surface); }
+.speed-btn:focus-visible { outline: 2px solid var(--risk-early); outline-offset: 1px; }
+.speed-btn.is-active { color: var(--text); background: var(--surface); font-weight: 600; }
+.speed-btn:disabled { opacity: 0.6; cursor: progress; }
+.speed-pause { min-width: 30px; }
 
 .badge {
     display: inline-flex;
@@ -120,7 +137,11 @@ button {
 .kpi-risk-label { font-size: 12px; font-weight: 400; color: var(--text-dim); white-space: nowrap; }
 .kpi-risk.is-alarm .kpi-risk-label { color: color-mix(in srgb, var(--risk-red) 70%, var(--text)); }
 /* На узких экранах подписи прячем — остаются глиф, число и подсказка по наведению. */
-@media (max-width: 1279px) { .kpi-risk-label { display: none; } }
+@media (max-width: 1439px) {
+    .kpi-risk-label { display: none; }
+    .topbar { gap: var(--gap-3); }
+}
+@media (max-width: 1151px) { .speed-btn.is-extra:not(.is-active) { display: none; } }
 
 .kpi-stat { 
     display: flex; 

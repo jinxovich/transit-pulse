@@ -202,3 +202,38 @@ async def test_autostart_waits_for_connections_and_drops_nothing(data_dir):
         srv.close()
     assert engine.stats.dropped == 0
     assert sum(len(f) for f in server.frames.values()) == 2 + 7
+
+
+def test_backend_restart_restarts_session_with_warmup(data_dir):
+    settings = _settings(data_dir, 1, speed=1.0)
+    engine = ReplayEngine(settings, load_track(settings.traffic_csv), SessionReporter("http://x"))
+    engine.begin(from_iso("2026-01-06T07:01:00"))
+    engine.clock.start(from_iso("2026-01-06T07:01:00"), None)  # прогрев позади
+    first = engine.session_id
+
+    def links(up: bool) -> None:
+        for link in engine.links:
+            link.connected = up
+        engine.watch_backend()
+
+    links(True)
+    links(False)
+    assert engine.session_id == first  # пока backend лежит, сессию не трогаем
+    links(True)
+
+    assert engine.session_id != first
+    assert engine.session_payload()["warmup_until"] == "2026-01-06T07:01:00"
+    assert engine.clock.speed == settings.speed
+
+
+def test_initial_connect_does_not_restart_session(data_dir):
+    settings = _settings(data_dir, 1)
+    engine = ReplayEngine(settings, load_track(settings.traffic_csv), SessionReporter("http://x"))
+    engine.begin(from_iso("2026-01-06T07:01:00"))
+    first = engine.session_id
+
+    for link in engine.links:
+        link.connected = True
+    engine.watch_backend()
+
+    assert engine.session_id == first

@@ -1,5 +1,6 @@
 import { useStream } from "../../store/stream";
 import { SimClock } from "./SimClock";
+import { SpeedControl } from "./SpeedControl";
 import type { RiskLevel } from "@contract";
 import { RiskGlyph } from "../map/RiskGlyph";
 import { MODE_LABEL, RISK_LABEL, riskHint } from "../../lib/labels";
@@ -47,6 +48,7 @@ export function TopBar() {
         <header className="topbar">
         <div className="brand">Transit Pulse</div>
         <SimClock />
+        <SpeedControl />
         <StreamBadge />
 
         <div className="kpi-group">
