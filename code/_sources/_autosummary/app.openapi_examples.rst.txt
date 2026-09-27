@@ -1,0 +1,6 @@
+app.openapi\_examples
+=====================
+
+.. automodule:: app.openapi_examples
+
+   

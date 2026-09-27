@@ -1,0 +1,73 @@
+﻿transit\_core.schemas
+=====================
+
+.. automodule:: transit_core.schemas
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      RiskLevel
+      VehicleKind
+      DoorSource
+      WhatIfAction
+      WsMessage
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AckInfo
+      AckRequest
+      AlertPolicyInfo
+      AppConfig
+      Cause
+      Contract
+      DeviationPoint
+      DoorSnapshot
+      Evidence
+      ForecastPoint
+      Health
+      Incident
+      IngestStats
+      Kpis
+      LastPacket
+      LatencyStats
+      LeadBucket
+      LeadMae
+      LineString
+      MetricsSummary
+      Network
+      NetworkSegment
+      OfflineMetrics
+      Prediction
+      QualityMetrics
+      Recommendation
+      ReplayControl
+      RiskColors
+      RiskCounts
+      Route
+      Segment
+      SegmentRisk
+      SimClock
+      SnapshotData
+      Stop
+      StopRef
+      StopTimelineItem
+      SystemStatus
+      Thresholds
+      VehicleDetail
+      VehicleState
+      VehiclesDeltaData
+      WhatIfRequest
+      WhatIfResult
+      WhatIfStop
+      WsBase
+      WsIncident
+      WsKpis
+      WsPing
+      WsSnapshot
+      WsSystemStatus
+      WsVehiclesDelta
+   

@@ -1,0 +1,663 @@
+<!doctype html>
+<html class="no-js" lang="ru" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Алфавитный указатель" href="../genindex.html"><link rel="search" title="Поиск" href="../search.html"><link rel="next" title="transit_core.ndtp" href="transit_core.ndtp.html"><link rel="prev" title="transit_core.labels" href="transit_core.labels.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>transit_core.matching - Transit Pulse — документация по коду</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Transit Pulse — документация по коду</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">Transit Pulse — документация по коду</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Поиск" name="q" aria-label="Поиск">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../core.html">Общее ядро <code class="docutils literal notranslate"><span class="pre">transit_core</span></code></a><input aria-label="Toggle navigation of Общее ядро transit_core" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="transit_core.html">transit_core</a><input aria-label="Toggle navigation of transit_core" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="transit_core.catalog.html">transit_core.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.causes.html">transit_core.causes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.contract_export.html">transit_core.contract_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.features.html">transit_core.features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.labels.html">transit_core.labels</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">transit_core.matching</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="transit_core.ndtp.html">transit_core.ndtp</a><input aria-label="Toggle navigation of transit_core.ndtp" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="transit_core.ndtp.cells.html">transit_core.ndtp.cells</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transit_core.ndtp.codec.html">transit_core.ndtp.codec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transit_core.ndtp.framing.html">transit_core.ndtp.framing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.network.html">transit_core.network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.plan.html">transit_core.plan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.risk.html">transit_core.risk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.route_line.html">transit_core.route_line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.schemas.html">transit_core.schemas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.segment_speed.html">transit_core.segment_speed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.sequence.html">transit_core.sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.stops_detector.html">transit_core.stops_detector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transit_core.track.html">transit_core.track</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../services.html">Сервисы</a><input aria-label="Toggle navigation of Сервисы" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="app.html">app</a><input aria-label="Toggle navigation of app" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.calibration.html">app.calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.cv.html">app.cv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.dataset.html">app.dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.ensemble.html">app.ensemble</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.inference.html">app.inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.models.html">app.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.openapi_examples.html">app.openapi_examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.seq_data.html">app.seq_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.seq_model.html">app.seq_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.seq_onnx.html">app.seq_onnx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.serve.html">app.serve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.train.html">app.train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.v1_compare.html">app.v1_compare</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="replayer.html">replayer</a><input aria-label="Toggle navigation of replayer" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="replayer.clock.html">replayer.clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replayer.config.html">replayer.config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replayer.engine.html">replayer.engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replayer.link.html">replayer.link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replayer.main.html">replayer.main</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replayer.session.html">replayer.session</a></li>
+<li class="toctree-l3"><a class="reference internal" href="replayer.source.html">replayer.source</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/_autosummary/transit_core.matching.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-transit_core.matching">
+<span id="transit-core-matching"></span><h1>transit_core.matching<a class="headerlink" href="#module-transit_core.matching" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Map matching: привязка точек NDTP к нитке рейса с монотонным прогрессом.</p>
+<p><a class="reference internal" href="#transit_core.matching.RouteMatcher" title="transit_core.matching.RouteMatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">RouteMatcher</span></code></a> живёт на одном ТС и получает точки по одной (онлайн). Учитывается
+специфика NDTP-телеметрии:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">valid</span></code>-бит (<code class="docutils literal notranslate"><span class="pre">extraDopBit7</span></code>) и нулевые координаты у невалидных точек — точка
+пропускается и считается «нет данных»;</p></li>
+<li><p>координаты с шагом 1e-7, целые скорость и курс; при скорости ниже
+<code class="xref py py-data docutils literal notranslate"><span class="pre">COURSE_MIN_KMH</span></code> курс недостоверен и не используется;</p></li>
+<li><p>GPS-выбросы: скачок, дающий скорость выше <code class="xref py py-data docutils literal notranslate"><span class="pre">MAX_KMH</span></code> (с допуском на округление
+времени до секунд), и «телепорт» после долгого разрыва — точка отбрасывается; после
+<code class="xref py py-data docutils literal notranslate"><span class="pre">RESYNC_N</span></code> отбросов подряд якорь переносится (выбросом был сам якорь);</p></li>
+<li><p>стоянка (скорость ≈ 0 и дрожание GPS в пределах <code class="xref py py-data docutils literal notranslate"><span class="pre">STILL_M</span></code>) не двигает прогресс.</p></li>
+</ul>
+<p>Проекция ищется на отрезках нитки в окне вокруг текущего прогресса; скоринг кандидата —
+поперечное расстояние + штраф за откат назад + несогласие курса с азимутом отрезка + слабый
+приор «прогресс по расписанию». Прогресс не убывает. Рейс меняется на конечной (по плану и
+проекции); при потере привязки рейс ищется заново по окну расписания.</p>
+<p class="rubric">Module Attributes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transit_core.matching.COURSE_CONF_W" title="transit_core.matching.COURSE_CONF_W"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COURSE_CONF_W</span></code></a></p></td>
+<td><p>Доля уверенности, которую снимает курс против азимута отрезка (нитка — хорды улиц).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transit_core.matching.match_track" title="transit_core.matching.match_track"><code class="xref py py-obj docutils literal notranslate"><span class="pre">match_track</span></code></a>(matcher, track[, timings])</p></td>
+<td><p>Прогон трека (<code class="docutils literal notranslate"><span class="pre">et,</span> <span class="pre">lon,</span> <span class="pre">lat,</span> <span class="pre">speed,</span> <span class="pre">heading,</span> <span class="pre">valid</span></code>) через матчер точка за точкой.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#transit_core.matching.schedule_deviation_s" title="transit_core.matching.schedule_deviation_s"><code class="xref py py-obj docutils literal notranslate"><span class="pre">schedule_deviation_s</span></code></a>(match, line, t)</p></td>
+<td><p>GPS-отклонение от нитки графика, сек (&gt; 0 — опоздание).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transit_core.matching.to_seconds" title="transit_core.matching.to_seconds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_seconds</span></code></a>(t)</p></td>
+<td><p>Секунды эпохи для naive-времени датасета (как <code class="docutils literal notranslate"><span class="pre">datetime64</span> <span class="pre">→</span> <span class="pre">int64</span></code> в плане).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Classes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transit_core.matching.MatchResult" title="transit_core.matching.MatchResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MatchResult</span></code></a>(t_s, trip, progress_m, ...)</p></td>
+<td><p>Привязка точки к нитке.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#transit_core.matching.RouteMatcher" title="transit_core.matching.RouteMatcher"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RouteMatcher</span></code></a>([plan_tr, lines])</p></td>
+<td><p>Онлайн map matching одного ТС по ниткам его рейсов.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py data">
+<dt class="sig sig-object py" id="transit_core.matching.COURSE_CONF_W">
+<span class="sig-prename descclassname"><span class="pre">transit_core.matching.</span></span><span class="sig-name descname"><span class="pre">COURSE_CONF_W</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.5</span></span><a class="headerlink" href="#transit_core.matching.COURSE_CONF_W" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Доля уверенности, которую снимает курс против азимута отрезка (нитка — хорды улиц).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">transit_core.matching.</span></span><span class="sig-name descname"><span class="pre">MatchResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prev_stop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_stop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_to_next_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_route</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#MatchResult"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.MatchResult" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Привязка точки к нитке.</p>
+<p><code class="docutils literal notranslate"><span class="pre">prev_stop</span></code>/<code class="docutils literal notranslate"><span class="pre">next_stop</span></code> — позиции строк в плане ТС (<code class="docutils literal notranslate"><span class="pre">plan_tr</span></code> со сброшенным
+индексом); <code class="docutils literal notranslate"><span class="pre">next_stop</span></code> = None в конце рейса. <code class="docutils literal notranslate"><span class="pre">offset_m</span></code> — поперечное отклонение.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_s</strong> (<em>float</em>)</p></li>
+<li><p><strong>trip</strong> (<em>int</em>)</p></li>
+<li><p><strong>progress_m</strong> (<em>float</em>)</p></li>
+<li><p><strong>segment_idx</strong> (<em>int</em>)</p></li>
+<li><p><strong>offset_m</strong> (<em>float</em>)</p></li>
+<li><p><strong>prev_stop</strong> (<em>int</em>)</p></li>
+<li><p><strong>next_stop</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>dist_to_next_m</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>on_route</strong> (<em>bool</em>)</p></li>
+<li><p><strong>confidence</strong> (<em>float</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.confidence">
+<span class="sig-name descname"><span class="pre">confidence</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.confidence" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.dist_to_next_m">
+<span class="sig-name descname"><span class="pre">dist_to_next_m</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.dist_to_next_m" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.next_stop">
+<span class="sig-name descname"><span class="pre">next_stop</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.next_stop" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.offset_m">
+<span class="sig-name descname"><span class="pre">offset_m</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.offset_m" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.on_route">
+<span class="sig-name descname"><span class="pre">on_route</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.on_route" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.prev_stop">
+<span class="sig-name descname"><span class="pre">prev_stop</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.prev_stop" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.progress_m">
+<span class="sig-name descname"><span class="pre">progress_m</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.progress_m" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.segment_idx">
+<span class="sig-name descname"><span class="pre">segment_idx</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.segment_idx" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.t_s">
+<span class="sig-name descname"><span class="pre">t_s</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.t_s" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.MatchResult.trip">
+<span class="sig-name descname"><span class="pre">trip</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#transit_core.matching.MatchResult.trip" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="transit_core.matching.RouteMatcher">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">transit_core.matching.</span></span><span class="sig-name descname"><span class="pre">RouteMatcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plan_tr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#RouteMatcher"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.RouteMatcher" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Онлайн map matching одного ТС по ниткам его рейсов.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plan_tr</strong> (<em>pd.DataFrame</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>lines</strong> (<em>list</em><em>[</em><a class="reference internal" href="transit_core.route_line.html#transit_core.route_line.TripLine" title="transit_core.route_line.TripLine"><em>TripLine</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="transit_core.matching.RouteMatcher.deviation_s">
+<span class="sig-name descname"><span class="pre">deviation_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#RouteMatcher.deviation_s"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.RouteMatcher.deviation_s" title="Ссылка на это определение">¶</a></dt>
+<dd><p><a class="reference internal" href="#transit_core.matching.schedule_deviation_s" title="transit_core.matching.schedule_deviation_s"><code class="xref py py-func docutils literal notranslate"><span class="pre">schedule_deviation_s()</span></code></a> для последней привязки (по умолчанию на её момент).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<em>datetime</em><em> | </em><em>float</em><em> | </em><em>None</em>)</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.RouteMatcher.last">
+<span class="sig-name descname"><span class="pre">last</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#transit_core.matching.MatchResult" title="transit_core.matching.MatchResult"><span class="pre">MatchResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#transit_core.matching.RouteMatcher.last" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="transit_core.matching.RouteMatcher.line_of">
+<span class="sig-name descname"><span class="pre">line_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trip</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#RouteMatcher.line_of"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.RouteMatcher.line_of" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Нитка рейса <code class="docutils literal notranslate"><span class="pre">trip</span></code> или None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>trip</strong> (<em>int</em>)</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="transit_core.route_line.html#transit_core.route_line.TripLine" title="transit_core.route_line.TripLine"><em>TripLine</em></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="transit_core.matching.RouteMatcher.stats">
+<span class="sig-name descname"><span class="pre">stats</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Counter</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#transit_core.matching.RouteMatcher.stats" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="transit_core.matching.RouteMatcher.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">course</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#RouteMatcher.update"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.RouteMatcher.update" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Очередная точка NDTP → привязка или None (точка пропущена/отброшена).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>datetime</em><em> | </em><em>float</em>)</p></li>
+<li><p><strong>lon</strong> (<em>float</em>)</p></li>
+<li><p><strong>lat</strong> (<em>float</em>)</p></li>
+<li><p><strong>speed</strong> (<em>float</em>)</p></li>
+<li><p><strong>course</strong> (<em>float</em>)</p></li>
+<li><p><strong>valid</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#transit_core.matching.MatchResult" title="transit_core.matching.MatchResult"><em>MatchResult</em></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="transit_core.matching.match_track">
+<span class="sig-prename descclassname"><span class="pre">transit_core.matching.</span></span><span class="sig-name descname"><span class="pre">match_track</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matcher</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#match_track"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.match_track" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Прогон трека (<code class="docutils literal notranslate"><span class="pre">et,</span> <span class="pre">lon,</span> <span class="pre">lat,</span> <span class="pre">speed,</span> <span class="pre">heading,</span> <span class="pre">valid</span></code>) через матчер точка за точкой.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>кадр <code class="xref py py-data docutils literal notranslate"><span class="pre">MATCH_COLUMNS</span></code> по точкам, получившим привязку (as-of: каждая
+строка зависит только от точек до неё); <code class="docutils literal notranslate"><span class="pre">acquired</span></code> — привязка найдена заново
+(первая точка, смена якоря после выбросов, потеря привязки), только тогда прогресс
+может уменьшиться. В <code class="docutils literal notranslate"><span class="pre">timings</span></code> (если передан) — секунды на каждую точку.</p>
+</dd>
+<dt class="field-even">Параметры<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>matcher</strong> (<a class="reference internal" href="#transit_core.matching.RouteMatcher" title="transit_core.matching.RouteMatcher"><em>RouteMatcher</em></a>)</p></li>
+<li><p><strong>track</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>timings</strong> (<em>list</em><em>[</em><em>float</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>DataFrame</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="transit_core.matching.schedule_deviation_s">
+<span class="sig-prename descclassname"><span class="pre">transit_core.matching.</span></span><span class="sig-name descname"><span class="pre">schedule_deviation_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">match</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#schedule_deviation_s"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.schedule_deviation_s" title="Ссылка на это определение">¶</a></dt>
+<dd><p>GPS-отклонение от нитки графика, сек (&gt; 0 — опоздание).</p>
+<p>Плановое время для текущего прогресса — интерполяция между плановыми временами соседних
+остановок (<code class="xref py py-meth docutils literal notranslate"><span class="pre">TripLine.planned_at()</span></code>); отклонение = <code class="docutils literal notranslate"><span class="pre">t</span></code> − это время.</p>
+<p>До планового отправления рейса ТС на отстое: отклонение 0, а не «опережение» на
+остаток отстоя. Иначе ТС, вставшее в паре метров за точкой конечной (или на второй
+точке конечной), получало −(минуты до отправления) — до −75 мин на validate — и
+спорило по знаку с задержкой прибытия на конечную у стоп-детектора.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>match</strong> (<a class="reference internal" href="#transit_core.matching.MatchResult" title="transit_core.matching.MatchResult"><em>MatchResult</em></a>)</p></li>
+<li><p><strong>line</strong> (<a class="reference internal" href="transit_core.route_line.html#transit_core.route_line.TripLine" title="transit_core.route_line.TripLine"><em>TripLine</em></a>)</p></li>
+<li><p><strong>t</strong> (<em>datetime</em><em> | </em><em>float</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="transit_core.matching.to_seconds">
+<span class="sig-prename descclassname"><span class="pre">transit_core.matching.</span></span><span class="sig-name descname"><span class="pre">to_seconds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/transit_core/matching.html#to_seconds"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#transit_core.matching.to_seconds" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Секунды эпохи для naive-времени датасета (как <code class="docutils literal notranslate"><span class="pre">datetime64</span> <span class="pre">→</span> <span class="pre">int64</span></code> в плане).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<em>datetime</em><em> | </em><em>float</em>)</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="transit_core.ndtp.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">transit_core.ndtp</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="transit_core.labels.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">transit_core.labels</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, команда Transit Pulse
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">transit_core.matching</a><ul>
+<li><a class="reference internal" href="#transit_core.matching.COURSE_CONF_W"><code class="docutils literal notranslate"><span class="pre">COURSE_CONF_W</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult"><code class="docutils literal notranslate"><span class="pre">MatchResult</span></code></a><ul>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.confidence"><code class="docutils literal notranslate"><span class="pre">MatchResult.confidence</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.dist_to_next_m"><code class="docutils literal notranslate"><span class="pre">MatchResult.dist_to_next_m</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.next_stop"><code class="docutils literal notranslate"><span class="pre">MatchResult.next_stop</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.offset_m"><code class="docutils literal notranslate"><span class="pre">MatchResult.offset_m</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.on_route"><code class="docutils literal notranslate"><span class="pre">MatchResult.on_route</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.prev_stop"><code class="docutils literal notranslate"><span class="pre">MatchResult.prev_stop</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.progress_m"><code class="docutils literal notranslate"><span class="pre">MatchResult.progress_m</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.segment_idx"><code class="docutils literal notranslate"><span class="pre">MatchResult.segment_idx</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.t_s"><code class="docutils literal notranslate"><span class="pre">MatchResult.t_s</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.MatchResult.trip"><code class="docutils literal notranslate"><span class="pre">MatchResult.trip</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#transit_core.matching.RouteMatcher"><code class="docutils literal notranslate"><span class="pre">RouteMatcher</span></code></a><ul>
+<li><a class="reference internal" href="#transit_core.matching.RouteMatcher.deviation_s"><code class="docutils literal notranslate"><span class="pre">RouteMatcher.deviation_s()</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.RouteMatcher.last"><code class="docutils literal notranslate"><span class="pre">RouteMatcher.last</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.RouteMatcher.line_of"><code class="docutils literal notranslate"><span class="pre">RouteMatcher.line_of()</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.RouteMatcher.stats"><code class="docutils literal notranslate"><span class="pre">RouteMatcher.stats</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.RouteMatcher.update"><code class="docutils literal notranslate"><span class="pre">RouteMatcher.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#transit_core.matching.match_track"><code class="docutils literal notranslate"><span class="pre">match_track()</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.schedule_deviation_s"><code class="docutils literal notranslate"><span class="pre">schedule_deviation_s()</span></code></a></li>
+<li><a class="reference internal" href="#transit_core.matching.to_seconds"><code class="docutils literal notranslate"><span class="pre">to_seconds()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=372fde1a"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/translations.js?v=cd1d70c9"></script>
+    </body>
+</html>

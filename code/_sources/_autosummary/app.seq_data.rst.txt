@@ -1,0 +1,26 @@
+app.seq\_data
+=============
+
+.. automodule:: app.seq_data
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_set
+      cached
+      fold_ids
+      group_key
+      load_labeled
+      load_plan_csv
+      load_track_csv
+      load_validate
+      synthetic_tr_ids
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SeqSet
+   

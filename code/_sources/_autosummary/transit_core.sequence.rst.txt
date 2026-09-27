@@ -1,0 +1,14 @@
+transit\_core.sequence
+======================
+
+.. automodule:: transit_core.sequence
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_sequence
+      prepare_plan
+      sequence_static
+   

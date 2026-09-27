@@ -1,0 +1,15 @@
+transit\_core.catalog
+=====================
+
+.. automodule:: transit_core.catalog
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      evidence
+      format_delay
+      make_cause
+      recommendations_for
+   

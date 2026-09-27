@@ -1,0 +1,16 @@
+﻿transit\_core.plan
+==================
+
+.. automodule:: transit_core.plan
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      load_plan
+      name_unaddressed
+      prepare_plan
+      split_by_tr
+      stop_key
+   

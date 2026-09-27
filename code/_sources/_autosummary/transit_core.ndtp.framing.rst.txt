@@ -1,0 +1,18 @@
+transit\_core.ndtp.framing
+==========================
+
+.. automodule:: transit_core.ndtp.framing
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      MAX_DATA_SIZE
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      FrameDecoder
+   

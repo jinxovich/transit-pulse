@@ -1,0 +1,25 @@
+transit\_core.route\_line
+=========================
+
+.. automodule:: transit_core.route_line
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      AT_STOP_M
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_lines
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Projection
+      TripLine
+   

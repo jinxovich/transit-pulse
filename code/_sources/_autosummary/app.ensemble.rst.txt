@@ -1,0 +1,16 @@
+app.ensemble
+============
+
+.. automodule:: app.ensemble
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      attach_external
+      best_weights
+      main
+      own_oof
+      summarize
+   

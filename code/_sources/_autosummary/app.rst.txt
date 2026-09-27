@@ -1,0 +1,25 @@
+﻿app
+===
+
+.. automodule:: app
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   calibration
+   cv
+   dataset
+   ensemble
+   inference
+   models
+   openapi_examples
+   seq_data
+   seq_model
+   seq_onnx
+   serve
+   train
+   v1_compare

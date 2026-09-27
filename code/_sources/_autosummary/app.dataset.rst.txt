@@ -1,0 +1,22 @@
+app.dataset
+===========
+
+.. automodule:: app.dataset
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_split
+      clone_sources
+      labeled
+      load_split
+      with_cur_dev
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Table
+   

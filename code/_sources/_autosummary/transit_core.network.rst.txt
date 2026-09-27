@@ -1,0 +1,17 @@
+transit\_core.network
+=====================
+
+.. automodule:: transit_core.network
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_network
+      route_id_of
+      route_name
+      segment_id_of
+      short_name
+      stop_key
+   

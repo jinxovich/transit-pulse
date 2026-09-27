@@ -1,0 +1,15 @@
+transit\_core.labels
+====================
+
+.. automodule:: transit_core.labels
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      load_schedule_with_fact
+      make_label
+      make_labels
+      target_class
+   

@@ -1,0 +1,28 @@
+﻿app.serve
+=========
+
+.. automodule:: app.serve
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      health
+      lifespan
+      metrics
+      model_info
+      predict_endpoint
+      reload_models
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Contribution
+      Item
+      PredictRequest
+      PredictResponse
+      Prediction
+      ReloadResponse
+   

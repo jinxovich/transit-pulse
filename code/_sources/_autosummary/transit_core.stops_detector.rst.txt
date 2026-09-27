@@ -1,0 +1,13 @@
+transit\_core.stops\_detector
+=============================
+
+.. automodule:: transit_core.stops_detector
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      detect_arrivals
+      online_cur_dev
+   

@@ -1,0 +1,1095 @@
+<!doctype html>
+<html class="no-js" lang="ru" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Алфавитный указатель" href="../../genindex.html"><link rel="search" title="Поиск" href="../../search.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>transit_core.schemas - Transit Pulse — документация по коду</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Transit Pulse — документация по коду</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <span class="sidebar-brand-text">Transit Pulse — документация по коду</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Поиск" name="q" aria-label="Поиск">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../core.html">Общее ядро <code class="docutils literal notranslate"><span class="pre">transit_core</span></code></a><input aria-label="Toggle navigation of Общее ядро transit_core" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../_autosummary/transit_core.html">transit_core</a><input aria-label="Toggle navigation of transit_core" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.catalog.html">transit_core.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.causes.html">transit_core.causes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.contract_export.html">transit_core.contract_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.features.html">transit_core.features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.labels.html">transit_core.labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.matching.html">transit_core.matching</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.html">transit_core.ndtp</a><input aria-label="Toggle navigation of transit_core.ndtp" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.cells.html">transit_core.ndtp.cells</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.codec.html">transit_core.ndtp.codec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.framing.html">transit_core.ndtp.framing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.network.html">transit_core.network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.plan.html">transit_core.plan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.risk.html">transit_core.risk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.route_line.html">transit_core.route_line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.schemas.html">transit_core.schemas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.segment_speed.html">transit_core.segment_speed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.sequence.html">transit_core.sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.stops_detector.html">transit_core.stops_detector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.track.html">transit_core.track</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../services.html">Сервисы</a><input aria-label="Toggle navigation of Сервисы" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../_autosummary/app.html">app</a><input aria-label="Toggle navigation of app" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.calibration.html">app.calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.cv.html">app.cv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.dataset.html">app.dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.ensemble.html">app.ensemble</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.inference.html">app.inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.models.html">app.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.openapi_examples.html">app.openapi_examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.seq_data.html">app.seq_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.seq_model.html">app.seq_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.seq_onnx.html">app.seq_onnx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.serve.html">app.serve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.train.html">app.train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.v1_compare.html">app.v1_compare</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../_autosummary/replayer.html">replayer</a><input aria-label="Toggle navigation of replayer" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.clock.html">replayer.clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.config.html">replayer.config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.engine.html">replayer.engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.link.html">replayer.link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.main.html">replayer.main</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.session.html">replayer.session</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.source.html">replayer.source</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Исходный код transit_core.schemas</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Контракт REST API и WebSocket между backend и дашбордом диспетчера.</span>
+
+<span class="sd">Это единственный источник правды для фронтенда: из этих моделей генерируются</span>
+<span class="sd">OpenAPI (FastAPI), JSON Schema для WS-сообщений и TypeScript-типы</span>
+<span class="sd">(``contracts/ts/contract.ts``).</span>
+
+<span class="sd">Соглашения:</span>
+
+<span class="sd">* **Время** — naive ISO-строки ``YYYY-MM-DDTHH:MM:SS`` во «времени датасета»</span>
+<span class="sd">  (как в CSV организаторов). Фронт показывает их как есть, без сдвига часового пояса.</span>
+<span class="sd">* **Задержка** в секундах: ``+`` — опоздание, ``−`` — опережение графика.</span>
+<span class="sd">* **lead_min** — сколько сим-минут от момента прогноза (``generated_at``)</span>
+<span class="sd">  до планового прибытия на целевую остановку.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Literal</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span>
+
+<span class="n">SCHEMA_VERSION</span> <span class="o">=</span> <span class="s2">"1.0"</span>
+
+<span class="n">NaiveTime</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
+    <span class="nb">str</span><span class="p">,</span>
+    <span class="n">Field</span><span class="p">(</span>
+        <span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">"^\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">T\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">$"</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Время датасета без часового пояса, например 2026-01-06T07:14:00"</span><span class="p">,</span>
+        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">"2026-01-06T07:14:00"</span><span class="p">],</span>
+    <span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">RiskLevel</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"green"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">,</span> <span class="s2">"red"</span><span class="p">,</span> <span class="s2">"early"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">]</span>
+<span class="sd">"""Уровень риска: ``early`` — опережение графика, ``none`` — прогноза нет."""</span>
+<span class="n">VehicleKind</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"scheduled"</span><span class="p">,</span> <span class="s2">"no_schedule"</span><span class="p">,</span> <span class="s2">"unknown"</span><span class="p">]</span>
+<span class="sd">"""``scheduled`` — есть расписание и прогнозы; ``no_schedule`` — ТС из датасета без</span>
+<span class="sd">расписания; ``unknown`` — борт, которого нет в справочнике (например, из эмулятора)."""</span>
+<span class="n">StreamMode</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"LIVE"</span><span class="p">,</span> <span class="s2">"WARMING_UP"</span><span class="p">,</span> <span class="s2">"DEGRADED"</span><span class="p">,</span> <span class="s2">"OFFLINE"</span><span class="p">,</span> <span class="s2">"PAUSED"</span><span class="p">]</span>
+<span class="n">CauseCode</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span>
+    <span class="s2">"ACCUMULATED_DELAY"</span><span class="p">,</span>
+    <span class="s2">"CONGESTION"</span><span class="p">,</span>
+    <span class="s2">"LONG_DWELL"</span><span class="p">,</span>
+    <span class="s2">"SHORT_LAYOVER"</span><span class="p">,</span>
+    <span class="s2">"EARLY_RUNNING"</span><span class="p">,</span>
+    <span class="s2">"GPS_LOSS"</span><span class="p">,</span>
+    <span class="s2">"UNKNOWN"</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">IncidentStatus</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"open"</span><span class="p">,</span> <span class="s2">"ack"</span><span class="p">,</span> <span class="s2">"resolved"</span><span class="p">]</span>
+<span class="n">IncidentOutcome</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"pending"</span><span class="p">,</span> <span class="s2">"hit"</span><span class="p">,</span> <span class="s2">"false_alarm"</span><span class="p">,</span> <span class="s2">"miss"</span><span class="p">]</span>
+<span class="n">ModelMode</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"ml"</span><span class="p">,</span> <span class="s2">"fallback"</span><span class="p">]</span>
+<span class="n">AlertMode</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"or"</span><span class="p">,</span> <span class="s2">"and"</span><span class="p">]</span>
+<span class="n">DoorSource</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"irma"</span><span class="p">,</span> <span class="s2">"corona"</span><span class="p">]</span>
+<span class="sd">"""Источник снимка дверей: ячейка ``G6CellIrma04`` или ``G6CellCrown03``."""</span>
+
+
+<div class="viewcode-block" id="Contract">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Contract">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Contract</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""База контракта: неизменяемые объекты и запрет лишних полей."""</span>
+
+    <span class="c1"># Поля с дефолтами в ответах есть всегда — в TS-типах они обязательные.</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span>
+        <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"forbid"</span><span class="p">,</span> <span class="n">json_schema_serialization_defaults_required</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LineString">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.LineString">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LineString</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""GeoJSON LineString, координаты ``[lon, lat]``."""</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"LineString"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"LineString"</span>
+    <span class="n">coordinates</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span></div>
+
+
+
+<div class="viewcode-block" id="Stop">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Stop">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Stop</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Остановка (физическая точка), общая для всех плановых прибытий."""</span>
+
+    <span class="n">stop_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Стабильный ключ остановки"</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Адрес остановки из расписания"</span><span class="p">)</span>
+    <span class="n">lon</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">lat</span><span class="p">:</span> <span class="nb">float</span></div>
+
+
+
+<div class="viewcode-block" id="Route">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Route">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Route</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Маршрут одного ТС за день (объединение его рейсов)."""</span>
+
+    <span class="n">route_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"«Конечная A ↔ Конечная B»"</span><span class="p">)</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Цвет линии маршрута в легенде, hex"</span><span class="p">)</span>
+    <span class="n">vehicle_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">stop_keys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="NetworkSegment">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NetworkSegment</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Перегон между соседними остановками маршрута."""</span>
+
+    <span class="n">segment_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">route_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">from_stop_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">to_stop_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">geometry</span><span class="p">:</span> <span class="n">LineString</span></div>
+
+
+
+<div class="viewcode-block" id="Network">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Network">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Network</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Статическая маршрутная сеть дня: ответ ``GET /api/v1/network``."""</span>
+
+    <span class="n">stops</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Stop</span><span class="p">]</span>
+    <span class="n">routes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Route</span><span class="p">]</span>
+    <span class="n">segments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NetworkSegment</span><span class="p">]</span>
+    <span class="n">bbox</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"[minLon, minLat, maxLon, maxLat]"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="StopRef">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StopRef</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Ссылка на плановое прибытие ТС на остановку."""</span>
+
+    <span class="n">visit_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"ID планового прибытия (tt_action_item_id)"</span><span class="p">)</span>
+    <span class="n">stop_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">lon</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">lat</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">planned_at</span><span class="p">:</span> <span class="n">NaiveTime</span> <span class="o">|</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="Prediction">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Prediction</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Прогноз задержки на целевой остановке в горизонте 10–15 минут."""</span>
+
+    <span class="n">target_stop</span><span class="p">:</span> <span class="n">StopRef</span>
+    <span class="n">predicted_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Прогноз задержки, c (+ опоздание)"</span><span class="p">)</span>
+    <span class="n">p_late</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Вероятность опоздания &gt; 120 c"</span><span class="p">)</span>
+    <span class="n">interval_s</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Интервал прогноза [q10, q90], c"</span><span class="p">)</span>
+    <span class="n">expected_abs_error_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Ожидаемая абсолютная ошибка, c"</span><span class="p">)</span>
+    <span class="n">lead_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Минут от generated_at до planned_at цели"</span><span class="p">)</span>
+    <span class="n">generated_at</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">horizon_ok</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Цель в окне (T+10, T+15]; false — перерыв/конечная"</span><span class="p">)</span>
+    <span class="n">model_version</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">model_mode</span><span class="p">:</span> <span class="n">ModelMode</span>
+    <span class="n">risk_level</span><span class="p">:</span> <span class="n">RiskLevel</span>
+    <span class="n">cause_code</span><span class="p">:</span> <span class="n">CauseCode</span></div>
+
+
+
+<div class="viewcode-block" id="VehicleState">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VehicleState</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Текущее состояние ТС на карте."""</span>
+
+    <span class="n">vehicle_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"tr_id или 'u:&lt;unit_id&gt;' для неопознанного борта"</span><span class="p">)</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="n">VehicleKind</span>
+    <span class="n">tr_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">unit_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">route_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">route_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">lon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"null, пока нет ни одной валидной координаты"</span><span class="p">)</span>
+    <span class="n">lat</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">heading</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Курс, градусы 0–360"</span><span class="p">)</span>
+    <span class="n">speed_kmh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">last_seen</span><span class="p">:</span> <span class="n">NaiveTime</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">stale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Давно нет данных от ТС"</span><span class="p">)</span>
+    <span class="n">warming_up</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Мало истории для прогноза, инциденты не создаются"</span><span class="p">)</span>
+    <span class="n">current_dev_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Отклонение от графика сейчас, c"</span><span class="p">)</span>
+    <span class="n">next_stop</span><span class="p">:</span> <span class="n">StopRef</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">prediction</span><span class="p">:</span> <span class="n">Prediction</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">risk_level</span><span class="p">:</span> <span class="n">RiskLevel</span>
+    <span class="n">open_incident_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="Evidence">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Evidence">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Evidence</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Факт, объясняющий прогноз (вклад признака)."""</span>
+
+    <span class="n">feature</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Человекочитаемое название признака"</span><span class="p">)</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Отформатированное значение, например '4.2 км/ч'"</span><span class="p">)</span>
+    <span class="n">contribution_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Вклад в прогноз, c"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Cause">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Cause">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Cause</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Предполагаемая причина задержки."""</span>
+
+    <span class="n">code</span><span class="p">:</span> <span class="n">CauseCode</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">details</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">evidence</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Evidence</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="Recommendation">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Recommendation">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Recommendation</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Упреждающее действие для диспетчера."""</span>
+
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="Segment">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Segment">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Segment</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Участок маршрута, на котором ожидается сбой."""</span>
+
+    <span class="n">segment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">from_stop</span><span class="p">:</span> <span class="n">StopRef</span>
+    <span class="n">to_stop</span><span class="p">:</span> <span class="n">StopRef</span>
+    <span class="n">geometry</span><span class="p">:</span> <span class="n">LineString</span></div>
+
+
+
+<div class="viewcode-block" id="AckInfo">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.AckInfo">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AckInfo</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Реакция диспетчера на инцидент."""</span>
+
+    <span class="n">action_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">at</span><span class="p">:</span> <span class="n">NaiveTime</span></div>
+
+
+
+<div class="viewcode-block" id="Incident">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Incident">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Incident</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Карточка инцидента: ТС с высоким риском задержки."""</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">vehicle_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">tr_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">route_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">IncidentStatus</span>
+    <span class="n">risk_level</span><span class="p">:</span> <span class="n">RiskLevel</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">updated_at</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">lead_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"За сколько минут до события создан алерт"</span><span class="p">)</span>
+    <span class="n">target_stop</span><span class="p">:</span> <span class="n">StopRef</span>
+    <span class="n">predicted_delay_s</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">p_late</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">interval_s</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="n">expected_abs_error_s</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">cause</span><span class="p">:</span> <span class="n">Cause</span>
+    <span class="n">segment</span><span class="p">:</span> <span class="n">Segment</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">recommendations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Recommendation</span><span class="p">]</span>
+    <span class="n">ack</span><span class="p">:</span> <span class="n">AckInfo</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">actual_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Фактическая задержка (по GPS) после события"</span><span class="p">)</span>
+    <span class="n">outcome</span><span class="p">:</span> <span class="n">IncidentOutcome</span></div>
+
+
+
+<div class="viewcode-block" id="RiskCounts">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RiskCounts</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">green</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">yellow</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">red</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">early</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">none</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="Kpis">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Kpis</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Сводка для верхней полосы дашборда."""</span>
+
+    <span class="n">vehicles_online</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">vehicles_total</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">by_risk</span><span class="p">:</span> <span class="n">RiskCounts</span>
+    <span class="n">incidents_open</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">avg_predicted_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">lead_ok_share</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Доля алертов с упреждением ≥ 10 мин"</span><span class="p">)</span>
+    <span class="n">e2e_latency_ms_p95</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">ml_latency_ms_p95</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">ingest_pps</span><span class="p">:</span> <span class="nb">float</span></div>
+
+
+
+<div class="viewcode-block" id="SystemStatus">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SystemStatus</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Режим работы системы (баннеры LIVE/DEGRADED/...)."""</span>
+
+    <span class="n">mode</span><span class="p">:</span> <span class="n">StreamMode</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Пояснение для баннера"</span><span class="p">)</span>
+    <span class="n">last_packet_age_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Секунд (wall-clock) с последнего пакета"</span><span class="p">)</span>
+    <span class="n">units_connected</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">ml_status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"ok"</span><span class="p">,</span> <span class="s2">"degraded"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]</span>
+    <span class="n">model_version</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">model_mode</span><span class="p">:</span> <span class="n">ModelMode</span></div>
+
+
+
+<div class="viewcode-block" id="Thresholds">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Thresholds</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Пороги риска; фронт берёт их только отсюда, не хардкодит."""</span>
+
+    <span class="n">red_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">120</span>
+    <span class="n">yellow_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">early_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">60</span>
+    <span class="n">red_p_late</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">yellow_p_late</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span></div>
+
+
+
+<div class="viewcode-block" id="RiskColors">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RiskColors</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">green</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"#2FBF71"</span>
+    <span class="n">yellow</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"#F2B134"</span>
+    <span class="n">red</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"#E5484D"</span>
+    <span class="n">early</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"#3E9BFF"</span>
+    <span class="n">none</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"#8B93A1"</span>
+    <span class="n">stale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"#6B7280"</span></div>
+
+
+
+<div class="viewcode-block" id="AppConfig">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AppConfig</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Ответ ``GET /api/v1/config``."""</span>
+
+    <span class="n">schema_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SCHEMA_VERSION</span>
+    <span class="n">thresholds</span><span class="p">:</span> <span class="n">Thresholds</span> <span class="o">=</span> <span class="n">Thresholds</span><span class="p">()</span>
+    <span class="n">colors</span><span class="p">:</span> <span class="n">RiskColors</span> <span class="o">=</span> <span class="n">RiskColors</span><span class="p">()</span>
+    <span class="n">horizon_min</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="n">dataset_day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"2026-01-06"</span>
+    <span class="n">sim_speed</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="StopTimelineItem">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StopTimelineItem</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Строка «нитки графика» ТС: план, виртуальный факт по GPS и прогноз."""</span>
+
+    <span class="n">visit_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">stop_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">planned_at</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">actual_at</span><span class="p">:</span> <span class="n">NaiveTime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Прибытие по GPS (для пройденных)"</span><span class="p">)</span>
+    <span class="n">actual_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">predicted_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">is_target</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"passed"</span><span class="p">,</span> <span class="s2">"upcoming"</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="DeviationPoint">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.DeviationPoint">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeviationPoint</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">t</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">dev_s</span><span class="p">:</span> <span class="nb">float</span></div>
+
+
+
+<div class="viewcode-block" id="ForecastPoint">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.ForecastPoint">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ForecastPoint</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">t</span><span class="p">:</span> <span class="n">NaiveTime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Плановое время целевой остановки"</span><span class="p">)</span>
+    <span class="n">delay_s</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">lo_s</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">hi_s</span><span class="p">:</span> <span class="nb">float</span></div>
+
+
+
+<div class="viewcode-block" id="DoorSnapshot">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DoorSnapshot</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Последний снимок дверей и пассажиропотока ТС из NDTP.</span>
+
+<span class="sd">    Источник — ячейки ``G6CellIrma04`` (IRMA: счётчики и статус дверей) или</span>
+<span class="sd">    ``G6CellCrown03`` («Корона»: только счётчики). В датасете и в режиме autoGenerate</span>
+<span class="sd">    эмулятора их нет, поэтому снимок появляется, только если терминал их прислал.</span>
+<span class="sd">    В признаки модели не входит.</span>
+<span class="sd">    """</span>
+
+    <span class="n">at</span><span class="p">:</span> <span class="n">NaiveTime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Время пакета с ячейкой дверей"</span><span class="p">)</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">DoorSource</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"irma — IRMA, corona — «Корона»"</span><span class="p">)</span>
+    <span class="n">any_open</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Открыта хотя бы одна дверь; null — у источника нет статуса дверей"</span>
+    <span class="p">)</span>
+    <span class="n">open_doors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Номера открытых дверей 1–4: датчик двери есть и дверь не закрыта"</span>
+    <span class="p">)</span>
+    <span class="n">entered</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Вошло: сумма счётчиков in1…in4 из ячейки"</span><span class="p">)</span>
+    <span class="n">exited</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Вышло: сумма счётчиков out1…out4 из ячейки"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="VehicleDetail">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VehicleDetail</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Ответ ``GET /api/v1/vehicles/{vehicle_id}``."""</span>
+
+    <span class="n">vehicle</span><span class="p">:</span> <span class="n">VehicleState</span>
+    <span class="n">timeline</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">StopTimelineItem</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Остановки в окне ±60 мин"</span><span class="p">)</span>
+    <span class="n">deviation_series</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">DeviationPoint</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Отклонение за последние 60 мин"</span><span class="p">)</span>
+    <span class="n">forecast</span><span class="p">:</span> <span class="n">ForecastPoint</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">incident_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">doors</span><span class="p">:</span> <span class="n">DoorSnapshot</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Последний снимок дверей из NDTP; null — ячеек дверей не было"</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SegmentRisk">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SegmentRisk</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Риск на перегоне (для окраски участков на карте)."""</span>
+
+    <span class="n">segment_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">route_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">risk_level</span><span class="p">:</span> <span class="n">RiskLevel</span>
+    <span class="n">vehicle_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">speed_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Текущая скорость / типичная для перегона"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LatencyStats">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.LatencyStats">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LatencyStats</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">p50_ms</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">p95_ms</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">max_ms</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MetricsSummary">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MetricsSummary</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Ответ ``GET /api/v1/metrics/summary``: производительность."""</span>
+
+    <span class="n">kpis</span><span class="p">:</span> <span class="n">Kpis</span>
+    <span class="n">ingest_to_state</span><span class="p">:</span> <span class="n">LatencyStats</span>
+    <span class="n">pass_to_ws</span><span class="p">:</span> <span class="n">LatencyStats</span>
+    <span class="n">ml_batch</span><span class="p">:</span> <span class="n">LatencyStats</span>
+    <span class="n">queue_lag</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">dropped_packets</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="LeadBucket">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.LeadBucket">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LeadBucket</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">lead_min</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">count</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="LeadMae">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.LeadMae">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LeadMae</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Онлайн-MAE сверенных прогнозов с упреждением в минуте ``(lead_min − 1, lead_min]``."""</span>
+
+    <span class="n">lead_min</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">mae_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"MAE, c; null — сверенных прогнозов нет"</span><span class="p">)</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Сколько прогнозов сверено"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AlertPolicyInfo">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.AlertPolicyInfo">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AlertPolicyInfo</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Действующая политика открытия инцидента."""</span>
+
+    <span class="n">delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Порог прогноза задержки, c (строго больше)"</span><span class="p">)</span>
+    <span class="n">p_late</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Порог вероятности опоздания (не меньше)"</span><span class="p">)</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">AlertMode</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Как сочетаются пороги: or — любой, and — оба"</span><span class="p">)</span>
+    <span class="n">min_streak</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Сколько проходов подряд держится условие"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OfflineMetrics">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OfflineMetrics</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">cv_mae_baseline_s</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">cv_mae_model_s</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">improvement</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Доля снижения MAE к baseline"</span><span class="p">)</span>
+    <span class="n">brier_before</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Brier p_late до калибровки; null — нет в отчёте ML"</span>
+    <span class="p">)</span>
+    <span class="n">brier_after</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Brier p_late после калибровки"</span><span class="p">)</span>
+    <span class="n">interval_coverage</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Доля фактов внутри интервала [q10, q90] (цель — 0.8)"</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="QualityMetrics">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">QualityMetrics</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Ответ ``GET /api/v1/metrics/quality``: качество прогнозов на потоке."""</span>
+
+    <span class="n">online_mae_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">n_resolved</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">lead_ok_share</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">lead_hist</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeadBucket</span><span class="p">]</span>
+    <span class="n">alert_precision</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">alert_recall</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">offline</span><span class="p">:</span> <span class="n">OfflineMetrics</span>
+    <span class="n">n_incidents</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Инцидентов в сессии"</span><span class="p">)</span>
+    <span class="n">alerts_per_vehicle_hour</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Инцидентов на ТС·час сим-времени (ТС с расписанием на связи, не в прогреве)"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">lead_median_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Медианное упреждение инцидентов, мин"</span>
+    <span class="p">)</span>
+    <span class="n">mae_by_lead</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">LeadMae</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Онлайн-MAE по минуте упреждения 11…15"</span>
+    <span class="p">)</span>
+    <span class="n">alert_policy</span><span class="p">:</span> <span class="n">AlertPolicyInfo</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Действующая политика алерта"</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LastPacket">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.LastPacket">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LastPacket</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">received_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Wall-clock время приёма, ISO UTC"</span><span class="p">)</span>
+    <span class="n">unit_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="nb">hex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Сырой NDTP-кадр в hex"</span><span class="p">)</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="IngestStats">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IngestStats</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Ответ ``GET /api/v1/ingest/stats``: приём NDTP."""</span>
+
+    <span class="n">packets_total</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">pps</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">crc_errors</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">parse_errors</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">connections</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">reconnects</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">unknown_units</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">last_packet</span><span class="p">:</span> <span class="n">LastPacket</span> <span class="o">|</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="SimClock">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.SimClock">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimClock</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">sim_time</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"running"</span><span class="p">,</span> <span class="s2">"paused"</span><span class="p">,</span> <span class="s2">"stopped"</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="Health">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.Health">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Health</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"ok"</span><span class="p">,</span> <span class="s2">"degraded"</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">]</span>
+    <span class="n">version</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">checks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="AckRequest">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.AckRequest">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AckRequest</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Тело ``POST /api/v1/incidents/{id}/ack``."""</span>
+
+    <span class="n">action_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="ReplayControl">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.ReplayControl">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReplayControl</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Тело ``POST /api/v1/replay/control``."""</span>
+
+    <span class="n">action</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"start"</span><span class="p">,</span> <span class="s2">"pause"</span><span class="p">,</span> <span class="s2">"resume"</span><span class="p">,</span> <span class="s2">"speed"</span><span class="p">,</span> <span class="s2">"seek"</span><span class="p">]</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">seek_to</span><span class="p">:</span> <span class="n">NaiveTime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<span class="n">WhatIfAction</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"hold_at_stop"</span><span class="p">,</span> <span class="s2">"shorten_dwell"</span><span class="p">,</span> <span class="s2">"skip_layover"</span><span class="p">,</span> <span class="s2">"add_reserve"</span><span class="p">]</span>
+<span class="sd">"""Упреждающая мера: ``hold_at_stop`` — придержать на остановке N мин; ``shorten_dwell`` —</span>
+<span class="sd">сократить отстой на конечной на N мин; ``skip_layover`` — выпустить без отстоя;</span>
+<span class="sd">``add_reserve`` — подменный выпуск резервного ТС на рейс после конечной."""</span>
+
+
+<div class="viewcode-block" id="WhatIfRequest">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfRequest">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WhatIfRequest</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Тело ``POST /api/v1/whatif``: какую меру применить к ТС."""</span>
+
+    <span class="n">vehicle_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">action</span><span class="p">:</span> <span class="n">WhatIfAction</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">le</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Минуты меры для hold_at_stop / shorten_dwell (по умолчанию 2 и 3); "</span>
+        <span class="s2">"для skip_layover и add_reserve не используется"</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="WhatIfStop">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WhatIfStop</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Остановка ТС: прогноз без меры и с мерой."""</span>
+
+    <span class="n">visit_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">stop_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">planned_at</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">lead_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Минут от момента расчёта до планового прибытия"</span><span class="p">)</span>
+    <span class="n">in_window</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Остановка в окне прогноза (T+10, T+15]"</span><span class="p">)</span>
+    <span class="n">after_break</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"До остановки есть конечная (разрыв рейса)"</span><span class="p">)</span>
+    <span class="n">predicted_before_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Прогноз задержки без меры, c"</span><span class="p">)</span>
+    <span class="n">predicted_after_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Прогноз задержки с мерой, c"</span><span class="p">)</span>
+    <span class="n">p_late_before</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p_late_after</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">risk_before</span><span class="p">:</span> <span class="n">RiskLevel</span>
+    <span class="n">risk_after</span><span class="p">:</span> <span class="n">RiskLevel</span></div>
+
+
+
+<div class="viewcode-block" id="WhatIfResult">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WhatIfResult</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Ответ ``POST /api/v1/whatif``: оценка влияния меры на график ТС."""</span>
+
+    <span class="n">vehicle_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">action</span><span class="p">:</span> <span class="n">WhatIfAction</span>
+    <span class="n">value_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Применённая величина меры, мин"</span><span class="p">)</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Мера по-русски, например «Придержать на остановке 2 мин»"</span><span class="p">)</span>
+    <span class="n">note</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Как мера учтена в прогнозе или почему она не влияет"</span><span class="p">)</span>
+    <span class="n">applied</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Мера меняет прогноз хотя бы одной остановки"</span><span class="p">)</span>
+    <span class="n">generated_at</span><span class="p">:</span> <span class="n">NaiveTime</span>
+    <span class="n">model_version</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">model_mode</span><span class="p">:</span> <span class="n">ModelMode</span>
+    <span class="n">current</span><span class="p">:</span> <span class="n">Prediction</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Текущий прогноз ТС из последнего прохода"</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">WhatIfStop</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Цель: остановка инцидента или текущего прогноза"</span><span class="p">)</span>
+    <span class="n">delta_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Изменение прогноза задержки на цели, c (− лучше)"</span><span class="p">)</span>
+    <span class="n">delta_p_late</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Изменение вероятности опоздания на цели"</span><span class="p">)</span>
+    <span class="n">stops</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">WhatIfStop</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Остановки окна (T+10, T+15] и ближайших 60 мин"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="WsBase">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WsBase">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WsBase</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">schema_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SCHEMA_VERSION</span>
+    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Меняется при перезапуске/перемотке потока"</span><span class="p">)</span>
+    <span class="n">sim_time</span><span class="p">:</span> <span class="n">NaiveTime</span></div>
+
+
+
+<div class="viewcode-block" id="SnapshotData">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.SnapshotData">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SnapshotData</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">vehicles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">VehicleState</span><span class="p">]</span>
+    <span class="n">incidents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Incident</span><span class="p">]</span>
+    <span class="n">kpis</span><span class="p">:</span> <span class="n">Kpis</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">SystemStatus</span></div>
+
+
+
+<div class="viewcode-block" id="VehiclesDeltaData">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.VehiclesDeltaData">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VehiclesDeltaData</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="n">vehicles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">VehicleState</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Изменившиеся ТС целиком"</span><span class="p">)</span>
+    <span class="n">removed</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"vehicle_id, которые надо убрать с карты"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="WsSnapshot">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WsSnapshot">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WsSnapshot</span><span class="p">(</span><span class="n">WsBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Полное состояние: при подключении и при смене session_id."""</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"snapshot"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"snapshot"</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">SnapshotData</span></div>
+
+
+
+<div class="viewcode-block" id="WsVehiclesDelta">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WsVehiclesDelta">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WsVehiclesDelta</span><span class="p">(</span><span class="n">WsBase</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"vehicles.delta"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"vehicles.delta"</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">VehiclesDeltaData</span></div>
+
+
+
+<div class="viewcode-block" id="WsIncident">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WsIncident">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WsIncident</span><span class="p">(</span><span class="n">WsBase</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"incident.opened"</span><span class="p">,</span> <span class="s2">"incident.updated"</span><span class="p">,</span> <span class="s2">"incident.resolved"</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Incident</span></div>
+
+
+
+<div class="viewcode-block" id="WsKpis">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WsKpis">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WsKpis</span><span class="p">(</span><span class="n">WsBase</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"kpis"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"kpis"</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Kpis</span></div>
+
+
+
+<div class="viewcode-block" id="WsSystemStatus">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WsSystemStatus">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WsSystemStatus</span><span class="p">(</span><span class="n">WsBase</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"system.status"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"system.status"</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">SystemStatus</span></div>
+
+
+
+<div class="viewcode-block" id="WsPing">
+<a class="viewcode-back" href="../../_autosummary/transit_core.schemas.html#transit_core.schemas.WsPing">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WsPing</span><span class="p">(</span><span class="n">WsBase</span><span class="p">):</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"ping"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"ping"</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span></div>
+
+
+
+<span class="n">WsMessage</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
+    <span class="n">WsSnapshot</span> <span class="o">|</span> <span class="n">WsVehiclesDelta</span> <span class="o">|</span> <span class="n">WsIncident</span> <span class="o">|</span> <span class="n">WsKpis</span> <span class="o">|</span> <span class="n">WsSystemStatus</span> <span class="o">|</span> <span class="n">WsPing</span><span class="p">,</span>
+    <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">"type"</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="sd">"""Любое сообщение ``/ws/v1/stream``; тип различается по полю ``type``."""</span>
+
+<span class="n">REST_MODELS</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Health</span><span class="p">,</span>
+    <span class="n">AppConfig</span><span class="p">,</span>
+    <span class="n">Network</span><span class="p">,</span>
+    <span class="n">VehicleState</span><span class="p">,</span>
+    <span class="n">VehicleDetail</span><span class="p">,</span>
+    <span class="n">Incident</span><span class="p">,</span>
+    <span class="n">SegmentRisk</span><span class="p">,</span>
+    <span class="n">MetricsSummary</span><span class="p">,</span>
+    <span class="n">QualityMetrics</span><span class="p">,</span>
+    <span class="n">IngestStats</span><span class="p">,</span>
+    <span class="n">SimClock</span><span class="p">,</span>
+    <span class="n">AckRequest</span><span class="p">,</span>
+    <span class="n">ReplayControl</span><span class="p">,</span>
+    <span class="n">WhatIfRequest</span><span class="p">,</span>
+    <span class="n">WhatIfResult</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, команда Transit Pulse
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=372fde1a"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../_static/translations.js?v=cd1d70c9"></script>
+    </body>
+</html>

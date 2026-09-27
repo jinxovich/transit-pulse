@@ -1,0 +1,27 @@
+app.inference
+=============
+
+.. automodule:: app.inference
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      lead_bin_index
+      load_calibration
+      load_registry
+      p_exceed
+      predict
+      to_matrix
+      top_contributions
+      widen
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Calibration
+      LoadedModel
+      Registry
+   

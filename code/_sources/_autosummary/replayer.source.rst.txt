@@ -1,0 +1,26 @@
+replayer.source
+===============
+
+.. automodule:: replayer.source
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      CLONE_UNIT_STEP
+      CLONE_SHIFT_DEG
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      clone_unit_id
+      load_track
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Track
+   

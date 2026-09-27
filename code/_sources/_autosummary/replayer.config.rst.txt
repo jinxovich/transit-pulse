@@ -1,0 +1,12 @@
+replayer.config
+===============
+
+.. automodule:: replayer.config
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Settings
+   

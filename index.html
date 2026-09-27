@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transit Pulse — документация</title>
+<style>
+:root { --bg: #0E1116; --panel: #161B22; --line: #262D36; --text: #E6EAF0; --muted: #8B93A1;
+  --accent: #3E9BFF; --red: #E5484D; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.5 "IBM Plex Sans", system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 48px 16px 64px; }
+h1 { font-size: 40px; margin: 0 0 8px; letter-spacing: -0.02em; }
+h1 b { color: var(--red); }
+p.lead { color: var(--muted); margin: 0 0 40px; max-width: 640px; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+  margin: 40px 0 12px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.card { display: flex; flex-direction: column; gap: 4px; padding: 16px; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 10px; color: inherit; text-decoration: none;
+  transition: border-color .15s, transform .15s; }
+.card:hover, .card:focus-visible { border-color: var(--accent); transform: translateY(-2px);
+  outline: none; }
+.card span { color: var(--muted); font-size: 14px; }
+footer { margin-top: 48px; color: var(--muted); font-size: 14px; }
+footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+<h1>Transit <b>Pulse</b></h1>
+<p class="lead">Система раннего предупреждения о задержках городского транспорта: поток NDTP →
+сопоставление с ниткой графика → ML-прогноз задержки за 10–15 минут → алерт с причиной и
+рекомендацией на дашборде диспетчера.</p>
+<h2>API и код</h2>
+<div class="grid"><a class="card" href="api/backend.html"><strong>Swagger backend</strong><span>REST /api/v1, WebSocket-контракт — 17 путей</span></a><a class="card" href="api/ml.html"><strong>Swagger ML-сервиса</strong><span>/predict с квантилями и вкладами — 5 пути</span></a><a class="card" href="code/index.html"><strong>Документация по коду</strong><span>Sphinx: transit_core, backend, replayer</span></a></div>
+<h2>Документы</h2>
+<div class="grid"><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/README.md"><strong>README</strong><span>Запуск в Docker одной командой, карта модулей</span></a><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/docs/JURY_GUIDE.md"><strong>Для жюри</strong><span>Как подать поток, где прогнозы, алерты и метрики</span></a><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/docs/PERFORMANCE.md"><strong>Производительность</strong><span>Латентность, нагрузка, деградация, старт</span></a><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/docs/FEATURES.md"><strong>Возможности</strong><span>Доп. фичи ТЗ и сверх обязательного</span></a><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/docs/DATA_AUDIT.md"><strong>Аудит данных</strong><span>Найденная утечка и почему мы её не используем</span></a><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/docs/perf/stream_eval.md"><strong>Горизонт на потоке</strong><span>Сверка потоковых прогнозов с разметкой</span></a><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/docs/SUBMISSIONS.md"><strong>Сабмиты</strong><span>Журнал сабмитов и CV-метрики</span></a><a class="card" href="https://github.com/jinxovich/transit-pulse/blob/main/docs/INTERFACES.md"><strong>Интерфейсы модулей</strong><span>Договор между backend, ML и replayer</span></a></div>
+<footer>Исходный код и запуск: <a href="https://github.com/jinxovich/transit-pulse">https://github.com/jinxovich/transit-pulse</a></footer>
+</main>
+</body>
+</html>

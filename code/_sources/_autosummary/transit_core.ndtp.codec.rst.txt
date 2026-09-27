@@ -1,0 +1,31 @@
+transit\_core.ndtp.codec
+========================
+
+.. automodule:: transit_core.ndtp.codec
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_frame
+      crc16_modbus
+      decode_cells
+      decode_frame
+      encode_handshake
+      encode_realtime
+      encode_result
+      frame_fields
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Frame
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      ParseError
+   

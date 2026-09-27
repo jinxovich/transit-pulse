@@ -1,0 +1,21 @@
+app.calibration
+===============
+
+.. automodule:: app.calibration
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      brier
+      conformal_scale
+      ece
+      evaluate
+      fit
+      fit_isotonic
+      lead_bins
+      main
+      reliability
+      write_artifact
+   

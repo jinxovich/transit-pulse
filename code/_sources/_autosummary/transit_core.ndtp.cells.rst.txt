@@ -1,0 +1,34 @@
+﻿transit\_core.ndtp.cells
+========================
+
+.. automodule:: transit_core.ndtp.cells
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      COORD_SCALE
+      DOORS
+      IRMA_FLAGS
+      LAYOUTS
+      CELL_SIZES
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      decode_cell
+      decode_nav
+      encode_cell
+      encode_nav
+      make_cell
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Cell
+      CellLayout
+      NavCell
+   

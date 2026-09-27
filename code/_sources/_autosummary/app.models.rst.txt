@@ -1,0 +1,16 @@
+app.models
+==========
+
+.. automodule:: app.models
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      fit_catboost
+      fit_predict_lgbm
+      sort_quantiles
+      stage_iterations
+      staged_quantiles
+   

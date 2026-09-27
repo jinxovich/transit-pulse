@@ -1,0 +1,16 @@
+app.cv
+======
+
+.. automodule:: app.cv
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      allowed_synthetic
+      make_folds
+      oof_mae
+      real_positions
+      run_cv
+   

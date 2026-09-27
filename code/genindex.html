@@ -1,0 +1,2828 @@
+<!doctype html>
+<html class="no-js" lang="ru" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Алфавитный указатель" href="#"><link rel="search" title="Поиск" href="search.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Алфавитный указатель - Transit Pulse — документация по коду</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Transit Pulse — документация по коду</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">Transit Pulse — документация по коду</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Поиск" name="q" aria-label="Поиск">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="core.html">Общее ядро <code class="docutils literal notranslate"><span class="pre">transit_core</span></code></a><input aria-label="Toggle navigation of Общее ядро transit_core" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_autosummary/transit_core.html">transit_core</a><input aria-label="Toggle navigation of transit_core" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.catalog.html">transit_core.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.causes.html">transit_core.causes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.contract_export.html">transit_core.contract_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.features.html">transit_core.features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.labels.html">transit_core.labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.matching.html">transit_core.matching</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="_autosummary/transit_core.ndtp.html">transit_core.ndtp</a><input aria-label="Toggle navigation of transit_core.ndtp" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/transit_core.ndtp.cells.html">transit_core.ndtp.cells</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/transit_core.ndtp.codec.html">transit_core.ndtp.codec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/transit_core.ndtp.framing.html">transit_core.ndtp.framing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.network.html">transit_core.network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.plan.html">transit_core.plan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.risk.html">transit_core.risk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.route_line.html">transit_core.route_line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.schemas.html">transit_core.schemas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.segment_speed.html">transit_core.segment_speed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.sequence.html">transit_core.sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.stops_detector.html">transit_core.stops_detector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/transit_core.track.html">transit_core.track</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="services.html">Сервисы</a><input aria-label="Toggle navigation of Сервисы" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_autosummary/app.html">app</a><input aria-label="Toggle navigation of app" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.calibration.html">app.calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.cv.html">app.cv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.dataset.html">app.dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.ensemble.html">app.ensemble</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.inference.html">app.inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.models.html">app.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.openapi_examples.html">app.openapi_examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.seq_data.html">app.seq_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.seq_model.html">app.seq_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.seq_onnx.html">app.seq_onnx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.serve.html">app.serve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.train.html">app.train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/app.v1_compare.html">app.v1_compare</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_autosummary/replayer.html">replayer</a><input aria-label="Toggle navigation of replayer" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/replayer.clock.html">replayer.clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/replayer.config.html">replayer.config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/replayer.engine.html">replayer.engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/replayer.link.html">replayer.link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/replayer.main.html">replayer.main</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/replayer.session.html">replayer.session</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/replayer.source.html">replayer.source</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          
+<section class="genindex-section">
+  <h1 id="index">Алфавитный указатель</h1>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
+</section>
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.ack">ack (атрибут transit_core.schemas.Incident)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckInfo">AckInfo (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckRequest">AckRequest (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/replayer.session.html#replayer.session.SessionReporter.aclose">aclose() (метод replayer.session.SessionReporter)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ReplayControl.action">action (атрибут transit_core.schemas.ReplayControl)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfRequest.action">(атрибут transit_core.schemas.WhatIfRequest)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.action">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckInfo.action_code">action_code (атрибут transit_core.schemas.AckInfo)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckRequest.action_code">(атрибут transit_core.schemas.AckRequest)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.actual_at">actual_at (атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.actual_delay_s">actual_delay_s (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.actual_delay_s">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.advance">advance() (метод replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.ReloadResponse.after">after (атрибут app.serve.ReloadResponse)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.after_break">after_break (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.alert_policy">alert_policy (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.alert_precision">alert_precision (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.alert_recall">alert_recall (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AlertPolicyInfo">AlertPolicyInfo (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.alerts_per_vehicle_hour">alerts_per_vehicle_hour (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/app.cv.html#app.cv.allowed_synthetic">allowed_synthetic() (в модуле app.cv)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.alt">alt (атрибут replayer.source.Track)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.altitude_m">altitude_m (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.altitude_m">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.ALWAYS_SHOWN">ALWAYS_SHOWN (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot.any_open">any_open (атрибут transit_core.schemas.DoorSnapshot)</a>
+</li>
+        <li>
+    app
+
+        <ul>
+          <li><a href="_autosummary/app.html#module-app">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.calibration
+
+        <ul>
+          <li><a href="_autosummary/app.calibration.html#module-app.calibration">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.cv
+
+        <ul>
+          <li><a href="_autosummary/app.cv.html#module-app.cv">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.dataset
+
+        <ul>
+          <li><a href="_autosummary/app.dataset.html#module-app.dataset">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    app.ensemble
+
+        <ul>
+          <li><a href="_autosummary/app.ensemble.html#module-app.ensemble">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.inference
+
+        <ul>
+          <li><a href="_autosummary/app.inference.html#module-app.inference">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.models
+
+        <ul>
+          <li><a href="_autosummary/app.models.html#module-app.models">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.openapi_examples
+
+        <ul>
+          <li><a href="_autosummary/app.openapi_examples.html#module-app.openapi_examples">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.seq_data
+
+        <ul>
+          <li><a href="_autosummary/app.seq_data.html#module-app.seq_data">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.seq_model
+
+        <ul>
+          <li><a href="_autosummary/app.seq_model.html#module-app.seq_model">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.seq_onnx
+
+        <ul>
+          <li><a href="_autosummary/app.seq_onnx.html#module-app.seq_onnx">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.serve
+
+        <ul>
+          <li><a href="_autosummary/app.serve.html#module-app.serve">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.train
+
+        <ul>
+          <li><a href="_autosummary/app.train.html#module-app.train">module</a>
+</li>
+        </ul></li>
+        <li>
+    app.v1_compare
+
+        <ul>
+          <li><a href="_autosummary/app.v1_compare.html#module-app.v1_compare">module</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig">AppConfig (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.applied">applied (атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.assign">assign() (в модуле transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckInfo.at">at (атрибут transit_core.schemas.AckInfo)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot.at">(атрибут transit_core.schemas.DoorSnapshot)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.AT_STOP_M">AT_STOP_M (в модуле transit_core.route_line)</a>
+</li>
+        <li><a href="_autosummary/app.ensemble.html#app.ensemble.attach_external">attach_external() (в модуле app.ensemble)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.autostart">autostart (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.AUTOSTART_WAIT_S">AUTOSTART_WAIT_S (в модуле replayer.engine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.avg_predicted_delay_s">avg_predicted_delay_s (атрибут transit_core.schemas.Kpis)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments.ax">ax (атрибут transit_core.segment_speed.Segments)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments.ay">ay (атрибут transit_core.segment_speed.Segments)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.backend_http">backend_http (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.bat_voltage">bat_voltage (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.bat_voltage">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.batch">batch (атрибут app.seq_model.TrainConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Network.bbox">bbox (атрибут transit_core.schemas.Network)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.ReloadResponse.before">before (атрибут app.serve.ReloadResponse)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.begin">begin() (метод replayer.engine.ReplayEngine)</a>
+</li>
+        <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.bench">bench() (в модуле app.seq_onnx)</a>
+</li>
+        <li><a href="_autosummary/app.ensemble.html#app.ensemble.best_weights">best_weights() (в модуле app.ensemble)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout.bits">bits (атрибут transit_core.ndtp.cells.CellLayout)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout.brief">brief (атрибут transit_core.ndtp.cells.CellLayout)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.brier">brier() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics.brier_after">brier_after (атрибут transit_core.schemas.OfflineMetrics)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics.brier_before">brier_before (атрибут transit_core.schemas.OfflineMetrics)</a>
+</li>
+        <li><a href="_autosummary/replayer.main.html#replayer.main.build_engine">build_engine() (в модуле replayer.main)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.build_frame">build_frame() (в модуле transit_core.ndtp.codec)</a>
+</li>
+        <li><a href="_autosummary/transit_core.contract_export.html#transit_core.contract_export.build_json_schema">build_json_schema() (в модуле transit_core.contract_export)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.build_lines">build_lines() (в модуле transit_core.route_line)</a>
+</li>
+        <li><a href="_autosummary/transit_core.network.html#transit_core.network.build_network">build_network() (в модуле transit_core.network)</a>
+</li>
+        <li><a href="_autosummary/transit_core.sequence.html#transit_core.sequence.build_sequence">build_sequence() (в модуле transit_core.sequence)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.build_set">build_set() (в модуле app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.build_split">build_split() (в модуле app.dataset)</a>
+</li>
+        <li><a href="_autosummary/transit_core.contract_export.html#transit_core.contract_export.build_typescript">build_typescript() (в модуле transit_core.contract_export)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments.bx">bx (атрибут transit_core.segment_speed.Segments)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments.by">by (атрибут transit_core.segment_speed.Segments)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.by_risk">by_risk (атрибут transit_core.schemas.Kpis)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.cached">cached() (в модуле app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel.calibration">calibration (атрибут app.inference.LoadedModel)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration">Calibration (класс в app.inference)</a>
+</li>
+        <li><a href="_autosummary/app.train.html#app.train.catboost_cv">catboost_cv() (в модуле app.train)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.cause">cause (атрибут transit_core.schemas.Incident)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Cause">Cause (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.cause_code">cause_code (атрибут transit_core.schemas.Prediction)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Cell">Cell (класс в transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.Cell">(класс в transit_core.ndtp.cells)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CELL_SIZES">CELL_SIZES (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout">CellLayout (класс в transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.cells">cells (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.cells">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Health.checks">checks (атрибут transit_core.schemas.Health)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.CLONE_SHIFT_DEG">CLONE_SHIFT_DEG (в модуле replayer.source)</a>
+</li>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.clone_sources">clone_sources() (в модуле app.dataset)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.clone_unit_id">clone_unit_id() (в модуле replayer.source)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.CLONE_UNIT_STEP">CLONE_UNIT_STEP (в модуле replayer.source)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Cause.code">code (атрибут transit_core.schemas.Cause)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Recommendation.code">(атрибут transit_core.schemas.Recommendation)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Route.color">color (атрибут transit_core.schemas.Route)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.colors">colors (атрибут transit_core.schemas.AppConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckInfo.comment">comment (атрибут transit_core.schemas.AckInfo)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckRequest.comment">(атрибут transit_core.schemas.AckRequest)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.confidence">confidence (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.conformal_scale">conformal_scale() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.connections">connections (атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.LinkStats.connects">connects (атрибут replayer.link.LinkStats)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Contract">Contract (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Contribution">Contribution (класс в app.serve)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Contribution.contribution_s">contribution_s (атрибут app.serve.Contribution)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Evidence.contribution_s">(атрибут transit_core.schemas.Evidence)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Prediction.contributions">contributions (атрибут app.serve.Prediction)</a>
+</li>
+        <li><a href="_autosummary/replayer.main.html#replayer.main.control">control() (в модуле replayer.main)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.control">(метод replayer.engine.ReplayEngine)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.COORD_SCALE">COORD_SCALE (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LineString.coordinates">coordinates (атрибут transit_core.schemas.LineString)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.Projection.cos_course">cos_course (атрибут transit_core.route_line.Projection)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadBucket.count">count (атрибут transit_core.schemas.LeadBucket)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.course">course (атрибут replayer.source.Track)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.course">(атрибут transit_core.ndtp.cells.NavCell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.course">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.COURSE_CONF_W">COURSE_CONF_W (в модуле transit_core.matching)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.crc16_modbus">crc16_modbus() (в модуле transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.crc16_modbus">(в модуле transit_core.ndtp.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.crc_errors">crc_errors (атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.crc_ok">crc_ok (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.crc_ok">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.created_at">created_at (атрибут transit_core.schemas.Incident)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.cum">cum (атрибут transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.current">current (атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.current_dev_s">current_dev_s (атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.current_segment">current_segment() (в модуле transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.CurrentSegment">CurrentSegment (класс в transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.cuts">cuts (атрибут app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics.cv_mae_baseline_s">cv_mae_baseline_s (атрибут transit_core.schemas.OfflineMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics.cv_mae_model_s">cv_mae_model_s (атрибут transit_core.schemas.OfflineMetrics)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsIncident.data">data (атрибут transit_core.schemas.WsIncident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsKpis.data">(атрибут transit_core.schemas.WsKpis)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsPing.data">(атрибут transit_core.schemas.WsPing)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSnapshot.data">(атрибут transit_core.schemas.WsSnapshot)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSystemStatus.data">(атрибут transit_core.schemas.WsSystemStatus)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsVehiclesDelta.data">(атрибут transit_core.schemas.WsVehiclesDelta)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.data_dir">data_dir (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.dataset_day">dataset_day (атрибут transit_core.schemas.AppConfig)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.DAY_END">DAY_END (в модуле replayer.engine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.decode_cell">decode_cell() (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.decode_cells">decode_cells() (в модуле transit_core.ndtp.codec)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.decode_frame">decode_frame() (в модуле transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.decode_frame">(в модуле transit_core.ndtp.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.decode_nav">decode_nav() (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.DELAY_FEATURES">DELAY_FEATURES (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Prediction.delay_s">delay_s (атрибут app.serve.Prediction)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AlertPolicyInfo.delay_s">(атрибут transit_core.schemas.AlertPolicyInfo)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ForecastPoint.delay_s">(атрибут transit_core.schemas.ForecastPoint)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.DelayEnsemble">DelayEnsemble (класс в app.seq_onnx)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.delta_delay_s">delta_delay_s (атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.delta_p_late">delta_p_late (атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Recommendation.description">description (атрибут transit_core.schemas.Recommendation)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Cause.details">details (атрибут transit_core.schemas.Cause)</a>
+</li>
+        <li><a href="_autosummary/transit_core.stops_detector.html#transit_core.stops_detector.detect_arrivals">detect_arrivals() (в модуле transit_core.stops_detector)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DeviationPoint.dev_s">dev_s (атрибут transit_core.schemas.DeviationPoint)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.RouteMatcher.deviation_s">deviation_s() (метод transit_core.matching.RouteMatcher)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail.deviation_series">deviation_series (атрибут transit_core.schemas.VehicleDetail)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DeviationPoint">DeviationPoint (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.device">device() (в модуле app.seq_model)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.Projection.dist">dist (атрибут transit_core.route_line.Projection)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.dist_to_next_m">dist_to_next_m (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail.doors">doors (атрибут transit_core.schemas.VehicleDetail)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.DOORS">DOORS (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot">DoorSnapshot (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSource">DoorSource (в модуле transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.dropout">dropout (атрибут app.seq_model.TrainConfig)</a>
+</li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.LinkStats.dropped">dropped (атрибут replayer.link.LinkStats)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary.dropped_packets">dropped_packets (атрибут transit_core.schemas.MetricsSummary)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.dwell_seconds">dwell_seconds() (в модуле transit_core.segment_speed)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.e2e_latency_ms_p95">e2e_latency_ms_p95 (атрибут transit_core.schemas.Kpis)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors.early">early (атрибут transit_core.schemas.RiskColors)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts.early">(атрибут transit_core.schemas.RiskCounts)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds.early_delay_s">early_delay_s (атрибут transit_core.schemas.Thresholds)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.ece">ece() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.effective_speed">effective_speed (свойство replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.encode_cell">encode_cell() (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.encode_handshake">encode_handshake() (в модуле transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.encode_handshake">(в модуле transit_core.ndtp.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.encode_nav">encode_nav() (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.encode_realtime">encode_realtime() (в модуле transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.encode_realtime">(в модуле transit_core.ndtp.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.encode_result">encode_result() (в модуле transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.encode_result">(в модуле transit_core.ndtp.codec)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot.entered">entered (атрибут transit_core.schemas.DoorSnapshot)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.epochs">epochs (атрибут app.seq_model.TrainConfig)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.err_k">err_k (атрибут app.inference.Calibration)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel.err_k">(атрибут app.inference.LoadedModel)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.evaluate">evaluate() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/app.train.html#app.train.evaluate_mode">evaluate_mode() (в модуле app.train)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Cause.evidence">evidence (атрибут transit_core.schemas.Cause)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Evidence">Evidence (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.catalog.html#transit_core.catalog.evidence">evidence() (в модуле transit_core.catalog)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot.exited">exited (атрибут transit_core.schemas.DoorSnapshot)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Prediction.expected_abs_error_s">expected_abs_error_s (атрибут app.serve.Prediction)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.expected_abs_error_s">(атрибут transit_core.schemas.Incident)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.expected_abs_error_s">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.serve.html#app.serve.PredictRequest.explain">explain (атрибут app.serve.PredictRequest)</a>
+</li>
+        <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.export">export() (в модуле app.seq_onnx)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.serve.html#app.serve.Contribution.feature">feature (атрибут app.serve.Contribution)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Evidence.feature">(атрибут transit_core.schemas.Evidence)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.feature">feature() (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Registry.features">features (атрибут app.inference.Registry)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.serve.html#app.serve.Item.features">(атрибут app.serve.Item)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.FrameDecoder.feed">feed() (метод transit_core.ndtp.FrameDecoder)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.framing.html#transit_core.ndtp.framing.FrameDecoder.feed">(метод transit_core.ndtp.framing.FrameDecoder)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Cell.fields">fields (атрибут transit_core.ndtp.Cell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.Cell.fields">(атрибут transit_core.ndtp.cells.Cell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LastPacket.fields">(атрибут transit_core.schemas.LastPacket)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout.fields">(свойство transit_core.ndtp.cells.CellLayout)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel.fingerprint">fingerprint (атрибут app.inference.LoadedModel)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.fit">fit() (в модуле app.calibration)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.seq_model.html#app.seq_model.fit">(в модуле app.seq_model)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.models.html#app.models.fit_catboost">fit_catboost() (в модуле app.models)</a>
+</li>
+        <li><a href="_autosummary/app.train.html#app.train.fit_final">fit_final() (в модуле app.train)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.fit_isotonic">fit_isotonic() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.fit_predict">fit_predict() (в модуле app.seq_model)</a>
+</li>
+        <li><a href="_autosummary/app.models.html#app.models.fit_predict_lgbm">fit_predict_lgbm() (в модуле app.models)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.flags">flags (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.flags">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.FLAGS">FLAGS (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.fleet_multiplier">fleet_multiplier (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout.fmt">fmt (атрибут transit_core.ndtp.cells.CellLayout)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.fold_ids">fold_ids() (в модуле app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail.forecast">forecast (атрибут transit_core.schemas.VehicleDetail)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ForecastPoint">ForecastPoint (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.catalog.html#transit_core.catalog.format_delay">format_delay() (в модуле transit_core.catalog)</a>
+</li>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.format_value">format_value() (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.SeqRegressor.forward">forward() (метод app.seq_model.SeqRegressor)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.DelayEnsemble.forward">(метод app.seq_onnx.DelayEnsemble)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame">Frame (класс в transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame">(класс в transit_core.ndtp.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.frame_fields">frame_fields() (в модуле transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.frame_fields">(в модуле transit_core.ndtp.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.FrameDecoder">FrameDecoder (класс в transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.framing.html#transit_core.ndtp.framing.FrameDecoder">(класс в transit_core.ndtp.framing)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.from_dict">from_dict() (метод класса app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.from_env">from_env() (метод класса replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.from_iso">from_iso() (в модуле replayer.engine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Segment.from_stop">from_stop (атрибут transit_core.schemas.Segment)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment.from_stop_key">from_stop_key (атрибут transit_core.schemas.NetworkSegment)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.generated_at">generated_at (атрибут transit_core.schemas.Prediction)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.generated_at">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment.geometry">geometry (атрибут transit_core.schemas.NetworkSegment)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Segment.geometry">(атрибут transit_core.schemas.Segment)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.global_scale">global_scale (атрибут app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors.green">green (атрибут transit_core.schemas.RiskColors)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts.green">(атрибут transit_core.schemas.RiskCounts)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.group_key">group_key() (в модуле app.seq_data)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.handshake">handshake (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.handshake">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.handshake_pause_s">handshake_pause_s (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.heading">heading (атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Health">Health (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.health">health() (в модуле app.serve)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.main.html#replayer.main.health">(в модуле replayer.main)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.heartbeat_s">heartbeat_s (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LastPacket.hex">hex (атрибут transit_core.schemas.LastPacket)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ForecastPoint.hi_s">hi_s (атрибут transit_core.schemas.ForecastPoint)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.hidden">hidden (атрибут app.seq_model.TrainConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.HIDDEN_EVIDENCE">HIDDEN_EVIDENCE (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.horizon_min">horizon_min (атрибут transit_core.schemas.AppConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.horizon_ok">horizon_ok (атрибут transit_core.schemas.Prediction)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.serve.html#app.serve.Item.id">id (атрибут app.serve.Item)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.serve.html#app.serve.Prediction.id">(атрибут app.serve.Prediction)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.id">(атрибут transit_core.schemas.Incident)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments.ids">ids (атрибут transit_core.segment_speed.Segments)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics.improvement">improvement (атрибут transit_core.schemas.OfflineMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.in_window">in_window (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident">Incident (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail.incident_ids">incident_ids (атрибут transit_core.schemas.VehicleDetail)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SnapshotData.incidents">incidents (атрибут transit_core.schemas.SnapshotData)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.incidents_open">incidents_open (атрибут transit_core.schemas.Kpis)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.index_at">index_at() (метод replayer.source.Track)</a>
+</li>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.infer_cause">infer_cause() (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.ingest_pps">ingest_pps (атрибут transit_core.schemas.Kpis)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary.ingest_to_state">ingest_to_state (атрибут transit_core.schemas.MetricsSummary)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats">IngestStats (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics.interval_coverage">interval_coverage (атрибут transit_core.schemas.OfflineMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.interval_s">interval_s (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.interval_s">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel.interval_scale">interval_scale (атрибут app.inference.LoadedModel)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.IRMA_FLAGS">IRMA_FLAGS (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.is_target">is_target (атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.iso_x">iso_x (атрибут app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.iso_y">iso_y (атрибут app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Item">Item (класс в app.serve)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.PredictRequest.items">items (атрибут app.serve.PredictRequest)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.serve.html#app.serve.PredictResponse.items">(атрибут app.serve.PredictResponse)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.kind">kind (атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary.kpis">kpis (атрибут transit_core.schemas.MetricsSummary)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SnapshotData.kpis">(атрибут transit_core.schemas.SnapshotData)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis">Kpis (класс в transit_core.schemas)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Evidence.label">label (атрибут transit_core.schemas.Evidence)</a>
+</li>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.labeled">labeled() (в модуле app.dataset)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.RouteMatcher.last">last (атрибут transit_core.matching.RouteMatcher)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.last_packet">last_packet (атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.last_packet_age_s">last_packet_age_s (атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.last_seen">last_seen (атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LastPacket">LastPacket (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.lat">lat (атрибут replayer.source.Track)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.lat">(атрибут transit_core.ndtp.cells.NavCell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.lat">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Stop.lat">(атрибут transit_core.schemas.Stop)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef.lat">(атрибут transit_core.schemas.StopRef)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.lat">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.latency">latency() (в модуле app.seq_onnx)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.PredictResponse.latency_ms">latency_ms (атрибут app.serve.PredictResponse)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LatencyStats">LatencyStats (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.layers">layers (атрибут app.seq_model.TrainConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.LAYOUTS">LAYOUTS (в модуле transit_core.ndtp.cells)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.lead_bin_index">lead_bin_index() (в модуле app.inference)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.lead_bins">lead_bins() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.lead_hist">lead_hist (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.lead_median_min">lead_median_min (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.lead_min">lead_min (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadBucket.lead_min">(атрибут transit_core.schemas.LeadBucket)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadMae.lead_min">(атрибут transit_core.schemas.LeadMae)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.lead_min">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.lead_min">(атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.lead_ok_share">lead_ok_share (атрибут transit_core.schemas.Kpis)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.lead_ok_share">(атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadBucket">LeadBucket (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadMae">LeadMae (класс в transit_core.schemas)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.length">length (свойство transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.lifespan">lifespan() (в модуле app.serve)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.main.html#replayer.main.lifespan">(в модуле replayer.main)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.RouteMatcher.line_of">line_of() (метод transit_core.matching.RouteMatcher)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LineString">LineString (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.links">links (свойство replayer.engine.ReplayEngine)</a>
+</li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.LinkStats">LinkStats (класс в replayer.link)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ForecastPoint.lo_s">lo_s (атрибут transit_core.schemas.ForecastPoint)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.load_calibration">load_calibration() (в модуле app.inference)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.load_history">load_history() (в модуле transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.load_labeled">load_labeled() (в модуле app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.ReloadResponse.load_ms">load_ms (атрибут app.serve.ReloadResponse)</a>
+</li>
+        <li><a href="_autosummary/transit_core.plan.html#transit_core.plan.load_plan">load_plan() (в модуле transit_core.plan)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.load_plan_csv">load_plan_csv() (в модуле app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.load_registry">load_registry() (в модуле app.inference)</a>
+</li>
+        <li><a href="_autosummary/transit_core.labels.html#transit_core.labels.load_schedule_with_fact">load_schedule_with_fact() (в модуле transit_core.labels)</a>
+</li>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.load_split">load_split() (в модуле app.dataset)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.load_track">load_track() (в модуле replayer.source)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.load_track_csv">load_track_csv() (в модуле app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/transit_core.track.html#transit_core.track.load_traffic">load_traffic() (в модуле transit_core.track)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.load_validate">load_validate() (в модуле app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel">LoadedModel (класс в app.inference)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.lon">lon (атрибут replayer.source.Track)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.lon">(атрибут transit_core.ndtp.cells.NavCell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.lon">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Stop.lon">(атрибут transit_core.schemas.Stop)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef.lon">(атрибут transit_core.schemas.StopRef)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.lon">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.loop">loop (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.loop_end">loop_end (свойство replayer.engine.ReplayEngine)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.loop_hours">loop_hours (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.lr">lr (атрибут app.seq_model.TrainConfig)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.mae_by_lead">mae_by_lead (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadMae.mae_s">mae_s (атрибут transit_core.schemas.LeadMae)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.main">main() (в модуле app.calibration)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.ensemble.html#app.ensemble.main">(в модуле app.ensemble)</a>
+</li>
+          <li><a href="_autosummary/app.train.html#app.train.main">(в модуле app.train)</a>
+</li>
+          <li><a href="_autosummary/transit_core.contract_export.html#transit_core.contract_export.main">(в модуле transit_core.contract_export)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.catalog.html#transit_core.catalog.make_cause">make_cause() (в модуле transit_core.catalog)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.make_cell">make_cell() (в модуле transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.make_cell">(в модуле transit_core.ndtp.cells)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.cv.html#app.cv.make_folds">make_folds() (в модуле app.cv)</a>
+</li>
+        <li><a href="_autosummary/transit_core.labels.html#transit_core.labels.make_label">make_label() (в модуле transit_core.labels)</a>
+</li>
+        <li><a href="_autosummary/transit_core.labels.html#transit_core.labels.make_labels">make_labels() (в модуле transit_core.labels)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.match_track">match_track() (в модуле transit_core.matching)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult">MatchResult (класс в transit_core.matching)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.framing.html#transit_core.ndtp.framing.MAX_DATA_SIZE">MAX_DATA_SIZE (в модуле transit_core.ndtp.framing)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LatencyStats.max_ms">max_ms (атрибут transit_core.schemas.LatencyStats)</a>
+</li>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.Table.meta">meta (атрибут app.dataset.Table)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Registry.metrics">metrics (атрибут app.inference.Registry)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.metrics">metrics() (в модуле app.serve)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary">MetricsSummary (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AlertPolicyInfo.min_streak">min_streak (атрибут transit_core.schemas.AlertPolicyInfo)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary.ml_batch">ml_batch (атрибут transit_core.schemas.MetricsSummary)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.ml_latency_ms_p95">ml_latency_ms_p95 (атрибут transit_core.schemas.Kpis)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.ml_status">ml_status (атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel.mode">mode (атрибут app.inference.LoadedModel)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AlertPolicyInfo.mode">(атрибут transit_core.schemas.AlertPolicyInfo)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.mode">(атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel.model">model (атрибут app.inference.LoadedModel)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.serve.html#app.serve.PredictRequest.model">(атрибут app.serve.PredictRequest)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Contribution.model_config">model_config (атрибут app.serve.Contribution)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.serve.html#app.serve.Item.model_config">(атрибут app.serve.Item)</a>
+</li>
+          <li><a href="_autosummary/app.serve.html#app.serve.Prediction.model_config">(атрибут app.serve.Prediction)</a>
+</li>
+          <li><a href="_autosummary/app.serve.html#app.serve.PredictRequest.model_config">(атрибут app.serve.PredictRequest)</a>
+</li>
+          <li><a href="_autosummary/app.serve.html#app.serve.PredictResponse.model_config">(атрибут app.serve.PredictResponse)</a>
+</li>
+          <li><a href="_autosummary/app.serve.html#app.serve.ReloadResponse.model_config">(атрибут app.serve.ReloadResponse)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckInfo.model_config">(атрибут transit_core.schemas.AckInfo)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AckRequest.model_config">(атрибут transit_core.schemas.AckRequest)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AlertPolicyInfo.model_config">(атрибут transit_core.schemas.AlertPolicyInfo)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.model_config">(атрибут transit_core.schemas.AppConfig)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Cause.model_config">(атрибут transit_core.schemas.Cause)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Contract.model_config">(атрибут transit_core.schemas.Contract)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DeviationPoint.model_config">(атрибут transit_core.schemas.DeviationPoint)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot.model_config">(атрибут transit_core.schemas.DoorSnapshot)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Evidence.model_config">(атрибут transit_core.schemas.Evidence)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ForecastPoint.model_config">(атрибут transit_core.schemas.ForecastPoint)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Health.model_config">(атрибут transit_core.schemas.Health)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.model_config">(атрибут transit_core.schemas.Incident)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.model_config">(атрибут transit_core.schemas.IngestStats)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.model_config">(атрибут transit_core.schemas.Kpis)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LastPacket.model_config">(атрибут transit_core.schemas.LastPacket)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LatencyStats.model_config">(атрибут transit_core.schemas.LatencyStats)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadBucket.model_config">(атрибут transit_core.schemas.LeadBucket)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadMae.model_config">(атрибут transit_core.schemas.LeadMae)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LineString.model_config">(атрибут transit_core.schemas.LineString)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary.model_config">(атрибут transit_core.schemas.MetricsSummary)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Network.model_config">(атрибут transit_core.schemas.Network)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment.model_config">(атрибут transit_core.schemas.NetworkSegment)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics.model_config">(атрибут transit_core.schemas.OfflineMetrics)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.model_config">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.model_config">(атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Recommendation.model_config">(атрибут transit_core.schemas.Recommendation)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ReplayControl.model_config">(атрибут transit_core.schemas.ReplayControl)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors.model_config">(атрибут transit_core.schemas.RiskColors)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts.model_config">(атрибут transit_core.schemas.RiskCounts)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Route.model_config">(атрибут transit_core.schemas.Route)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Segment.model_config">(атрибут transit_core.schemas.Segment)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk.model_config">(атрибут transit_core.schemas.SegmentRisk)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SimClock.model_config">(атрибут transit_core.schemas.SimClock)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SnapshotData.model_config">(атрибут transit_core.schemas.SnapshotData)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Stop.model_config">(атрибут transit_core.schemas.Stop)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef.model_config">(атрибут transit_core.schemas.StopRef)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.model_config">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.model_config">(атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds.model_config">(атрибут transit_core.schemas.Thresholds)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail.model_config">(атрибут transit_core.schemas.VehicleDetail)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehiclesDeltaData.model_config">(атрибут transit_core.schemas.VehiclesDeltaData)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.model_config">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfRequest.model_config">(атрибут transit_core.schemas.WhatIfRequest)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.model_config">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.model_config">(атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsBase.model_config">(атрибут transit_core.schemas.WsBase)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsIncident.model_config">(атрибут transit_core.schemas.WsIncident)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsKpis.model_config">(атрибут transit_core.schemas.WsKpis)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsPing.model_config">(атрибут transit_core.schemas.WsPing)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSnapshot.model_config">(атрибут transit_core.schemas.WsSnapshot)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSystemStatus.model_config">(атрибут transit_core.schemas.WsSystemStatus)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsVehiclesDelta.model_config">(атрибут transit_core.schemas.WsVehiclesDelta)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.serve.html#app.serve.model_info">model_info() (в модуле app.serve)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.model_mode">model_mode (атрибут transit_core.schemas.Prediction)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.model_mode">(атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.model_mode">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.serve.html#app.serve.PredictResponse.model_version">model_version (атрибут app.serve.PredictResponse)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.model_version">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.model_version">(атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.model_version">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Registry.models">models (атрибут app.inference.Registry)</a>
+</li>
+        <li>
+    module
+
+        <ul>
+          <li><a href="_autosummary/app.html#module-app">app</a>
+</li>
+          <li><a href="_autosummary/app.calibration.html#module-app.calibration">app.calibration</a>
+</li>
+          <li><a href="_autosummary/app.cv.html#module-app.cv">app.cv</a>
+</li>
+          <li><a href="_autosummary/app.dataset.html#module-app.dataset">app.dataset</a>
+</li>
+          <li><a href="_autosummary/app.ensemble.html#module-app.ensemble">app.ensemble</a>
+</li>
+          <li><a href="_autosummary/app.inference.html#module-app.inference">app.inference</a>
+</li>
+          <li><a href="_autosummary/app.models.html#module-app.models">app.models</a>
+</li>
+          <li><a href="_autosummary/app.openapi_examples.html#module-app.openapi_examples">app.openapi_examples</a>
+</li>
+          <li><a href="_autosummary/app.seq_data.html#module-app.seq_data">app.seq_data</a>
+</li>
+          <li><a href="_autosummary/app.seq_model.html#module-app.seq_model">app.seq_model</a>
+</li>
+          <li><a href="_autosummary/app.seq_onnx.html#module-app.seq_onnx">app.seq_onnx</a>
+</li>
+          <li><a href="_autosummary/app.serve.html#module-app.serve">app.serve</a>
+</li>
+          <li><a href="_autosummary/app.train.html#module-app.train">app.train</a>
+</li>
+          <li><a href="_autosummary/app.v1_compare.html#module-app.v1_compare">app.v1_compare</a>
+</li>
+          <li><a href="_autosummary/replayer.html#module-replayer">replayer</a>
+</li>
+          <li><a href="_autosummary/replayer.clock.html#module-replayer.clock">replayer.clock</a>
+</li>
+          <li><a href="_autosummary/replayer.config.html#module-replayer.config">replayer.config</a>
+</li>
+          <li><a href="_autosummary/replayer.engine.html#module-replayer.engine">replayer.engine</a>
+</li>
+          <li><a href="_autosummary/replayer.link.html#module-replayer.link">replayer.link</a>
+</li>
+          <li><a href="_autosummary/replayer.main.html#module-replayer.main">replayer.main</a>
+</li>
+          <li><a href="_autosummary/replayer.session.html#module-replayer.session">replayer.session</a>
+</li>
+          <li><a href="_autosummary/replayer.source.html#module-replayer.source">replayer.source</a>
+</li>
+          <li><a href="_autosummary/transit_core.html#module-transit_core">transit_core</a>
+</li>
+          <li><a href="_autosummary/transit_core.catalog.html#module-transit_core.catalog">transit_core.catalog</a>
+</li>
+          <li><a href="_autosummary/transit_core.causes.html#module-transit_core.causes">transit_core.causes</a>
+</li>
+          <li><a href="_autosummary/transit_core.contract_export.html#module-transit_core.contract_export">transit_core.contract_export</a>
+</li>
+          <li><a href="_autosummary/transit_core.features.html#module-transit_core.features">transit_core.features</a>
+</li>
+          <li><a href="_autosummary/transit_core.labels.html#module-transit_core.labels">transit_core.labels</a>
+</li>
+          <li><a href="_autosummary/transit_core.matching.html#module-transit_core.matching">transit_core.matching</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.html#module-transit_core.ndtp">transit_core.ndtp</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#module-transit_core.ndtp.cells">transit_core.ndtp.cells</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#module-transit_core.ndtp.codec">transit_core.ndtp.codec</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.framing.html#module-transit_core.ndtp.framing">transit_core.ndtp.framing</a>
+</li>
+          <li><a href="_autosummary/transit_core.network.html#module-transit_core.network">transit_core.network</a>
+</li>
+          <li><a href="_autosummary/transit_core.plan.html#module-transit_core.plan">transit_core.plan</a>
+</li>
+          <li><a href="_autosummary/transit_core.risk.html#module-transit_core.risk">transit_core.risk</a>
+</li>
+          <li><a href="_autosummary/transit_core.route_line.html#module-transit_core.route_line">transit_core.route_line</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#module-transit_core.schemas">transit_core.schemas</a>
+</li>
+          <li><a href="_autosummary/transit_core.segment_speed.html#module-transit_core.segment_speed">transit_core.segment_speed</a>
+</li>
+          <li><a href="_autosummary/transit_core.sequence.html#module-transit_core.sequence">transit_core.sequence</a>
+</li>
+          <li><a href="_autosummary/transit_core.stops_detector.html#module-transit_core.stops_detector">transit_core.stops_detector</a>
+</li>
+          <li><a href="_autosummary/transit_core.track.html#module-transit_core.track">transit_core.track</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LeadMae.n">n (атрибут transit_core.schemas.LeadMae)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.n_incidents">n_incidents (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.CurrentSegment.n_points">n_points (атрибут transit_core.segment_speed.CurrentSegment)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.n_resolved">n_resolved (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Cell.name">name (атрибут transit_core.ndtp.Cell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.Cell.name">(атрибут transit_core.ndtp.cells.Cell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout.name">(атрибут transit_core.ndtp.cells.CellLayout)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Route.name">(атрибут transit_core.schemas.Route)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Stop.name">(атрибут transit_core.schemas.Stop)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef.name">(атрибут transit_core.schemas.StopRef)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.name">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.name">(атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.plan.html#transit_core.plan.name_unaddressed">name_unaddressed() (в модуле transit_core.plan)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout.names">names (атрибут transit_core.ndtp.cells.CellLayout)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.nav">nav (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.nav">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.nav">nav() (метод replayer.source.Track)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell">NavCell (класс в transit_core.ndtp)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell">(класс в transit_core.ndtp.cells)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.ndtp_host">ndtp_host (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.track.html#transit_core.track.ndtp_normalize">ndtp_normalize() (в модуле transit_core.track)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.ndtp_port">ndtp_port (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Network">Network (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment">NetworkSegment (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.next_stop">next_stop (атрибут transit_core.matching.MatchResult)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.next_stop">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors.none">none (атрибут transit_core.schemas.RiskColors)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts.none">(атрибут transit_core.schemas.RiskCounts)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.note">note (атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.now">now() (метод replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.nph_type">nph_type (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.nph_type">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.nsat">nsat (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.nsat">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Cell.number">number (атрибут transit_core.ndtp.Cell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.Cell.number">(атрибут transit_core.ndtp.cells.Cell)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.offline">offline (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.OfflineMetrics">OfflineMetrics (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.offset_m">offset_m (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.on_route">on_route (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.stops_detector.html#transit_core.stops_detector.online_cur_dev">online_cur_dev() (в модуле transit_core.stops_detector)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics.online_mae_s">online_mae_s (атрибут transit_core.schemas.QualityMetrics)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.onnx_predict">onnx_predict() (в модуле app.seq_onnx)</a>
+</li>
+        <li><a href="_autosummary/app.cv.html#app.cv.oof_mae">oof_mae() (в модуле app.cv)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot.open_doors">open_doors (атрибут transit_core.schemas.DoorSnapshot)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.open_incident_id">open_incident_id (атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.outcome">outcome (атрибут transit_core.schemas.Incident)</a>
+</li>
+        <li><a href="_autosummary/app.ensemble.html#app.ensemble.own_oof">own_oof() (в модуле app.ensemble)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LatencyStats.p50_ms">p50_ms (атрибут transit_core.schemas.LatencyStats)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LatencyStats.p95_ms">p95_ms (атрибут transit_core.schemas.LatencyStats)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.p_exceed">p_exceed() (в модуле app.inference)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Prediction.p_late">p_late (атрибут app.serve.Prediction)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AlertPolicyInfo.p_late">(атрибут transit_core.schemas.AlertPolicyInfo)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.p_late">(атрибут transit_core.schemas.Incident)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.p_late">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.p_late">p_late() (метод app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.p_late_after">p_late_after (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.p_late_before">p_late_before (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.LinkStats.packets_sent">packets_sent (атрибут replayer.link.LinkStats)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.packets_total">packets_total (атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.parity">parity() (в модуле app.seq_onnx)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.park">park() (метод replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.parse_errors">parse_errors (атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.ParseError">ParseError</a>, <a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.ParseError">[1]</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary.pass_to_ws">pass_to_ws (атрибут transit_core.schemas.MetricsSummary)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.pause">pause() (метод replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.pdop">pdop (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.pdop">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.FrameDecoder.pending">pending (свойство transit_core.ndtp.FrameDecoder)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.framing.html#transit_core.ndtp.framing.FrameDecoder.pending">(свойство transit_core.ndtp.framing.FrameDecoder)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef.planned_at">planned_at (атрибут transit_core.schemas.StopRef)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.planned_at">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.planned_at">(атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.planned_at">planned_at() (метод transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.features.html#transit_core.features.point_features">point_features() (в модуле transit_core.features)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.SeqSet.points">points (атрибут app.seq_data.SeqSet)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.pps">pps (атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.predict">predict() (в модуле app.inference)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.seq_model.html#app.seq_model.predict">(в модуле app.seq_model)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.serve.html#app.serve.predict_endpoint">predict_endpoint() (в модуле app.serve)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.predicted_after_s">predicted_after_s (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.predicted_before_s">predicted_before_s (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.predicted_delay_s">predicted_delay_s (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.predicted_delay_s">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.predicted_delay_s">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.prediction">prediction (атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Prediction">Prediction (класс в app.serve)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction">(класс в transit_core.schemas)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.serve.html#app.serve.PredictRequest">PredictRequest (класс в app.serve)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.PredictResponse">PredictResponse (класс в app.serve)</a>
+</li>
+        <li><a href="_autosummary/transit_core.plan.html#transit_core.plan.prepare_plan">prepare_plan() (в модуле transit_core.plan)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.sequence.html#transit_core.sequence.prepare_plan">(в модуле transit_core.sequence)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.preset_start">preset_start (свойство replayer.engine.ReplayEngine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.prev_stop">prev_stop (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.progress_m">progress_m (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.project">project() (метод transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.Projection">Projection (класс в transit_core.route_line)</a>
+</li>
+        <li><a href="_autosummary/replayer.session.html#replayer.session.SessionReporter.push">push() (метод replayer.session.SessionReporter)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Q" class="genindex-section">
+  <h2>Q</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.serve.html#app.serve.Prediction.q10">q10 (атрибут app.serve.Prediction)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.Prediction.q90">q90 (атрибут app.serve.Prediction)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.QualityMetrics">QualityMetrics (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.MetricsSummary.queue_lag">queue_lag (атрибут transit_core.schemas.MetricsSummary)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.raw">raw (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.raw">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.cv.html#app.cv.real_positions">real_positions() (в модуле app.cv)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.reason">reason (атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LastPacket.received_at">received_at (атрибут transit_core.schemas.LastPacket)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Recommendation">Recommendation (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.recommendations">recommendations (атрибут transit_core.schemas.Incident)</a>
+</li>
+        <li><a href="_autosummary/transit_core.catalog.html#transit_core.catalog.recommendations_for">recommendations_for() (в модуле transit_core.catalog)</a>
+</li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.LinkStats.reconnects">reconnects (атрибут replayer.link.LinkStats)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.reconnects">(атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors.red">red (атрибут transit_core.schemas.RiskColors)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts.red">(атрибут transit_core.schemas.RiskCounts)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds.red_delay_s">red_delay_s (атрибут transit_core.schemas.Thresholds)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds.red_p_late">red_p_late (атрибут transit_core.schemas.Thresholds)</a>
+</li>
+        <li><a href="_autosummary/app.train.html#app.train.refit">refit() (в модуле app.train)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Registry">Registry (класс в app.inference)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.reliability">reliability() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.reload_models">reload_models() (в модуле app.serve)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.ReloadResponse">ReloadResponse (класс в app.serve)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehiclesDeltaData.removed">removed (атрибут transit_core.schemas.VehiclesDeltaData)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock">ReplayClock (класс в replayer.clock)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ReplayControl">ReplayControl (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine">ReplayEngine (класс в replayer.engine)</a>
+</li>
+        <li>
+    replayer
+
+        <ul>
+          <li><a href="_autosummary/replayer.html#module-replayer">module</a>
+</li>
+        </ul></li>
+        <li>
+    replayer.clock
+
+        <ul>
+          <li><a href="_autosummary/replayer.clock.html#module-replayer.clock">module</a>
+</li>
+        </ul></li>
+        <li>
+    replayer.config
+
+        <ul>
+          <li><a href="_autosummary/replayer.config.html#module-replayer.config">module</a>
+</li>
+        </ul></li>
+        <li>
+    replayer.engine
+
+        <ul>
+          <li><a href="_autosummary/replayer.engine.html#module-replayer.engine">module</a>
+</li>
+        </ul></li>
+        <li>
+    replayer.link
+
+        <ul>
+          <li><a href="_autosummary/replayer.link.html#module-replayer.link">module</a>
+</li>
+        </ul></li>
+        <li>
+    replayer.main
+
+        <ul>
+          <li><a href="_autosummary/replayer.main.html#module-replayer.main">module</a>
+</li>
+        </ul></li>
+        <li>
+    replayer.session
+
+        <ul>
+          <li><a href="_autosummary/replayer.session.html#module-replayer.session">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    replayer.source
+
+        <ul>
+          <li><a href="_autosummary/replayer.source.html#module-replayer.source">module</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.report">report() (метод replayer.engine.ReplayEngine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.request_id">request_id (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.request_id">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.resume">resume() (метод replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.risk_after">risk_after (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.risk_before">risk_before (атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.risk_level">risk_level (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.risk_level">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk.risk_level">(атрибут transit_core.schemas.SegmentRisk)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.risk_level">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.risk.html#transit_core.risk.risk_of">risk_of() (в модуле transit_core.risk)</a>
+</li>
+        <li><a href="_autosummary/transit_core.risk.html#transit_core.risk.RISK_ORDER">RISK_ORDER (в модуле transit_core.risk)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors">RiskColors (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts">RiskCounts (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskLevel">RiskLevel (в модуле transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Route">Route (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment.route_id">route_id (атрибут transit_core.schemas.NetworkSegment)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Route.route_id">(атрибут transit_core.schemas.Route)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk.route_id">(атрибут transit_core.schemas.SegmentRisk)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.route_id">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.network.html#transit_core.network.route_id_of">route_id_of() (в модуле transit_core.network)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.route_name">route_name (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.route_name">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.network.html#transit_core.network.route_name">route_name() (в модуле transit_core.network)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.route_segments">route_segments() (в модуле transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.RouteMatcher">RouteMatcher (класс в transit_core.matching)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Network.routes">routes (атрибут transit_core.schemas.Network)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.rows">rows (атрибут transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.causes.html#transit_core.causes.rule_cause">rule_cause() (в модуле transit_core.causes)</a>
+</li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.UnitLink.run">run() (метод replayer.link.UnitLink)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.session.html#replayer.session.SessionReporter.run">(метод replayer.session.SessionReporter)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.cv.html#app.cv.run_cv">run_cv() (в модуле app.cv)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.running">running() (в модуле transit_core.segment_speed)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.Projection.s">s (атрибут transit_core.route_line.Projection)</a>
+</li>
+        <li><a href="_autosummary/app.train.html#app.train.save_oof">save_oof() (в модуле app.train)</a>
+</li>
+        <li><a href="_autosummary/app.train.html#app.train.save_oof_cache">save_oof_cache() (в модуле app.train)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.scale_for">scale_for() (метод app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.scales">scales (атрибут app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.schedule_deviation_s">schedule_deviation_s() (в модуле transit_core.matching)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.schema_version">schema_version (атрибут transit_core.schemas.AppConfig)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsBase.schema_version">(атрибут transit_core.schemas.WsBase)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ReplayControl.seek_to">seek_to (атрибут transit_core.schemas.ReplayControl)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.Projection.seg">seg (атрибут transit_core.route_line.Projection)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.seg_len">seg_len (атрибут transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.segment">segment (атрибут transit_core.schemas.Incident)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Segment">Segment (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment.segment_id">segment_id (атрибут transit_core.schemas.NetworkSegment)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Segment.segment_id">(атрибут transit_core.schemas.Segment)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk.segment_id">(атрибут transit_core.schemas.SegmentRisk)</a>
+</li>
+          <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.CurrentSegment.segment_id">(атрибут transit_core.segment_speed.CurrentSegment)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.network.html#transit_core.network.segment_id_of">segment_id_of() (в модуле transit_core.network)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.segment_idx">segment_idx (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk">SegmentRisk (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Network.segments">segments (атрибут transit_core.schemas.Network)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments">Segments (класс в transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.UnitLink.send">send() (метод replayer.link.UnitLink)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.SeqSet.seq">seq (атрибут app.seq_data.SeqSet)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.SeqRegressor">SeqRegressor (класс в app.seq_model)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.SeqSet">SeqSet (класс в app.seq_data)</a>
+</li>
+        <li><a href="_autosummary/transit_core.sequence.html#transit_core.sequence.sequence_static">sequence_static() (в модуле transit_core.sequence)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.service_id">service_id (атрибут transit_core.ndtp.codec.Frame)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.service_id">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.seq_onnx.html#app.seq_onnx.session">session() (в модуле app.seq_onnx)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.session_id">session_id (атрибут transit_core.schemas.AppConfig)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SimClock.session_id">(атрибут transit_core.schemas.SimClock)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsBase.session_id">(атрибут transit_core.schemas.WsBase)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.session_payload">session_payload() (метод replayer.engine.ReplayEngine)</a>
+</li>
+        <li><a href="_autosummary/replayer.session.html#replayer.session.SessionReporter">SessionReporter (класс в replayer.session)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.set_speed">set_speed() (метод replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings">Settings (класс в replayer.config)</a>
+</li>
+        <li><a href="_autosummary/transit_core.network.html#transit_core.network.short_name">short_name() (в модуле transit_core.network)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.sim_speed">sim_speed (атрибут transit_core.schemas.AppConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SimClock.sim_time">sim_time (атрибут transit_core.schemas.SimClock)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsBase.sim_time">(атрибут transit_core.schemas.WsBase)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SimClock">SimClock (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SnapshotData">SnapshotData (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.models.html#app.models.sort_quantiles">sort_quantiles() (в модуле app.models)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DoorSnapshot.source">source (атрибут transit_core.schemas.DoorSnapshot)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.speed">speed (атрибут replayer.clock.ReplayClock)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.speed">(атрибут replayer.config.Settings)</a>
+</li>
+          <li><a href="_autosummary/replayer.source.html#replayer.source.Track.speed">(атрибут replayer.source.Track)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ReplayControl.speed">(атрибут transit_core.schemas.ReplayControl)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SimClock.speed">(атрибут transit_core.schemas.SimClock)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.speed_kmh">speed_kmh (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.speed_kmh">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.speed_kmh">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+          <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.CurrentSegment.speed_kmh">(атрибут transit_core.segment_speed.CurrentSegment)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.speed_max_kmh">speed_max_kmh (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.speed_max_kmh">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk.speed_ratio">speed_ratio (атрибут transit_core.schemas.SegmentRisk)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.speed_ratio">speed_ratio() (в модуле transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/transit_core.plan.html#transit_core.plan.split_by_tr">split_by_tr() (в модуле transit_core.plan)</a>
+</li>
+        <li><a href="_autosummary/transit_core.track.html#transit_core.track.split_tracks">split_tracks() (в модуле transit_core.track)</a>
+</li>
+        <li><a href="_autosummary/app.models.html#app.models.stage_iterations">stage_iterations() (в модуле app.models)</a>
+</li>
+        <li><a href="_autosummary/app.models.html#app.models.staged_quantiles">staged_quantiles() (в модуле app.models)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors.stale">stale (атрибут transit_core.schemas.RiskColors)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.stale">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.start">start (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.start">start() (метод replayer.clock.ReplayClock)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.start">(метод replayer.engine.ReplayEngine)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.state">state (атрибут replayer.clock.ReplayClock)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SimClock.state">(атрибут transit_core.schemas.SimClock)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.SeqSet.static">static (атрибут app.seq_data.SeqSet)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.static_hidden">static_hidden (атрибут app.seq_model.TrainConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.RouteMatcher.stats">stats (атрибут transit_core.matching.RouteMatcher)</a>
+</li>
+        <li><a href="_autosummary/app.serve.html#app.serve.ReloadResponse.status">status (атрибут app.serve.ReloadResponse)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Health.status">(атрибут transit_core.schemas.Health)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.status">(атрибут transit_core.schemas.Incident)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SnapshotData.status">(атрибут transit_core.schemas.SnapshotData)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.status">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.main.html#replayer.main.status">status() (в модуле replayer.main)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.status">(метод replayer.engine.ReplayEngine)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Stop">Stop (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.stop">stop() (метод replayer.clock.ReplayClock)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.stop">(метод replayer.engine.ReplayEngine)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Stop.stop_key">stop_key (атрибут transit_core.schemas.Stop)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef.stop_key">(атрибут transit_core.schemas.StopRef)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.stop_key">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.stop_key">(атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.network.html#transit_core.network.stop_key">stop_key() (в модуле transit_core.network)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.plan.html#transit_core.plan.stop_key">(в модуле transit_core.plan)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Route.stop_keys">stop_keys (атрибут transit_core.schemas.Route)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.STOP_ZONE_M">STOP_ZONE_M (в модуле transit_core.segment_speed)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef">StopRef (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Network.stops">stops (атрибут transit_core.schemas.Network)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.stops">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.stops_around">stops_around() (метод transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem">StopTimelineItem (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.ensemble.html#app.ensemble.summarize">summarize() (в модуле app.ensemble)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.summary">summary (атрибут app.inference.Calibration)</a>
+</li>
+        <li><a href="_autosummary/app.seq_data.html#app.seq_data.synthetic_tr_ids">synthetic_tr_ids() (в модуле app.seq_data)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.track.html#transit_core.track.synthetic_tr_ids">(в модуле transit_core.track)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus">SystemStatus (класс в transit_core.schemas)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.DeviationPoint.t">t (атрибут transit_core.schemas.DeviationPoint)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.ForecastPoint.t">(атрибут transit_core.schemas.ForecastPoint)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.t_end">t_end (свойство transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments.t_hi">t_hi (атрибут transit_core.segment_speed.Segments)</a>
+</li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.Segments.t_lo">t_lo (атрибут transit_core.segment_speed.Segments)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.t_s">t_s (атрибут transit_core.matching.MatchResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.t_start">t_start (свойство transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.Table">Table (класс в app.dataset)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.target">target (атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.labels.html#transit_core.labels.target_class">target_class() (в модуле transit_core.labels)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.target_stop">target_stop (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Prediction.target_stop">(атрибут transit_core.schemas.Prediction)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.tb">tb (атрибут transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.AppConfig.thresholds">thresholds (атрибут transit_core.schemas.AppConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds">Thresholds (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.ReplayEngine.tick">tick() (метод replayer.engine.ReplayEngine)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.tick_s">tick_s (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail.timeline">timeline (атрибут transit_core.schemas.VehicleDetail)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.timestamp">timestamp (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.timestamp">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Cause.title">title (атрибут transit_core.schemas.Cause)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Recommendation.title">(атрибут transit_core.schemas.Recommendation)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.title">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.engine.html#replayer.engine.to_iso">to_iso() (в модуле replayer.engine)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.to_matrix">to_matrix() (в модуле app.inference)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.to_seconds">to_seconds() (в модуле transit_core.matching)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Segment.to_stop">to_stop (атрибут transit_core.schemas.Segment)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.NetworkSegment.to_stop_key">to_stop_key (атрибут transit_core.schemas.NetworkSegment)</a>
+</li>
+        <li><a href="_autosummary/transit_core.track.html#transit_core.track.to_xy">to_xy() (в модуле transit_core.track)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.top_contributions">top_contributions() (в модуле app.inference)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.tr_id">tr_id (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.tr_id">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track">Track (класс в replayer.source)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.track_m">track_m (атрибут transit_core.ndtp.cells.NavCell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.track_m">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.traffic_csv">traffic_csv (свойство replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig">TrainConfig (класс в app.seq_model)</a>
+</li>
+        <li>
+    transit_core
+
+        <ul>
+          <li><a href="_autosummary/transit_core.html#module-transit_core">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.catalog
+
+        <ul>
+          <li><a href="_autosummary/transit_core.catalog.html#module-transit_core.catalog">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.causes
+
+        <ul>
+          <li><a href="_autosummary/transit_core.causes.html#module-transit_core.causes">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.contract_export
+
+        <ul>
+          <li><a href="_autosummary/transit_core.contract_export.html#module-transit_core.contract_export">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.features
+
+        <ul>
+          <li><a href="_autosummary/transit_core.features.html#module-transit_core.features">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    transit_core.labels
+
+        <ul>
+          <li><a href="_autosummary/transit_core.labels.html#module-transit_core.labels">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.matching
+
+        <ul>
+          <li><a href="_autosummary/transit_core.matching.html#module-transit_core.matching">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.ndtp
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.html#module-transit_core.ndtp">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.ndtp.cells
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#module-transit_core.ndtp.cells">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.ndtp.codec
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#module-transit_core.ndtp.codec">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.ndtp.framing
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.framing.html#module-transit_core.ndtp.framing">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.network
+
+        <ul>
+          <li><a href="_autosummary/transit_core.network.html#module-transit_core.network">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.plan
+
+        <ul>
+          <li><a href="_autosummary/transit_core.plan.html#module-transit_core.plan">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.risk
+
+        <ul>
+          <li><a href="_autosummary/transit_core.risk.html#module-transit_core.risk">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.route_line
+
+        <ul>
+          <li><a href="_autosummary/transit_core.route_line.html#module-transit_core.route_line">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.schemas
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#module-transit_core.schemas">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.segment_speed
+
+        <ul>
+          <li><a href="_autosummary/transit_core.segment_speed.html#module-transit_core.segment_speed">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.sequence
+
+        <ul>
+          <li><a href="_autosummary/transit_core.sequence.html#module-transit_core.sequence">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.stops_detector
+
+        <ul>
+          <li><a href="_autosummary/transit_core.stops_detector.html#module-transit_core.stops_detector">module</a>
+</li>
+        </ul></li>
+        <li>
+    transit_core.track
+
+        <ul>
+          <li><a href="_autosummary/transit_core.track.html#module-transit_core.track">module</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.MatchResult.trip">trip (атрибут transit_core.matching.MatchResult)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.trip">(атрибут transit_core.route_line.TripLine)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine">TripLine (класс в transit_core.route_line)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.ts">ts (атрибут replayer.source.Track)</a>
+</li>
+        <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Cell.type">type (атрибут transit_core.ndtp.Cell)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.Cell.type">(атрибут transit_core.ndtp.cells.Cell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.CellLayout.type">(атрибут transit_core.ndtp.cells.CellLayout)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LineString.type">(атрибут transit_core.schemas.LineString)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsIncident.type">(атрибут transit_core.schemas.WsIncident)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsKpis.type">(атрибут transit_core.schemas.WsKpis)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsPing.type">(атрибут transit_core.schemas.WsPing)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSnapshot.type">(атрибут transit_core.schemas.WsSnapshot)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSystemStatus.type">(атрибут transit_core.schemas.WsSystemStatus)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsVehiclesDelta.type">(атрибут transit_core.schemas.WsVehiclesDelta)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.segment_speed.html#transit_core.segment_speed.typical_speeds">typical_speeds() (в модуле transit_core.segment_speed)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.unit_id">unit_id (атрибут replayer.source.Track)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.codec.html#transit_core.ndtp.codec.Frame.unit_id">(атрибут transit_core.ndtp.codec.Frame)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.Frame.unit_id">(атрибут transit_core.ndtp.Frame)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.LastPacket.unit_id">(атрибут transit_core.schemas.LastPacket)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.unit_id">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.link.html#replayer.link.UnitLink">UnitLink (класс в replayer.link)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.units">units (свойство replayer.source.Track)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SystemStatus.units_connected">units_connected (атрибут transit_core.schemas.SystemStatus)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.IngestStats.unknown_units">unknown_units (атрибут transit_core.schemas.IngestStats)</a>
+</li>
+        <li><a href="_autosummary/transit_core.matching.html#transit_core.matching.RouteMatcher.update">update() (метод transit_core.matching.RouteMatcher)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.updated_at">updated_at (атрибут transit_core.schemas.Incident)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.ux">ux (атрибут transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.uy">uy (атрибут transit_core.route_line.TripLine)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.v1_compare.html#app.v1_compare.v1_cv">v1_cv() (в модуле app.v1_compare)</a>
+</li>
+        <li><a href="_autosummary/app.v1_compare.html#app.v1_compare.v1_features">v1_features() (в модуле app.v1_compare)</a>
+</li>
+        <li><a href="_autosummary/replayer.source.html#replayer.source.Track.valid">valid (атрибут replayer.source.Track)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.ndtp.cells.html#transit_core.ndtp.cells.NavCell.valid">(атрибут transit_core.ndtp.cells.NavCell)</a>
+</li>
+          <li><a href="_autosummary/transit_core.ndtp.html#transit_core.ndtp.NavCell.valid">(атрибут transit_core.ndtp.NavCell)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Evidence.value">value (атрибут transit_core.schemas.Evidence)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfRequest.value">(атрибут transit_core.schemas.WhatIfRequest)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.value_min">value_min (атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail.vehicle">vehicle (атрибут transit_core.schemas.VehicleDetail)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Incident.vehicle_id">vehicle_id (атрибут transit_core.schemas.Incident)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.vehicle_id">(атрибут transit_core.schemas.VehicleState)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfRequest.vehicle_id">(атрибут transit_core.schemas.WhatIfRequest)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult.vehicle_id">(атрибут transit_core.schemas.WhatIfResult)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Route.vehicle_ids">vehicle_ids (атрибут transit_core.schemas.Route)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SegmentRisk.vehicle_ids">(атрибут transit_core.schemas.SegmentRisk)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleDetail">VehicleDetail (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleKind">VehicleKind (в модуле transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.SnapshotData.vehicles">vehicles (атрибут transit_core.schemas.SnapshotData)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehiclesDeltaData.vehicles">(атрибут transit_core.schemas.VehiclesDeltaData)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.vehicles_online">vehicles_online (атрибут transit_core.schemas.Kpis)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Kpis.vehicles_total">vehicles_total (атрибут transit_core.schemas.Kpis)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehiclesDeltaData">VehiclesDeltaData (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState">VehicleState (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.Calibration.version">version (атрибут app.inference.Calibration)</a>
+
+        <ul>
+          <li><a href="_autosummary/app.inference.html#app.inference.LoadedModel.version">(атрибут app.inference.LoadedModel)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Health.version">(атрибут transit_core.schemas.Health)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopRef.visit_id">visit_id (атрибут transit_core.schemas.StopRef)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.StopTimelineItem.visit_id">(атрибут transit_core.schemas.StopTimelineItem)</a>
+</li>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop.visit_id">(атрибут transit_core.schemas.WhatIfStop)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.wall">wall() (метод replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.VehicleState.warming_up">warming_up (атрибут transit_core.schemas.VehicleState)</a>
+</li>
+        <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.warmup_min">warmup_min (атрибут replayer.config.Settings)</a>
+</li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.warmup_speed">warmup_speed (атрибут replayer.clock.ReplayClock)</a>
+
+        <ul>
+          <li><a href="_autosummary/replayer.config.html#replayer.config.Settings.warmup_speed">(атрибут replayer.config.Settings)</a>
+</li>
+        </ul></li>
+        <li><a href="_autosummary/replayer.clock.html#replayer.clock.ReplayClock.warmup_until">warmup_until (атрибут replayer.clock.ReplayClock)</a>
+</li>
+        <li><a href="_autosummary/app.seq_model.html#app.seq_model.TrainConfig.weight_decay">weight_decay (атрибут app.seq_model.TrainConfig)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfAction">WhatIfAction (в модуле transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfRequest">WhatIfRequest (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfResult">WhatIfResult (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WhatIfStop">WhatIfStop (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/app.inference.html#app.inference.widen">widen() (в модуле app.inference)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.window">window() (метод transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.with_cur_dev">with_cur_dev() (в модуле app.dataset)</a>
+</li>
+        <li><a href="_autosummary/app.calibration.html#app.calibration.write_artifact">write_artifact() (в модуле app.calibration)</a>
+</li>
+        <li><a href="_autosummary/transit_core.contract_export.html#transit_core.contract_export.write_contract">write_contract() (в модуле transit_core.contract_export)</a>
+</li>
+        <li><a href="_autosummary/app.train.html#app.train.write_metrics">write_metrics() (в модуле app.train)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsBase">WsBase (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsIncident">WsIncident (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsKpis">WsKpis (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsMessage">WsMessage (в модуле transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsPing">WsPing (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSnapshot">WsSnapshot (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsSystemStatus">WsSystemStatus (класс в transit_core.schemas)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.WsVehiclesDelta">WsVehiclesDelta (класс в transit_core.schemas)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="X" class="genindex-section">
+  <h2>X</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/app.dataset.html#app.dataset.Table.x">x (атрибут app.dataset.Table)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.x">(атрибут transit_core.route_line.TripLine)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Y" class="genindex-section">
+  <h2>Y</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.route_line.html#transit_core.route_line.TripLine.y">y (атрибут transit_core.route_line.TripLine)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskColors.yellow">yellow (атрибут transit_core.schemas.RiskColors)</a>
+
+        <ul>
+          <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.RiskCounts.yellow">(атрибут transit_core.schemas.RiskCounts)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds.yellow_delay_s">yellow_delay_s (атрибут transit_core.schemas.Thresholds)</a>
+</li>
+        <li><a href="_autosummary/transit_core.schemas.html#transit_core.schemas.Thresholds.yellow_p_late">yellow_p_late (атрибут transit_core.schemas.Thresholds)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, команда Transit Pulse
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    </body>
+</html>

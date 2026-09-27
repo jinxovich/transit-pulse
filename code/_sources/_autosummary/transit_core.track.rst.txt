@@ -1,0 +1,16 @@
+transit\_core.track
+===================
+
+.. automodule:: transit_core.track
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      load_traffic
+      ndtp_normalize
+      split_tracks
+      synthetic_tr_ids
+      to_xy
+   

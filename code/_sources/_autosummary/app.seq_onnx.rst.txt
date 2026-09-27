@@ -1,0 +1,22 @@
+app.seq\_onnx
+=============
+
+.. automodule:: app.seq_onnx
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      bench
+      export
+      latency
+      onnx_predict
+      session
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      DelayEnsemble
+   

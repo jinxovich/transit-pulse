@@ -1,0 +1,32 @@
+transit\_core.segment\_speed
+============================
+
+.. automodule:: transit_core.segment_speed
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      STOP_ZONE_M
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      assign
+      current_segment
+      dwell_seconds
+      load_history
+      route_segments
+      running
+      speed_ratio
+      typical_speeds
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CurrentSegment
+      Segments
+   

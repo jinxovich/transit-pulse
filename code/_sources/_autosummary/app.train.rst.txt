@@ -1,0 +1,19 @@
+﻿app.train
+=========
+
+.. automodule:: app.train
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      catboost_cv
+      evaluate_mode
+      fit_final
+      main
+      refit
+      save_oof
+      save_oof_cache
+      write_metrics
+   

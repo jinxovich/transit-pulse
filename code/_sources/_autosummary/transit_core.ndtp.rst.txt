@@ -1,0 +1,15 @@
+transit\_core.ndtp
+==================
+
+.. automodule:: transit_core.ndtp
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   cells
+   codec
+   framing

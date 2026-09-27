@@ -1,0 +1,27 @@
+transit\_core.matching
+======================
+
+.. automodule:: transit_core.matching
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      COURSE_CONF_W
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      match_track
+      schedule_deviation_s
+      to_seconds
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      MatchResult
+      RouteMatcher
+   

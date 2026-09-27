@@ -1,0 +1,496 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Transit Pulse ML",
+  "description": "Прогноз задержки ТС на остановке за 10–15 минут (CatBoost MultiQuantile на остатке от текущего отклонения).",
+  "version": "2.0"
+ },
+ "paths": {
+  "/predict": {
+   "post": {
+    "summary": "Батч-прогноз задержки",
+    "description": "Квантили задержки, вероятность опоздания > 120 с и топ-5 вкладов признаков.",
+    "operationId": "predict_endpoint_predict_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PredictRequest"
+       },
+       "examples": {
+        "stream": {
+         "summary": "Один визит, поток (с вкладами признаков)",
+         "description": "Как запрос бэкенда в проходе прогнозов: `cur_dev` посчитан по GPS.",
+         "value": {
+          "model": "stream",
+          "explain": true,
+          "items": [
+           {
+            "id": "122048:53699018729",
+            "features": {
+             "cur_dev": 167.56,
+             "lead": 11.0,
+             "hour_sin": 0.92,
+             "hour_cos": 0.38,
+             "tgt_manual": 0.0,
+             "tgt_newtrip": 0.0,
+             "tgt_gap": 2.0,
+             "n_between": 7.0,
+             "trip_break_between": 0.0,
+             "max_gap_between": 3.0,
+             "plan_run": 13.0,
+             "since_last_plan": 2.0,
+             "trip_progress": 0.35,
+             "stale": 5.0,
+             "stale_valid": 10.0,
+             "invalid15": 0.09,
+             "spd_last": 31.0,
+             "spd1": 14.2,
+             "spd5": 11.74,
+             "spd15": 6.15,
+             "stop5": 0.26,
+             "dwell": 0.0,
+             "gps_dev": 179.02,
+             "gps_dist": 2.24,
+             "gps_dev_trend": 32.59,
+             "dist_tgt": 3135.95,
+             "remain_m": 3675.64,
+             "eta_dev": 1492.62
+            }
+           }
+          ]
+         }
+        },
+        "batch": {
+         "summary": "Батч из двух точек, подсказка организаторов, без SHAP",
+         "description": "`submission` — `cur_dev` из `points.csv`. У второй точки нет GPS-признаков: отсутствующие ключи и `null` превращаются в NaN.",
+         "value": {
+          "model": "submission",
+          "explain": false,
+          "items": [
+           {
+            "id": "122048:53699018729",
+            "features": {
+             "cur_dev": 163.0,
+             "lead": 11.0,
+             "hour_sin": 0.92,
+             "hour_cos": 0.38,
+             "tgt_manual": 0.0,
+             "tgt_newtrip": 0.0,
+             "tgt_gap": 2.0,
+             "n_between": 7.0,
+             "trip_break_between": 0.0,
+             "max_gap_between": 3.0,
+             "plan_run": 13.0,
+             "since_last_plan": 2.0,
+             "trip_progress": 0.35,
+             "stale": 5.0,
+             "stale_valid": 10.0,
+             "invalid15": 0.09,
+             "spd_last": 31.0,
+             "spd1": 14.2,
+             "spd5": 11.74,
+             "spd15": 6.15,
+             "stop5": 0.26,
+             "dwell": 0.0,
+             "gps_dev": 179.02,
+             "gps_dist": 2.24,
+             "gps_dev_trend": 32.59,
+             "dist_tgt": 3135.95,
+             "remain_m": 3675.64,
+             "eta_dev": 1492.62
+            }
+           },
+           {
+            "id": "130238:53698370378",
+            "features": {
+             "cur_dev": 127.0,
+             "lead": 12.0,
+             "hour_sin": 0.89,
+             "hour_cos": -0.46,
+             "tgt_manual": 0.0,
+             "tgt_newtrip": 0.0,
+             "tgt_gap": 3.0,
+             "n_between": 9.0,
+             "trip_break_between": 0.0,
+             "max_gap_between": 3.0,
+             "plan_run": 12.0,
+             "since_last_plan": 0.0,
+             "trip_progress": 0.55
+            }
+           }
+          ]
+         }
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PredictResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/health": {
+   "get": {
+    "summary": "Готовность сервиса",
+    "description": "``ok``, если модели загружены и прогреты.",
+    "operationId": "health_health_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Health Health Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/model/info": {
+   "get": {
+    "summary": "Признаки, метрики и калибровка модели",
+    "description": "Порядок признаков, метрики CV из ``models/metrics.json`` и сводка калибровки по режимам\n(масштабы интервала по корзинам lead, узлы изотоники p_late, Brier/ECE до→после);\n``null`` — у режима нет ``calibration_{mode}.json``, работает общий ``interval_scale``.",
+    "operationId": "model_info_model_info_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Model Info Model Info Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/model/reload": {
+   "post": {
+    "summary": "Подхватить дообученные модели без рестарта",
+    "description": "Читает ``MODELS_DIR`` заново, прогревает и атомарно подменяет модели.\n\nПока новые модели загружаются, ``/predict`` отвечает старыми. Если загрузка не удалась\n(нет файлов, битая модель), продолжают работать прежние модели, ответ — 500 с причиной.",
+    "operationId": "reload_models_model_reload_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReloadResponse"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/metrics": {
+   "get": {
+    "summary": "Метрики Prometheus",
+    "description": "Гистограммы латентности и размера батча, счётчик запросов.",
+    "operationId": "metrics_metrics_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "Contribution": {
+    "properties": {
+     "feature": {
+      "type": "string",
+      "title": "Feature",
+      "description": "Имя признака"
+     },
+     "contribution_s": {
+      "type": "number",
+      "title": "Contribution S",
+      "description": "Вклад в прогноз, секунды (SHAP медианы; у cur_dev — вместе с базой)"
+     }
+    },
+    "type": "object",
+    "required": [
+     "feature",
+     "contribution_s"
+    ],
+    "title": "Contribution"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "Item": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Ключ точки, например `130072:53700172828` (ТС:визит)"
+     },
+     "features": {
+      "additionalProperties": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "type": "object",
+      "title": "Features",
+      "description": "Признаки из `transit_core.features.FEATURES`; отсутствующие → NaN"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "features"
+    ],
+    "title": "Item",
+    "description": "Одна прогнозная точка."
+   },
+   "PredictRequest": {
+    "properties": {
+     "model": {
+      "type": "string",
+      "enum": [
+       "stream",
+       "submission"
+      ],
+      "title": "Model",
+      "description": "`stream` — cur_dev по GPS (онлайн), `submission` — подсказка cur_dev_s из points.csv",
+      "default": "stream"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/Item"
+      },
+      "type": "array",
+      "title": "Items",
+      "description": "Точки прогноза"
+     },
+     "explain": {
+      "type": "boolean",
+      "title": "Explain",
+      "description": "Считать вклады признаков (точный SHAP CatBoost, ~0.1–0.3 с на батч). false — только прогноз (~2 мс), contributions пустые",
+      "default": true
+     }
+    },
+    "type": "object",
+    "required": [
+     "items"
+    ],
+    "title": "PredictRequest",
+    "description": "Батч точек для прогноза."
+   },
+   "PredictResponse": {
+    "properties": {
+     "model_version": {
+      "type": "string",
+      "title": "Model Version"
+     },
+     "latency_ms": {
+      "type": "number",
+      "title": "Latency Ms",
+      "description": "Время инференса в сервисе, мс"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/Prediction"
+      },
+      "type": "array",
+      "title": "Items"
+     }
+    },
+    "type": "object",
+    "required": [
+     "model_version",
+     "latency_ms",
+     "items"
+    ],
+    "title": "PredictResponse"
+   },
+   "Prediction": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "delay_s": {
+      "type": "number",
+      "title": "Delay S",
+      "description": "Прогноз задержки (медиана), с; + — опоздание"
+     },
+     "q10": {
+      "type": "number",
+      "title": "Q10",
+      "description": "10-й перцентиль задержки, с"
+     },
+     "q90": {
+      "type": "number",
+      "title": "Q90",
+      "description": "90-й перцентиль задержки, с"
+     },
+     "p_late": {
+      "type": "number",
+      "title": "P Late",
+      "description": "Вероятность задержки > 120 с (изотоническая калибровка по OOF, если есть файл калибровки)"
+     },
+     "expected_abs_error_s": {
+      "type": "number",
+      "title": "Expected Abs Error S",
+      "description": "Ожидаемая абсолютная ошибка, с (полуширина q10–q90 × калибровка)"
+     },
+     "contributions": {
+      "items": {
+       "$ref": "#/components/schemas/Contribution"
+      },
+      "type": "array",
+      "title": "Contributions",
+      "description": "Топ-5 вкладов по модулю"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "delay_s",
+     "q10",
+     "q90",
+     "p_late",
+     "expected_abs_error_s",
+     "contributions"
+    ],
+    "title": "Prediction"
+   },
+   "ReloadResponse": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "reloaded",
+       "unchanged"
+      ],
+      "title": "Status",
+      "description": "`unchanged` — файлы моделей те же, что уже загружены"
+     },
+     "before": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "type": "object",
+      "title": "Before",
+      "description": "Режим → отпечаток модели до перезагрузки"
+     },
+     "after": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "type": "object",
+      "title": "After",
+      "description": "Режим → отпечаток загруженной модели"
+     },
+     "load_ms": {
+      "type": "number",
+      "title": "Load Ms",
+      "description": "Загрузка и прогрев новых моделей, мс"
+     }
+    },
+    "type": "object",
+    "required": [
+     "status",
+     "before",
+     "after",
+     "load_ms"
+    ],
+    "title": "ReloadResponse"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   }
+  }
+ }
+}

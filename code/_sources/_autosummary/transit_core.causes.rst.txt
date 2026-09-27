@@ -1,0 +1,24 @@
+﻿transit\_core.causes
+====================
+
+.. automodule:: transit_core.causes
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      FLAGS
+      ALWAYS_SHOWN
+      HIDDEN_EVIDENCE
+      DELAY_FEATURES
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      feature
+      format_value
+      infer_cause
+      rule_cause
+   

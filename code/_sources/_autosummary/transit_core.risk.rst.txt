@@ -1,0 +1,18 @@
+transit\_core.risk
+==================
+
+.. automodule:: transit_core.risk
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      RISK_ORDER
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      risk_of
+   

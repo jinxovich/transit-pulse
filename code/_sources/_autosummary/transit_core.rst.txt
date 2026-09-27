@@ -1,0 +1,28 @@
+﻿transit\_core
+=============
+
+.. automodule:: transit_core
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   catalog
+   causes
+   contract_export
+   features
+   labels
+   matching
+   ndtp
+   network
+   plan
+   risk
+   route_line
+   schemas
+   segment_speed
+   sequence
+   stops_detector
+   track

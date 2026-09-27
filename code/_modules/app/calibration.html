@@ -1,0 +1,614 @@
+<!doctype html>
+<html class="no-js" lang="ru" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Алфавитный указатель" href="../../genindex.html"><link rel="search" title="Поиск" href="../../search.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>app.calibration - Transit Pulse — документация по коду</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Transit Pulse — документация по коду</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <span class="sidebar-brand-text">Transit Pulse — документация по коду</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Поиск" name="q" aria-label="Поиск">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../core.html">Общее ядро <code class="docutils literal notranslate"><span class="pre">transit_core</span></code></a><input aria-label="Toggle navigation of Общее ядро transit_core" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../_autosummary/transit_core.html">transit_core</a><input aria-label="Toggle navigation of transit_core" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.catalog.html">transit_core.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.causes.html">transit_core.causes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.contract_export.html">transit_core.contract_export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.features.html">transit_core.features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.labels.html">transit_core.labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.matching.html">transit_core.matching</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.html">transit_core.ndtp</a><input aria-label="Toggle navigation of transit_core.ndtp" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.cells.html">transit_core.ndtp.cells</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.codec.html">transit_core.ndtp.codec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_autosummary/transit_core.ndtp.framing.html">transit_core.ndtp.framing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.network.html">transit_core.network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.plan.html">transit_core.plan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.risk.html">transit_core.risk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.route_line.html">transit_core.route_line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.schemas.html">transit_core.schemas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.segment_speed.html">transit_core.segment_speed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.sequence.html">transit_core.sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.stops_detector.html">transit_core.stops_detector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/transit_core.track.html">transit_core.track</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../services.html">Сервисы</a><input aria-label="Toggle navigation of Сервисы" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../_autosummary/app.html">app</a><input aria-label="Toggle navigation of app" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.calibration.html">app.calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.cv.html">app.cv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.dataset.html">app.dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.ensemble.html">app.ensemble</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.inference.html">app.inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.models.html">app.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.openapi_examples.html">app.openapi_examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.seq_data.html">app.seq_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.seq_model.html">app.seq_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.seq_onnx.html">app.seq_onnx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.serve.html">app.serve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.train.html">app.train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/app.v1_compare.html">app.v1_compare</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../_autosummary/replayer.html">replayer</a><input aria-label="Toggle navigation of replayer" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.clock.html">replayer.clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.config.html">replayer.config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.engine.html">replayer.engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.link.html">replayer.link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.main.html">replayer.main</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.session.html">replayer.session</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/replayer.source.html">replayer.source</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Исходный код app.calibration</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Калибровка прогноза по OOF: интервалы по корзинам lead и изотоника для ``p_late``.</span>
+
+<span class="sd">Сырые q10/q90 CatBoost MultiQuantile узкие (покрытие ~0.45 вместо 0.8), а ``p_late`` из</span>
+<span class="sd">кусочно-линейной CDF через квантили нигде не проверялась на калибровку. Здесь:</span>
+
+<span class="sd">* метрики качества вероятности (Brier, ECE по 10 корзинам, reliability-таблица) для ``p_late``</span>
+<span class="sd">  против события ``y &gt; 120 с`` и покрытие/полуширина интервала всего и по корзинам ``lead``;</span>
+<span class="sd">* split-conformal масштаб интервала на корзину ``lead`` (узкие корзины сливаются с соседями</span>
+<span class="sd">  до :data:`MIN_BIN_N` точек) — вместо одного общего ``interval_scale``;</span>
+<span class="sd">* изотоническая регрессия ``p_exceed → P(y &gt; 120)`` поверх интервала с масштабами по lead.</span>
+
+<span class="sd">Оценка «после» честная: масштабы и изотоника фитятся на остальных фолдах и применяются к</span>
+<span class="sd">отложенному (кросс-фит по тем же фолдам CV, что дали OOF). Итоговый артефакт</span>
+<span class="sd">``models/calibration_{mode}.json`` фитится на всём OOF. Пересчёт по кешу OOF без переобучения::</span>
+
+<span class="sd">    uv run python -m services.ml.app.calibration</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.isotonic</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsotonicRegression</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">services.ml.app.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">CACHE</span><span class="p">,</span> <span class="n">ROOT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">services.ml.app.inference</span><span class="w"> </span><span class="kn">import</span> <span class="n">LATE_S</span><span class="p">,</span> <span class="n">Calibration</span><span class="p">,</span> <span class="n">lead_bin_index</span><span class="p">,</span> <span class="n">p_exceed</span><span class="p">,</span> <span class="n">widen</span>
+
+<span class="n">VERSION</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">TARGET_COVERAGE</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">LEAD_EDGES</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">,</span> <span class="mf">13.0</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">)</span>
+<span class="n">MIN_BIN_N</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">MIN_FIT_N</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">N_PROB_BINS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">MODES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"submission"</span><span class="p">,</span> <span class="s2">"stream"</span><span class="p">)</span>
+<span class="n">MODELS</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s2">"models"</span>
+<span class="n">_EPS</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"calibration"</span><span class="p">)</span>
+
+
+<span class="c1"># --- метрики -------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="brier">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.brier">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">brier</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Brier score: средний квадрат ``p − 1[событие]``."""</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_prob_bins</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+               <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Корзины равной ширины по p: (номер, средняя p, частота события, n); пустые пропущены."""</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">((</span><span class="n">p</span> <span class="o">*</span> <span class="n">n_bins</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">n_bins</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bins</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">==</span> <span class="n">b</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">b</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="nb">float</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">())))</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="reliability">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.reliability">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reliability</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">N_PROB_BINS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Reliability-таблица: корзина p → средняя p, частота события, число точек."""</span>
+    <span class="k">return</span> <span class="p">[{</span><span class="s2">"bin"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">b</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n_bins</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">–</span><span class="si">{</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n_bins</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"p_mean"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+             <span class="s2">"freq"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">fr</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s2">"n"</span><span class="p">:</span> <span class="n">n</span><span class="p">}</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">fr</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">_prob_bins</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="ece">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.ece">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ece</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">N_PROB_BINS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Expected calibration error: взвешенное по n среднее ``|средняя p − частота|``."""</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">_prob_bins</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pm</span> <span class="o">-</span> <span class="n">fr</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">fr</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="k">if</span> <span class="n">total</span> <span class="k">else</span> <span class="mf">0.0</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_interval_stats</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Покрытие [q10, q90] и средняя полуширина на подмножестве строк."""</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">q</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]))),</span>
+            <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">q</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span>
+
+
+<span class="c1"># --- корзины lead и масштабы ----------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="lead_bins">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.lead_bins">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lead_bins</span><span class="p">(</span><span class="n">lead</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">LEAD_EDGES</span><span class="p">,</span>
+              <span class="n">min_n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">MIN_BIN_N</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Корзины ``(lo, hi]`` по lead: слева направо копим соседние, пока не наберётся ``min_n``;</span>
+<span class="sd">    недобравший хвост сливается с предыдущей корзиной."""</span>
+    <span class="n">lead</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">lead</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">lead_bin_index</span><span class="p">(</span><span class="n">lead</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">lead</span><span class="p">)],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">groups</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">start</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">counts</span><span class="p">):</span>
+        <span class="n">acc</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">acc</span> <span class="o">&gt;=</span> <span class="n">min_n</span><span class="p">:</span>
+            <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">float</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">start</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])))</span>
+            <span class="n">start</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">):</span>
+        <span class="n">lo</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">pop</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">groups</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lo</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">groups</span></div>
+
+
+
+<div class="viewcode-block" id="conformal_scale">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.conformal_scale">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">conformal_scale</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">TARGET_COVERAGE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Split-conformal множитель отступов q10/q90 от медианы до покрытия ``target``.</span>
+
+<span class="sd">    Оценка несоответствия ``max((q50−y)/(q50−q10), (y−q50)/(q90−q50))``; масштаб — её</span>
+<span class="sd">    квантиль уровня ``⌈(n+1)·target⌉/n``.</span>
+<span class="sd">    """</span>
+    <span class="n">med</span> <span class="o">=</span> <span class="n">q</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">((</span><span class="n">med</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">med</span> <span class="o">-</span> <span class="n">q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">_EPS</span><span class="p">),</span>
+                       <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">med</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">q</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">med</span><span class="p">,</span> <span class="n">_EPS</span><span class="p">))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">target</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"higher"</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="fit_isotonic">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.fit_isotonic">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fit_isotonic</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Узлы (x, y) изотонической регрессии ``P(событие | p)`` (неубывающая, в [0, 1])."""</span>
+    <span class="n">iso</span> <span class="o">=</span> <span class="n">IsotonicRegression</span><span class="p">(</span><span class="n">out_of_bounds</span><span class="o">=</span><span class="s2">"clip"</span><span class="p">,</span> <span class="n">y_min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y_max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">increasing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">iso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">iso</span><span class="o">.</span><span class="n">X_thresholds_</span><span class="p">,</span> <span class="n">iso</span><span class="o">.</span><span class="n">y_thresholds_</span></div>
+
+
+
+<div class="viewcode-block" id="fit">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.fit">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lead</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">bins</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+        <span class="n">n_repeats</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Артефакт калибровки по строкам OOF: абсолютные сырые квантили ``q`` (n, 3), цель, lead.</span>
+
+<span class="sd">    ``n`` в корзинах — число точек (строки / ``n_repeats``).</span>
+<span class="sd">    """</span>
+    <span class="n">cuts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">hi</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">hi</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">lead_bin_index</span><span class="p">(</span><span class="n">lead</span><span class="p">,</span> <span class="n">cuts</span><span class="p">)</span>
+    <span class="n">global_scale</span> <span class="o">=</span> <span class="n">conformal_scale</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bins</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">==</span> <span class="n">b</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">conformal_scale</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">m</span><span class="p">])</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">MIN_FIT_N</span> <span class="k">else</span> <span class="n">global_scale</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"lo"</span><span class="p">:</span> <span class="n">lo</span><span class="p">,</span> <span class="s2">"hi"</span><span class="p">:</span> <span class="n">hi</span><span class="p">,</span> <span class="s2">"scale"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s2">"n"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">//</span> <span class="n">n_repeats</span><span class="p">)})</span>
+    <span class="n">art</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"version"</span><span class="p">:</span> <span class="n">VERSION</span><span class="p">,</span> <span class="s2">"target_coverage"</span><span class="p">:</span> <span class="n">TARGET_COVERAGE</span><span class="p">,</span> <span class="s2">"late_s"</span><span class="p">:</span> <span class="n">LATE_S</span><span class="p">,</span>
+           <span class="s2">"lead_bins"</span><span class="p">:</span> <span class="n">rows</span><span class="p">,</span> <span class="s2">"global_scale"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">global_scale</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s2">"err_k"</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+           <span class="s2">"isotonic"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="s2">"y"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]}}</span>
+    <span class="n">qw</span> <span class="o">=</span> <span class="n">widen</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">Calibration</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">art</span><span class="p">)</span><span class="o">.</span><span class="n">scale_for</span><span class="p">(</span><span class="n">lead</span><span class="p">))</span>
+    <span class="n">iso_x</span><span class="p">,</span> <span class="n">iso_y</span> <span class="o">=</span> <span class="n">fit_isotonic</span><span class="p">(</span><span class="n">p_exceed</span><span class="p">(</span><span class="n">qw</span><span class="p">),</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">LATE_S</span><span class="p">)</span>
+    <span class="n">half</span> <span class="o">=</span> <span class="p">(</span><span class="n">qw</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">qw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">art</span><span class="p">[</span><span class="s2">"err_k"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">qw</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">half</span><span class="p">),</span> <span class="n">_EPS</span><span class="p">)),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">art</span><span class="p">[</span><span class="s2">"isotonic"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"x"</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">iso_x</span><span class="p">],</span> <span class="s2">"y"</span><span class="p">:</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">iso_y</span><span class="p">]}</span>
+    <span class="k">return</span> <span class="n">art</span></div>
+
+
+
+<span class="c1"># --- оценка до/после ------------------------------------------------------------------------</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cross_fit</span><span class="p">(</span><span class="n">qa</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lead</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">folds</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+               <span class="n">bins</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Интервалы и p_late «после» для каждой строки OOF: калибровка без её фолда."""</span>
+    <span class="n">n_rep</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">folds</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">q_out</span><span class="p">,</span> <span class="n">p_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">qa</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qa</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rep</span><span class="p">):</span>
+        <span class="n">qr</span> <span class="o">=</span> <span class="n">qa</span><span class="p">[</span><span class="n">r</span> <span class="o">*</span> <span class="n">n</span><span class="p">:(</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">folds</span><span class="p">[</span><span class="n">r</span><span class="p">]):</span>
+            <span class="n">te</span> <span class="o">=</span> <span class="n">folds</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">f</span>
+            <span class="n">cal</span> <span class="o">=</span> <span class="n">Calibration</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">fit</span><span class="p">(</span><span class="n">qr</span><span class="p">[</span><span class="o">~</span><span class="n">te</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="o">~</span><span class="n">te</span><span class="p">],</span> <span class="n">lead</span><span class="p">[</span><span class="o">~</span><span class="n">te</span><span class="p">],</span> <span class="n">bins</span><span class="p">))</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">te</span><span class="p">)</span>
+            <span class="n">q_out</span><span class="p">[</span><span class="n">rows</span><span class="p">]</span> <span class="o">=</span> <span class="n">widen</span><span class="p">(</span><span class="n">qr</span><span class="p">[</span><span class="n">te</span><span class="p">],</span> <span class="n">cal</span><span class="o">.</span><span class="n">scale_for</span><span class="p">(</span><span class="n">lead</span><span class="p">[</span><span class="n">te</span><span class="p">]))</span>
+            <span class="n">p_out</span><span class="p">[</span><span class="n">rows</span><span class="p">]</span> <span class="o">=</span> <span class="n">cal</span><span class="o">.</span><span class="n">p_late</span><span class="p">(</span><span class="n">p_exceed</span><span class="p">(</span><span class="n">q_out</span><span class="p">[</span><span class="n">rows</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">q_out</span><span class="p">,</span> <span class="n">p_out</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_by_lead</span><span class="p">(</span><span class="n">q_before</span><span class="p">,</span> <span class="n">q_after</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">n_repeats</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">lo</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">–</span><span class="si">{</span><span class="n">hi</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">]</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="n">idx</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">//</span> <span class="n">n_repeats</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">))]</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"bins"</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span> <span class="s2">"n"</span><span class="p">:</span> <span class="n">counts</span><span class="p">,</span> <span class="s2">"before"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"after"</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">half</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"bins"</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span> <span class="s2">"n"</span><span class="p">:</span> <span class="n">counts</span><span class="p">,</span> <span class="s2">"before"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"after"</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"before"</span><span class="p">,</span> <span class="n">q_before</span><span class="p">),</span> <span class="p">(</span><span class="s2">"after"</span><span class="p">,</span> <span class="n">q_after</span><span class="p">)):</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">_interval_stats</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">idx</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">cov</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="n">half</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">cov</span><span class="p">,</span> <span class="n">half</span>
+
+
+<div class="viewcode-block" id="evaluate">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.evaluate">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lead</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+             <span class="n">folds</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">global_scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Артефакт калибровки (на всём OOF) и отчёт до/после для ``metrics.json``.</span>
+
+<span class="sd">    :param q: OOF-квантили остатка (повтор, точка, 3), как в ``train.catboost_cv``.</span>
+<span class="sd">    :param folds: номер фолда каждой точки по повторам (повтор, точка).</span>
+<span class="sd">    :param global_scale: нынешний общий ``interval_scale`` — это состояние «до».</span>
+<span class="sd">    """</span>
+    <span class="n">n_rep</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">qa</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="n">base</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">yp</span><span class="p">,</span> <span class="n">lp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n_rep</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">lead</span><span class="p">,</span> <span class="n">n_rep</span><span class="p">)</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">yp</span> <span class="o">&gt;</span> <span class="n">LATE_S</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="n">lead_bins</span><span class="p">(</span><span class="n">lead</span><span class="p">)</span>
+    <span class="n">art</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">qa</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span> <span class="n">lp</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">n_rep</span><span class="p">)</span>
+    <span class="n">q_before</span> <span class="o">=</span> <span class="n">widen</span><span class="p">(</span><span class="n">qa</span><span class="p">,</span> <span class="n">global_scale</span><span class="p">)</span>
+    <span class="n">p_before</span> <span class="o">=</span> <span class="n">p_exceed</span><span class="p">(</span><span class="n">q_before</span><span class="p">)</span>
+    <span class="n">q_after</span><span class="p">,</span> <span class="n">p_after</span> <span class="o">=</span> <span class="n">_cross_fit</span><span class="p">(</span><span class="n">qa</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lead</span><span class="p">,</span> <span class="n">folds</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">lead_bin_index</span><span class="p">(</span><span class="n">lp</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">hi</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">hi</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+    <span class="n">cov</span><span class="p">,</span> <span class="n">half</span> <span class="o">=</span> <span class="n">_by_lead</span><span class="p">(</span><span class="n">q_before</span><span class="p">,</span> <span class="n">q_after</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">n_rep</span><span class="p">)</span>
+    <span class="n">all_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">yp</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">hb</span><span class="p">),</span> <span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">ha</span><span class="p">)</span> <span class="o">=</span> <span class="n">_interval_stats</span><span class="p">(</span><span class="n">q_before</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span> <span class="n">all_rows</span><span class="p">),</span> <span class="n">_interval_stats</span><span class="p">(</span><span class="n">q_after</span><span class="p">,</span> <span class="n">yp</span><span class="p">,</span>
+                                                                                    <span class="n">all_rows</span><span class="p">)</span>
+    <span class="n">report</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"late_s"</span><span class="p">:</span> <span class="n">LATE_S</span><span class="p">,</span> <span class="s2">"target_coverage"</span><span class="p">:</span> <span class="n">TARGET_COVERAGE</span><span class="p">,</span> <span class="s2">"repeats"</span><span class="p">:</span> <span class="n">n_rep</span><span class="p">,</span>
+        <span class="s2">"after_method"</span><span class="p">:</span> <span class="s2">"кросс-фит по фолдам CV: split-conformal масштаб по корзине lead + "</span>
+                        <span class="s2">"изотоника p_late, фит без отложенного фолда"</span><span class="p">,</span>
+        <span class="s2">"event_rate"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">"brier_before"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">brier</span><span class="p">(</span><span class="n">p_before</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="s2">"brier_after"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">brier</span><span class="p">(</span><span class="n">p_after</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="s2">"ece_before"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">ece</span><span class="p">(</span><span class="n">p_before</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="s2">"ece_after"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">ece</span><span class="p">(</span><span class="n">p_after</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="s2">"reliability_before"</span><span class="p">:</span> <span class="n">reliability</span><span class="p">(</span><span class="n">p_before</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span>
+        <span class="s2">"reliability_after"</span><span class="p">:</span> <span class="n">reliability</span><span class="p">(</span><span class="n">p_after</span><span class="p">,</span> <span class="n">event</span><span class="p">),</span>
+        <span class="s2">"coverage_before"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s2">"coverage_after"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">"half_width_before"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">hb</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">"half_width_after"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">ha</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s2">"coverage_by_lead"</span><span class="p">:</span> <span class="n">cov</span><span class="p">,</span> <span class="s2">"half_width_by_lead"</span><span class="p">:</span> <span class="n">half</span><span class="p">,</span>
+        <span class="s2">"lead_scales"</span><span class="p">:</span> <span class="p">{</span><span class="n">lbl</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">"scale"</span><span class="p">]</span> <span class="k">for</span> <span class="n">lbl</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="s2">"bins"</span><span class="p">],</span> <span class="n">art</span><span class="p">[</span><span class="s2">"lead_bins"</span><span class="p">],</span>
+                                                             <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)},</span>
+        <span class="s2">"err_k_calibrated"</span><span class="p">:</span> <span class="n">art</span><span class="p">[</span><span class="s2">"err_k"</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">art</span><span class="p">[</span><span class="s2">"quality"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">report</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"brier_before"</span><span class="p">,</span> <span class="s2">"brier_after"</span><span class="p">,</span> <span class="s2">"ece_before"</span><span class="p">,</span>
+                                             <span class="s2">"ece_after"</span><span class="p">,</span> <span class="s2">"coverage_after"</span><span class="p">,</span> <span class="s2">"half_width_after"</span><span class="p">)}</span>
+    <span class="k">return</span> <span class="n">art</span><span class="p">,</span> <span class="n">report</span></div>
+
+
+
+<span class="c1"># --- запуск ---------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="write_artifact">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.write_artifact">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_artifact</span><span class="p">(</span><span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">art</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">models_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">MODELS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""``calibration_{mode}.json`` рядом с моделью."""</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">models_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"calibration_</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">.json"</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"mode"</span><span class="p">:</span> <span class="n">mode</span><span class="p">,</span> <span class="o">**</span><span class="n">art</span><span class="p">},</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="s2">"utf-8"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../_autosummary/app.calibration.html#app.calibration.main">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Пересчёт калибровки по кешу OOF (``data/cache/oof_{mode}.npz`` от ``train``)."""</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">metrics_path</span> <span class="o">=</span> <span class="n">MODELS</span> <span class="o">/</span> <span class="s2">"metrics.json"</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">metrics_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">MODES</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">CACHE</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"oof_</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">.npz"</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2">: нет </span><span class="si">%s</span><span class="s2"> — сначала `python -m services.ml.app.train`"</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="n">metrics</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="s2">"calibration"</span><span class="p">]</span>
+        <span class="n">art</span><span class="p">,</span> <span class="n">report</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"q"</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">"base"</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">"y"</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">"lead"</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">"folds"</span><span class="p">],</span>
+                               <span class="nb">float</span><span class="p">(</span><span class="n">old</span><span class="p">[</span><span class="s2">"interval_scale"</span><span class="p">]))</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="s2">"calibration"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">old</span><span class="p">,</span> <span class="o">**</span><span class="n">report</span><span class="p">}</span>
+        <span class="n">write_artifact</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">art</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2">: brier </span><span class="si">%.4f</span><span class="s2">→</span><span class="si">%.4f</span><span class="s2">, ece </span><span class="si">%.4f</span><span class="s2">→</span><span class="si">%.4f</span><span class="s2">, покрытие по lead </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span>
+                 <span class="n">report</span><span class="p">[</span><span class="s2">"brier_before"</span><span class="p">],</span> <span class="n">report</span><span class="p">[</span><span class="s2">"brier_after"</span><span class="p">],</span> <span class="n">report</span><span class="p">[</span><span class="s2">"ece_before"</span><span class="p">],</span>
+                 <span class="n">report</span><span class="p">[</span><span class="s2">"ece_after"</span><span class="p">],</span> <span class="n">report</span><span class="p">[</span><span class="s2">"coverage_by_lead"</span><span class="p">][</span><span class="s2">"after"</span><span class="p">])</span>
+    <span class="n">metrics_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                            <span class="s2">"utf-8"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, команда Transit Pulse
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=372fde1a"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../_static/translations.js?v=cd1d70c9"></script>
+    </body>
+</html>

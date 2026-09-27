@@ -1,0 +1,21 @@
+app.seq\_model
+==============
+
+.. automodule:: app.seq_model
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      device
+      fit
+      fit_predict
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SeqRegressor
+      TrainConfig
+   

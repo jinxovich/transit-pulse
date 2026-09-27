@@ -1,0 +1,13 @@
+app.v1\_compare
+===============
+
+.. automodule:: app.v1_compare
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      v1_cv
+      v1_features
+   
