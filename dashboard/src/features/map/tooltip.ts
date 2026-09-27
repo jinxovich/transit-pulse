@@ -1,6 +1,7 @@
 import type { VehicleState } from "@contract";
 import { formatDelay } from "../../lib/format";
 import { formatSimTime, minutesBetween } from "../../lib/time";
+import { stopAfterWord } from "../../lib/labels";
 
 /** Экранирует HTML в данных ТС. */
 const esc = (s: string) =>
@@ -31,7 +32,7 @@ const esc = (s: string) =>
         const until = at && simTime ? Math.floor(minutesBetween(simTime, at)) : null;
         rows.push(
         `<div>Прогноз <b style="color: var(--risk-${p.risk_level})">${formatDelay(p.predicted_delay_s)}</b>` +
-            ` на ост. ${esc(p.target_stop.name)}` +
+            ` на ост. ${esc(stopAfterWord(p.target_stop.name))}` +
             (at ? ` в ${formatSimTime(at)}` : "") +
             (until != null && until > 0 ? ` (через ${until} мин)` : "") +
             `</div>`,

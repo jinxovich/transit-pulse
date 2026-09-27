@@ -5,6 +5,7 @@ import { useStream } from "../../store/stream";
 import { useUi } from "../../store/ui";
 import { formatDelay } from "../../lib/format";
 import { formatSimTime, minutesBetween, untilLabel } from "../../lib/time";
+import { stopAfterWord } from "../../lib/labels";
 import { RiskGlyph } from "../map/RiskGlyph";
 import { WhatIf } from "./WhatIf";
 
@@ -151,7 +152,7 @@ export function IncidentCard({ id }: { id: string }) {
             {inc.segment.from_stop.name} → {inc.segment.to_stop.name}
           </p>
         ) : (
-          <p>перед остановкой {inc.target_stop.name}</p>
+          <p>перед остановкой {stopAfterWord(inc.target_stop.name)}</p>
         )}
         <p className="dim small">Подсвечен на карте белой обводкой</p>
       </div>

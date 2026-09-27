@@ -2,8 +2,7 @@ import { Fragment, useEffect, useRef } from "react";
 import type { StopTimelineItem, Thresholds } from "@contract";
 import { formatDelayShort } from "../../lib/format";
 import { formatSimTime } from "../../lib/time";
-
-const NO_ADDRESS = "Остановка без адреса";
+import { stopAfterWord } from "../../lib/labels";
 
 /** Класс цвета задержки по порогам из /config (только подсветка цифры, риск ТС не пересчитываем). */
 function delayTone(sec: number | null, t: Thresholds): string {
@@ -72,9 +71,7 @@ export function StopTimeline({
                 <tr className={cls}>
                   <td className="stops-name">
                     {s.is_target && <span className="stops-target">цель</span>}
-                    <span className={s.name === NO_ADDRESS ? "faint" : ""}>
-                      {s.name === NO_ADDRESS ? "без адреса" : s.name}
-                    </span>
+                    <span className={stopAfterWord(s.name) !== s.name ? "faint" : ""}>{stopAfterWord(s.name)}</span>
                   </td>
                   <td className="r num">{formatSimTime(s.planned_at)}</td>
                   <td className="r num">{s.actual_at ? formatSimTime(s.actual_at, true) : <span className="faint">—</span>}</td>
