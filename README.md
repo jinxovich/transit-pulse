@@ -45,6 +45,7 @@ docker compose --profile emulator up -d
 | Что | Где |
 |---|---|
 | Дашборд диспетчера | http://localhost:8080 |
+| Метрики, качество на потоке, последний NDTP-пакет | кнопка «Система» на дашборде |
 | Swagger backend (REST API) | http://localhost:8000/docs |
 | Swagger ML-сервиса | http://localhost:8001/docs |
 | Документация по коду (Sphinx) | http://localhost:8000/code-docs/ |
