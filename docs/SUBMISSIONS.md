@@ -9,8 +9,12 @@ mae0 ≈ 108.1, baseline `cur_dev_s` ≈ 88.7, MAE_T ≈ 59.6, то есть sco
 | Версия | Файл | Модель | Локально (test MAE) | Score на платформе | Дата |
 |---|---|---|---|---|---|
 | v0 | `submissions/sub_v0_baseline.csv` | `cur_dev_s` (baseline организаторов) | 93.36 | — | 25.09 |
-| v1 | `submissions/sub_v1_lgbm.csv` | LightGBM L1 на остатке, 17 признаков, синтетика с весом 0.5, 5 seed | 63.62 (−31.9%) | — | 25.09 |
-| v1b | `submissions/sub_v1b_gru_lgbm.csv` | 0.6·GRU (последовательности, ONNX) + 0.4·LightGBM v1 | OOF 58.98 (GRU 60.88, LGBM 61.99, baseline 88.38) | — | 27.09 |
-| v2 | `submissions/sub_v2_catboost.csv` | 0.85·CatBoost MultiQuantile (28 признаков `transit_core.features`, остаток от `cur_dev_s`, синтетика 0.5) + 0.15·GRU; веса по OOF на общих фолдах GRU | OOF наивно (клоны в train, как на лидерборде): CatBoost 52.05, ансамбль 51.85, GRU 60.88, v1 61.99; честно (clone guard ±45 мин): CatBoost 67.08, real-only 68.60, v1 69.44; baseline 88.38 | — | 27.09 |
+| v1 | `submissions/sub_v1_lgbm.csv` | LightGBM L1 на остатке, 17 признаков, синтетика с весом 0.5, 5 seed | 63.62 (−31.9%) | 1.00000 (27.09 05:18) | 25.09 |
+| v1b | `submissions/sub_v1b_gru_lgbm.csv` | 0.6·GRU (последовательности, ONNX) + 0.4·LightGBM v1 | OOF 58.98 (GRU 60.88, LGBM 61.99, baseline 88.38) | 1.00000 (27.09 05:19) | 27.09 |
+| v2 | `submissions/sub_v2_catboost.csv` | 0.85·CatBoost MultiQuantile (28 признаков `transit_core.features`, остаток от `cur_dev_s`, синтетика 0.5) + 0.15·GRU; веса по OOF на общих фолдах GRU | OOF наивно (клоны в train, как на лидерборде): CatBoost 52.05, ансамбль 51.85, GRU 60.88, v1 61.99; честно (clone guard ±45 мин): CatBoost 67.08, real-only 68.60, v1 69.44; baseline 88.38 | **1.00000** (27.09 05:19) | 27.09 |
 
 Score на платформе вписываем после загрузки.
+
+Скор платформы обрезан сверху (`min(1, …)` в README датасета): у всех трёх моделей MAE на validate
+не хуже целевого, поэтому 1.00000 — максимум, 6 баллов из 6 (порог — 0.70). Сравнивать модели
+по лидерборду нельзя, выбор — по честному CV (`models/metrics.json`).
