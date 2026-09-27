@@ -110,6 +110,7 @@ class PipelineRunner:
             except Exception:  # noqa: BLE001 — одно ТС не должно срывать проход
                 log.exception("Не удалось применить прогноз ТС %s", task.vehicle_id)
             rec.open_incident_id = rt.book.active.get(rec.vehicle_id)
+        rt.journal.on_pass(t, [task.vehicle_id for task in tasks if task.ready and not task.stale])
         rows = [(t.vehicle_id, rec.prediction) for t in tasks
                 if (rec := rt.store.vehicles.get(t.vehicle_id)) and rec.prediction]  # fmt: skip
         rt.db.predictions(rt.clock.session_id or "", rows)
@@ -134,9 +135,9 @@ class PipelineRunner:
             rec.dirty_wall = self.rt.wall()
         journal = self.rt.journal
         if preds and preds[0].prediction.horizon_ok and not task.stale:
-            first = preds[0]
+            first, fp = preds[0], preds[0].prediction
             journal.record(rec.vehicle_id, first.visit.visit_id, first.visit.trip,
-                           first.prediction.predicted_delay_s)  # fmt: skip
+                           fp.predicted_delay_s, fp.lead_min)  # fmt: skip
         journal.on_arrivals(rec.vehicle_id, task.arrivals)
 
     def _incidents(

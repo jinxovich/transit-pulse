@@ -13,6 +13,7 @@ export type IncidentStatus = "open" | "ack" | "resolved";
 export type IncidentOutcome = "pending" | "hit" | "false_alarm" | "miss";
 export type ModelMode = "ml" | "fallback";
 export type WhatIfAction = "hold_at_stop" | "shorten_dwell" | "skip_layover" | "add_reserve";
+export type AlertMode = "or" | "and";
 
 /** Реакция диспетчера на инцидент. */
 export interface AckInfo {
@@ -26,6 +27,18 @@ export interface AckInfo {
 export interface AckRequest {
   action_code: string | null;
   comment: string | null;
+}
+
+/** Действующая политика открытия инцидента. */
+export interface AlertPolicyInfo {
+  /** Порог прогноза задержки, c (строго больше) */
+  delay_s: number;
+  /** Порог вероятности опоздания (не меньше) */
+  p_late: number;
+  /** Как сочетаются пороги: or — любой, and — оба */
+  mode: AlertMode;
+  /** Сколько проходов подряд держится условие */
+  min_streak: number;
 }
 
 /** Ответ `GET /api/v1/config`. */
@@ -152,6 +165,15 @@ export interface LeadBucket {
   count: number;
 }
 
+/** Онлайн-MAE сверенных прогнозов с упреждением в минуте `(lead_min − 1, lead_min]`. */
+export interface LeadMae {
+  lead_min: number;
+  /** MAE, c; null — сверенных прогнозов нет */
+  mae_s: number | null;
+  /** Сколько прогнозов сверено */
+  n: number;
+}
+
 /** GeoJSON LineString, координаты `[lon, lat]`. */
 export interface LineString {
   type: "LineString";
@@ -191,6 +213,12 @@ export interface OfflineMetrics {
   cv_mae_model_s: number;
   /** Доля снижения MAE к baseline */
   improvement: number;
+  /** Brier p_late до калибровки; null — нет в отчёте ML */
+  brier_before: number | null;
+  /** Brier p_late после калибровки */
+  brier_after: number | null;
+  /** Доля фактов внутри интервала [q10, q90] (цель — 0.8) */
+  interval_coverage: number | null;
 }
 
 /** Прогноз задержки на целевой остановке в горизонте 10–15 минут. */
@@ -225,6 +253,16 @@ export interface QualityMetrics {
   alert_precision: number | null;
   alert_recall: number | null;
   offline: OfflineMetrics;
+  /** Инцидентов в сессии */
+  n_incidents: number | null;
+  /** Инцидентов на ТС·час сим-времени (ТС с расписанием на связи, не в прогреве) */
+  alerts_per_vehicle_hour: number | null;
+  /** Медианное упреждение инцидентов, мин */
+  lead_median_min: number | null;
+  /** Онлайн-MAE по минуте упреждения 11…15 */
+  mae_by_lead: LeadMae[];
+  /** Действующая политика алерта */
+  alert_policy: AlertPolicyInfo | null;
 }
 
 /** Упреждающее действие для диспетчера. */

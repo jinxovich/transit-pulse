@@ -1,4 +1,6 @@
 // Числа панели «Система»: пусто или ноль измерения — «—», табличные цифры по-русски.
+import type { AlertPolicyInfo } from "@contract";
+
 const DASH = "—";
 
 function fixed(v: number, digits: number): string {
@@ -34,4 +36,27 @@ export function fmtPct(share: number | null | undefined): string {
 export function fmtAge(v: number | null | undefined): string {
   if (v == null) return DASH;
   return fixed(v, 1);
+}
+
+/** Коэффициент, где ноль осмыслен (алертов на ТС·ч, Brier). */
+export function fmtRatio(v: number | null | undefined, digits = 2): string {
+  if (v == null) return DASH;
+  return fixed(v, digits);
+}
+
+/** «1 проход», «2 прохода», «5 проходов». */
+export function pluralRu(n: number, one: string, few: string, many: string): string {
+  const d10 = n % 10;
+  const d100 = n % 100;
+  if (d10 === 1 && d100 !== 11) return one;
+  if (d10 >= 2 && d10 <= 4 && (d100 < 12 || d100 > 14)) return few;
+  return many;
+}
+
+/** Политика алерта словами: «задержка > 150 с или вероятность ≥ 60%, 2 прохода подряд». */
+export function fmtPolicy(p: AlertPolicyInfo): string {
+  const join = p.mode === "and" ? "и" : "или";
+  const streak =
+    p.min_streak > 1 ? `${p.min_streak} ${pluralRu(p.min_streak, "проход", "прохода", "проходов")} подряд` : "с первого прохода";
+  return `задержка > ${Math.round(p.delay_s)} с ${join} вероятность ≥ ${Math.round(p.p_late * 100)}%, ${streak}`;
 }

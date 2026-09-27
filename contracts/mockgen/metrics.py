@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import calendar
 import math
+import statistics
 from collections import Counter
 from datetime import datetime
 
@@ -78,16 +79,34 @@ def metrics_summary(k: S.Kpis) -> S.MetricsSummary:
     )
 
 
+# Онлайн-MAE растёт с упреждением: (минута, MAE с, сверено прогнозов).
+MAE_BY_LEAD = ((11, 54.8, 212), (12, 57.3, 198), (13, 60.1, 205), (14, 63.9, 187), (15, 68.4, 96))
+MOCK_VEHICLE_HOURS = 38.5
+
+
 def metrics_quality(book: IncidentBook) -> S.QualityMetrics:
-    leads = Counter(min(int(i.lead_min), 15) for i in book.all.values())
+    incs = list(book.all.values())
+    leads = Counter(min(int(i.lead_min), 15) for i in incs)
     return S.QualityMetrics(
         online_mae_s=61.2,
-        n_resolved=sum(i.status == "resolved" for i in book.all.values()),
+        n_resolved=sum(i.status == "resolved" for i in incs),
         lead_ok_share=1.0,
         lead_hist=[S.LeadBucket(lead_min=m, count=leads.get(m, 0)) for m in range(10, 16)],
         alert_precision=0.78,
         alert_recall=0.71,
-        offline=S.OfflineMetrics(cv_mae_baseline_s=93.36, cv_mae_model_s=63.62, improvement=0.319),
+        offline=S.OfflineMetrics(
+            cv_mae_baseline_s=93.36,
+            cv_mae_model_s=63.62,
+            improvement=0.319,
+            brier_before=0.214,
+            brier_after=0.171,
+            interval_coverage=0.801,
+        ),
+        n_incidents=len(incs),
+        alerts_per_vehicle_hour=round(len(incs) / MOCK_VEHICLE_HOURS, 2),
+        lead_median_min=round(statistics.median(i.lead_min for i in incs), 1) if incs else None,
+        mae_by_lead=[S.LeadMae(lead_min=m, mae_s=mae, n=n) for m, mae, n in MAE_BY_LEAD],
+        alert_policy=S.AlertPolicyInfo(delay_s=150.0, p_late=0.6, mode="or", min_streak=2),
     )
 
 

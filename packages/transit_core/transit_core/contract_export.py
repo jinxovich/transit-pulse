@@ -42,6 +42,7 @@ ENUM_ALIASES = (
     "IncidentOutcome",
     "ModelMode",
     "WhatIfAction",
+    "AlertMode",
 )
 HEADER = (
     "// АВТОГЕНЕРАЦИЯ из packages/transit_core/transit_core/schemas.py — не редактировать руками.\n"

@@ -574,6 +574,8 @@ button {
   overflow: hidden;
 }
 .sys-tiles-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.sys-tiles-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sys-tiles + .sys-tiles { margin-top: var(--gap-2); }
 
 .sys-mode-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--gap-2) var(--gap-4); }
 .sys-mode-row .sys-tile { padding: 0 var(--gap-4) 0 0; border-right: 1px solid var(--line); }
@@ -589,6 +591,9 @@ button {
 .sys-lead-cap { max-width: 190px; font-size: 13px; line-height: 1.35; }
 .sys-lead-cap b { font-weight: 600; }
 .sys-lead-hist { min-width: 0; }
+.sys-policy { margin-bottom: var(--gap-3); padding: 6px 10px; border-left: 2px solid var(--risk-red); background: var(--bg); border-radius: 0 var(--radius-s) var(--radius-s) 0; line-height: 1.4; }
+.sys-mae { margin-top: var(--gap-3); }
+.sys-mae-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--gap-2); }
 
 .sys-table { width: 100%; margin-top: var(--gap-3); border-collapse: collapse; font-size: 13px; }
 .sys-table th { padding: 4px 8px; border-bottom: 1px solid var(--line); color: var(--text-dim); font-size: 11px; font-weight: 500; text-align: left; }
@@ -605,6 +610,9 @@ button {
 .sys-offline-bars { display: grid; gap: 3px; }
 .sys-offline-bars i { display: block; height: 5px; border-radius: 3px; background: var(--text-faint); }
 .sys-offline-bars i.is-model { background: var(--risk-green); }
+.sys-calib { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px var(--gap-4); margin-top: 4px; font-size: 13px; }
+.sys-calib b { font-weight: 500; }
+.sys-calib .whatif-arrow { margin: 0 6px; }
 .sys-retry { color: var(--risk-early); text-decoration: underline; }
 
 .pkt { margin-top: var(--gap-4); }
