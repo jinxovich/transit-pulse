@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { Health, LatencyStats, SystemStatus } from "@contract";
+import type { Health, LatencyStats, OfflineMetrics, SystemStatus } from "@contract";
 import { fetchHealth, fetchIngestStats, fetchMetricsSummary, fetchQuality } from "../../api/system";
 import { useStream } from "../../store/stream";
 import { useUi } from "../../store/ui";
 import { MODE_LABEL } from "../../lib/labels";
-import { fmtAge, fmtCount, fmtMs, fmtPct, fmtValue } from "./fmt";
+import { fmtAge, fmtCount, fmtMs, fmtPct, fmtPolicy, fmtRatio, fmtValue } from "./fmt";
 import { LeadHistogram } from "./LeadHistogram";
+import { LeadMaeChart } from "./LeadMaeChart";
 import { LastPacket } from "./LastPacket";
 
 const FAST_MS = 5_000;
@@ -167,11 +168,36 @@ function PerfSection() {
   );
 }
 
+/** Калибровка вероятности и интервала из офлайн-отчёта ML; пустое — не показываем. */
+function OfflineCalibration({ off }: { off: OfflineMetrics }) {
+  const hasBrier = off.brier_before != null && off.brier_after != null;
+  const hasCoverage = off.interval_coverage != null;
+  if (!hasBrier && !hasCoverage) return null;
+  return (
+    <div className="sys-calib">
+      {hasBrier && (
+        <span title="Brier-score вероятности опоздания: меньше — лучше">
+          <span className="dim">Brier</span> <span className="num">{fmtRatio(off.brier_before)}</span>
+          <span className="whatif-arrow">→</span>
+          <b className="num">{fmtRatio(off.brier_after)}</b>
+        </span>
+      )}
+      {hasCoverage && (
+        <span title="Доля фактов внутри интервала прогноза q10–q90; цель — 80%">
+          <span className="dim">покрытие интервала</span> <b className="num">{fmtPct(off.interval_coverage)}</b>
+          <span className="faint"> цель 80%</span>
+        </span>
+      )}
+    </div>
+  );
+}
+
 function QualitySection() {
   const q = useQuery({ queryKey: ["metrics-quality"], queryFn: fetchQuality, refetchInterval: SLOW_MS });
   const m = q.data;
   const alerts = m?.lead_hist.reduce((sum, b) => sum + b.count, 0) ?? 0;
   const off = m?.offline;
+  const maeKnown = m?.mae_by_lead?.some((b) => b.mae_s != null) ?? false;
 
   return (
     <Section title="Качество на потоке" aside="сверка с фактом по GPS">
@@ -189,11 +215,26 @@ function QualitySection() {
           {m && m.lead_hist.length > 0 ? <LeadHistogram buckets={m.lead_hist} /> : <p className="faint small">—</p>}
         </div>
       </div>
+      <p className="sys-policy small">
+        <span className="dim">алерт:</span> {m?.alert_policy ? fmtPolicy(m.alert_policy) : "—"}
+      </p>
+      <div className="sys-tiles sys-tiles-3">
+        <Tile label="Инцидентов" value={fmtCount(m?.n_incidents)} />
+        <Tile label="Алертов на ТС·ч" value={fmtRatio(m?.alerts_per_vehicle_hour)} />
+        <Tile label="Медиана упреждения" value={fmtValue(m?.lead_median_min, 1)} unit="мин" />
+      </div>
       <div className="sys-tiles">
         <Tile label="Онлайн-MAE" value={fmtValue(m?.online_mae_s)} unit="с" />
         <Tile label="Сверено" value={fmtValue(m?.n_resolved)} />
         <Tile label="Точность" value={fmtPct(m?.alert_precision)} />
         <Tile label="Полнота" value={fmtPct(m?.alert_recall)} />
+      </div>
+      <div className="sys-mae">
+        <div className="sys-mae-head">
+          <span className="dim small">MAE по упреждению 11…15 мин</span>
+          <span className="faint small">с, онлайн</span>
+        </div>
+        {m && maeKnown ? <LeadMaeChart buckets={m.mae_by_lead} /> : <p className="faint small">—</p>}
       </div>
       {off && off.cv_mae_baseline_s > 0 && (
         <div className="sys-offline">
@@ -208,6 +249,7 @@ function QualitySection() {
             <i style={{ width: "100%" }} />
             <i className="is-model" style={{ width: `${(off.cv_mae_model_s / off.cv_mae_baseline_s) * 100}%` }} />
           </div>
+          <OfflineCalibration off={off} />
         </div>
       )}
     </Section>
