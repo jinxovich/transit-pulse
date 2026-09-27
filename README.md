@@ -90,7 +90,7 @@ docker compose --profile emulator up -d
 | Модуль | Роль | Код |
 |---|---|---|
 | **backend** | Приём и парсинг NDTP (TCP :9201), состояние флота, сим-часы, сопоставление с расписанием, производные признаки (отклонение, скорость на перегоне, простой), оркестрация прогнозов, инциденты, REST и WebSocket | `services/backend` |
-| **ml** | ML-ядро: обучение (CatBoost, CV) и stateless-инференс `/predict` с квантилями, вероятностью опоздания и вкладами признаков | `services/ml` |
+| **ml** | ML-ядро: обучение (CatBoost, CV; в Docker — сервис `train`, `docker compose --profile train run --rm train --refit`) и stateless-инференс `/predict` с квантилями, вероятностью опоздания и вкладами признаков; `POST /model/reload` подхватывает дообученные модели без рестарта | `services/ml` |
 | **dashboard** | BI-дашборд диспетчера (React, MapLibre) | `dashboard` |
 | replayer | Источник потока: проигрывает исторический день как NDTP-трафик | `services/replayer` |
 | transit_core | Общее ядро: NDTP-кодек, расписание, признаки на момент T, стоп-детектор, причины, контракт API | `packages/transit_core` |

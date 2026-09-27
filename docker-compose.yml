@@ -5,7 +5,9 @@
 #   2) docker compose up -d --build
 #   3) откройте http://localhost:8080
 #
-# Профили: `emulator` — официальный эмулятор NDTP (нужен `docker load -i data/raw/ndtp-telemetry-emulator.tar`).
+# Профили: `emulator` — официальный эмулятор NDTP (нужен `docker load -i data/raw/ndtp-telemetry-emulator.tar`);
+#          `train` — дообучение ML-ядра: `docker compose --profile train run --rm train --refit`,
+#          затем `curl -X POST localhost:8001/model/reload` (ML подхватит модели без рестарта).
 
 x-healthcheck: &healthcheck
   interval: 5s
@@ -38,10 +40,28 @@ services:
     ports: ["${ML_PORT:-8001}:8001"]
     environment:
       MODELS_DIR: /app/models
+    volumes:
+      - ./models:/app/models:ro  # артефакты из git; сервис train пишет сюда новые
     healthcheck:
       <<: *healthcheck
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=2)"]
     restart: unless-stopped
+
+  train:
+    # ML-ядро в режиме обучения: тот же образ, что у ml. Без аргументов — полное обучение с CV
+    # (≈20 мин CPU), `--refit` — дообучение финальных моделей на текущих данных (≈1 мин).
+    image: transit-pulse-ml
+    profiles: ["train"]
+    entrypoint: ["python", "-m", "services.ml.app.train"]
+    command: []
+    environment:
+      DATA_DIR: /data/raw
+      MODELS_DIR: /app/models
+    volumes:
+      - ./data/raw:/data/raw:ro
+      - ./models:/app/models
+    depends_on:
+      data-init: { condition: service_completed_successfully }
 
   backend:
     image: transit-pulse-backend

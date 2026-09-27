@@ -1,5 +1,5 @@
 # Удобства для разработки; README работает и без make.
-.PHONY: data up down logs emulator test lint train submit mock docs-site
+.PHONY: data up down logs emulator test lint train retrain submit mock docs-site
 
 data:            ## распаковать датасет из ./data/*.zip в ./data/raw
 	uv run python -m scripts.data_prep --with-emulator
@@ -25,6 +25,10 @@ lint:
 
 train:           ## CV + обучение моделей в ./models
 	uv run python -m services.ml.app.train
+
+retrain:         ## дообучить ML в Docker (--refit) и подхватить модели без рестарта
+	docker compose --profile train run --rm train --refit
+	curl -fsS -X POST http://localhost:$${ML_PORT:-8001}/model/reload
 
 submit:          ## сабмит по validate + проверка формата
 	uv run python -m scripts.make_submission

@@ -115,5 +115,14 @@ Prometheus `/metrics`.
 - Сабмит — `submissions/`, журнал с CV-метриками — [SUBMISSIONS.md](SUBMISSIONS.md).
 - Модели и отчёт CV — `models/metrics.json`. Пересобрать: `uv run python -m services.ml.app.train`,
   затем `uv run python -m scripts.make_submission`.
+- Дообучение ML-ядра в Docker без остановки системы (≈30 с):
+
+  ```bash
+  docker compose --profile train run --rm train --refit   # переобучить модели в ./models
+  curl -X POST http://localhost:8001/model/reload          # ML подхватит их на лету
+  ```
+
+  Ответ reload показывает отпечатки моделей до и после. Без `--refit` — полное обучение с CV
+  (≈20 мин). То же одной командой — `make retrain`.
 - Честность: признаки строятся только из телеметрии с `event_time ≤ T` и планового расписания.
   Найденную в данных утечку мы не используем — [DATA_AUDIT.md](DATA_AUDIT.md).

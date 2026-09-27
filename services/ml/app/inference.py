@@ -10,6 +10,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 from dataclasses import dataclass, field
@@ -93,6 +94,8 @@ class LoadedModel:
     version: str
     interval_scale: float = 1.0
     calibration: Calibration | None = None
+    fingerprint: str = ""
+    """Первые 12 символов sha256 файла модели: видно, что после дообучения загружена новая."""
 
 
 @dataclass
@@ -120,7 +123,8 @@ def load_registry(models_dir: Path) -> Registry:
         reg.models[mode] = LoadedModel(mode, model, float(cal.get("k", DEFAULT_ERR_K)),
                                        f"catboost-v2-{mode}",
                                        float(cal.get("interval_scale", 1.0)),
-                                       load_calibration(models_dir / f"calibration_{mode}.json"))
+                                       load_calibration(models_dir / f"calibration_{mode}.json"),
+                                       hashlib.sha256(path.read_bytes()).hexdigest()[:12])
     if not reg.models:
         raise FileNotFoundError(f"в {models_dir} нет моделей catboost_*.cbm")
     return reg

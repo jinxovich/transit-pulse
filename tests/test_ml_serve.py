@@ -1,6 +1,7 @@
 """ML-сервис: /predict через TestClient на маленькой обученной в фикстуре модели."""
 
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -251,3 +252,64 @@ def test_swagger_examples_predict_ok_on_repo_models(monkeypatch):
             r = c.post("/predict", json=ex["value"])
             assert r.status_code == 200, r.text
             assert [p["id"] for p in r.json()["items"]] == [it["id"] for it in items]
+
+
+def _retrained_copy(src: Path, dst: Path) -> Path:
+    shutil.copytree(src, dst)
+    rng = np.random.default_rng(7)
+    x = pd.DataFrame(rng.normal(size=(N_TRAIN, len(FEATURES))), columns=FEATURES)
+    m = CatBoostRegressor(loss_function="MultiQuantile:alpha=0.1,0.5,0.9", iterations=30,
+                          depth=2, verbose=False, allow_writing_files=False)
+    m.fit(x, 10 * x["lead"])
+    m.save_model(str(dst / "catboost_stream.cbm"))
+    return dst
+
+
+@pytest.fixture
+def reload_client(models_dir, tmp_path, monkeypatch):
+    live = tmp_path / "live"
+    shutil.copytree(models_dir, live)
+    monkeypatch.setenv("MODELS_DIR", str(live))
+    from services.ml.app.serve import app
+
+    with TestClient(app) as c:
+        yield c, live
+
+
+def test_reload_same_files_is_unchanged(reload_client):
+    client, _ = reload_client
+
+    r = client.post("/model/reload")
+
+    assert r.status_code == 200
+    body = r.json()
+    assert body["status"] == "unchanged" and body["before"] == body["after"]
+    assert set(body["after"]) == {"stream", "submission"}
+
+
+def test_reload_picks_up_retrained_model(reload_client, tmp_path, monkeypatch):
+    client, live = reload_client
+    before = client.get("/model/info").json()["fingerprints"]
+    monkeypatch.setenv("MODELS_DIR", str(_retrained_copy(live, tmp_path / "retrained")))
+
+    body = client.post("/model/reload").json()
+
+    assert body["status"] == "reloaded"
+    assert body["after"]["stream"] != before["stream"]
+    assert body["after"]["submission"] == before["submission"]
+    assert client.get("/model/info").json()["fingerprints"] == body["after"]
+
+
+def test_failed_reload_keeps_serving_old_models(reload_client, tmp_path, monkeypatch):
+    client, _ = reload_client
+    before = client.get("/model/info").json()["fingerprints"]
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    monkeypatch.setenv("MODELS_DIR", str(empty))
+
+    r = client.post("/model/reload")
+
+    assert r.status_code == 500 and "прежние" in r.json()["detail"]
+    assert client.get("/model/info").json()["fingerprints"] == before
+    ok = client.post("/predict", json={"model": "stream", "items": _items(3), "explain": False})
+    assert ok.status_code == 200 and len(ok.json()["items"]) == 3

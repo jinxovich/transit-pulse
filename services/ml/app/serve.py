@@ -3,11 +3,15 @@
 Запуск локально::
 
     MODELS_DIR=models uv run uvicorn services.ml.app.serve:app --port 8001
+
+После дообучения (``services.ml.app.train``) новые модели подхватываются без рестарта:
+``POST /model/reload``.
 """
 
 from __future__ import annotations
 
 import os
+import threading
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -76,6 +80,23 @@ class PredictResponse(BaseModel):
 
 
 STATE: dict[str, Registry] = {}
+RELOAD_LOCK = threading.Lock()
+
+
+class ReloadResponse(BaseModel):
+    status: Literal["reloaded", "unchanged"] = Field(
+        ..., description="`unchanged` — файлы моделей те же, что уже загружены")
+    before: dict[str, str] = Field(..., description="Режим → отпечаток модели до перезагрузки")
+    after: dict[str, str] = Field(..., description="Режим → отпечаток загруженной модели")
+    load_ms: float = Field(..., description="Загрузка и прогрев новых моделей, мс")
+
+
+def _models_dir() -> Path:
+    return Path(os.environ.get("MODELS_DIR", ROOT / "models"))
+
+
+def _fingerprints(reg: Registry | None) -> dict[str, str]:
+    return {mode: lm.fingerprint for mode, lm in reg.models.items()} if reg else {}
 
 
 def _warmup(reg: Registry) -> None:
@@ -87,7 +108,7 @@ def _warmup(reg: Registry) -> None:
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    reg = load_registry(Path(os.environ.get("MODELS_DIR", ROOT / "models")))
+    reg = load_registry(_models_dir())
     _warmup(reg)
     STATE["reg"] = reg
     yield
@@ -145,7 +166,30 @@ def model_info() -> dict:
     reg = _registry()
     cal = {mode: lm.calibration.summary if lm.calibration else None
            for mode, lm in reg.models.items()}
-    return {"features": reg.features, "metrics": reg.metrics, "calibration": cal}
+    return {"features": reg.features, "metrics": reg.metrics, "calibration": cal,
+            "fingerprints": _fingerprints(reg)}
+
+
+@app.post("/model/reload", response_model=ReloadResponse,
+          summary="Подхватить дообученные модели без рестарта")
+def reload_models() -> ReloadResponse:
+    """Читает ``MODELS_DIR`` заново, прогревает и атомарно подменяет модели.
+
+    Пока новые модели загружаются, ``/predict`` отвечает старыми. Если загрузка не удалась
+    (нет файлов, битая модель), продолжают работать прежние модели, ответ — 500 с причиной.
+    """
+    with RELOAD_LOCK:
+        before = _fingerprints(STATE.get("reg"))
+        start = time.perf_counter()
+        try:
+            reg = load_registry(_models_dir())
+            _warmup(reg)
+        except Exception as exc:
+            raise HTTPException(500, f"модели не перезагружены, работают прежние: {exc}") from exc
+        STATE["reg"] = reg
+        after = _fingerprints(reg)
+    return ReloadResponse(status="unchanged" if after == before else "reloaded", before=before,
+                          after=after, load_ms=round((time.perf_counter() - start) * 1000, 1))
 
 
 @app.get("/metrics", summary="Метрики Prometheus")

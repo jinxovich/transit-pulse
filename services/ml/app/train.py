@@ -4,6 +4,14 @@
 
     uv run python -m services.ml.app.train
 
+Дообучение на новых данных без CV (≈1 мин): те же гиперпараметры и вес синтетики из
+``metrics.json``, финальные модели переобучаются на текущей разметке::
+
+    uv run python -m services.ml.app.train --refit
+
+В Docker — ``docker compose --profile train run --rm train [--refit]``, затем
+``POST /model/reload`` ML-сервиса подхватывает новые модели без рестарта.
+
 Артефакты в ``models/``: ``catboost_submission.cbm``, ``catboost_stream.cbm``,
 ``feature_list.json``, ``metrics.json``, ``calibration_{mode}.json`` (калибровка p_late и
 интервалов по lead, :mod:`services.ml.app.calibration`), ``oof_catboost_honest.csv``,
@@ -13,9 +21,13 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
+import os
 import sys
+from datetime import UTC, datetime
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -26,7 +38,7 @@ from services.ml.app.dataset import CACHE, ROOT, clone_sources, labeled, with_cu
 from services.ml.app.v1_compare import v1_cv
 from transit_core.features import FEATURES
 
-MODELS = ROOT / "models"
+MODELS = Path(os.environ.get("MODELS_DIR", ROOT / "models"))
 SYN_WEIGHTS = (0.0, 0.3, 0.5, 1.0)
 FINAL_ITER_FACTOR = 1.1
 TARGET_COVERAGE = 0.8
@@ -162,7 +174,10 @@ def fit_final(mode, table, weight, iterations) -> M.CatBoostRegressor:
     y = table.meta["target_delay_s"].to_numpy(dtype=float) - base
     w = np.where(table.meta["synthetic"].to_numpy(), weight, 1.0)
     model = M.fit_catboost(x[FEATURES], y, w, iterations=iterations)
-    model.save_model(str(MODELS / f"catboost_{mode}.cbm"))
+    path = MODELS / f"catboost_{mode}.cbm"
+    tmp = path.with_suffix(".cbm.tmp")
+    model.save_model(str(tmp))
+    os.replace(tmp, path)  # /model/reload не увидит недописанный файл
     return model
 
 
@@ -186,9 +201,35 @@ def save_oof(table, q, lgb_oof, blend_w) -> None:
     pd.concat(folds).to_csv(MODELS / "cv_folds.csv", index=False)
 
 
-def main() -> int:
+def refit() -> dict:
+    """Финальные модели на текущей разметке с параметрами последнего полного обучения."""
+    try:
+        saved = json.loads((MODELS / "metrics.json").read_text("utf-8"))
+    except (OSError, ValueError) as exc:
+        msg = f"--refit нужен {MODELS / 'metrics.json'} от полного обучения: {exc}"
+        raise SystemExit(msg) from exc
+    table = labeled()
+    for mode in ("submission", "stream"):
+        params = saved[mode]
+        fit_final(mode, table, params["best_synthetic_weight"], params["final_iterations"])
+        log.info("%s: переобучена, вес синтетики %s, итераций %s", mode,
+                 params["best_synthetic_weight"], params["final_iterations"])
+    return {"n_real_points": int((~table.meta["synthetic"]).sum()),
+            "n_synthetic_points": int(table.meta["synthetic"].sum())}
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--refit", action="store_true",
+                    help="без CV: переобучить финальные модели с сохранёнными параметрами")
+    args = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    MODELS.mkdir(exist_ok=True)
+    MODELS.mkdir(parents=True, exist_ok=True)
+    if args.refit:
+        counts = refit()
+        write_metrics({"last_training": {"kind": "refit", **counts,
+                                         "finished_at": datetime.now(UTC).isoformat()}})
+        return 0
     table, sources = labeled(), clone_sources()
     metrics = {"n_real_points": int((~table.meta["synthetic"]).sum()),
                "n_synthetic_points": int(table.meta["synthetic"].sum()),
@@ -206,6 +247,9 @@ def main() -> int:
         fit_final(mode, table, res["best_synthetic_weight"], res["final_iterations"])
         log.info("%s: %s", mode, {k: v for k, v in res.items() if k != "catboost"})
     (MODELS / "feature_list.json").write_text(json.dumps(FEATURES, indent=2), "utf-8")
+    metrics["last_training"] = {"kind": "full", "n_real_points": metrics["n_real_points"],
+                                "n_synthetic_points": metrics["n_synthetic_points"],
+                                "finished_at": datetime.now(UTC).isoformat()}
     write_metrics(metrics)
     return 0
 
