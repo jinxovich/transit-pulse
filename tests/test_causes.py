@@ -2,8 +2,8 @@
 
 import math
 
-from transit_core.catalog import CAUSES
-from transit_core.causes import format_value, infer_cause
+from transit_core.catalog import CAUSES, FEATURE_LABELS
+from transit_core.causes import HIDDEN_EVIDENCE, format_value, infer_cause
 
 
 def test_gps_loss_wins_when_no_data():
@@ -82,3 +82,65 @@ def test_planned_layover_is_not_long_dwell_by_contributions():
     contributions = [{"feature": "stop5", "contribution_s": 40.0}]
 
     assert infer_cause(f, contributions, predicted_delay_s=150).code != "LONG_DWELL"
+
+
+def test_service_features_hidden_from_evidence_but_cause_unchanged():
+    contrib = [{"feature": "hour_cos", "contribution_s": 90.0},
+               {"feature": "lead", "contribution_s": 70.0},
+               {"feature": "n_between", "contribution_s": 50.0},
+               {"feature": "eta_dev", "contribution_s": 40.0},
+               {"feature": "unlabeled_x", "contribution_s": 30.0},
+               {"feature": "cur_dev", "contribution_s": 20.0}]  # fmt: skip
+    f = {"eta_dev": 150.0, "cur_dev": 10.0, "hour_cos": 0.3, "lead": 12.0, "n_between": 4.0}
+
+    cause = infer_cause(f, contrib, predicted_delay_s=130)
+
+    assert cause.code == "CONGESTION"
+    assert [e.feature for e in cause.evidence] == ["eta_dev", "cur_dev"]
+
+
+def test_contribution_without_value_does_not_give_accumulated_delay():
+    contrib = [{"feature": "cur_dev", "contribution_s": 79.6},
+               {"feature": "n_between", "contribution_s": 33.0},
+               {"feature": "invalid15", "contribution_s": 16.8}]  # fmt: skip
+    f = {"cur_dev": math.nan, "n_between": 9.0, "invalid15": 0.0}
+
+    cause = infer_cause(f, contrib, predicted_delay_s=130)
+
+    assert cause.code == "UNKNOWN"
+    assert CAUSES["UNKNOWN"][0] == "Причина не определена"
+    assert [e.feature for e in cause.evidence] == ["invalid15"]
+
+
+def test_contribution_cause_falls_to_next_confirmed_feature():
+    contrib = [{"feature": "cur_dev", "contribution_s": 90.0},
+               {"feature": "gps_dev", "contribution_s": 40.0},
+               {"feature": "spd15", "contribution_s": 20.0}]  # fmt: skip
+    ahead = {"cur_dev": -30.0, "gps_dev": -10.0, "spd15": 12.0}
+
+    assert infer_cause(ahead, contrib, predicted_delay_s=130).code == "CONGESTION"
+    assert infer_cause({**ahead, "gps_dev": 50.0}, contrib, 130).code == "ACCUMULATED_DELAY"
+    assert infer_cause({"cur_dev": 20.0}, contrib, 130).code == "ACCUMULATED_DELAY"
+
+
+def test_speed_contribution_needs_known_value_and_no_layover():
+    contrib = [{"feature": "spd15", "contribution_s": 50.0}]
+
+    assert infer_cause({}, contrib, predicted_delay_s=130).code == "UNKNOWN"
+    assert infer_cause({"spd15": 3.0}, contrib, predicted_delay_s=130).code == "CONGESTION"
+    on_layover = {"spd15": 0.0, "dwell": 900.0, "in_layover": 1.0}
+    assert infer_cause(on_layover, contrib, predicted_delay_s=130).code == "UNKNOWN"
+
+
+def test_unknown_values_shown_only_when_nothing_else():
+    contrib = [{"feature": "gps_dev", "contribution_s": 60.0},
+               {"feature": "spd5", "contribution_s": 10.0}]  # fmt: skip
+
+    only_unknown = infer_cause({}, contrib, predicted_delay_s=130)
+    assert [e.value for e in only_unknown.evidence] == ["нет данных", "нет данных"]
+    mixed = infer_cause({"spd5": 20.0}, contrib, predicted_delay_s=130)
+    assert [e.feature for e in mixed.evidence] == ["spd5"]
+
+
+def test_hidden_evidence_features_are_labeled_model_features():
+    assert {"hour_sin", "hour_cos", "n_between"} <= HIDDEN_EVIDENCE <= set(FEATURE_LABELS)
