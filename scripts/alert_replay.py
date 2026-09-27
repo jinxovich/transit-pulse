@@ -137,7 +137,7 @@ def evaluate(inc: pd.DataFrame, preds: pd.DataFrame, fact: pd.DataFrame,
     alerted = set(zip(inc["tr_id"], inc["visit_id"], strict=True))
     alerted_trips = set(zip(inc["tr_id"], inc["visit_id"].map(f["trip"]), strict=True))
     trip_recall = _share(late_trips, alerted_trips)
-    lead = (inc["planned"] - inc["created"]).dt.total_seconds() / 60
+    lead = (pd.to_datetime(inc["planned"]) - pd.to_datetime(inc["created"])).dt.total_seconds() / 60
     hours = _vehicle_hours(minutes, preds)
     return {
         "n_incidents": len(inc),

@@ -52,10 +52,10 @@ class Settings:
     db_path: Path = Path("/tmp/transit_pulse_journal.sqlite")
     code_docs_dir: Path = Path("docs/sphinx/_build/html")
     # политика алерта (docs/perf/alert_policy.md): delay > X <mode> p_late ≥ Y, N проходов
-    alert_delay_s: float = 150.0
-    alert_p_late: float = 0.6
+    alert_delay_s: float = 120.0
+    alert_p_late: float = 0.5
     alert_mode: str = "or"
-    alert_min_streak: int = 2
+    alert_min_streak: int = 3
 
     def alert_policy(self) -> AlertPolicy:
         """Политика открытия инцидентов (ошибка в значениях — ``ValueError`` на старте)."""
@@ -84,8 +84,8 @@ class Settings:
             ml_timeout_s=_env_float("ML_TIMEOUT_S", 1.0),
             db_path=Path(os.environ.get("JOURNAL_DB", "/tmp/transit_pulse_journal.sqlite")),
             code_docs_dir=Path(os.environ.get("CODE_DOCS_DIR", "docs/sphinx/_build/html")),
-            alert_delay_s=_env_float("ALERT_DELAY_S", 150.0),
-            alert_p_late=_env_float("ALERT_P_LATE", 0.6),
+            alert_delay_s=_env_float("ALERT_DELAY_S", 120.0),
+            alert_p_late=_env_float("ALERT_P_LATE", 0.5),
             alert_mode=os.environ.get("ALERT_MODE", "or").strip().lower(),
-            alert_min_streak=_env_int("ALERT_MIN_STREAK", 2),
+            alert_min_streak=_env_int("ALERT_MIN_STREAK", 3),
         )

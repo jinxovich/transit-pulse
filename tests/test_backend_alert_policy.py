@@ -150,7 +150,7 @@ def test_invalid_policy_fails_fast(kw, msg):
 
 def test_default_policy_is_selected_one():
     p = AlertPolicy()
-    assert (p.delay_s, p.p_late, p.mode, p.min_streak) == (150.0, 0.6, "or", 2)
+    assert (p.delay_s, p.p_late, p.mode, p.min_streak) == (120.0, 0.5, "or", 3)
 
 
 def test_settings_read_alert_env(monkeypatch):

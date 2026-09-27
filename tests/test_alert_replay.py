@@ -138,3 +138,18 @@ def test_select_prefers_f1_under_recall_floor_then_fewer_alerts():
     assert best is rows[2] and constrained
     best, constrained = R.select(rows, min_recall=0.95)
     assert best is rows[0] and not constrained
+
+
+def test_policy_that_opens_nothing_is_evaluated_without_errors():
+    import pandas as pd
+
+    from scripts.alert_replay import INC_COLUMNS, evaluate
+
+    preds = pd.DataFrame(
+        {"tr_id": [1], "visit_id": [10], "horizon_ok": [True], "T": [pd.Timestamp("2026-01-06")]}
+    )
+    fact = pd.DataFrame({"visit_id": [10], "delay_s": [300.0], "trip": [1]})
+
+    res = evaluate(pd.DataFrame(columns=INC_COLUMNS), preds, fact, None)
+
+    assert res["n_incidents"] == 0 and res["trip_recall"] == 0.0 and res["lead_median_min"] is None

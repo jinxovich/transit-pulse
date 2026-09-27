@@ -106,3 +106,26 @@ def test_honest_fold_is_taken_from_nearest_label_of_same_vehicle():
     folds = assign_folds(preds, fm)
 
     np.testing.assert_array_equal(folds, [3, 4, DEFAULT_FOLD, DEFAULT_FOLD])
+
+
+def test_recalibrate_scales_interval_by_lead_and_maps_p_late():
+    import numpy as np
+
+    from scripts.stream_dump import recalibrate
+    from services.ml.app.inference import Calibration
+
+    cal = Calibration.from_dict({
+        "version": 1, "global_scale": 1.0, "err_k": 0.5,
+        "lead_bins": [{"lo": 10, "hi": 12, "scale": 2.0}, {"lo": 12, "hi": 15, "scale": 3.0}],
+        "isotonic": {"x": [0.0, 1.0], "y": [0.0, 0.5]},
+    })  # fmt: skip
+    preds = pd.DataFrame({
+        "h_base": [100.0, 100.0], "h_q10r": [-10.0, -10.0], "h_q50r": [0.0, 0.0],
+        "h_q90r": [10.0, 10.0], "f_lead": [11.0, 14.0],
+        "h_delay": [0.0, 0.0], "h_q10": [0.0, 0.0], "h_q90": [0.0, 0.0], "h_p_late": [0.0, 0.0],
+    })  # fmt: skip
+
+    out = recalibrate({"preds": preds, "interval_scale": 1.0}, cal)["preds"]
+
+    np.testing.assert_allclose(out["h_q90"] - out["h_delay"], [20.0, 30.0])
+    assert (out["h_p_late"] <= 0.5).all()

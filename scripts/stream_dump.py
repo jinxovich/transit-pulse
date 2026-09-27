@@ -21,7 +21,13 @@ import pandas as pd
 
 from scripts.stream_eval_honest import FoldModels
 from scripts.stream_eval_run import StreamLog
-from services.ml.app.inference import LATE_S, p_exceed, widen
+from services.ml.app.inference import (
+    LATE_S,
+    Calibration,
+    load_calibration,
+    p_exceed,
+    widen,
+)
 
 NEAREST_LABEL = timedelta(minutes=30)
 DEFAULT_FOLD = 0
@@ -47,7 +53,8 @@ def assign_folds(preds: pd.DataFrame, fm: FoldModels) -> np.ndarray:
 
 
 def honest_window(
-    preds: pd.DataFrame, features: dict, fm: FoldModels, scale: float
+    preds: pd.DataFrame, features: dict, fm: FoldModels, scale: float,
+    cal: Calibration | None = None,
 ) -> pd.DataFrame:
     """Честные квантили, прогноз, p_late и интервал для каждого прогноза окна."""
     folds = assign_folds(preds, fm)
@@ -58,13 +65,32 @@ def honest_window(
         rows = [features[(int(r.tr_id), r.T, int(r.visit_id))]
                 for r in preds.iloc[idx].itertuples()]  # fmt: skip
         q[idx], base[idx] = fm.residual_quantiles(int(f), rows)
-    q_abs = widen(q, scale) + base[:, None]
-    return pd.DataFrame({
-        "h_fold": folds, "h_base": base,
-        "h_q10r": q[:, 0], "h_q50r": q[:, 1], "h_q90r": q[:, 2],
-        "h_delay": q_abs[:, 1], "h_q10": q_abs[:, 0], "h_q90": q_abs[:, 2],
-        "h_p_late": p_exceed(q_abs, LATE_S),
+    out = pd.DataFrame({
+        "h_fold": folds, "h_base": base, "h_q10r": q[:, 0], "h_q50r": q[:, 1], "h_q90r": q[:, 2],
     }, index=preds.index)  # fmt: skip
+    return out.join(honest_outputs(out, preds["f_lead"].to_numpy(float), scale, cal))
+
+
+def honest_outputs(
+    h: pd.DataFrame, lead: np.ndarray, scale: float, cal: Calibration | None
+) -> pd.DataFrame:
+    """Прогноз, интервал и p_late из квантилей остатка — так же, как их отдаёт ML-сервис."""
+    q = h[["h_q10r", "h_q50r", "h_q90r"]].to_numpy(float)
+    width = scale if cal is None else cal.scale_for(lead)
+    q_abs = widen(q, width) + h["h_base"].to_numpy(float)[:, None]
+    p = p_exceed(q_abs, LATE_S)
+    return pd.DataFrame({
+        "h_delay": q_abs[:, 1], "h_q10": q_abs[:, 0], "h_q90": q_abs[:, 2],
+        "h_p_late": p if cal is None else cal.p_late(p),
+    }, index=h.index)  # fmt: skip
+
+
+def recalibrate(dump: dict, cal: Calibration) -> dict:
+    """Пересчитывает честные прогнозы дампа по новой калибровке, без повторного прогона."""
+    preds = dump["preds"].drop(columns=["h_delay", "h_q10", "h_q90", "h_p_late"])
+    lead = preds["f_lead"].to_numpy(float)
+    preds = preds.join(honest_outputs(preds, lead, dump["interval_scale"], cal))
+    return {**dump, "preds": preds, "calibration": cal.summary}
 
 
 def build_dump(log: StreamLog, labels: pd.DataFrame, fm: FoldModels, models_dir: Path) -> dict:
@@ -75,10 +101,12 @@ def build_dump(log: StreamLog, labels: pd.DataFrame, fm: FoldModels, models_dir:
     preds["T"] = pd.to_datetime(preds["T"])
     feats = pd.DataFrame([log.features[(int(r.tr_id), r.T.to_pydatetime(), int(r.visit_id))]
                           for r in preds.itertuples()]).add_prefix("f_")  # fmt: skip
+    preds = pd.concat([preds, feats.set_index(preds.index)], axis=1)
     keyed = {(k[0], pd.Timestamp(k[1]), k[2]): v for k, v in log.features.items()}
-    honest = honest_window(preds, keyed, fm, scale)
+    cal = load_calibration(models_dir / "calibration_stream.json")
+    honest = honest_window(preds, keyed, fm, scale, cal)
     return {
-        "preds": pd.concat([preds, feats.set_index(preds.index), honest], axis=1),
+        "preds": pd.concat([preds, honest], axis=1),
         "minutes": pd.DataFrame(log.vehicle_minutes),
         "incidents": pd.DataFrame(log.incidents),
         "labels": labels,
@@ -97,3 +125,26 @@ def read_dump(path: Path) -> dict:
     """Читает дамп, записанный :func:`write_dump`."""
     with path.open("rb") as fh:
         return pickle.load(fh)
+
+
+def main(argv: list[str] | None = None) -> int:
+    """``--recalibrate``: пересчитать честные прогнозы готового дампа по калибровке модели."""
+    import argparse
+
+    ap = argparse.ArgumentParser(description=main.__doc__)
+    ap.add_argument("--recalibrate", type=Path, required=True, help="путь к дампу")
+    ap.add_argument("--models-dir", type=Path, default=Path("models"))
+    args = ap.parse_args(argv)
+    cal = load_calibration(args.models_dir / "calibration_stream.json")
+    if cal is None:
+        print("нет models/calibration_stream.json — пересчитывать нечего")
+        return 1
+    write_dump(args.recalibrate, recalibrate(read_dump(args.recalibrate), cal))
+    print(f"Пересчитано: {args.recalibrate}")
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+
+    sys.exit(main())

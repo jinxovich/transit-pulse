@@ -47,10 +47,10 @@ services:
       ML_URL: http://ml:8001
       REPLAYER_URL: http://replayer:8090
       NDTP_PORT: "9201"
-      ALERT_DELAY_S: ${ALERT_DELAY_S:-150}
-      ALERT_P_LATE: ${ALERT_P_LATE:-0.6}
+      ALERT_DELAY_S: ${ALERT_DELAY_S:-120}
+      ALERT_P_LATE: ${ALERT_P_LATE:-0.5}
       ALERT_MODE: ${ALERT_MODE:-or}
-      ALERT_MIN_STREAK: ${ALERT_MIN_STREAK:-2}
+      ALERT_MIN_STREAK: ${ALERT_MIN_STREAK:-3}
     volumes:
       - ./data/raw:/data/raw:ro
     depends_on:

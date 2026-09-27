@@ -20,10 +20,10 @@ ALERT_MODES = ("or", "and")
 class AlertPolicy:
     """Условие алерта: ``delay > delay_s`` ``mode`` ``p_late ≥ p_late``, серия ≥ min_streak."""
 
-    delay_s: float = 150.0
-    p_late: float = 0.6
+    delay_s: float = 120.0
+    p_late: float = 0.5
     mode: str = "or"
-    min_streak: int = 2
+    min_streak: int = 3
 
     def __post_init__(self) -> None:
         if self.mode not in ALERT_MODES:
