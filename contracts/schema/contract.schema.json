@@ -83,6 +83,47 @@
       "title": "AckRequest",
       "type": "object"
     },
+    "AlertPolicyInfo": {
+      "additionalProperties": false,
+      "description": "Действующая политика открытия инцидента.",
+      "properties": {
+        "delay_s": {
+          "description": "Порог прогноза задержки, c (строго больше)",
+          "title": "Delay S",
+          "type": "number"
+        },
+        "p_late": {
+          "description": "Порог вероятности опоздания (не меньше)",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "P Late",
+          "type": "number"
+        },
+        "mode": {
+          "description": "Как сочетаются пороги: or — любой, and — оба",
+          "enum": [
+            "or",
+            "and"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "min_streak": {
+          "description": "Сколько проходов подряд держится условие",
+          "minimum": 1,
+          "title": "Min Streak",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "delay_s",
+        "p_late",
+        "mode",
+        "min_streak"
+      ],
+      "title": "AlertPolicyInfo",
+      "type": "object"
+    },
     "AppConfig": {
       "additionalProperties": false,
       "description": "Ответ ``GET /api/v1/config``.",
@@ -765,6 +806,40 @@
       "title": "LeadBucket",
       "type": "object"
     },
+    "LeadMae": {
+      "additionalProperties": false,
+      "description": "Онлайн-MAE сверенных прогнозов с упреждением в минуте ``(lead_min − 1, lead_min]``.",
+      "properties": {
+        "lead_min": {
+          "title": "Lead Min",
+          "type": "integer"
+        },
+        "mae_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "MAE, c; null — сверенных прогнозов нет",
+          "title": "Mae S"
+        },
+        "n": {
+          "description": "Сколько прогнозов сверено",
+          "title": "N",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lead_min",
+        "mae_s",
+        "n"
+      ],
+      "title": "LeadMae",
+      "type": "object"
+    },
     "LineString": {
       "additionalProperties": false,
       "description": "GeoJSON LineString, координаты ``[lon, lat]``.",
@@ -941,12 +1016,54 @@
           "description": "Доля снижения MAE к baseline",
           "title": "Improvement",
           "type": "number"
+        },
+        "brier_before": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Brier p_late до калибровки; null — нет в отчёте ML",
+          "title": "Brier Before"
+        },
+        "brier_after": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Brier p_late после калибровки",
+          "title": "Brier After"
+        },
+        "interval_coverage": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Доля фактов внутри интервала [q10, q90] (цель — 0.8)",
+          "title": "Interval Coverage"
         }
       },
       "required": [
         "cv_mae_baseline_s",
         "cv_mae_model_s",
-        "improvement"
+        "improvement",
+        "brier_before",
+        "brier_after",
+        "interval_coverage"
       ],
       "title": "OfflineMetrics",
       "type": "object"
@@ -1124,6 +1241,65 @@
         },
         "offline": {
           "$ref": "#/$defs/OfflineMetrics"
+        },
+        "n_incidents": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Инцидентов в сессии",
+          "title": "N Incidents"
+        },
+        "alerts_per_vehicle_hour": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Инцидентов на ТС·час сим-времени (ТС с расписанием на связи, не в прогреве)",
+          "title": "Alerts Per Vehicle Hour"
+        },
+        "lead_median_min": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Медианное упреждение инцидентов, мин",
+          "title": "Lead Median Min"
+        },
+        "mae_by_lead": {
+          "description": "Онлайн-MAE по минуте упреждения 11…15",
+          "items": {
+            "$ref": "#/$defs/LeadMae"
+          },
+          "title": "Mae By Lead",
+          "type": "array"
+        },
+        "alert_policy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AlertPolicyInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Действующая политика алерта"
         }
       },
       "required": [
@@ -1133,7 +1309,12 @@
         "lead_hist",
         "alert_precision",
         "alert_recall",
-        "offline"
+        "offline",
+        "n_incidents",
+        "alerts_per_vehicle_hour",
+        "lead_median_min",
+        "mae_by_lead",
+        "alert_policy"
       ],
       "title": "QualityMetrics",
       "type": "object"

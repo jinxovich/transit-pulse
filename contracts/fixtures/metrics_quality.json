@@ -33,6 +33,45 @@
   "offline": {
     "cv_mae_baseline_s": 93.36,
     "cv_mae_model_s": 63.62,
-    "improvement": 0.319
+    "improvement": 0.319,
+    "brier_before": 0.214,
+    "brier_after": 0.171,
+    "interval_coverage": 0.801
+  },
+  "n_incidents": 5,
+  "alerts_per_vehicle_hour": 0.13,
+  "lead_median_min": 11.5,
+  "mae_by_lead": [
+    {
+      "lead_min": 11,
+      "mae_s": 54.8,
+      "n": 212
+    },
+    {
+      "lead_min": 12,
+      "mae_s": 57.3,
+      "n": 198
+    },
+    {
+      "lead_min": 13,
+      "mae_s": 60.1,
+      "n": 205
+    },
+    {
+      "lead_min": 14,
+      "mae_s": 63.9,
+      "n": 187
+    },
+    {
+      "lead_min": 15,
+      "mae_s": 68.4,
+      "n": 96
+    }
+  ],
+  "alert_policy": {
+    "delay_s": 150.0,
+    "p_late": 0.6,
+    "mode": "or",
+    "min_streak": 2
   }
 }

@@ -166,6 +166,19 @@ def test_sqlite_journal_records_predictions_and_incidents(red_run):
     assert "incident.opened" in kinds
 
 
+@needs_data
+def test_quality_on_stream_counts_vehicle_hours_and_policy(red_run):
+    rt, _ = red_run
+    q = rt.journal.contract(rt.book)
+
+    assert rt.journal.vehicle_hours() > 0
+    assert q.n_incidents == len(rt.book.incidents) > 0
+    assert q.alerts_per_vehicle_hour == round(q.n_incidents / rt.journal.vehicle_hours(), 2)
+    assert q.lead_median_min is not None and 10 < q.lead_median_min <= 15
+    assert q.alert_policy is not None and q.alert_policy.min_streak == rt.book.policy.min_streak
+    assert sum(b.n for b in q.mae_by_lead) == len(rt.journal.errors)
+
+
 def test_load_offline_reads_stream_model_cv_from_ml_metrics(tmp_path):
     import json
 

@@ -48,6 +48,7 @@ CauseCode = Literal[
 IncidentStatus = Literal["open", "ack", "resolved"]
 IncidentOutcome = Literal["pending", "hit", "false_alarm", "miss"]
 ModelMode = Literal["ml", "fallback"]
+AlertMode = Literal["or", "and"]
 
 
 class Contract(BaseModel):
@@ -356,10 +357,34 @@ class LeadBucket(Contract):
     count: int
 
 
+class LeadMae(Contract):
+    """Онлайн-MAE сверенных прогнозов с упреждением в минуте ``(lead_min − 1, lead_min]``."""
+
+    lead_min: int
+    mae_s: float | None = Field(description="MAE, c; null — сверенных прогнозов нет")
+    n: int = Field(description="Сколько прогнозов сверено")
+
+
+class AlertPolicyInfo(Contract):
+    """Действующая политика открытия инцидента."""
+
+    delay_s: float = Field(description="Порог прогноза задержки, c (строго больше)")
+    p_late: float = Field(ge=0, le=1, description="Порог вероятности опоздания (не меньше)")
+    mode: AlertMode = Field(description="Как сочетаются пороги: or — любой, and — оба")
+    min_streak: int = Field(ge=1, description="Сколько проходов подряд держится условие")
+
+
 class OfflineMetrics(Contract):
     cv_mae_baseline_s: float
     cv_mae_model_s: float
     improvement: float = Field(description="Доля снижения MAE к baseline")
+    brier_before: float | None = Field(
+        default=None, description="Brier p_late до калибровки; null — нет в отчёте ML"
+    )
+    brier_after: float | None = Field(default=None, description="Brier p_late после калибровки")
+    interval_coverage: float | None = Field(
+        default=None, description="Доля фактов внутри интервала [q10, q90] (цель — 0.8)"
+    )
 
 
 class QualityMetrics(Contract):
@@ -372,6 +397,20 @@ class QualityMetrics(Contract):
     alert_precision: float | None
     alert_recall: float | None
     offline: OfflineMetrics
+    n_incidents: int | None = Field(default=None, description="Инцидентов в сессии")
+    alerts_per_vehicle_hour: float | None = Field(
+        default=None,
+        description="Инцидентов на ТС·час сим-времени (ТС с расписанием на связи, не в прогреве)",
+    )
+    lead_median_min: float | None = Field(
+        default=None, description="Медианное упреждение инцидентов, мин"
+    )
+    mae_by_lead: list[LeadMae] = Field(
+        default_factory=list, description="Онлайн-MAE по минуте упреждения 11…15"
+    )
+    alert_policy: AlertPolicyInfo | None = Field(
+        default=None, description="Действующая политика алерта"
+    )
 
 
 class LastPacket(Contract):
