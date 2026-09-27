@@ -68,6 +68,7 @@ class VehicleRecord:
     dwell_s: float | None = None
     matcher: RouteMatcher | None = None
     match: MatchResult | None = None
+    doors: S.DoorSnapshot | None = None  # последний снимок дверей из NDTP (если пришёл)
 
     def add(self, point: tuple, wall: float, history: timedelta) -> None:
         """Дописывает точку ``(et, lon, lat, speed, heading, valid)`` и чистит старые."""

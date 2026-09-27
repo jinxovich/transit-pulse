@@ -1106,5 +1106,6 @@
     "lo_s": -152.4,
     "hi_s": -41.8
   },
-  "incident_ids": []
+  "incident_ids": [],
+  "doors": null
 }

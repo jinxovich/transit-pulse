@@ -49,6 +49,8 @@ IncidentStatus = Literal["open", "ack", "resolved"]
 IncidentOutcome = Literal["pending", "hit", "false_alarm", "miss"]
 ModelMode = Literal["ml", "fallback"]
 AlertMode = Literal["or", "and"]
+DoorSource = Literal["irma", "corona"]
+"""Источник снимка дверей: ячейка ``G6CellIrma04`` или ``G6CellCrown03``."""
 
 
 class Contract(BaseModel):
@@ -315,6 +317,27 @@ class ForecastPoint(Contract):
     hi_s: float
 
 
+class DoorSnapshot(Contract):
+    """Последний снимок дверей и пассажиропотока ТС из NDTP.
+
+    Источник — ячейки ``G6CellIrma04`` (IRMA: счётчики и статус дверей) или
+    ``G6CellCrown03`` («Корона»: только счётчики). В датасете и в режиме autoGenerate
+    эмулятора их нет, поэтому снимок появляется, только если терминал их прислал.
+    В признаки модели не входит.
+    """
+
+    at: NaiveTime = Field(description="Время пакета с ячейкой дверей")
+    source: DoorSource = Field(description="irma — IRMA, corona — «Корона»")
+    any_open: bool | None = Field(
+        description="Открыта хотя бы одна дверь; null — у источника нет статуса дверей"
+    )
+    open_doors: list[int] = Field(
+        description="Номера открытых дверей 1–4: датчик двери есть и дверь не закрыта"
+    )
+    entered: int = Field(description="Вошло: сумма счётчиков in1…in4 из ячейки")
+    exited: int = Field(description="Вышло: сумма счётчиков out1…out4 из ячейки")
+
+
 class VehicleDetail(Contract):
     """Ответ ``GET /api/v1/vehicles/{vehicle_id}``."""
 
@@ -323,6 +346,9 @@ class VehicleDetail(Contract):
     deviation_series: list[DeviationPoint] = Field(description="Отклонение за последние 60 мин")
     forecast: ForecastPoint | None
     incident_ids: list[str]
+    doors: DoorSnapshot | None = Field(
+        default=None, description="Последний снимок дверей из NDTP; null — ячеек дверей не было"
+    )
 
 
 class SegmentRisk(Contract):

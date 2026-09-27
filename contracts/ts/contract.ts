@@ -14,6 +14,7 @@ export type IncidentOutcome = "pending" | "hit" | "false_alarm" | "miss";
 export type ModelMode = "ml" | "fallback";
 export type WhatIfAction = "hold_at_stop" | "shorten_dwell" | "skip_layover" | "add_reserve";
 export type AlertMode = "or" | "and";
+export type DoorSource = "irma" | "corona";
 
 /** Реакция диспетчера на инцидент. */
 export interface AckInfo {
@@ -64,6 +65,28 @@ export interface DeviationPoint {
   /** Время датасета без часового пояса, например 2026-01-06T07:14:00 */
   t: NaiveTime;
   dev_s: number;
+}
+
+/**
+ * Последний снимок дверей и пассажиропотока ТС из NDTP.
+ * Источник — ячейки `G6CellIrma04` (IRMA: счётчики и статус дверей) или
+ * `G6CellCrown03` («Корона»: только счётчики). В датасете и в режиме autoGenerate
+ * эмулятора их нет, поэтому снимок появляется, только если терминал их прислал.
+ * В признаки модели не входит.
+ */
+export interface DoorSnapshot {
+  /** Время пакета с ячейкой дверей */
+  at: NaiveTime;
+  /** irma — IRMA, corona — «Корона» */
+  source: DoorSource;
+  /** Открыта хотя бы одна дверь; null — у источника нет статуса дверей */
+  any_open: boolean | null;
+  /** Номера открытых дверей 1–4: датчик двери есть и дверь не закрыта */
+  open_doors: number[];
+  /** Вошло: сумма счётчиков in1…in4 из ячейки */
+  entered: number;
+  /** Вышло: сумма счётчиков out1…out4 из ячейки */
+  exited: number;
 }
 
 /** Факт, объясняющий прогноз (вклад признака). */
@@ -407,6 +430,8 @@ export interface VehicleDetail {
   deviation_series: DeviationPoint[];
   forecast: ForecastPoint | null;
   incident_ids: string[];
+  /** Последний снимок дверей из NDTP; null — ячеек дверей не было */
+  doors: DoorSnapshot | null;
 }
 
 /** Текущее состояние ТС на карте. */

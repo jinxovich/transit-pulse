@@ -274,5 +274,6 @@
     }
   ],
   "forecast": null,
-  "incident_ids": []
+  "incident_ids": [],
+  "doors": null
 }

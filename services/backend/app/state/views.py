@@ -91,6 +91,7 @@ def vehicle_detail(
         deviation_series=series,
         forecast=forecast,
         incident_ids=[i.id for i in incidents if i.vehicle_id == rec.vehicle_id],
+        doors=rec.doors,
     )
 
 

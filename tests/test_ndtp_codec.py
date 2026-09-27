@@ -75,7 +75,8 @@ def test_zero_coordinates_invalid_point_like_terminal():
 @pytest.mark.parametrize("type_", sorted(LAYOUTS))
 def test_every_known_cell_roundtrips(type_):
     lay = LAYOUTS[type_]
-    fields = {name: i + 1 for i, name in enumerate(lay.names)}
+    fields = {name: i + 1 for i, name in enumerate(lay.fields)}
+    fields |= {name: i % 2 == 0 for i, name in enumerate(lay.bits)}
     cell = Cell(type_, 1, lay.name, fields)
     raw = encode_realtime(42, 9, NAV, [cell])
     frame = decode_frame(raw)
@@ -87,6 +88,8 @@ def test_cell_sizes_match_spec():
     sizes = {lay.name: lay.fmt.size for lay in LAYOUTS.values()}
     assert sizes == {
         "G6CellIntSensor02": 26,
+        "G6CellCrown03": 14,
+        "G6CellIrma04": 15,
         "G6CellUsi08": 6,
         "G6CellCan10": 37,
         "G6CellLls15": 50,
@@ -103,7 +106,7 @@ def test_signed_fields_keep_sign():
 def test_unknown_cell_stops_parsing_without_error_keeping_previous():
     usi = make_cell("G6CellUsi08", level_l=77)
     raw = encode_realtime(1, 1, NAV, [usi])
-    unknown = bytes([3, 0]) + b"\x00" * 40  # G6CellCrown03 — не разбираем
+    unknown = bytes([5, 0]) + b"\x00" * 40  # G6CellKdm05 — не разбираем
     body = raw[NPL_LEN:] + unknown + bytes([8, 1]) + b"\x00" * 6
     patched = _reframe(raw, body)
     frame = decode_frame(patched)

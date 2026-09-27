@@ -264,6 +264,70 @@
       "title": "DeviationPoint",
       "type": "object"
     },
+    "DoorSnapshot": {
+      "additionalProperties": false,
+      "description": "Последний снимок дверей и пассажиропотока ТС из NDTP.\n\nИсточник — ячейки ``G6CellIrma04`` (IRMA: счётчики и статус дверей) или\n``G6CellCrown03`` («Корона»: только счётчики). В датасете и в режиме autoGenerate\nэмулятора их нет, поэтому снимок появляется, только если терминал их прислал.\nВ признаки модели не входит.",
+      "properties": {
+        "at": {
+          "description": "Время пакета с ячейкой дверей",
+          "examples": [
+            "2026-01-06T07:14:00"
+          ],
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+          "title": "At",
+          "type": "string"
+        },
+        "source": {
+          "description": "irma — IRMA, corona — «Корона»",
+          "enum": [
+            "irma",
+            "corona"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "any_open": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Открыта хотя бы одна дверь; null — у источника нет статуса дверей",
+          "title": "Any Open"
+        },
+        "open_doors": {
+          "description": "Номера открытых дверей 1–4: датчик двери есть и дверь не закрыта",
+          "items": {
+            "type": "integer"
+          },
+          "title": "Open Doors",
+          "type": "array"
+        },
+        "entered": {
+          "description": "Вошло: сумма счётчиков in1…in4 из ячейки",
+          "title": "Entered",
+          "type": "integer"
+        },
+        "exited": {
+          "description": "Вышло: сумма счётчиков out1…out4 из ячейки",
+          "title": "Exited",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "at",
+        "source",
+        "any_open",
+        "open_doors",
+        "entered",
+        "exited"
+      ],
+      "title": "DoorSnapshot",
+      "type": "object"
+    },
     "Evidence": {
       "additionalProperties": false,
       "description": "Факт, объясняющий прогноз (вклад признака).",
@@ -2017,6 +2081,18 @@
           },
           "title": "Incident Ids",
           "type": "array"
+        },
+        "doors": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DoorSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Последний снимок дверей из NDTP; null — ячеек дверей не было"
         }
       },
       "required": [
@@ -2024,7 +2100,8 @@
         "timeline",
         "deviation_series",
         "forecast",
-        "incident_ids"
+        "incident_ids",
+        "doors"
       ],
       "title": "VehicleDetail",
       "type": "object"
