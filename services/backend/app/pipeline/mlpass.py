@@ -5,8 +5,9 @@
 
 1. ``explain=false`` — прогноз для всего батча;
 2. ``explain=true`` — только для визитов, причину которых видит диспетчер: текущий
-   прогноз ТС с риском red/yellow, первый красный визит (кандидат в инцидент) и цель
-   открытого инцидента. Зелёным и дальним визитам окна SHAP не нужен.
+   прогноз ТС с риском red/yellow, первый красный визит, первый визит, прошедший политику
+   алерта (кандидат в инцидент), и цель открытого инцидента. Зелёным и дальним визитам
+   окна SHAP не нужен.
 
 Если второй вызов не удался, прогнозы первого остаются, а причина считается по правилам
 (:func:`transit_core.causes.infer_cause` без вкладов).
@@ -20,6 +21,7 @@ from dataclasses import dataclass, replace
 
 from transit_core.risk import risk_of
 
+from ..alerts.policy import AlertPolicy
 from ..ml_client import MlClient, MlItem
 from .assemble import all_visits, ml_items
 from .prepare import VehicleTask
@@ -39,26 +41,34 @@ class MlPass:
     explained: int = 0
 
 
-def _needs_explain(task: VehicleTask, ml: dict[str, MlItem], target: str | None) -> list:
+def _needs_explain(
+    task: VehicleTask, ml: dict[str, MlItem], target: str | None, policy: AlertPolicy | None
+) -> list:
     """Визиты ТС, чья причина видна диспетчеру: первый (состояние ТС) при риске
-    red/yellow, первый красный (кандидат в инцидент) и цель активного инцидента
-    (в окне или follow-up)."""
+    red/yellow, первый красный, первый прошедший политику алерта (кандидат в инцидент)
+    и цель активного инцидента (в окне или follow-up)."""
     visits = [v for v in task.visits if v.item_id in ml]
     risk = {v.item_id: risk_of(ml[v.item_id].delay_s, ml[v.item_id].p_late) for v in visits}
     chosen = [v for v in visits[:1] if risk[v.item_id] in EXPLAIN_RISKS]
     chosen += [v for v in visits if risk[v.item_id] == "red"][:1]
+    if policy is not None:
+        chosen += [v for v in visits
+                   if policy.matches(ml[v.item_id].delay_s, ml[v.item_id].p_late)][:1]  # fmt: skip
     chosen += [v for v in all_visits(task) if v.visit_id == target and v.item_id in ml]
     return list({v.item_id: v for v in chosen}.values())
 
 
 def explain_items(
-    tasks: list[VehicleTask], ml: dict[str, MlItem], targets: Mapping[str, str]
+    tasks: list[VehicleTask],
+    ml: dict[str, MlItem],
+    targets: Mapping[str, str],
+    policy: AlertPolicy | None = None,
 ) -> list[tuple[str, dict]]:
     """Визиты для вкладов признаков; ``targets`` — ТС → визит-цель активного инцидента."""
     out = []
     for task in tasks:
         if not task.stale:
-            visits = _needs_explain(task, ml, targets.get(task.vehicle_id))
+            visits = _needs_explain(task, ml, targets.get(task.vehicle_id), policy)
             out += [(v.item_id, v.features) for v in visits]
     return out
 
@@ -71,14 +81,19 @@ def with_contributions(ml: dict[str, MlItem], explained: dict[str, MlItem]) -> d
     }
 
 
-async def run_ml(client: MlClient, tasks: list[VehicleTask], targets: Mapping[str, str]) -> MlPass:
+async def run_ml(
+    client: MlClient,
+    tasks: list[VehicleTask],
+    targets: Mapping[str, str],
+    policy: AlertPolicy | None = None,
+) -> MlPass:
     """Прогноз для всех свежих ТС и вклады признаков только для рискованных."""
     items = ml_items(tasks)
     ml = await client.predict(items, explain=False) if items else None
     if ml is None:
         return MlPass(None)
     predict_ms = client.last_latency_ms
-    hot = explain_items(tasks, ml, targets)
+    hot = explain_items(tasks, ml, targets, policy)
     if not hot:
         return MlPass(ml, predict_ms)
     extra = await client.predict(hot, explain=True)

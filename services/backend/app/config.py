@@ -6,6 +6,10 @@ import os
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .alerts.policy import AlertPolicy
 
 VERSION = "0.1.0"
 DATASET_DAY = datetime(2026, 1, 6)
@@ -47,10 +51,23 @@ class Settings:
     ml_open_s: float = 15.0
     db_path: Path = Path("/tmp/transit_pulse_journal.sqlite")
     code_docs_dir: Path = Path("docs/sphinx/_build/html")
+    # политика алерта (docs/perf/alert_policy.md): delay > X <mode> p_late ≥ Y, N проходов
+    alert_delay_s: float = 150.0
+    alert_p_late: float = 0.6
+    alert_mode: str = "or"
+    alert_min_streak: int = 2
+
+    def alert_policy(self) -> AlertPolicy:
+        """Политика открытия инцидентов (ошибка в значениях — ``ValueError`` на старте)."""
+        from .alerts.policy import AlertPolicy
+
+        return AlertPolicy(self.alert_delay_s, self.alert_p_late, self.alert_mode,
+                           self.alert_min_streak)  # fmt: skip
 
     @classmethod
     def from_env(cls) -> Settings:
-        """Читает настройки из окружения (``DATA_DIR``, ``ML_URL``, ``NDTP_PORT`` …)."""
+        """Читает настройки из окружения (``DATA_DIR``, ``ML_URL``, ``NDTP_PORT``,
+        ``ALERT_DELAY_S`` / ``ALERT_P_LATE`` / ``ALERT_MODE`` / ``ALERT_MIN_STREAK`` …)."""
         cors = os.environ.get("CORS_ORIGINS", "*")
         return cls(
             data_dir=Path(os.environ.get("DATA_DIR", "data/raw")),
@@ -67,4 +84,8 @@ class Settings:
             ml_timeout_s=_env_float("ML_TIMEOUT_S", 1.0),
             db_path=Path(os.environ.get("JOURNAL_DB", "/tmp/transit_pulse_journal.sqlite")),
             code_docs_dir=Path(os.environ.get("CODE_DOCS_DIR", "docs/sphinx/_build/html")),
+            alert_delay_s=_env_float("ALERT_DELAY_S", 150.0),
+            alert_p_late=_env_float("ALERT_P_LATE", 0.6),
+            alert_mode=os.environ.get("ALERT_MODE", "or").strip().lower(),
+            alert_min_streak=_env_int("ALERT_MIN_STREAK", 2),
         )

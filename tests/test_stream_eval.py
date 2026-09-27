@@ -77,3 +77,32 @@ def test_match_explains_missing_forecasts():
     assert m["found"].tolist() == [True, False, False, False]
     assert m["miss_reason"].tolist()[1:] == [M.MISS_WARMUP, M.MISS_NOT_IN_WINDOW,
                                             M.MISS_NO_VEHICLE]  # fmt: skip
+
+
+@pytest.mark.skipif(not _ready(), reason="нет data/raw или моделей")
+def test_every_window_prediction_keeps_its_stream_features(small_run):
+    log, _, _ = small_run
+    keys = {(p["tr_id"], p["T"], p["visit_id"]) for p in log.preds}
+
+    assert keys and keys <= set(log.features)
+
+
+def test_honest_fold_is_taken_from_nearest_label_of_same_vehicle():
+    import numpy as np
+
+    from scripts.stream_dump import DEFAULT_FOLD, assign_folds
+    from scripts.stream_eval_honest import FoldModels
+
+    t0 = pd.Timestamp("2026-01-06 08:00")
+    meta = pd.DataFrame(
+        {"sample_id": ["a", "b"], "tr_id": [1, 1], "T": [t0, t0 + pd.Timedelta("2h")]}
+    )
+    fm = FoldModels(models=[], meta=meta, fold_of=pd.Series([3, 4], index=["a", "b"]))
+    preds = pd.DataFrame({
+        "tr_id": [1, 1, 1, 2],
+        "T": [t0 + pd.Timedelta("10min"), t0 + pd.Timedelta("110min"), t0 + pd.Timedelta("1h"), t0],
+    })  # fmt: skip
+
+    folds = assign_folds(preds, fm)
+
+    np.testing.assert_array_equal(folds, [3, 4, DEFAULT_FOLD, DEFAULT_FOLD])

@@ -85,7 +85,7 @@ class PipelineRunner:
         self._last_pass_wall = rt.wall()
         tasks = await asyncio.to_thread(prepare, rt.static, self.inputs(), t, rt.typical)
         rt.metrics.batch_size.observe(len(ml_items(tasks)))
-        res = await run_ml(rt.ml, tasks, rt.book.active_targets())
+        res = await run_ml(rt.ml, tasks, rt.book.active_targets(), rt.book.policy)
         rt.metrics.observe_ml(res.predict_ms, res.explain_ms, res.explained)
         if epoch != rt.session_epoch:
             return  # пока считали, началась новая сессия — результат устарел
@@ -148,12 +148,14 @@ class PipelineRunner:
         t: datetime,
         can_alert: bool,
     ) -> list[Event]:
-        """Resolve / update активного инцидента или открытие нового на первом красном.
+        """Resolve / update активного инцидента или открытие нового по политике алерта.
 
-        Инцидент обновляется по прогнозу цели из окна, а когда цель вышла из окна
-        (упреждение < 10 мин) — по follow-up; открываются инциденты только по окну.
+        Серии условия алерта обновляются каждым проходом по визитам окна. Инцидент
+        обновляется по прогнозу цели из окна, а когда цель вышла из окна (упреждение
+        < 10 мин) — по follow-up; открываются инциденты только по окну.
         """
         book, vid = self.rt.book, rec.vehicle_id
+        book.observe(vid, preds)
         events = []
         if (ev := book.settle(vid, rec.arrivals, task.cur_dev, t)) is not None:
             events.append(ev)
@@ -168,10 +170,10 @@ class PipelineRunner:
         if not can_alert or task.stale or not task.ready:
             return events
         now = self.rt.sim_now()
-        red = next((vp for vp in preds if book.can_open(vid, vp, now)), None)
-        if red is not None:
+        hit = next((vp for vp in preds if book.can_open(vid, vp, now)), None)
+        if hit is not None:
             seg = target_segment(self.rt.static.plans[rec.tr_id], rec.tr_id,
-                                 red.prediction.target_stop)  # fmt: skip
+                                 hit.prediction.target_stop)  # fmt: skip
             info = {"vehicle_id": vid, "tr_id": str(rec.tr_id), "route_name": rec.route_name}
-            events.append(book.open(info, red, seg, t))
+            events.append(book.open(info, hit, seg, t))
         return events

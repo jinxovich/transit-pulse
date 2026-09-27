@@ -51,7 +51,7 @@ class Runtime:
         self.static = static
         self.store = FleetStore(static, settings.history_min) if static else None
         self.clock = SimClock()
-        self.book = IncidentBook()
+        self.book = IncidentBook(policy=settings.alert_policy())
         self.journal = QualityJournal(load_offline(settings.models_dir))
         self.stats = IngestStats()
         self.queue = DropOldestQueue(settings.queue_size, self.stats)
