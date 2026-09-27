@@ -1131,5 +1131,6 @@
   "incident_ids": [
     "inc-0001",
     "inc-0003"
-  ]
+  ],
+  "doors": null
 }

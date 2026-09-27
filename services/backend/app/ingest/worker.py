@@ -14,6 +14,7 @@ from typing import TYPE_CHECKING
 
 from ..state.timefmt import from_epoch
 from .codec import Frame
+from .doors import door_snapshot
 
 if TYPE_CHECKING:
     from ..runtime import Runtime
@@ -51,6 +52,9 @@ def apply_frame(rt: Runtime, recv_wall: float, frame: Frame) -> bool:
         rt.clock.observe(et, wall)
     rec = store.record(frame.unit_id, et)
     store.add(rec, point, rt.wall())
+    doors = door_snapshot(frame.cells, et)
+    if doors is not None:
+        rec.doors = doors
     rt.metrics.observe("ingest_to_state", max(rt.wall() - recv_wall, 0.0) * 1000)
     return True
 

@@ -43,6 +43,7 @@ ENUM_ALIASES = (
     "ModelMode",
     "WhatIfAction",
     "AlertMode",
+    "DoorSource",
 )
 HEADER = (
     "// АВТОГЕНЕРАЦИЯ из packages/transit_core/transit_core/schemas.py — не редактировать руками.\n"
