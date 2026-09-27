@@ -21,7 +21,7 @@ from dataclasses import dataclass, replace
 from transit_core.risk import risk_of
 
 from ..ml_client import MlClient, MlItem
-from .assemble import ml_items
+from .assemble import all_visits, ml_items
 from .prepare import VehicleTask
 
 log = logging.getLogger(__name__)
@@ -41,12 +41,13 @@ class MlPass:
 
 def _needs_explain(task: VehicleTask, ml: dict[str, MlItem], target: str | None) -> list:
     """Визиты ТС, чья причина видна диспетчеру: первый (состояние ТС) при риске
-    red/yellow, первый красный (кандидат в инцидент) и цель активного инцидента."""
+    red/yellow, первый красный (кандидат в инцидент) и цель активного инцидента
+    (в окне или follow-up)."""
     visits = [v for v in task.visits if v.item_id in ml]
     risk = {v.item_id: risk_of(ml[v.item_id].delay_s, ml[v.item_id].p_late) for v in visits}
     chosen = [v for v in visits[:1] if risk[v.item_id] in EXPLAIN_RISKS]
     chosen += [v for v in visits if risk[v.item_id] == "red"][:1]
-    chosen += [v for v in visits if v.visit_id == target]
+    chosen += [v for v in all_visits(task) if v.visit_id == target and v.item_id in ml]
     return list({v.item_id: v for v in chosen}.values())
 
 

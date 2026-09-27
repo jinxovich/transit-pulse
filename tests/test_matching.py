@@ -8,7 +8,13 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from transit_core.matching import RESYNC_N, RouteMatcher, schedule_deviation_s, to_seconds
+from transit_core.matching import (
+    RESYNC_N,
+    MatchResult,
+    RouteMatcher,
+    schedule_deviation_s,
+    to_seconds,
+)
 from transit_core.route_line import build_lines
 from transit_core.track import M_PER_DEG_LAT, M_PER_DEG_LON
 
@@ -143,6 +149,27 @@ def test_schedule_deviation_interpolates_between_stops(l_line):
     assert schedule_deviation_s(r, line, T0 + timedelta(seconds=70)) == pytest.approx(-5.0)
     assert m.deviation_s() == pytest.approx(-5.0)
     assert r.dist_to_next_m == pytest.approx(250.0, abs=1.0)
+
+
+def _at(line, s: float, t: float) -> MatchResult:
+    """Привязка к нитке ``line`` на дистанции ``s`` в момент ``T0 + t`` сек."""
+    prev, nxt = line.stops_around(s)
+    return MatchResult(to_seconds(T0) + t, line.trip, s, prev, 0.0, int(line.rows[prev]),
+                       None if nxt is None else int(line.rows[nxt]), None, True, 1.0)  # fmt: skip
+
+
+def test_layover_before_trip_start_is_not_ahead_of_schedule():
+    """Отстой на конечной до планового отправления — не «опережение»: ТС встало на 20 м
+    дальше точки остановки или на вторую точку конечной (60 м), рейс 2 — через 5 мин."""
+    plan = _plan([(0, 0, 0, 1), (1000, 0, 120, 1),
+                  (1000, 0, 600, 2), (940, 0, 660, 2), (0, 0, 1200, 2)])  # fmt: skip
+    line = build_lines(plan)[1]
+    now = to_seconds(T0) + 300.0
+
+    assert schedule_deviation_s(_at(line, 20.0, 300.0), line, now) == 0.0
+    assert schedule_deviation_s(_at(line, 60.0, 300.0), line, now) == 0.0
+    # после планового отправления опережение по нитке снова видно
+    assert schedule_deviation_s(_at(line, 530.0, 700.0), line, now + 400.0) < -100.0
 
 
 def test_build_lines_skips_single_stop_trips():

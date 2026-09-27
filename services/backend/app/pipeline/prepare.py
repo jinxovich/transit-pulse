@@ -35,6 +35,7 @@ class VehicleInput:
     points: list
     stale: bool
     ready: bool  # истории хватает для прогноза (≥ 15 сим-мин)
+    follow: str | None = None  # визит-цель активного инцидента: прогноз и после выхода из окна
 
 
 @dataclass(frozen=True)
@@ -73,6 +74,9 @@ class VehicleTask:
     horizon_ok: bool = False
     segment: SegmentNow | None = None
     dwell_s: float | None = None
+    follow: VisitTask | None = None
+    """Цель активного инцидента вне окна (упреждение < 10 мин): прогноз только для
+    обновления карточки инцидента — не в ``VehicleState.prediction`` и не в ``can_open``."""
 
     def extras(self) -> dict[str, float]:
         """Производные признаки бэкенда для причины и evidence (в ML не уходят)."""
@@ -122,24 +126,37 @@ def _arrivals(plan_tr: pd.DataFrame, track: pd.DataFrame, t: datetime) -> dict:
     }
 
 
+def _visit_task(
+    vi: VehicleInput, plan_tr: pd.DataFrame, track: pd.DataFrame, t: datetime, r, cur_dev
+) -> VisitTask:
+    feats = point_features(plan_tr, track, t, int(r.visit_id), cur_dev)
+    return VisitTask(
+        item_id=f"{vi.tr_id}:{int(r.visit_id)}",
+        visit_id=str(int(r.visit_id)),
+        trip=int(r.trip),
+        row=r,
+        lead_min=round((r.tb - t).total_seconds() / 60, 2),
+        features=dict(feats),
+    )
+
+
 def _visit_tasks(
     vi: VehicleInput, plan_tr: pd.DataFrame, track: pd.DataFrame, t: datetime, cur_dev
 ) -> tuple:
     rows, ok = horizon_visits(plan_tr, t)
-    tasks = []
-    for r in rows.itertuples():
-        feats = point_features(plan_tr, track, t, int(r.visit_id), cur_dev)
-        tasks.append(
-            VisitTask(
-                item_id=f"{vi.tr_id}:{int(r.visit_id)}",
-                visit_id=str(int(r.visit_id)),
-                trip=int(r.trip),
-                row=r,
-                lead_min=round((r.tb - t).total_seconds() / 60, 2),
-                features=dict(feats),
-            )
-        )
-    return tasks, ok
+    return [_visit_task(vi, plan_tr, track, t, r, cur_dev) for r in rows.itertuples()], ok
+
+
+def _follow_task(
+    vi: VehicleInput, plan_tr: pd.DataFrame, track: pd.DataFrame, t: datetime, task: VehicleTask
+) -> VisitTask | None:
+    """Follow-up цели инцидента: цель впереди по плану, ещё не прибыли и её нет в окне."""
+    target = vi.follow
+    if target is None or target in task.arrivals or any(v.visit_id == target for v in task.visits):
+        return None
+    rows = plan_tr[(plan_tr["visit_id"] == int(target)) & (plan_tr["tb"] > t)]
+    r = next(rows.head(1).itertuples(), None)
+    return None if r is None else _visit_task(vi, plan_tr, track, t, r, task.cur_dev)
 
 
 def segment_now(
@@ -173,6 +190,7 @@ def prepare_vehicle(
     task.dwell_s = dwell_seconds(track, t)
     if vi.ready:
         task.visits, task.horizon_ok = _visit_tasks(vi, plan_tr, track, t, task.cur_dev)
+        task.follow = _follow_task(vi, plan_tr, track, t, task)
     return task
 
 
