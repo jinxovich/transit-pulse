@@ -65,3 +65,20 @@ def test_format_value_for_schedule_and_quality_features():
     assert format_value("invalid15", 0.07) == "7%"
     assert format_value("trip_progress", 0.5) == "50%"
     assert format_value("tgt_gap", 12.0) == "12 мин"
+
+
+def test_planned_layover_is_not_long_dwell():
+    f = {"cur_dev": 30.0, "spd5": 0.0, "stop5": 1.0, "dwell": 2222.0, "in_layover": 1.0}
+
+    cause = infer_cause(f, predicted_delay_s=150)
+
+    assert cause.code != "LONG_DWELL"
+    shown = {e.feature: e.value for e in cause.evidence}
+    assert shown["in_layover"] == "да"
+
+
+def test_planned_layover_is_not_long_dwell_by_contributions():
+    f = {"cur_dev": 10.0, "stop5": 1.0, "dwell": 1800.0, "in_layover": 1.0}
+    contributions = [{"feature": "stop5", "contribution_s": 40.0}]
+
+    assert infer_cause(f, contributions, predicted_delay_s=150).code != "LONG_DWELL"

@@ -79,6 +79,8 @@ class VehicleTask:
         out: dict[str, float] = {}
         if self.dwell_s is not None:
             out["dwell"] = self.dwell_s
+            if self.dwell_s > 0 and self.in_layover():
+                out["in_layover"] = 1.0
         if self.segment is not None:
             out["seg_speed"] = self.segment.speed_kmh
             if self.segment.ratio is not None:
@@ -86,6 +88,10 @@ class VehicleTask:
         return out
 
     next_row: object | None = None
+
+    def in_layover(self) -> bool:
+        """Стоит до планового начала следующего рейса — это отстой, а не задержка."""
+        return bool(getattr(self.next_row, "new_trip", 0))
 
 
 def horizon_visits(plan_tr: pd.DataFrame, t: datetime) -> tuple[pd.DataFrame, bool]:

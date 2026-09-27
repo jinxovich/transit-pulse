@@ -181,3 +181,16 @@ def test_load_offline_reads_stream_model_cv_from_ml_metrics(tmp_path):
     assert offline.cv_mae_baseline_s == 114.1
     assert offline.cv_mae_model_s == 77.8
     assert offline.improvement == round(1 - 77.8 / 114.1, 4)
+
+
+def test_standing_before_next_trip_start_is_planned_layover():
+    from collections import namedtuple
+
+    from services.backend.app.pipeline.prepare import VehicleTask
+
+    row = namedtuple("Row", "new_trip")
+    at_terminal = VehicleTask("1", 1, stale=False, ready=True, dwell_s=900.0, next_row=row(1))
+    mid_trip = VehicleTask("1", 1, stale=False, ready=True, dwell_s=900.0, next_row=row(0))
+
+    assert at_terminal.extras()["in_layover"] == 1.0
+    assert "in_layover" not in mid_trip.extras()

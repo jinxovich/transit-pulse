@@ -43,9 +43,9 @@ UNITS: dict[str, str] = {
     "tgt_gap": "{:.0f} мин", "plan_run": "{:.0f} мин", "since_last_plan": "{:.0f} мин",
     "stale_valid": "{:.0f} с", "hour_sin": "{:.2f}", "hour_cos": "{:.2f}",
 }  # fmt: skip
-FLAGS = ("tgt_manual", "tgt_newtrip", "trip_break_between")
+FLAGS = ("tgt_manual", "tgt_newtrip", "trip_break_between", "in_layover")
 """Признаки-флаги 0/1: в карточке — «да»/«нет»."""
-ALWAYS_SHOWN = ("seg_speed", "speed_ratio", "dwell")
+ALWAYS_SHOWN = ("seg_speed", "speed_ratio", "dwell", "in_layover")
 """Производные признаки бэкенда, которые карточка показывает всегда (если посчитаны)."""
 CONTRIB_CAUSE: dict[str, S.CauseCode] = {
     "cur_dev": "ACCUMULATED_DELAY",
@@ -120,7 +120,11 @@ def rule_cause(
     )
     if slow and (trend is None or trend >= 0):
         return "CONGESTION"
-    if (dwell is not None and dwell > LONG_DWELL_S) or (stop5 is not None and stop5 >= STOP_SHARE):
+    in_layover = feature(f, "in_layover") == 1.0
+    long_stop = (dwell is not None and dwell > LONG_DWELL_S) or (
+        stop5 is not None and stop5 >= STOP_SHARE
+    )
+    if long_stop and not in_layover:
         return "LONG_DWELL"
     if cur is not None and cur > ACCUMULATED_S and (trend is None or trend >= 0):
         return "ACCUMULATED_DELAY"
@@ -169,6 +173,8 @@ def infer_cause(
     ``contributions`` — вклады признаков от ML (``[{"feature", "contribution_s"}]``).
     """
     code = rule_cause(features, predicted_delay_s, stale) or _contrib_cause(contributions)
+    if code == "LONG_DWELL" and feature(features, "in_layover") == 1.0:
+        code = None
     return make_cause(code or "UNKNOWN", _evidence(features, contributions))
 
 
