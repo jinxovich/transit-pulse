@@ -1,34 +1,4 @@
- Network transit-pulse_default  Creating
- Network transit-pulse_default  Created
- Container transit-pulse-ml-1  Creating
- Container transit-pulse-data-init-1  Creating
- Container transit-pulse-ml-1  Created
- Container transit-pulse-data-init-1  Created
- Container transit-pulse-backend-1  Creating
- Container transit-pulse-backend-1  Created
- Container transit-pulse-dashboard-1  Creating
- Container transit-pulse-replayer-1  Creating
- Container transit-pulse-dashboard-1  Created
- Container transit-pulse-replayer-1  Created
- Container transit-pulse-data-init-1  Starting
- Container transit-pulse-ml-1  Starting
- Container transit-pulse-data-init-1  Started
- Container transit-pulse-ml-1  Started
- Container transit-pulse-data-init-1  Waiting
- Container transit-pulse-ml-1  Waiting
- Container transit-pulse-data-init-1  Exited
- Container transit-pulse-ml-1  Healthy
- Container transit-pulse-backend-1  Starting
- Container transit-pulse-backend-1  Started
- Container transit-pulse-backend-1  Waiting
- Container transit-pulse-backend-1  Waiting
- Container transit-pulse-backend-1  Healthy
- Container transit-pulse-dashboard-1  Starting
- Container transit-pulse-backend-1  Healthy
- Container transit-pulse-replayer-1  Starting
- Container transit-pulse-replayer-1  Started
- Container transit-pulse-dashboard-1  Started
-ml         healthy через   11.9 c
+ml         healthy через   12.0 c
 backend    healthy через   12.0 c
 replayer   healthy через   17.4 c
 dashboard  healthy через   17.5 c
