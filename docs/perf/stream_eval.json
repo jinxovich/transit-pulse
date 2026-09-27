@@ -103,23 +103,23 @@
     ]
   },
   "alerts": {
-    "incidents_opened": 241,
+    "incidents_opened": 162,
     "lead_ge_10_share": 1.0,
     "lead_in_window_share": 1.0,
     "lead_min": {
-      "n": 241,
+      "n": 162,
       "min": 11.0,
       "p05": 11.0,
-      "p50": 13.0,
-      "mean": 12.64,
-      "p95": 15.0,
-      "max": 15.0
+      "p50": 12.0,
+      "mean": 11.88,
+      "p95": 13.0,
+      "max": 13.0
     },
-    "incident_precision_vs_schedule_fact": 0.5187,
-    "incidents_with_fact": 241,
+    "incident_precision_vs_schedule_fact": 0.6728,
+    "incidents_with_fact": 162,
     "online_outcomes": {
-      "false_alarm": 125,
-      "hit": 115,
+      "hit": 102,
+      "false_alarm": 59,
       "pending": 1
     },
     "points_red_vs_late": {
@@ -130,8 +130,8 @@
       "precision": 1.0,
       "recall": 0.8023
     },
-    "late_points_with_incident_on_target": 0.1628,
-    "late_trips_with_incident": 1.0,
+    "late_points_with_incident_on_target": 0.1047,
+    "late_trips_with_incident": 0.9643,
     "n_late_targets": 86,
     "n_late_trips": 28
   },
@@ -140,21 +140,21 @@
     "passes_with_predictions": 1362,
     "pass_ms": {
       "n": 1362,
-      "min": 54.07,
-      "p05": 122.15,
-      "p50": 263.83,
-      "mean": 254.02,
-      "p95": 365.95,
-      "max": 644.88
+      "min": 20.32,
+      "p05": 64.05,
+      "p50": 179.07,
+      "mean": 166.92,
+      "p95": 214.71,
+      "max": 294.98
     },
     "ml_ms": {
       "n": 1362,
-      "min": 32.6,
-      "p05": 49.96,
-      "p50": 116.99,
-      "mean": 115.31,
-      "p95": 179.79,
-      "max": 325.13
+      "min": 1.63,
+      "p05": 2.6,
+      "p50": 43.93,
+      "mean": 39.5,
+      "p95": 49.99,
+      "max": 71.92
     },
     "preds_per_pass": {
       "n": 1362,
@@ -165,9 +165,9 @@
       "p95": 31.0,
       "max": 35.0
     },
-    "run_wall_s": 359.2,
-    "sim_minutes_per_wall_s": 4.01,
-    "max_speed_without_skips": 164.0,
+    "run_wall_s": 242.3,
+    "sim_minutes_per_wall_s": 5.94,
+    "max_speed_without_skips": 279.0,
     "modes": {
       "LIVE": 1425,
       "WARMING_UP": 15
