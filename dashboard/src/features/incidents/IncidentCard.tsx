@@ -101,6 +101,9 @@ export function IncidentCard({ id }: { id: string }) {
         <div className="card-meta">
           <span className="num">ТС {inc.vehicle_id}</span>
           <span className={`chip chip-${inc.status}`}>{STATUS_LABEL[inc.status]}</span>
+          <button className="card-link" onClick={() => useUi.getState().selectVehicle(inc.vehicle_id)}>
+            Подробнее о ТС →
+          </button>
         </div>
       </header>
 
