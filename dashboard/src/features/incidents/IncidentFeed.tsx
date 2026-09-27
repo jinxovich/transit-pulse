@@ -1,10 +1,20 @@
 import { useMemo } from "react";
-import type { Incident, IncidentOutcome, IncidentStatus } from "@contract";
+import { useQuery } from "@tanstack/react-query";
+import type { AppConfig, Incident, IncidentOutcome, IncidentStatus } from "@contract";
+import { fetchConfig } from "../../api/config";
 import { useStream } from "../../store/stream";
 import { useUi } from "../../store/ui";
-import { formatDelay } from "../../lib/format";
-import { minutesBetween, untilLabel } from "../../lib/time";
+import { formatDelay, formatMinutes } from "../../lib/format";
+import { arrivalLabel, minutesBetween } from "../../lib/time";
 import { RiskGlyph } from "../map/RiskGlyph";
+
+/** Что считается инцидентом — одной строкой под заголовком; пороги из /config (по умолчанию 2 мин, 50%, 10–15 мин). */
+function feedRule(config: AppConfig | undefined): string {
+    const delay = formatMinutes(config?.thresholds.red_delay_s ?? 120);
+    const pLate = Math.round((config?.thresholds.red_p_late ?? 0.5) * 100);
+    const [from, to] = config?.horizon_min ?? [10, 15];
+    return `Прогноз опоздания > ${delay} (или вероятность ≥ ${pLate}%) на остановке за ${from}–${to} мин до прибытия`;
+}
 
 const STATUS_LABEL: Record<IncidentStatus, string> = {
     open: "новый",
@@ -38,7 +48,13 @@ const STATUS_LABEL: Record<IncidentStatus, string> = {
     });
     }
 
-    function FeedItem({ inc, simTime }: { inc: Incident; simTime: string | null }) {
+/** Подпись к числу: у открытых — прогноз опоздания/опережения, у закрытых — каким был прогноз (факт ниже). */
+function delayLabel(inc: Incident): string {
+    if (inc.status === "resolved") return "прогноз был";
+    return inc.predicted_delay_s < 0 ? "опережение" : "опоздание";
+}
+
+function FeedItem({ inc, simTime }: { inc: Incident; simTime: string | null }) {
     const selectIncident = useUi((s) => s.selectIncident);
     const resolved = inc.status === "resolved";
 
@@ -50,12 +66,17 @@ const STATUS_LABEL: Record<IncidentStatus, string> = {
         >
             <div className="feed-row1">
             <RiskGlyph risk={resolved ? "none" : inc.risk_level} size={16} />
+            <span className="feed-label">{delayLabel(inc)}</span>
             <span className="feed-delay num">{formatDelay(inc.predicted_delay_s)}</span>
-            {!resolved && <span className="feed-until num">{untilLabel(simTime, inc.target_stop.planned_at)}</span>}
             <span className={`chip chip-${inc.status}`}>{STATUS_LABEL[inc.status]}</span>
             </div>
+            {!resolved && (
+            <div className="feed-until">{arrivalLabel(simTime, inc.target_stop.planned_at)}</div>
+            )}
             <div className="feed-row2">
-            {inc.route_name ?? "Без маршрута"}
+            <span className="feed-route" title={inc.route_name ?? undefined}>
+                <span className="feed-label">маршрут</span> {inc.route_name ?? "не указан"}
+            </span>
             <span className="feed-vid num">ТС {inc.vehicle_id}</span>
             </div>
             <div className="feed-row3">
@@ -71,6 +92,7 @@ const STATUS_LABEL: Record<IncidentStatus, string> = {
     export function IncidentFeed() {
     const incidents = useStream((s) => s.incidents);
     const simTime = useStream((s) => s.simTime);
+    const config = useQuery({ queryKey: ["config"], queryFn: fetchConfig, staleTime: Infinity }).data;
 
     const sorted = useMemo(() => sortIncidents(Object.values(incidents), simTime), [incidents, simTime]);
     const active = sorted.filter((i) => i.status !== "resolved");
@@ -82,6 +104,7 @@ const STATUS_LABEL: Record<IncidentStatus, string> = {
             <h2>Инциденты</h2>
             <span className="feed-count num">{active.length} открыто</span>
         </header>
+        <p className="feed-rule">{feedRule(config)}</p>
 
         {active.length === 0 ? (
             <div className="feed-empty">

@@ -3,8 +3,8 @@ import type { Evidence, Incident } from "@contract";
 import { ackIncident } from "../../api/incidents";
 import { useStream } from "../../store/stream";
 import { useUi } from "../../store/ui";
-import { formatDelay } from "../../lib/format";
-import { formatSimTime, minutesBetween, untilLabel } from "../../lib/time";
+import { formatDelay, formatDelayApprox, formatDelayShort } from "../../lib/format";
+import { arrivalLabel, formatSimTime, minutesBetween } from "../../lib/time";
 import { stopAfterWord } from "../../lib/labels";
 import { RiskGlyph } from "../map/RiskGlyph";
 import { WhatIf } from "./WhatIf";
@@ -13,13 +13,42 @@ const STATUS_LABEL = { open: "новый", ack: "принят", resolved: "за�
 
 const OUTCOME_TEXT = {
   pending: "",
-  hit: "опоздание подтвердилось",
-  false_alarm: "опоздание не подтвердилось",
+  hit: "подтвердилось",
+  false_alarm: "не подтвердилось",
   miss: "пропуск",
 } as const;
 
 function addSeconds(naive: string, sec: number): string {
   return new Date(new Date(naive + "Z").getTime() + sec * 1000).toISOString().slice(0, 19);
+}
+
+/** Остановка во фразе: «Каширское ш., д.23» в кавычках; «Остановка без адреса» → «без адреса» без кавычек. */
+function stopInSentence(name: string): string {
+  const rest = stopAfterWord(name);
+  return rest === name ? `«${name}»` : rest;
+}
+
+/** Итог закрытого инцидента: «ТС …: прогноз был +2:45. Факт: опоздание +4:23 — подтвердилось.» */
+function outcomeSentence(inc: Incident): string {
+  const actual = inc.actual_delay_s;
+  if (inc.outcome === "pending" || actual == null) return "Инцидент закрыт, факт прибытия не получен.";
+  const fact = actual < 0 ? `опережение ${formatDelayShort(actual).slice(1)}` : `опоздание ${formatDelayShort(actual)}`;
+  const forecast = `ТС ${inc.vehicle_id}, остановка ${stopInSentence(inc.target_stop.name)}: прогноз был ${formatDelayShort(inc.predicted_delay_s)}.`;
+  return `${forecast} Факт: ${fact} — ${OUTCOME_TEXT[inc.outcome]}.`;
+}
+
+/** Вывод карточки одной фразой: кто, насколько, где и когда; для закрытого — итог по факту. */
+function summarySentence(inc: Incident, eta: string | null): string {
+  if (inc.status === "resolved") return outcomeSentence(inc);
+  const planned = inc.target_stop.planned_at;
+  const early = inc.predicted_delay_s < 0;
+  const how = early ? "придёт раньше" : "опоздает";
+  const times = planned && eta ? `: план ${formatSimTime(planned)} → прогноз ${formatSimTime(eta)}` : "";
+  const chance = early ? "" : ` Вероятность опоздания ${Math.round(inc.p_late * 100)}%.`;
+  return (
+    `ТС ${inc.vehicle_id} ${how} на ${formatDelayApprox(inc.predicted_delay_s)} ` +
+    `на остановку ${stopInSentence(inc.target_stop.name)}${times}.${chance}`
+  );
 }
 
 function HorizonStrip({ inc, simTime }: { inc: Incident; simTime: string | null }) {
@@ -32,15 +61,16 @@ function HorizonStrip({ inc, simTime }: { inc: Incident; simTime: string | null 
   return (
     <div className="horizon">
       <div className="horizon-lead">
+        <span>Предупредили</span>
         <span className="horizon-num num">за {inc.lead_min} мин</span>
-        <span>до события система создала этот алерт</span>
+        <span>до прибытия</span>
       </div>
       <div className="horizon-track">
         <div className="horizon-fill" style={{ width: `${pct}%` }} />
       </div>
       <div className="horizon-labels num">
         <span>алерт {formatSimTime(inc.created_at)}</span>
-        <span>событие {formatSimTime(planned)}</span>
+        <span>прибытие по плану {formatSimTime(planned)}</span>
       </div>
     </div>
   );
@@ -95,9 +125,10 @@ export function IncidentCard({ id }: { id: string }) {
 
       {/* 1. Какое ТС */}
       <header className="card-head">
+        <span className="card-kicker">Маршрут</span>
         <div className="card-title">
           <RiskGlyph risk={inc.risk_level} size={20} />
-          <h2>{inc.route_name ?? "Без маршрута"}</h2>
+          <h2>{inc.route_name ?? "не указан"}</h2>
         </div>
         <div className="card-meta">
           <span className="num">ТС {inc.vehicle_id}</span>
@@ -108,14 +139,22 @@ export function IncidentCard({ id }: { id: string }) {
         </div>
       </header>
 
+      {/* Вывод одной фразой — понятен без остальной карточки */}
+      <p className={`card-summary${resolved ? ` outcome-${inc.outcome}` : ""}`}>{summarySentence(inc, eta)}</p>
+
       {/* 2. Прогноз */}
       <div className="card-block">
         <div className="forecast-main">
+          <span className="forecast-label dim small">
+            {resolved ? "прогноз был" : inc.predicted_delay_s < 0 ? "прогноз опережения" : "прогноз опоздания"}
+          </span>
           <span className="forecast-delay num">{formatDelay(inc.predicted_delay_s)}</span>
-          <span className="dim num">±{Math.round(inc.expected_abs_error_s)} с</span>
+          <span className="forecast-err dim num" title="ожидаемая ошибка прогноза">
+            ±{Math.round(inc.expected_abs_error_s)} с
+          </span>
         </div>
         <div className="forecast-sub">
-          {!resolved && <b className="num">{untilLabel(simTime, planned)}</b>}
+          {!resolved && <b>{arrivalLabel(simTime, planned, "прибытие по плану")}</b>}
           <span>
             вероятность опоздания <b className="num">{Math.round(inc.p_late * 100)}%</b>
           </span>
@@ -130,18 +169,20 @@ export function IncidentCard({ id }: { id: string }) {
         <HorizonStrip inc={inc} simTime={simTime} />
       </div>
 
-      {resolved && inc.outcome !== "pending" && (
-        <div className={`card-block outcome outcome-${inc.outcome}`}>
-          Факт: <b className="num">{formatDelay(inc.actual_delay_s ?? 0)}</b> — {OUTCOME_TEXT[inc.outcome]}
-        </div>
-      )}
-
       {/* 3. Причина */}
       <div className="card-block">
         <h3>Причина</h3>
         <p className="cause-title">{inc.cause.title}</p>
         <p className="dim small">{inc.cause.details}</p>
-        {inc.cause.evidence.length > 0 && <EvidenceBars items={inc.cause.evidence} />}
+        {inc.cause.evidence.length > 0 && (
+          <>
+            <h4 className="ev-head">Почему модель так считает</h4>
+            {inc.cause.evidence.some((e) => e.contribution_s != null) && (
+              <p className="dim small">длина полосы — вклад признака в прогноз</p>
+            )}
+            <EvidenceBars items={inc.cause.evidence} />
+          </>
+        )}
       </div>
 
       {/* 4. Участок */}

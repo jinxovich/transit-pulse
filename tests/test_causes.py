@@ -37,12 +37,28 @@ def test_accumulated_delay_and_nan_tolerance():
 
 
 def test_contributions_pick_cause_and_evidence():
+    contrib = [{"feature": "gps_dev", "contribution_s": 80.0},
+               {"feature": "cur_dev", "contribution_s": -5.0}]  # fmt: skip
+    cause = infer_cause({"gps_dev": 150.0, "cur_dev": 10.0}, contrib, predicted_delay_s=130)
+    assert cause.code == "ACCUMULATED_DELAY"
+    assert [e.feature for e in cause.evidence] == ["gps_dev", "cur_dev"]
+    assert cause.evidence[0].contribution_s == 80.0 and cause.evidence[0].value == "+2 мин 30 с"
+
+
+def test_raw_eta_dev_hidden_but_still_gives_cause():
     contrib = [{"feature": "eta_dev", "contribution_s": 80.0},
                {"feature": "cur_dev", "contribution_s": -5.0}]  # fmt: skip
-    cause = infer_cause({"eta_dev": 150.0, "cur_dev": 10.0}, contrib, predicted_delay_s=130)
+    f = {"eta_dev": 1440.0, "cur_dev": 10.0, "seg_speed": 12.0, "speed_ratio": 0.8}
+
+    cause = infer_cause(f, contrib, predicted_delay_s=150)
+
     assert cause.code == "CONGESTION"
-    assert [e.feature for e in cause.evidence] == ["eta_dev", "cur_dev"]
-    assert cause.evidence[0].contribution_s == 80.0 and cause.evidence[0].value == "+2 мин 30 с"
+    assert [e.feature for e in cause.evidence] == ["cur_dev", "seg_speed", "speed_ratio"]
+
+
+def test_delay_labels_say_where_it_is_measured():
+    assert FEATURE_LABELS["cur_dev"] == "Отставание на последней пройденной остановке"
+    assert FEATURE_LABELS["gps_dev"] == "Отставание от графика по GPS сейчас"
 
 
 def test_unknown_when_nothing_matches():
@@ -96,7 +112,7 @@ def test_service_features_hidden_from_evidence_but_cause_unchanged():
     cause = infer_cause(f, contrib, predicted_delay_s=130)
 
     assert cause.code == "CONGESTION"
-    assert [e.feature for e in cause.evidence] == ["eta_dev", "cur_dev"]
+    assert [e.feature for e in cause.evidence] == ["cur_dev"]
 
 
 def test_contribution_without_value_does_not_give_accumulated_delay():
@@ -143,4 +159,5 @@ def test_unknown_values_shown_only_when_nothing_else():
 
 
 def test_hidden_evidence_features_are_labeled_model_features():
-    assert {"hour_sin", "hour_cos", "n_between"} <= HIDDEN_EVIDENCE <= set(FEATURE_LABELS)
+    service = {"hour_sin", "hour_cos", "n_between", "eta_dev"}
+    assert service <= HIDDEN_EVIDENCE <= set(FEATURE_LABELS)
