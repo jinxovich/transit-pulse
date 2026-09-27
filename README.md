@@ -20,7 +20,9 @@ http://localhost:8001/docs (Swagger); собрать сайт локально �
 ## Результаты
 
 - Скор платформы **1.0** (максимум, 6 из 6) у всех ML-сабмитов, в том числе у v3 без
-  синтетических клонов моментов validate — [SUBMISSIONS](docs/SUBMISSIONS.md).
+  синтетических клонов моментов validate и у v4, который выдала сама потоковая система
+  (NDTP → backend → ML, без подсказки `cur_dev_s`; `scripts/make_submission_stream.py`) —
+  [SUBMISSIONS](docs/SUBMISSIONS.md).
 - Честное CV (клоны validate отсечены ±45 мин): MAE **67 с** против **88 с** у baseline `cur_dev_s`.
 - На потоке (NDTP → backend → ML, фолд-модели): честная MAE **78 с** против **93 с** у baseline;
   алерты — у 100% упреждение ≥ 10 мин, 85% опоздавших рейсов с алертом —
