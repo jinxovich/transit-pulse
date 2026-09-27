@@ -8,6 +8,7 @@ from datetime import datetime
 
 from backend_kit import FakeWall, ml_transport
 
+from services.backend.app.alerts.policy import AlertPolicy
 from services.backend.app.metrics import Metrics
 from services.backend.app.ml_client import MlClient
 from services.backend.app.pipeline.assemble import assemble
@@ -104,3 +105,16 @@ def test_metrics_split_predict_and_explain():
     assert m.stats("ml_predict").max_ms == 3.0
     assert m.stats("ml_explain").max_ms == 20.0
     assert m.stats("ml").max_ms == 23.0 and m.stats("ml").p50_ms == 12.5
+
+
+def test_first_alert_policy_candidate_is_explained_even_if_not_first_red():
+    """Инцидент откроется на визите, прошедшем политику алерта, а не на первом красном —
+    причина в его карточке тоже должна быть по SHAP."""
+    bodies: list[dict] = []
+    client = MlClient("http://ml", now=FakeWall(), transport=ml_transport(bodies=bodies))
+    task = _task("6", 130.0, 300.0)  # оба красные; политике (> 150 c) отвечает второй
+    policy = AlertPolicy(delay_s=150.0, p_late=0.95, mode="or", min_streak=1)
+
+    asyncio.run(run_ml(client, [task], {}, policy))
+
+    assert {i["id"] for i in bodies[1]["items"]} == {"6:60", "6:61"}

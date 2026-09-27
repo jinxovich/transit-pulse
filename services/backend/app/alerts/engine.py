@@ -1,7 +1,8 @@
 """Жизненный цикл инцидентов: open → ack → resolved.
 
-* Открываем на первом красном визите окна ``(T+10, T+15]`` — только если ТС не на
-  прогреве, данные свежие и цель ещё впереди (``planned_at > created_at``).
+* Открываем на первом визите окна ``(T+10, T+15]``, удовлетворившем политике алерта
+  (:class:`~.policy.AlertPolicy`: пороги, or/and) ``min_streak`` проходов подряд, — только
+  если ТС не на прогреве, данные свежие и цель ещё впереди (``planned_at > created_at``).
 * Дедупликация: у ТС не больше одного активного инцидента, одна цель — один инцидент.
 * Resolve — по виртуальному факту прибытия на целевую остановку: ``hit``, если
   фактическое опоздание > порога red, иначе ``false_alarm``.
@@ -17,6 +18,9 @@ from transit_core.catalog import recommendations_for
 
 from ..pipeline.assemble import VisitPrediction
 from ..state.timefmt import fmt, parse
+from .policy import AlertPolicy
+
+__all__ = ["AlertPolicy", "Event", "IncidentBook", "IncidentMeta"]
 
 UPDATE_STEP_S = 30.0
 RESOLVE_TIMEOUT = timedelta(minutes=20)
@@ -37,8 +41,12 @@ class IncidentMeta:
 class IncidentBook:
     """Инциденты текущей сессии."""
 
-    def __init__(self, thresholds: S.Thresholds | None = None) -> None:
+    def __init__(
+        self, thresholds: S.Thresholds | None = None, policy: AlertPolicy | None = None
+    ) -> None:
         self.th = thresholds or S.Thresholds()
+        self.policy = policy or AlertPolicy()
+        self.streaks: dict[str, dict[str, int]] = {}  # vehicle_id → visit_id → проходов подряд
         self.incidents: dict[str, S.Incident] = {}
         self.meta: dict[str, IncidentMeta] = {}
         self.active: dict[str, str] = {}  # vehicle_id → incident id
@@ -48,7 +56,7 @@ class IncidentBook:
 
     def clear(self) -> None:
         """Новая сессия — инциденты старой не переносятся."""
-        self.__init__(self.th)
+        self.__init__(self.th, self.policy)
 
     def open_count(self) -> int:
         return len(self.active)
@@ -84,12 +92,31 @@ class IncidentBook:
         self.trips.add((vid, vp.visit.trip))
         return self._store("incident.opened", inc)
 
+    def observe(self, vehicle_id: str, preds: list[VisitPrediction]) -> None:
+        """Обновляет серии визитов окна ТС после прохода.
+
+        Серия визита растёт, если он в окне и удовлетворяет условию алерта; иначе — и если
+        визит пропал из окна — обнуляется.
+        """
+        prev = self.streaks.get(vehicle_id, {})
+        self.streaks[vehicle_id] = {
+            vp.visit.visit_id: prev.get(vp.visit.visit_id, 0) + 1
+            for vp in preds
+            if vp.prediction.horizon_ok and self.policy.hit(vp.prediction)
+        }
+
+    def streak(self, vehicle_id: str, visit_id: str) -> int:
+        """Сколько проходов подряд визит удовлетворял условию алерта."""
+        return self.streaks.get(vehicle_id, {}).get(visit_id, 0)
+
     def can_open(self, vehicle_id: str, vp: VisitPrediction, sim_now: datetime) -> bool:
-        """Красный прогноз в горизонте, цель впереди и ещё не алертилась."""
+        """Условие алерта держится ``min_streak`` проходов, прогноз в горизонте, цель
+        впереди и ещё не алертилась, у ТС нет активного инцидента."""
         p = vp.prediction
         return (
             p.horizon_ok
-            and p.risk_level == "red"
+            and self.policy.hit(p)
+            and self.streak(vehicle_id, vp.visit.visit_id) >= self.policy.min_streak
             and vehicle_id not in self.active
             and (vehicle_id, vp.visit.visit_id) not in self.targets
             and parse(p.target_stop.planned_at) > sim_now
