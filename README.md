@@ -6,7 +6,9 @@ NDTP, накладывает его на нитку графика, за **10–
 
 ![Дашборд: алерт за 11 минут до события, причина и доказательства](docs/screenshots/incident-card-1440.png)
 
-Документация: <!-- DOCS_URL --> (Sphinx + Swagger), локально — `make docs-site`.
+Документация (Sphinx по коду + Swagger): [jinxovich.github.io/transit-pulse](https://jinxovich.github.io/transit-pulse/).
+В запущенной системе — http://localhost:8000/code-docs/ (Sphinx), http://localhost:8000/docs и
+http://localhost:8001/docs (Swagger); собрать сайт локально — `make docs-site`.
 
 ```
  replayer / эмулятор ──NDTP TCP──► backend :8000 (+ NDTP :9201) ──HTTP──► ml :8001
@@ -27,7 +29,8 @@ NDTP, накладывает его на нитку графика, за **10–
 ## Запуск (Docker)
 
 Нужны Docker с Compose v2, ≈4 ГБ диска под образы и интернет для первой сборки; первая сборка
-занимает ≈N мин <!-- BUILD_TIME TODO: замерить на чистой машине -->.
+занимает 1–3 мин в зависимости от сети (у нас из чистого клона: сборка без кэша слоёв — 64 с,
+затем `up` со скачиванием датасета — 24 с).
 
 1. Датасет: [disk.yandex.ru/d/CA6tsj4aJJ4Aaw](https://disk.yandex.ru/d/CA6tsj4aJJ4Aaw). Класть его
    не обязательно — `data-init` сам скачает `dataset.zip` (≈150 МБ, нужен интернет). Можно
