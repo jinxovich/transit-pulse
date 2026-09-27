@@ -93,6 +93,18 @@ def load_plan(path: Path) -> pd.DataFrame:
     return prepare_plan(raw)
 
 
+def name_unaddressed(plan: pd.DataFrame) -> pd.DataFrame:
+    """Копия плана, где остановки без адреса названы по номеру на рейсе: «Остановка № 7 рейса».
+
+    Для экранов диспетчера; маршрутную сеть строить по исходному плану (там ``NO_ADDRESS``
+    отличает безымянные конечные).
+    """
+    pos = plan.groupby(["tr_id", "trip"]).cumcount() + 1
+    blank = plan["name"] == NO_ADDRESS
+    names = plan["name"].where(~blank, "Остановка № " + pos.astype(str) + " рейса")
+    return plan.assign(name=names)
+
+
 def split_by_tr(plan: pd.DataFrame) -> dict[int, pd.DataFrame]:
     """Разбивает план на кадры по ТС (индекс сброшен)."""
     return {int(k): g.reset_index(drop=True) for k, g in plan.groupby("tr_id", sort=False)}

@@ -9,6 +9,7 @@ import pandas as pd
 
 from transit_core import schemas as S
 from transit_core.network import build_network, route_id_of
+from transit_core.plan import name_unaddressed
 from transit_core.route_line import TripLine, build_lines
 from transit_core.segment_speed import Segments, load_history, route_segments, typical_speeds
 
@@ -58,7 +59,8 @@ def load_static(data_dir: Path) -> StaticData:
     """Загружает план validate, справочник бортов и строит сеть."""
     plan = load_plan(data_dir / "validate" / "schedule_plan.csv")
     network = build_network(plan)
-    plans = {int(k): g.reset_index(drop=True) for k, g in plan.groupby("tr_id")}
+    shown = name_unaddressed(plan)
+    plans = {int(k): g.reset_index(drop=True) for k, g in shown.groupby("tr_id")}
     return StaticData(
         plans=plans,
         unit_map=load_unit_map(data_dir / "validate" / "traffic.csv"),

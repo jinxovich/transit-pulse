@@ -3,7 +3,7 @@ import pandas as pd
 from contracts.mockgen.common import NO_ADDRESS as MOCK_NO_ADDRESS
 from contracts.mockgen.common import stop_key as mock_stop_key
 from tests.conftest import require_raw, synthetic_schedule_csv
-from transit_core.plan import NO_ADDRESS, PLAN_COLUMNS, load_plan
+from transit_core.plan import NO_ADDRESS, PLAN_COLUMNS, load_plan, name_unaddressed
 
 
 def test_load_plan_columns_and_order(tmp_path):
@@ -41,3 +41,13 @@ def test_trip_split_on_real_validate_plan():
     first = plan.groupby("tr_id").head(1)
     assert (first["new_trip"] == 1).all()
     assert ((plan["gap_min"] >= 5) == (plan["new_trip"] == 1) & plan["gap_min"].notna()).all()
+
+
+def test_unaddressed_stop_named_by_position_on_trip(tmp_path):
+    plan = load_plan(synthetic_schedule_csv(tmp_path / "s.csv"))
+
+    shown = name_unaddressed(plan)
+
+    assert shown["name"].iat[2] == "Остановка № 3 рейса"
+    assert shown["name"].drop(index=2).tolist() == plan["name"].drop(index=2).tolist()
+    assert plan["name"].iat[2] == NO_ADDRESS  # исходный план не меняется
