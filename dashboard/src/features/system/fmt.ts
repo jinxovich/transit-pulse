@@ -29,3 +29,9 @@ export function fmtPct(share: number | null | undefined): string {
   if (share == null) return DASH;
   return `${Math.round(share * 100)}%`;
 }
+
+/** Возраст в секундах: ноль — «только что пришёл», а не пусто. */
+export function fmtAge(v: number | null | undefined): string {
+  if (v == null) return DASH;
+  return fixed(v, 1);
+}

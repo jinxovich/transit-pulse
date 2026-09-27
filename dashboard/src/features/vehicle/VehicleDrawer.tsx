@@ -12,7 +12,7 @@ import { DeviationChart } from "./DeviationChart";
 import { StopTimeline } from "./StopTimeline";
 
 const REFRESH_MS = 5_000;
-const MAX_INCIDENT_LINKS = 4;
+const MAX_INCIDENT_LINKS = 3;
 const STATUS_LABEL = { open: "новый", ack: "принят", resolved: "закрыт" } as const;
 
 function Freshness({ v, simTime }: { v: VehicleState; simTime: string | null }) {

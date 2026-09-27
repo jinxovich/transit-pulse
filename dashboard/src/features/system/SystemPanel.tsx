@@ -5,7 +5,7 @@ import { fetchHealth, fetchIngestStats, fetchMetricsSummary, fetchQuality } from
 import { useStream } from "../../store/stream";
 import { useUi } from "../../store/ui";
 import { MODE_LABEL } from "../../lib/labels";
-import { fmtCount, fmtMs, fmtPct, fmtValue } from "./fmt";
+import { fmtAge, fmtCount, fmtMs, fmtPct, fmtValue } from "./fmt";
 import { LeadHistogram } from "./LeadHistogram";
 import { LastPacket } from "./LastPacket";
 
@@ -92,7 +92,7 @@ function ModeSection({ health }: { health: Health | undefined }) {
         />
         <Tile label="Версия модели" value={status?.model_version || "—"} />
         <Tile label="Бортов на связи" value={fmtValue(status?.units_connected)} />
-        <Tile label="Последний пакет" value={fmtValue(status?.last_packet_age_s, 1)} unit="с назад" />
+        <Tile label="Последний пакет" value={fmtAge(status?.last_packet_age_s)} unit="с назад" />
       </div>
       {checks.length > 0 && (
         <ul className="sys-checks">

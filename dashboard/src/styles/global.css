@@ -396,7 +396,7 @@ button {
   right: var(--gap-3);
   bottom: var(--gap-3);
   z-index: 6;
-  height: clamp(360px, 47vh, 500px);
+  height: var(--drawer-h);
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   padding: 14px var(--gap-4) var(--gap-3);
@@ -638,3 +638,5 @@ button {
 }
 .sys-links a:hover { background: var(--surface); border-color: var(--text-faint); }
 .panel-failed { position: fixed; left: 50%; bottom: var(--gap-6); z-index: 30; transform: translateX(-50%); border-radius: var(--radius-m); align-items: center; }
+/* Кнопки масштаба и атрибуция карты — над открытым drawer, а не под ним. */
+.stage:has(.vdrawer) .maplibregl-ctrl-bottom-right { bottom: calc(var(--drawer-h) + var(--gap-3)); }

@@ -23,4 +23,5 @@
     --dur-fast: 150ms; --dur: 250ms; --ease: cubic-bezier(.16,1,.3,1);
     --side-w: 400px;
     --topbar-h: 56px;
+    --drawer-h: clamp(380px, 50vh, 520px);
 }

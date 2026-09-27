@@ -363,8 +363,8 @@ useEffect(() => {
                 features: [{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: [v.lon, v.lat] } }],
             });
             if (!fly) return;
-            // Высота drawer как в CSS .vdrawer: clamp(360px, 47vh, 500px) + отступ снизу.
-            const bottom = Math.min(500, Math.max(360, window.innerHeight * 0.47)) + 12;
+            // Высота drawer как токен --drawer-h: clamp(380px, 50vh, 520px) + отступ снизу.
+            const bottom = Math.min(520, Math.max(380, window.innerHeight * 0.5)) + 12;
             map.easeTo({
                 center: [v.lon, v.lat],
                 zoom: Math.max(map.getZoom(), 13),
