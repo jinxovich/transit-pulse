@@ -2,8 +2,10 @@ import { useStream } from "../../store/stream";
 import {formatSimTime } from "../../lib/time"
 import type { RiskLevel } from "@contract";
 import { RiskGlyph } from "../map/RiskGlyph";
-import { MODE_LABEL } from "../../lib/labels";
+import { MODE_LABEL, RISK_LABEL, riskHint } from "../../lib/labels";
 import { useUi } from "../../store/ui";
+import { useQuery } from "@tanstack/react-query";
+import { fetchConfig } from "../../api/config";
 
 const COUNTERS: RiskLevel[] = ["red", "yellow", "green", "early"];
 
@@ -40,6 +42,7 @@ function SystemButton() {
 export function TopBar() {
     const simTime = useStream((s) => s.simTime);
     const kpis = useStream((s) => s.kpis);
+    const thresholds = useQuery({ queryKey: ["config"], queryFn: fetchConfig, staleTime: Infinity }).data?.thresholds;
 
     return (
         <header className="topbar">
@@ -53,10 +56,12 @@ export function TopBar() {
             {COUNTERS.map((risk) => {
             const n = kpis?.by_risk[risk] ?? 0;
             const alarm = risk === "red" && n > 0;
+            const hint = `${riskHint(risk, thresholds)}. ТС: ${n}`;
             return (
-                <div key={risk} className={`kpi-risk${alarm ? " is-alarm" : ""}`}>
+                <div key={risk} className={`kpi-risk${alarm ? " is-alarm" : ""}`} title={hint}>
                 <RiskGlyph risk={risk} size={risk === "red" ? 18 : 15} />
                 <span className="num">{n}</span>
+                <span className="kpi-risk-label">{RISK_LABEL[risk]}</span>
                 </div>
             );
             })}

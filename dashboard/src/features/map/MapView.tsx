@@ -9,6 +9,7 @@ import { useUi } from "../../store/ui";
 import { fetchConfig } from "../../api/config";
 import { useStream } from "../../store/stream";
 import { iconName, registerIcons } from "./icons";
+import { MapLegend } from "./MapLegend";
 
 const STYLE_URL = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
 
@@ -55,6 +56,19 @@ const DRAW_ORDER: Record<RiskLevel, number> = { red: 5, yellow: 4, early: 3, gre
         }
         return { type: "FeatureCollection", features };
     }
+    const FIT_PADDING = 64;
+
+    /** Рамка по ТС на линии (свежие координаты, не неопознанные борта); нет таких — ``null``. */
+    function activeBounds(vehicles: Record<string, VehicleState>): maplibregl.LngLatBoundsLike | null {
+        const pts = Object.values(vehicles).filter(
+            (v) => !v.stale && v.kind !== "unknown" && v.lon != null && v.lat != null,
+        );
+        if (!pts.length) return null;
+        const lons = pts.map((v) => v.lon!);
+        const lats = pts.map((v) => v.lat!);
+        return [[Math.min(...lons), Math.min(...lats)], [Math.max(...lons), Math.max(...lats)]];
+    }
+
     async function fetchSegmentsRisk(): Promise<SegmentRisk[]> {
     const res = await fetch("/api/v1/segments/risk");
     if (!res.ok) throw new Error(`segments: ${res.status}`);
@@ -87,6 +101,8 @@ const DRAW_ORDER: Record<RiskLevel, number> = { red: 5, yellow: 4, early: 3, gre
     const container = useRef<HTMLDivElement>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const [ready, setReady] = useState(false);
+    // Кто задал вид карты: ещё никто, рамка по ТС или сам диспетчер (жест, выбор инцидента/ТС).
+    const view = useRef<"auto" | "vehicles" | "user">("auto");
     const network = useQuery({ queryKey: ["network"], queryFn: fetchNetwork, staleTime: Infinity });
     const config = useQuery({ queryKey: ["config"], queryFn: fetchConfig, staleTime: Infinity });
     const segments = useQuery({ queryKey: ["segments-risk"], queryFn: fetchSegmentsRisk, refetchInterval: 10_000 });
@@ -153,9 +169,41 @@ const DRAW_ORDER: Record<RiskLevel, number> = { red: 5, yellow: 4, early: 3, gre
         },
         });
 
+        // Пока нет ТС — вся сеть; рамку по ТС и ручной сдвиг не перебиваем.
+        if (view.current !== "auto") return;
         const [minLon, minLat, maxLon, maxLat] = net.bbox;
         map.fitBounds([[minLon, minLat], [maxLon, maxLat]], { padding: 40, duration: 0 });
     }, [ready, network.data]);
+
+    // Стартовый вид: один раз по активным ТС из первого снапшота, если карту ещё не двигали.
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!ready || !map) return;
+
+        const onMoveStart = (e: { originalEvent?: unknown }) => {
+            if (e.originalEvent) view.current = "user";
+        };
+        map.on("movestart", onMoveStart);
+
+        const fit = (vehicles: Record<string, VehicleState>): boolean => {
+            if (view.current !== "auto") return true;
+            const bounds = activeBounds(vehicles);
+            if (!bounds) return false;
+            view.current = "vehicles";
+            map.fitBounds(bounds, { padding: FIT_PADDING, maxZoom: 14, duration: 700 });
+            return true;
+        };
+        let unsubscribe = () => {};
+        if (!fit(useStream.getState().vehicles)) {
+            unsubscribe = useStream.subscribe((s, prev) => {
+                if (s.vehicles !== prev.vehicles && fit(s.vehicles)) unsubscribe();
+            });
+        }
+        return () => {
+            unsubscribe();
+            map.off("movestart", onMoveStart);
+        };
+    }, [ready]);
 useEffect(() => {
     const map = mapRef.current;
     const colors = config.data?.colors;
@@ -175,7 +223,7 @@ useEffect(() => {
                 "icon-allow-overlap": true,
                 "icon-ignore-placement": true,
                 "symbol-sort-key": ["get", "order"],
-                "icon-size": ["interpolate", ["linear"], ["zoom"], 9, 0.8, 14, 1.1],
+                "icon-size": ["interpolate", ["linear"], ["zoom"], 9, 0.95, 14, 1.2],
                 },
             });
         }
@@ -304,6 +352,7 @@ useEffect(() => {
             map.setPaintProperty("selection-line", "line-color", inc.risk_level === "red" ? "#E5484D" : "#F2B134");
 
             if (!fly) return;
+            view.current = "user";
             // Рамка вокруг участка, остановки и самого ТС.
             const points: [number, number][] = [stop, ...(inc.segment?.geometry.coordinates ?? [])];
             const v = useStream.getState().vehicles[inc.vehicle_id];
@@ -363,6 +412,7 @@ useEffect(() => {
                 features: [{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: [v.lon, v.lat] } }],
             });
             if (!fly) return;
+            view.current = "user";
             // Высота drawer как токен --drawer-h: clamp(380px, 50vh, 520px) + отступ снизу.
             const bottom = Math.min(520, Math.max(380, window.innerHeight * 0.5)) + 12;
             map.easeTo({
@@ -386,5 +436,10 @@ useEffect(() => {
         };
     }, [ready]);
 
-    return <div ref={container} className="map" />;
+    return (
+        <>
+            <div ref={container} className="map" />
+            <MapLegend />
+        </>
+    );
 }

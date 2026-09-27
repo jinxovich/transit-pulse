@@ -109,8 +109,12 @@ button {
     border-radius: 6px; 
     font-size: 16px; 
 }
-.kpi-risk.is-alarm { 
+.kpi-risk.is-alarm {
     color: var(--risk-red); font-weight: 600; }
+.kpi-risk-label { font-size: 12px; font-weight: 400; color: var(--text-dim); white-space: nowrap; }
+.kpi-risk.is-alarm .kpi-risk-label { color: color-mix(in srgb, var(--risk-red) 70%, var(--text)); }
+/* На узких экранах подписи прячем — остаются глиф, число и подсказка по наведению. */
+@media (max-width: 1279px) { .kpi-risk-label { display: none; } }
 
 .kpi-stat { 
     display: flex; 
@@ -649,3 +653,39 @@ button {
 .panel-failed { position: fixed; left: 50%; bottom: var(--gap-6); z-index: 30; transform: translateX(-50%); border-radius: var(--radius-m); align-items: center; }
 /* Кнопки масштаба и атрибуция карты — над открытым drawer, а не под ним. */
 .stage:has(.vdrawer) .maplibregl-ctrl-bottom-right { bottom: calc(var(--drawer-h) + var(--gap-3)); }
+
+/* ---------- легенда карты */
+.map-legend {
+  position: absolute;
+  left: var(--gap-3);
+  bottom: var(--gap-3);
+  z-index: 4;
+  padding: 8px 12px 10px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.map-legend summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.map-legend summary::-webkit-details-marker { display: none; }
+.map-legend summary::after { content: " ▾"; }
+.map-legend:not([open]) summary::after { content: " ▸"; }
+.map-legend:not([open]) { padding-bottom: 8px; }
+.legend-list { list-style: none; display: grid; grid-template-columns: repeat(2, auto); gap: 4px 14px; margin-top: 6px; }
+.legend-list li { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.legend-list li > :first-child { flex: none; width: 16px; }
+.legend-lines { padding-top: 6px; border-top: 1px solid var(--line); }
+.legend-line { display: flex; gap: 2px; }
+.legend-line i { flex: 1; height: 4px; border-radius: 2px; }
+.legend-line-selected { height: 6px; background: var(--risk-red); border-radius: 3px; box-shadow: 0 0 0 2px #FFFFFF; }
+.stage:has(.vdrawer) .map-legend { display: none; }

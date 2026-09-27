@@ -14,7 +14,7 @@ import math
 from collections.abc import Mapping, Sequence
 
 from transit_core import schemas as S
-from transit_core.catalog import evidence, format_delay, make_cause
+from transit_core.catalog import FEATURE_LABELS, evidence, format_delay, make_cause
 
 EARLY_S = -60.0
 ACCUMULATED_S = 60.0
@@ -47,6 +47,15 @@ FLAGS = ("tgt_manual", "tgt_newtrip", "trip_break_between", "in_layover")
 """Признаки-флаги 0/1: в карточке — «да»/«нет»."""
 ALWAYS_SHOWN = ("seg_speed", "speed_ratio", "dwell", "in_layover")
 """Производные признаки бэкенда, которые карточка показывает всегда (если посчитаны)."""
+HIDDEN_EVIDENCE = frozenset({
+    "hour_sin", "hour_cos",  # кодировка времени суток
+    "tgt_manual", "tgt_newtrip", "tgt_gap",  # разметка расписания
+    "lead", "n_between", "plan_run", "dist_tgt", "remain_m", "trip_progress",  # горизонт прогноза
+})  # fmt: skip
+"""Служебные признаки модели: в прогноз идут, диспетчеру в обосновании не показываются.
+
+Объясняют устройство прогноза, а не почему ТС опаздывает. На код причины не влияют.
+"""
 CONTRIB_CAUSE: dict[str, S.CauseCode] = {
     "cur_dev": "ACCUMULATED_DELAY",
     "dev_trend": "ACCUMULATED_DELAY",
@@ -60,6 +69,8 @@ CONTRIB_CAUSE: dict[str, S.CauseCode] = {
     "spd1": "CONGESTION",
     "spd15": "CONGESTION",
 }
+DELAY_FEATURES = ("cur_dev", "dev_trend", "gps_dev", "eta_dev")
+"""Признаки-опоздания: причину по вкладу подтверждают только при значении > 0."""
 
 
 def _canon(feature: str) -> str | None:
@@ -142,11 +153,19 @@ def _raw_value(f: Mapping[str, float | None], name: str) -> float | None:
     return float(v)
 
 
+def _shown(name: str) -> bool:
+    """Признак можно показать диспетчеру: не служебный и с человеческой подписью."""
+    return name not in HIDDEN_EVIDENCE and name in FEATURE_LABELS
+
+
 def _evidence(f: Mapping[str, float | None], contributions: Sequence[Mapping]) -> list[S.Evidence]:
     """Топ вкладов ML (без них — ключевые признаки правил) + скорость на перегоне и простой."""
     out = []
     if contributions:
-        for c in _top(contributions)[:MAX_EVIDENCE]:
+        visible = [c for c in _top(contributions) if _shown(str(c["feature"]))]
+        # «нет данных» — не доказательство; показываем, только если известного нет вовсе
+        known = [c for c in visible if _raw_value(f, str(c["feature"])) is not None]
+        for c in (known or visible)[:MAX_EVIDENCE]:
             name = str(c["feature"])
             value = format_value(name, _raw_value(f, name))
             out.append(evidence(name, value, round(float(c.get("contribution_s") or 0), 1)))
@@ -172,17 +191,30 @@ def infer_cause(
 
     ``contributions`` — вклады признаков от ML (``[{"feature", "contribution_s"}]``).
     """
-    code = rule_cause(features, predicted_delay_s, stale) or _contrib_cause(contributions)
-    if code == "LONG_DWELL" and feature(features, "in_layover") == 1.0:
-        code = None
+    code = rule_cause(features, predicted_delay_s, stale) or _contrib_cause(features, contributions)
     return make_cause(code or "UNKNOWN", _evidence(features, contributions))
 
 
-def _contrib_cause(contributions: Sequence[Mapping]) -> S.CauseCode | None:
-    """Причина по признаку с наибольшим положительным вкладом."""
+def _confirms(f: Mapping[str, float | None], name: str, code: S.CauseCode) -> bool:
+    """Значение признака не противоречит причине: известно, опоздание > 0, не отстой."""
+    value = _raw_value(f, name)
+    if value is None:
+        return False
+    if (_canon(name) or name) in DELAY_FEATURES and value <= 0:
+        return False
+    # На плановом отстое ТС стоит по графику — это не затор и не долгая стоянка.
+    return not (code in ("CONGESTION", "LONG_DWELL") and feature(f, "in_layover") == 1.0)
+
+
+def _contrib_cause(
+    f: Mapping[str, float | None], contributions: Sequence[Mapping]
+) -> S.CauseCode | None:
+    """Причина по признаку с наибольшим положительным вкладом, если значение её подтверждает."""
     for c in _top(contributions):
         name = str(c["feature"])
         code = CONTRIB_CAUSE.get(_canon(name) or name)
-        if code is not None and float(c.get("contribution_s") or 0) > 0:
+        if code is None or float(c.get("contribution_s") or 0) <= 0:
+            continue
+        if _confirms(f, name, code):
             return code
     return None
