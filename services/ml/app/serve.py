@@ -11,14 +11,15 @@ import os
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Literal
+from typing import Annotated, Literal
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import Body, FastAPI, HTTPException, Response
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 from pydantic import BaseModel, Field
 
 from services.ml.app.inference import Registry, load_registry, predict, to_matrix
+from services.ml.app.openapi_examples import PREDICT_EXAMPLES
 
 ROOT = Path(__file__).resolve().parents[3]
 WARMUP_BATCH = 8
@@ -107,7 +108,9 @@ def _registry() -> Registry:
 
 
 @app.post("/predict", response_model=PredictResponse, summary="Батч-прогноз задержки")
-def predict_endpoint(req: PredictRequest) -> PredictResponse:
+def predict_endpoint(
+    req: Annotated[PredictRequest, Body(openapi_examples=PREDICT_EXAMPLES)],
+) -> PredictResponse:
     """Квантили задержки, вероятность опоздания > 120 с и топ-5 вкладов признаков."""
     reg = _registry()
     lm = reg.models.get(req.model)

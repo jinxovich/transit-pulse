@@ -1,6 +1,7 @@
 """ML-сервис: /predict через TestClient на маленькой обученной в фикстуре модели."""
 
 import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -228,3 +229,25 @@ def test_broken_or_missing_calibration_file_means_old_behaviour(tmp_path):
 
     assert load_calibration(bad) is None
     assert load_calibration(tmp_path / "missing.json") is None
+
+
+REPO_MODELS = Path(__file__).resolve().parents[1] / "models"
+
+
+@pytest.mark.skipif(not (REPO_MODELS / "catboost_stream.cbm").is_file(), reason="нет models/")
+def test_swagger_examples_predict_ok_on_repo_models(monkeypatch):
+    from services.ml.app.openapi_examples import PREDICT_EXAMPLES, VEHICLE_122048
+    from services.ml.app.serve import app
+
+    monkeypatch.setenv("MODELS_DIR", str(REPO_MODELS))
+    with TestClient(app) as c:
+        body = c.get("/openapi.json").json()["paths"]["/predict"]["post"]["requestBody"]
+        examples = body["content"]["application/json"]["examples"]
+        assert set(examples) == set(PREDICT_EXAMPLES)
+        assert list(VEHICLE_122048) == FEATURES
+        for ex in PREDICT_EXAMPLES.values():
+            items = ex["value"]["items"]
+            assert all(set(it["features"]) <= set(FEATURES) for it in items)
+            r = c.post("/predict", json=ex["value"])
+            assert r.status_code == 200, r.text
+            assert [p["id"] for p in r.json()["items"]] == [it["id"] for it in items]
