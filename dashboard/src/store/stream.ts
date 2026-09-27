@@ -4,6 +4,8 @@ import type { Incident, Kpis, SystemStatus, VehicleState, WsSnapshot } from "@co
 interface StreamState {
     sessionId: string | null;
     simTime: string | null;
+    /** performance.now() прихода последнего sim_time — якорь для плавных часов. */
+    simWall: number;
     connected: boolean;
     vehicles: Record<string, VehicleState>;
     incidents: Record<string, Incident>;
@@ -22,18 +24,20 @@ interface StreamState {
 export const useStream = create<StreamState>((set) => ({
     sessionId: null,
     simTime: null,
+    simWall: 0,
     connected: false,
     vehicles: {},
     incidents: {},
     kpis: null,
     status: null,
 
-    touch: (simTime) => set({ simTime }),
+    touch: (simTime) => set({ simTime, simWall: performance.now() }),
     setConnected: (connected) => set({ connected }),
     replaceAll: (msg) =>
     set({
         sessionId: msg.session_id,
         simTime: msg.sim_time,
+        simWall: performance.now(),
         vehicles: Object.fromEntries(msg.data.vehicles.map((v) => [v.vehicle_id, v])),
         incidents: Object.fromEntries(msg.data.incidents.map((i) => [i.id, i])),
         kpis: msg.data.kpis,

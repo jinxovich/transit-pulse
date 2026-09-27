@@ -65,6 +65,12 @@ button {
 }
 .brand { font-weight: 600; white-space: nowrap; }
 .clock { font-size: 22px; font-weight: 500; }
+.clock-speed {
+    margin-left: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    vertical-align: super;
+}
 
 .badge {
     display: inline-flex;

@@ -1,5 +1,5 @@
 import { useStream } from "../../store/stream";
-import {formatSimTime } from "../../lib/time"
+import { SimClock } from "./SimClock";
 import type { RiskLevel } from "@contract";
 import { RiskGlyph } from "../map/RiskGlyph";
 import { MODE_LABEL, RISK_LABEL, riskHint } from "../../lib/labels";
@@ -40,16 +40,13 @@ function SystemButton() {
 }
 
 export function TopBar() {
-    const simTime = useStream((s) => s.simTime);
     const kpis = useStream((s) => s.kpis);
     const thresholds = useQuery({ queryKey: ["config"], queryFn: fetchConfig, staleTime: Infinity }).data?.thresholds;
 
     return (
         <header className="topbar">
         <div className="brand">Transit Pulse</div>
-        <div className="clock num">
-            {simTime ? formatSimTime(simTime, true) : "--:--:--"}
-        </div>
+        <SimClock />
         <StreamBadge />
 
         <div className="kpi-group">
