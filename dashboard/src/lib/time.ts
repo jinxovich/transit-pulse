@@ -19,3 +19,14 @@ export function untilLabel(simTime: string | null, target: string | null | undef
     }
     return m < 1 ? "меньше минуты" : `через ${Math.floor(m)} мин`;
 }
+
+/**
+ * Когда ТС прибудет на целевую остановку: «прибытие через 9 мин».
+ * После планового времени инцидент ждёт фактического прибытия — «ждём факт прибытия».
+ */
+export function arrivalLabel(simTime: string | null, target: string | null | undefined, prefix = "прибытие"): string {
+    if (!simTime || !target) return "";
+    const m = minutesBetween(simTime, target);
+    if (m <= 0) return "ждём факт прибытия";
+    return m < 1 ? `${prefix} менее чем через минуту` : `${prefix} через ${Math.floor(m)} мин`;
+}
