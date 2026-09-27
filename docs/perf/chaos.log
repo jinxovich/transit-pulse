@@ -26,8 +26,8 @@
  Container transit-pulse-data-init-1  Started
  Container transit-pulse-ml-1  Waiting
  Container transit-pulse-data-init-1  Waiting
- Container transit-pulse-ml-1  Healthy
  Container transit-pulse-data-init-1  Exited
+ Container transit-pulse-ml-1  Healthy
  Container transit-pulse-backend-1  Waiting
  Container transit-pulse-backend-1  Healthy
  Container transit-pulse-replayer-1  Starting
@@ -61,4 +61,25 @@
 [ml восстановлен +30s]
   health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector, matching=transit_core.matching'}
   ТС: 16 stale: 0 прогнозы: {'ml': 10}
+== рестарт backend: replayer должен переподключиться без вмешательства
+ Container transit-pulse-backend-1  Restarting
+ Container transit-pulse-backend-1  Started
+[backend перезапущен +10s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'WARMING_UP', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector, matching=transit_core.matching'}
+  ТС: 16 stale: 0 прогнозы: {}
+[backend перезапущен +20s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'WARMING_UP', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector, matching=transit_core.matching'}
+  ТС: 16 stale: 0 прогнозы: {}
+[backend перезапущен +30s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'WARMING_UP', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector, matching=transit_core.matching'}
+  ТС: 16 stale: 1 прогнозы: {}
+[backend перезапущен +40s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector, matching=transit_core.matching'}
+  ТС: 16 stale: 1 прогнозы: {'ml': 9}
+[backend перезапущен +50s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector, matching=transit_core.matching'}
+  ТС: 16 stale: 2 прогнозы: {'ml': 8, 'fallback': 1}
+[backend перезапущен +60s]
+  health: ok {'data': 'ok', 'ingest': 'ok: NDTP :9201', 'ml': 'ok', 'stream': 'LIVE', 'pipeline': 'plan=transit_core.plan, features=transit_core.features (28), stops_detector=transit_core.stops_detector, matching=transit_core.matching'}
+  ТС: 15 stale: 1 прогнозы: {'ml': 10}
 == готово

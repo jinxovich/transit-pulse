@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# Chaos-проверка деградации: обрыв потока (стоп replayer) и падение ML-сервиса.
+# Chaos-проверка деградации: обрыв потока (стоп replayer), падение ML-сервиса и рестарт backend.
 # Ожидания: backend не падает; при обрыве — DEGRADED, при падении ML — model_mode=fallback;
-# после восстановления — снова LIVE / ml.
+# после восстановления — снова LIVE / ml; после рестарта backend борта переподключаются сами.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 API=${API:-http://localhost:8000/api/v1}
 STREAM_OUTAGE_S=${STREAM_OUTAGE_S:-60}
 ML_OUTAGE_S=${ML_OUTAGE_S:-30}
+BACKEND_WATCH_S=${BACKEND_WATCH_S:-60}
 
 status() {
   curl -sf "$API/metrics/summary" >/dev/null || { echo "  backend НЕ отвечает"; return; }
@@ -35,4 +36,8 @@ docker compose stop ml >/dev/null
 watch_for "$ML_OUTAGE_S" "ml недоступен"
 docker compose start ml >/dev/null
 watch_for 30 "ml восстановлен"
+
+echo "== рестарт backend: replayer должен переподключиться без вмешательства"
+docker compose restart backend >/dev/null
+watch_for "$BACKEND_WATCH_S" "backend перезапущен"
 echo "== готово"

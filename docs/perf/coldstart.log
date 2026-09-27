@@ -1,5 +1,18 @@
+== прогон 1 из 3
 ml         healthy через   12.0 c
 backend    healthy через   12.0 c
 replayer   healthy через   17.4 c
+dashboard  healthy через   17.5 c
+1-й прогноз через   17.6 c (включая прогрев 30 сим-мин)
+== прогон 2 из 3
+ml         healthy через   12.0 c
+backend    healthy через   12.1 c
+replayer   healthy через   17.4 c
+dashboard  healthy через   17.5 c
+1-й прогноз через   17.6 c (включая прогрев 30 сим-мин)
+== прогон 3 из 3
+ml         healthy через   12.0 c
+backend    healthy через   12.1 c
+replayer   healthy через   17.5 c
 dashboard  healthy через   17.5 c
 1-й прогноз через   17.6 c (включая прогрев 30 сим-мин)
