@@ -106,7 +106,7 @@ def metrics_quality(book: IncidentBook) -> S.QualityMetrics:
         alerts_per_vehicle_hour=round(len(incs) / MOCK_VEHICLE_HOURS, 2),
         lead_median_min=round(statistics.median(i.lead_min for i in incs), 1) if incs else None,
         mae_by_lead=[S.LeadMae(lead_min=m, mae_s=mae, n=n) for m, mae, n in MAE_BY_LEAD],
-        alert_policy=S.AlertPolicyInfo(delay_s=150.0, p_late=0.6, mode="or", min_streak=2),
+        alert_policy=S.AlertPolicyInfo(delay_s=120.0, p_late=0.5, mode="or", min_streak=3),
     )
 
 
