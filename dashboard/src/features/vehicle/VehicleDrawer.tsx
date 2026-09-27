@@ -51,9 +51,11 @@ function Header({ v, simTime }: { v: VehicleState; simTime: string | null }) {
         {v.warming_up && <span className="chip">прогрев</span>}
       </div>
       <div className="vd-stats">
-        <Stat label="Сейчас к графику">
-          {v.current_dev_s != null ? formatDelay(v.current_dev_s) : "—"}
-        </Stat>
+        {v.kind === "scheduled" && (
+          <>
+            <Stat label="Сейчас к графику">
+              {v.current_dev_s != null ? formatDelay(v.current_dev_s) : "—"}
+            </Stat>
         <Stat label={p ? `Прогноз на ${p.target_stop.planned_at ? formatSimTime(p.target_stop.planned_at) : "цель"}` : "Прогноз"}>
           {p ? (
             <>
@@ -64,7 +66,9 @@ function Header({ v, simTime }: { v: VehicleState; simTime: string | null }) {
             "—"
           )}
         </Stat>
-        <Stat label="Вероятность опоздания">{p ? `${Math.round(p.p_late * 100)}%` : "—"}</Stat>
+            <Stat label="Вероятность опоздания">{p ? `${Math.round(p.p_late * 100)}%` : "—"}</Stat>
+          </>
+        )}
         <Stat label="Скорость">{v.speed_kmh != null ? `${Math.round(v.speed_kmh)} км/ч` : "—"}</Stat>
         <Stat label="Курс">
           {v.heading != null ? (
@@ -198,12 +202,15 @@ export function VehicleDrawer({ id }: { id: string }) {
     queryKey: ["vehicle", id],
     queryFn: () => fetchVehicleDetail(id),
     refetchInterval: REFRESH_MS,
+    retry: 1,
   });
   // Шапка — из потока (обновляется каждую секунду), график и остановки — из REST.
   const vehicle = live ?? detail.data?.vehicle;
+  // Без расписания или при ошибке показывать нечего, кроме шапки: drawer по высоте содержимого.
+  const compact = vehicle?.kind !== "scheduled" || (detail.isError && !detail.data);
 
   return (
-    <section className="vdrawer" aria-label="Транспортное средство">
+    <section className={`vdrawer${compact ? " is-compact" : ""}`} aria-label="Транспортное средство">
       <button className="vd-close" onClick={() => selectVehicle(null)} aria-label="Закрыть (Esc)" title="Закрыть (Esc)">
         ×
       </button>

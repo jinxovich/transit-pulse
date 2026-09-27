@@ -407,6 +407,7 @@ button {
   backdrop-filter: blur(6px);
   animation: drawer-in var(--dur) var(--ease);
 }
+.vdrawer.is-compact { height: auto; grid-template-rows: auto; }
 @keyframes drawer-in { from { transform: translateY(24px); opacity: 0; } }
 .vd-close {
   position: absolute;
