@@ -1,17 +1,10 @@
 import { useStream } from "../../store/stream";
 import {formatSimTime } from "../../lib/time"
-import type { StreamMode } from "@contract";
 import type { RiskLevel } from "@contract";
 import { RiskGlyph } from "../map/RiskGlyph";
+import { MODE_LABEL } from "../../lib/labels";
+import { useUi } from "../../store/ui";
 
-
-const MODE_LABEL: Record<StreamMode, string> = {
-    LIVE: "Поток идёт",
-    WARMING_UP: "Прогрев",
-    DEGRADED: "Поток прерван",
-    OFFLINE: "Нет источника",
-    PAUSED: "Пауза",
-};
 const COUNTERS: RiskLevel[] = ["red", "yellow", "green", "early"];
 
 function StreamBadge(){
@@ -27,6 +20,21 @@ function StreamBadge(){
         </div>
         
     )
+}
+
+function SystemButton() {
+    const open = useUi((s) => s.systemOpen);
+    const ml = useStream((s) => s.status?.ml_status);
+    return (
+        <button
+            className={`sys-btn${open ? " is-open" : ""}`}
+            aria-pressed={open}
+            onClick={() => useUi.getState().setSystemOpen(!open)}
+        >
+            <span className={`sys-dot ${!ml || ml === "ok" ? "is-ok" : "is-bad"}`} aria-hidden />
+            Система
+        </button>
+    );
 }
 
 export function TopBar() {
@@ -66,6 +74,8 @@ export function TopBar() {
             <span className="kpi-label">Инцидентов</span>
             <span className="num">{kpis?.incidents_open ?? "—"}</span>
         </div>
+
+        <SystemButton />
         </header>
     );
 }

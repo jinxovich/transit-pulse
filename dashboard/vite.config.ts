@@ -14,6 +14,8 @@ export default defineConfig({
     proxy: {
       "/api": backend,
       "/mock": backend,
+      // Ссылки панели «Система»: Swagger, документация кода и метрики Prometheus бэкенда.
+      "^/(docs|redoc|openapi\\.json|code-docs|metrics)": backend,
       "/ws": { target: backend.replace(/^http/, "ws"), ws: true },
     },
   },

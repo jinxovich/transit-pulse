@@ -201,11 +201,13 @@ useEffect(() => {
         map.on("mousemove", "vehicles", onMove);
         map.on("mouseleave", "vehicles", onLeave);
 
-        // Клик по ТС с инцидентом — открыть его карточку.
+        // Клик по ТС: с открытым инцидентом — его карточка, без инцидента — drawer ТС.
         const onClick = (e: maplibregl.MapLayerMouseEvent) => {
             const id = e.features?.[0]?.properties?.id;
-            const incidentId = id ? useStream.getState().vehicles[id]?.open_incident_id : null;
+            if (!id) return;
+            const incidentId = useStream.getState().vehicles[id]?.open_incident_id;
             if (incidentId) useUi.getState().selectIncident(incidentId);
+            else useUi.getState().selectVehicle(id);
         };
         map.on("click", "vehicles", onClick);
 
@@ -320,6 +322,63 @@ useEffect(() => {
         });
         const unsubStream = useStream.subscribe((s, prev) => {
             if (s.incidents !== prev.incidents) show(useUi.getState().selectedIncidentId, false);
+        });
+        return () => {
+            unsubUi();
+            unsubStream();
+        };
+    }, [ready]);
+
+    // ТС в drawer: кольцо вокруг маркера и перелёт так, чтобы его не закрыл drawer снизу.
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!ready || !map) return;
+
+        map.addSource("picked", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+        map.addLayer(
+            {
+                id: "picked-ring",
+                type: "circle",
+                source: "picked",
+                paint: {
+                    "circle-radius": 15,
+                    "circle-color": "rgba(0,0,0,0)",
+                    "circle-stroke-color": "#E6EAF0",
+                    "circle-stroke-width": 2,
+                    "circle-stroke-opacity": 0.9,
+                },
+            },
+            map.getLayer("vehicles") ? "vehicles" : undefined,
+        );
+
+        const draw = (fly: boolean) => {
+            const id = useUi.getState().selectedVehicleId;
+            const v = id ? useStream.getState().vehicles[id] : undefined;
+            const source = map.getSource("picked") as maplibregl.GeoJSONSource;
+            if (!v || v.lon == null || v.lat == null) {
+                return source.setData({ type: "FeatureCollection", features: [] });
+            }
+            source.setData({
+                type: "FeatureCollection",
+                features: [{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: [v.lon, v.lat] } }],
+            });
+            if (!fly) return;
+            // Высота drawer как токен --drawer-h: clamp(380px, 50vh, 520px) + отступ снизу.
+            const bottom = Math.min(520, Math.max(380, window.innerHeight * 0.5)) + 12;
+            map.easeTo({
+                center: [v.lon, v.lat],
+                zoom: Math.max(map.getZoom(), 13),
+                offset: [0, -bottom / 2],
+                duration: 800,
+            });
+        };
+
+        draw(false);
+        const unsubUi = useUi.subscribe((s, prev) => {
+            if (s.selectedVehicleId !== prev.selectedVehicleId) requestAnimationFrame(() => draw(true));
+        });
+        const unsubStream = useStream.subscribe((s, prev) => {
+            if (s.vehicles !== prev.vehicles && useUi.getState().selectedVehicleId) draw(false);
         });
         return () => {
             unsubUi();

@@ -14,5 +14,5 @@ server {
     proxy_read_timeout 3600s;
   }
 
-  location ~ ^/(docs|redoc|openapi\.json|code-docs) { proxy_pass http://${BACKEND_UPSTREAM}; }
+  location ~ ^/(docs|redoc|openapi\.json|code-docs|metrics) { proxy_pass http://${BACKEND_UPSTREAM}; }
 }
