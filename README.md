@@ -4,6 +4,10 @@
 NDTP, накладывает его на нитку графика, за **10–15 минут** до прибытия прогнозирует задержку ТС на
 остановке и выводит алерт с причиной и рекомендациями на дашборд диспетчера.
 
+![Дашборд: алерт за 14 минут до события, причина и вклады признаков](docs/screenshots/incident-drawer-1440.png)
+
+Документация: <!-- DOCS_URL --> (Sphinx + Swagger), локально — `make docs-site`.
+
 ```
  replayer / эмулятор ──NDTP TCP──► backend :8000 (+ NDTP :9201) ──HTTP──► ml :8001
                                         │  REST /api/v1 + WebSocket
@@ -11,24 +15,48 @@ NDTP, накладывает его на нитку графика, за **10–
                                   dashboard :8080
 ```
 
+## Результаты
+
+- Скор платформы **1.0** (максимум, 6 из 6) у всех ML-сабмитов, в том числе у v3 без
+  синтетических клонов моментов validate — [SUBMISSIONS](docs/SUBMISSIONS.md).
+- Честное CV (клоны validate отсечены ±45 мин): MAE **67 с** против **88 с** у baseline `cur_dev_s`.
+- На потоке (NDTP → backend → ML, фолд-модели): честная MAE **78 с** против **93 с** у baseline;
+  алерты — у 100% упреждение ≥ 10 мин, 85% опоздавших рейсов с алертом —
+  [stream_eval](docs/perf/stream_eval.md), [PERFORMANCE](docs/PERFORMANCE.md).
+
 ## Запуск (Docker)
 
-Нужны Docker с Compose v2 и архив датасета организаторов.
+Нужны Docker с Compose v2, ≈4 ГБ диска под образы и интернет для первой сборки; первая сборка
+занимает ≈N мин <!-- BUILD_TIME TODO: замерить на чистой машине -->.
 
-1. Положите архив датасета (`Предиктор задержек транспорта.zip` или `dataset.zip`) в каталог `./data`.
+1. Датасет: [disk.yandex.ru/d/CA6tsj4aJJ4Aaw](https://disk.yandex.ru/d/CA6tsj4aJJ4Aaw). Класть его
+   не обязательно — `data-init` сам скачает `dataset.zip` (≈150 МБ, нужен интернет). Можно
+   положить в `./data` архив (`Предиктор задержек транспорта.zip` или `dataset.zip`) или уже
+   распакованную папку — тогда без сети.
 2. Поднимите систему:
 
    ```bash
    docker compose up -d --build
    ```
 
-   Сервис `data-init` сам распакует архив в `./data/raw`, затем по healthcheck поднимутся `ml`,
-   `backend`, `replayer` и `dashboard`. Replayer стартует автоматически: прогревает 30 сим-минут и
+   Сервис `data-init` найдёт или скачает датасет и разложит его в `./data/raw`, затем по
+   healthcheck поднимутся `ml`, `backend`, `replayer` и `dashboard`. Replayer стартует автоматически: прогревает 30 сим-минут и
    проигрывает день 06.01.2026 с 07:00 со скоростью ×30.
 3. Откройте дашборд: **http://localhost:8080**. Через минуту на карте двигаются ТС, а в ленте
    появляются инциденты с упреждением 10–15 минут.
 
-Если порт занят, задайте другой в `.env` (пример — `.env.example`), например `DASHBOARD_PORT=8088`.
+### Если что-то не поднялось
+
+- **`data-init` завершился с ошибкой** — `docker compose logs data-init`. Обычно нет сети до
+  Яндекс.Диска: скачайте архив по ссылке выше, положите в `./data` и повторите `docker compose up -d`.
+- **Порт занят** — скопируйте `.env.example` в `.env` и поменяйте порт, например `DASHBOARD_PORT=8088`.
+- **npm падает по таймауту при сборке дашборда** — соберите его через зеркало npm или с сетью хоста:
+
+  ```bash
+  docker compose build --build-arg NPM_REGISTRY=https://registry.npmmirror.com dashboard
+  # или: docker build --network host -f dashboard/Dockerfile -t transit-pulse-dashboard .
+  docker compose up -d
+  ```
 
 **Живой поток с официального эмулятора NDTP** (дополнительно):
 
@@ -77,7 +105,7 @@ docker compose --profile emulator up -d
 
 ```bash
 uv sync --all-groups                               # окружение Python 3.12+
-uv run python -m scripts.data_prep                 # распаковать ./data/*.zip в ./data/raw
+uv run python -m scripts.data_prep                 # датасет в ./data/raw (архив, папка или скачать)
 uv run pytest -q                                   # тесты
 uv run ruff check                                  # линтер
 uv run python -m services.ml.app.train             # CV и обучение моделей в ./models

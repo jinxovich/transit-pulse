@@ -165,3 +165,27 @@ def test_whatif_falls_back_to_heuristic_when_ml_down(live, monkeypatch):
 
     assert res.model_mode == "fallback" and res.model_version == FALLBACK_VERSION
     assert res.delta_delay_s == pytest.approx(0.7 * 120, abs=0.2)
+
+
+def test_swagger_examples_are_valid_requests_and_published():
+    from fastapi import FastAPI
+
+    from services.backend.app.api.whatif import WHATIF_EXAMPLES, router
+
+    app = FastAPI()
+    app.include_router(router)
+    body = app.openapi()["paths"]["/api/v1/whatif"]["post"]["requestBody"]
+
+    assert set(body["content"]["application/json"]["examples"]) == set(WHATIF_EXAMPLES)
+    for name, ex in WHATIF_EXAMPLES.items():
+        assert S.WhatIfRequest.model_validate(ex["value"]).action == name
+
+
+@needs_data
+def test_swagger_examples_work_on_live_stream(live):
+    from services.backend.app.api.whatif import WHATIF_EXAMPLES
+
+    client, _ = live
+    for ex in WHATIF_EXAMPLES.values():
+        resp = client.post("/api/v1/whatif", json=ex["value"])
+        assert resp.status_code == 200, resp.text

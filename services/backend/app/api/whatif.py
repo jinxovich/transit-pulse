@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException
+from typing import Annotated
+
+from fastapi import APIRouter, Body, HTTPException
 
 from transit_core import schemas as S
 
@@ -10,6 +12,35 @@ from ..whatif.scenario import evaluate
 from .deps import Rt, need_static
 
 router = APIRouter(prefix="/api/v1", tags=["What-if"])
+
+_VEHICLE_HINT = (
+    "`vehicle_id` — ТС из живого потока: возьмите его из `GET /api/v1/incidents` (ТС с открытым "
+    "инцидентом) или `GET /api/v1/vehicles`. 122048 ходит в потоке validate весь день, но если "
+    "у него сейчас нет прогноза (прогрев, межрейсовый отстой), ответ будет 409 — подставьте "
+    "другое ТС."
+)
+WHATIF_EXAMPLES = {
+    "hold_at_stop": {
+        "summary": "Придержать на остановке 2 мин",
+        "description": _VEHICLE_HINT,
+        "value": {"vehicle_id": "122048", "action": "hold_at_stop", "value": 2},
+    },
+    "shorten_dwell": {
+        "summary": "Сократить отстой на конечной на 3 мин",
+        "description": _VEHICLE_HINT,
+        "value": {"vehicle_id": "122048", "action": "shorten_dwell", "value": 3},
+    },
+    "skip_layover": {
+        "summary": "Выпустить с конечной без отстоя",
+        "description": _VEHICLE_HINT + " `value` для этой меры не нужен.",
+        "value": {"vehicle_id": "122048", "action": "skip_layover"},
+    },
+    "add_reserve": {
+        "summary": "Резервный выпуск на рейс после конечной",
+        "description": _VEHICLE_HINT + " `value` для этой меры не нужен.",
+        "value": {"vehicle_id": "122048", "action": "add_reserve"},
+    },
+}
 
 
 @router.post(
@@ -19,7 +50,9 @@ router = APIRouter(prefix="/api/v1", tags=["What-if"])
         409: {"description": "У ТС нет прогноза (прогрев, нет расписания) или остановок впереди"},
     },
 )  # fmt: skip
-async def whatif(body: S.WhatIfRequest, rt: Rt) -> S.WhatIfResult:
+async def whatif(
+    body: Annotated[S.WhatIfRequest, Body(openapi_examples=WHATIF_EXAMPLES)], rt: Rt
+) -> S.WhatIfResult:
     """Прогноз ТС без меры и с мерой по остановкам окна (T+10, T+15] и ближайших 60 минут.
 
     Меры (``action``):

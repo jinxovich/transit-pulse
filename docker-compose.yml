@@ -1,6 +1,7 @@
 # Transit Pulse: поток NDTP → backend → ML → дашборд диспетчера.
 #
-#   1) положите архив датасета (*.zip) в ./data
+#   1) (необязательно) положите архив датасета (*.zip) или распакованную папку в ./data —
+#      иначе data-init сам скачает dataset.zip с Яндекс.Диска (нужен интернет)
 #   2) docker compose up -d --build
 #   3) откройте http://localhost:8080
 #
@@ -20,6 +21,10 @@ services:
     image: transit-pulse-backend
     command: ["python", "-m", "scripts.data_prep", "--dest", "/data/raw", "--with-emulator"]
     working_dir: /app
+    environment:
+      # нет архива и распакованной папки в ./data → скачать dataset.zip с Яндекс.Диска
+      DATASET_AUTO_DOWNLOAD: ${DATASET_AUTO_DOWNLOAD:-1}
+      DATASET_PUBLIC_URL: ${DATASET_PUBLIC_URL:-https://disk.yandex.ru/d/CA6tsj4aJJ4Aaw}
     volumes:
       - ./data:/app/data
       - ./data/raw:/data/raw
