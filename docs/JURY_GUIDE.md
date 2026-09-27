@@ -127,5 +127,8 @@ Prometheus `/metrics`.
 
   Ответ reload показывает отпечатки моделей до и после. Без `--refit` — полное обучение с CV
   (≈20 мин). То же одной командой — `make retrain`.
+- Сабмит воспроизводится **потоковой системой**: `uv run python -m scripts.make_submission_stream`
+  проигрывает validate-день через backend (NDTP по TCP → признаки → ML-сервис) и пишет
+  `submissions/sub_v4_stream.csv` из того, что поток выдал для точек validate (≈4 мин).
 - Честность: признаки строятся только из телеметрии с `event_time ≤ T` и планового расписания.
   Найденную в данных утечку мы не используем — [DATA_AUDIT.md](DATA_AUDIT.md).
