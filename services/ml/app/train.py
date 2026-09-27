@@ -206,9 +206,19 @@ def main() -> int:
         fit_final(mode, table, res["best_synthetic_weight"], res["final_iterations"])
         log.info("%s: %s", mode, {k: v for k, v in res.items() if k != "catboost"})
     (MODELS / "feature_list.json").write_text(json.dumps(FEATURES, indent=2), "utf-8")
-    (MODELS / "metrics.json").write_text(
-        json.dumps(metrics, ensure_ascii=False, indent=2, default=float), "utf-8")
+    write_metrics(metrics)
     return 0
+
+
+def write_metrics(metrics: dict) -> None:
+    """``metrics.json``: разделы обучения заменяются, чужие (``ensemble`` и т.п.) сохраняются."""
+    path = MODELS / "metrics.json"
+    try:
+        old = json.loads(path.read_text("utf-8"))
+    except (OSError, ValueError):
+        old = {}
+    merged = {**(old if isinstance(old, dict) else {}), **metrics}
+    path.write_text(json.dumps(merged, ensure_ascii=False, indent=2, default=float), "utf-8")
 
 
 if __name__ == "__main__":
