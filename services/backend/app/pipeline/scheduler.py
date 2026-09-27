@@ -19,7 +19,7 @@ from ..alerts.segment import target_segment
 from ..state.matched import matched_now
 from ..state.static import stop_ref
 from ..state.timefmt import floor_minute
-from .assemble import VisitPrediction, assemble, ml_items
+from .assemble import VisitPrediction, assemble, assemble_follow, ml_items
 from .mlpass import run_ml
 from .prepare import VehicleInput, VehicleTask, prepare
 
@@ -68,12 +68,13 @@ class PipelineRunner:
                 self.last_t = t
 
     def inputs(self) -> list[VehicleInput]:
-        """Снимок ТС с расписанием для thread-worker'а."""
+        """Снимок ТС с расписанием для thread-worker'а (с целью активного инцидента)."""
         rt = self.rt
-        now, wall = rt.sim_now(), rt.wall()
+        now, wall, targets = rt.sim_now(), rt.wall(), rt.book.active_targets()
         return [
             VehicleInput(rec.vehicle_id, rec.tr_id, list(rec.points),
-                         rt.is_stale(rec, now, wall), not rt.is_warming(rec))
+                         rt.is_stale(rec, now, wall), not rt.is_warming(rec),
+                         targets.get(rec.vehicle_id))
             for rec in rt.store.vehicles.values()
             if rec.kind == "scheduled" and rec.points
         ]  # fmt: skip
@@ -102,8 +103,9 @@ class PipelineRunner:
                 continue
             try:
                 preds = assemble(task, ml, t, rt.ml.model_version)
+                follow = assemble_follow(task, ml, t, rt.ml.model_version)
                 self._update_record(rec, task, preds, t)
-                for ev in self._incidents(rec, task, preds, t, can_alert):
+                for ev in self._incidents(rec, task, preds, follow, t, can_alert):
                     rt.emit(*ev)
             except Exception:  # noqa: BLE001 — одно ТС не должно срывать проход
                 log.exception("Не удалось применить прогноз ТС %s", task.vehicle_id)
@@ -142,10 +144,15 @@ class PipelineRunner:
         rec: VehicleRecord,
         task: VehicleTask,
         preds: list[VisitPrediction],
+        follow: VisitPrediction | None,
         t: datetime,
         can_alert: bool,
     ) -> list[Event]:
-        """Resolve / update активного инцидента или открытие нового на первом красном."""
+        """Resolve / update активного инцидента или открытие нового на первом красном.
+
+        Инцидент обновляется по прогнозу цели из окна, а когда цель вышла из окна
+        (упреждение < 10 мин) — по follow-up; открываются инциденты только по окну.
+        """
         book, vid = self.rt.book, rec.vehicle_id
         events = []
         if (ev := book.settle(vid, rec.arrivals, task.cur_dev, t)) is not None:
@@ -153,7 +160,8 @@ class PipelineRunner:
         active = book.active.get(vid)
         if active is not None:
             target = book.meta[active].visit_id
-            same = next((vp for vp in preds if vp.visit.visit_id == target), None)
+            cands = [*preds, follow] if follow is not None else preds
+            same = next((vp for vp in cands if vp.visit.visit_id == target), None)
             if same is not None and (ev := book.update(active, same.prediction, t)):
                 events.append(ev)
             return events

@@ -24,9 +24,14 @@ class VisitPrediction:
     cause: S.Cause
 
 
+def all_visits(task: VehicleTask) -> list[VisitTask]:
+    """Визиты окна и follow-up цели инцидента (если есть) — всё, что уходит в ML."""
+    return [*task.visits, task.follow] if task.follow is not None else list(task.visits)
+
+
 def ml_items(tasks: list[VehicleTask]) -> list[tuple[str, dict]]:
-    """Один батч в ml: все визиты всех «свежих» ТС."""
-    return [(v.item_id, v.features) for t in tasks if not t.stale for v in t.visits]
+    """Один батч в ml: все визиты всех «свежих» ТС (с follow-up целей инцидентов)."""
+    return [(v.item_id, v.features) for t in tasks if not t.stale for v in all_visits(t)]
 
 
 def _item_for(task: VehicleTask, v: VisitTask, ml: dict[str, MlItem] | None) -> MlItem:
@@ -42,6 +47,7 @@ def build_prediction(
     t: datetime,
     mode: S.ModelMode,
     version: str,
+    horizon_ok: bool | None = None,
 ) -> VisitPrediction:
     """Прогноз контракта для визита ``v`` на сим-минуту ``t``."""
     features = {**v.features, **task.extras()}
@@ -54,7 +60,7 @@ def build_prediction(
         expected_abs_error_s=round(item.expected_abs_error_s, 1),
         lead_min=v.lead_min,
         generated_at=fmt(t),
-        horizon_ok=task.horizon_ok,
+        horizon_ok=task.horizon_ok if horizon_ok is None else horizon_ok,
         model_version=version,
         model_mode=mode,
         risk_level=risk_of(item.delay_s, item.p_late),
@@ -63,14 +69,31 @@ def build_prediction(
     return VisitPrediction(v, pred, cause)
 
 
+def _predict(
+    task: VehicleTask,
+    v: VisitTask,
+    ml: dict[str, MlItem] | None,
+    t: datetime,
+    ml_version: str,
+    horizon_ok: bool | None = None,
+) -> VisitPrediction:
+    use_ml = ml is not None and not task.stale and v.item_id in ml
+    mode: S.ModelMode = "ml" if use_ml else "fallback"
+    version = ml_version if use_ml else FALLBACK_VERSION
+    return build_prediction(task, v, _item_for(task, v, ml), t, mode, version, horizon_ok)
+
+
 def assemble(
     task: VehicleTask, ml: dict[str, MlItem] | None, t: datetime, ml_version: str
 ) -> list[VisitPrediction]:
-    """Прогнозы по всем визитам ТС в порядке планового времени."""
-    out = []
-    for v in task.visits:
-        use_ml = ml is not None and not task.stale and v.item_id in ml
-        mode: S.ModelMode = "ml" if use_ml else "fallback"
-        version = ml_version if use_ml else FALLBACK_VERSION
-        out.append(build_prediction(task, v, _item_for(task, v, ml), t, mode, version))
-    return out
+    """Прогнозы по визитам окна ТС в порядке планового времени (без follow-up)."""
+    return [_predict(task, v, ml, t, ml_version) for v in task.visits]
+
+
+def assemble_follow(
+    task: VehicleTask, ml: dict[str, MlItem] | None, t: datetime, ml_version: str
+) -> VisitPrediction | None:
+    """Прогноз follow-up цели инцидента (вне окна: ``horizon_ok=False``) или ``None``."""
+    if task.follow is None:
+        return None
+    return _predict(task, task.follow, ml, t, ml_version, horizon_ok=False)

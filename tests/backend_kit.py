@@ -104,10 +104,12 @@ def ml_transport(
     calls: list | None = None,
     bodies: list | None = None,
     fail_explain: bool = False,
+    lead_slope: float = 0.0,
 ):
     """Поддельный ML-сервис INTERFACES §4: ``delay = cur_dev + delay_add``.
 
-    ``bodies`` — сюда пишутся тела ``/predict``; ``fail_explain`` — 500 на ``explain=true``.
+    ``bodies`` — сюда пишутся тела ``/predict``; ``fail_explain`` — 500 на ``explain=true``;
+    ``lead_slope`` — +сек за каждую минуту упреждения меньше 15 (прогноз меняется со временем).
     """
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -128,6 +130,8 @@ def ml_transport(
         for it in body["items"]:
             cur = it["features"].get("cur_dev")
             d = (0.0 if cur is None or math.isnan(cur) else cur) + delay_add
+            if lead_slope and (lead := it["features"].get("lead")) is not None:
+                d += lead_slope * (15.0 - lead)
             items.append(
                 {
                     "id": it["id"],
