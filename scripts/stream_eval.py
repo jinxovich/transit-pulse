@@ -25,7 +25,8 @@ from pathlib import Path
 import pandas as pd
 
 from scripts import stream_eval_metrics as M
-from scripts.stream_eval_honest import honest_accuracy
+from scripts.stream_dump import build_dump, write_dump
+from scripts.stream_eval_honest import fit_fold_models, honest_accuracy
 from scripts.stream_eval_run import ROOT, RunConfig, StreamLog, run_stream
 
 DAY = datetime(2026, 1, 6)
@@ -33,17 +34,27 @@ OUT_JSON = ROOT / "docs" / "perf" / "stream_eval.json"
 OUT_MD = ROOT / "docs" / "perf" / "stream_eval.md"
 
 
-def evaluate(cfg: RunConfig, honest: bool = True) -> tuple[dict, pd.DataFrame]:
+def evaluate(
+    cfg: RunConfig, honest: bool = True, dump: Path | None = None
+) -> tuple[dict, pd.DataFrame]:
     """Прогон + все метрики; возвращает отчёт и таблицу сопоставления с разметкой."""
     labels = M.load_labels(cfg.data_dir, cfg.start, cfg.end, cfg.tr_ids)
     log = asyncio.run(run_stream(cfg, M.label_keys(labels)))
-    return report(cfg, labels, log, honest)
+    return report(cfg, labels, log, honest, dump)
 
 
 def report(
-    cfg: RunConfig, labels: pd.DataFrame, log: StreamLog, honest: bool = True
+    cfg: RunConfig,
+    labels: pd.DataFrame,
+    log: StreamLog,
+    honest: bool = True,
+    dump: Path | None = None,
 ) -> tuple[dict, pd.DataFrame]:
-    """Метрики по журналу прогона (``honest`` — ещё и фолд-модели, ≈2 мин CPU)."""
+    """Метрики по журналу прогона.
+
+    ``honest`` — ещё и фолд-модели (≈2 мин CPU); ``dump`` — путь для дампа всех прогнозов
+    окна с честным ответом фолд-моделей (для реплея политики алертов и калибровки).
+    """
     preds = pd.DataFrame(log.preds)
     minutes = pd.DataFrame(
         log.vehicle_minutes,
@@ -66,8 +77,11 @@ def report(
         "alerts": M.alerts(log.incidents, m, cfg.data_dir),
         "latency": M.latency(pd.DataFrame(log.passes), log.wall_s),
     }  # fmt: skip
-    if honest:
-        out["accuracy_honest"] = honest_accuracy(m, log.features, cfg.models_dir)
+    if honest or dump:
+        fm = fit_fold_models(cfg.models_dir)
+        out["accuracy_honest"] = honest_accuracy(m, log.features, fm)
+        if dump:
+            write_dump(dump, build_dump(log, labels, fm, cfg.models_dir))
     return out, m
 
 
@@ -163,13 +177,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--speed", type=float, default=30.0, help="скорость сессии (как REPLAY_SPEED)")
     ap.add_argument("--tr", type=int, action="append", help="только эти tr_id (можно несколько)")
     ap.add_argument("--no-honest", action="store_true", help="без фолд-моделей (быстрее)")
+    ap.add_argument("--dump", type=Path, help="дамп всех прогнозов окна, например "
+                    "data/eval/stream_dump.pkl")
     ap.add_argument("--out", type=Path, default=OUT_JSON)
     ap.add_argument("--md", type=Path, default=OUT_MD)
     args = ap.parse_args(argv)
     logging.basicConfig(level=logging.WARNING)
     cfg = RunConfig(_hhmm(args.start), _hhmm(args.end), args.speed,
                     frozenset(args.tr) if args.tr else None)  # fmt: skip
-    rep, _ = evaluate(cfg, honest=not args.no_honest)
+    rep, _ = evaluate(cfg, honest=not args.no_honest, dump=args.dump)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(rep, ensure_ascii=False, indent=2, default=str), "utf-8")
     args.md.write_text(render_md(rep), "utf-8")

@@ -71,7 +71,8 @@ class RunConfig:
 
 @dataclass
 class StreamLog:
-    """Всё, что прогон записал: прогнозы, минуты ТС, проходы, инциденты, признаки."""
+    """Всё, что прогон записал: прогнозы, минуты ТС, проходы, инциденты и признаки
+    каждого прогноза окна (нужны для честного реплея политики алертов)."""
 
     preds: list[dict] = field(default_factory=list)
     vehicle_minutes: list[dict] = field(default_factory=list)
@@ -99,7 +100,6 @@ class CapturingRunner(PipelineRunner):
             "tr_id": task.tr_id, "T": t, "stale": task.stale, "ready": task.ready,
             "n_visits": len(task.visits), "horizon_ok": task.horizon_ok, "cur_dev": task.cur_dev,
         })  # fmt: skip
-        want = (task.tr_id, t) in self.keys
         for vp in preds:
             p = vp.prediction
             self.log.preds.append({
@@ -110,8 +110,7 @@ class CapturingRunner(PipelineRunner):
                 "risk": p.risk_level, "mode": p.model_mode, "cur_dev": task.cur_dev,
                 "stale": task.stale, "first": vp is preds[0],
             })  # fmt: skip
-            if want:
-                self.log.features[(task.tr_id, t, int(vp.visit.visit_id))] = dict(vp.visit.features)
+            self.log.features[(task.tr_id, t, int(vp.visit.visit_id))] = dict(vp.visit.features)
 
 
 class TcpFleet:

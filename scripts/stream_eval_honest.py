@@ -1,4 +1,4 @@
-"""Честная MAE stream-модели на потоке: фолд-модели, не видевшие точку, на потоковых признаках.
+"""Честная stream-модель на потоке: фолд-модели, не видевшие точку, на потоковых признаках.
 
 Финальная ``catboost_stream.cbm`` обучена на train+test, поэтому её ошибка на
 ``labels_test`` занижена. Здесь для каждой точки ``labels_test`` берётся модель фолда,
@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
@@ -24,42 +25,65 @@ from transit_core.features import FEATURES
 from transit_core.labels import LATE_S
 
 
-def _stream_rows(sub: pd.DataFrame, stream_features: dict) -> list[dict]:
-    return [stream_features[(int(r.tr_id), r.T.to_pydatetime(), int(r.target_stop_id))]
-            for r in sub.itertuples()]  # fmt: skip
+@dataclass(frozen=True)
+class FoldModels:
+    """Модели фолдов и то, какие реальные точки разметки каждая не видела."""
+
+    models: list
+    meta: pd.DataFrame
+    fold_of: pd.Series
+
+    def residual_quantiles(self, fold: int, rows: list[dict]) -> tuple[np.ndarray, np.ndarray]:
+        """Квантили остатка ``(n, 3)`` и база ``cur_dev`` для строк признаков."""
+        xs = to_matrix(rows, FEATURES)
+        q = sort_quantiles(self.models[fold].predict(xs))
+        return q, np.nan_to_num(xs[:, FEATURES.index("cur_dev")], nan=0.0)
 
 
-def honest_stream_preds(m: pd.DataFrame, stream_features: dict, models_dir: Path) -> pd.Series:
-    """OOF-прогноз stream-модели для найденных на потоке точек (индекс — ``sample_id``)."""
+def fit_fold_models(models_dir: Path) -> FoldModels:
+    """Обучает stream-модель на каждом фолде первого повтора (≈2 мин CPU)."""
     params = json.loads((models_dir / "metrics.json").read_text("utf-8"))["stream"]
     table = labeled()
     x, base = with_cur_dev(table.x, table.meta, "stream")
     y = table.meta["target_delay_s"].to_numpy(float) - base
     real = cv.real_positions(table.meta)
     folds = cv.make_folds(table.meta)[0]
-    real_ids = table.meta["sample_id"].to_numpy()[real]
-    want = m[m["found"] & (m["mode"] == "ml")].set_index("sample_id")
-    sources, out = clone_sources(), {}
+    sources, models = clone_sources(), []
     for f in range(cv.N_SPLITS):
         val = real[folds == f]
-        ids = [s for s in real_ids[folds == f] if s in want.index]
-        if not ids:
-            continue
         syn = cv.allowed_synthetic(table.meta, val, sources, honest=True)
         tr = np.concatenate([real[folds != f], syn]).astype(int)
         w = np.where(table.meta["synthetic"].to_numpy()[tr], params["best_synthetic_weight"], 1.0)
-        model = fit_catboost(x.iloc[tr][FEATURES], y[tr], w, iterations=params["final_iterations"])
+        models.append(
+            fit_catboost(x.iloc[tr][FEATURES], y[tr], w, iterations=params["final_iterations"])
+        )
+    real_meta = table.meta.iloc[real].reset_index(drop=True)
+    fold_of = pd.Series(folds, index=real_meta["sample_id"].to_numpy())
+    return FoldModels(models, real_meta, fold_of)
+
+
+def _stream_rows(sub: pd.DataFrame, stream_features: dict) -> list[dict]:
+    return [stream_features[(int(r.tr_id), r.T.to_pydatetime(), int(r.target_stop_id))]
+            for r in sub.itertuples()]  # fmt: skip
+
+
+def honest_stream_preds(m: pd.DataFrame, stream_features: dict, fm: FoldModels) -> pd.Series:
+    """OOF-прогноз stream-модели для найденных на потоке точек (индекс — ``sample_id``)."""
+    want = m[m["found"] & (m["mode"] == "ml")].set_index("sample_id")
+    out = {}
+    for f in range(cv.N_SPLITS):
+        ids = [s for s in fm.fold_of.index[fm.fold_of == f] if s in want.index]
+        if not ids:
+            continue
         sub = want.loc[ids].reset_index()
-        xs = to_matrix(_stream_rows(sub, stream_features), FEATURES)
-        q = sort_quantiles(model.predict(xs))
-        pred = np.nan_to_num(xs[:, FEATURES.index("cur_dev")], nan=0.0) + q[:, 1]
-        out.update(zip(ids, pred, strict=True))
+        q, base = fm.residual_quantiles(f, _stream_rows(sub, stream_features))
+        out.update(zip(ids, base + q[:, 1], strict=True))
     return pd.Series(out, name="honest_pred", dtype=float)
 
 
-def honest_accuracy(m: pd.DataFrame, stream_features: dict, models_dir: Path) -> dict:
+def honest_accuracy(m: pd.DataFrame, stream_features: dict, fm: FoldModels) -> dict:
     """MAE честной stream-модели на потоке и baseline'ы на тех же точках."""
-    pred = honest_stream_preds(m, stream_features, models_dir)
+    pred = honest_stream_preds(m, stream_features, fm)
     f = m.set_index("sample_id").loc[pred.index]
     y = f["target_delay_s"].to_numpy(float)
     late = f["target_class"] == "late"
