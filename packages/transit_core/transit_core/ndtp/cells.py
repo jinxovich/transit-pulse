@@ -3,6 +3,11 @@
 Раскладки взяты из спецификации эмулятора организаторов (раздел 6) и сверены с
 реальными байтами эмулятора (``tests/fixtures/emu.bin``). Все поля little-endian,
 структуры packed. Ячейка на проводе: ``[type: u8][number: u8][payload]``.
+
+Ячейки дверей и пассажиропотока (``G6CellCrown03``, ``G6CellIrma04``) в спецификации
+описаны только списком полей: размеры и порядок взяты из классов самого эмулятора
+(javolution-структуры в ``app.jar`` образа), эталонный кадр ими же собран в
+``tests/fixtures/emu_doors.bin``.
 """
 
 from __future__ import annotations
@@ -10,6 +15,7 @@ from __future__ import annotations
 import math
 import struct
 from dataclasses import dataclass
+from typing import Final
 
 COORD_SCALE = 10_000_000
 """Масштаб координат: ``|deg| × 1e7`` в u32."""
@@ -59,23 +65,51 @@ class Cell:
 
 @dataclass(frozen=True)
 class CellLayout:
-    """Описание раскладки ячейки: имя, формат ``struct`` и имена полей по порядку."""
+    """Описание раскладки ячейки: имя, формат ``struct`` и имена полей по порядку.
+
+    ``bits`` — однобитовые флаги, упакованные в последний байт структуры (поле
+    ``names[-1]``) начиная с младшего бита, как их кладёт javolution в little-endian.
+    Наружу такой байт виден только как набор bool-полей с именами из ``bits``.
+    """
 
     type: int
     name: str
     fmt: struct.Struct
     names: tuple[str, ...]
     brief: tuple[str, ...]
+    bits: tuple[str, ...] = ()
+
+    @property
+    def fields(self) -> tuple[str, ...]:
+        """Имена полей, как они видны в :attr:`Cell.fields` (флаги вместо их байта)."""
+        return self.names[:-1] + self.bits if self.bits else self.names
 
 
-def _layout(type_: int, name: str, spec: str, brief: tuple[str, ...]) -> CellLayout:
+def _layout(
+    type_: int, name: str, spec: str, brief: tuple[str, ...], bits: tuple[str, ...] = ()
+) -> CellLayout:
     """Строит :class:`CellLayout` из строки ``"поле:код поле:код"`` (коды ``struct``)."""
     pairs = [item.split(":") for item in spec.split()]
     fmt = struct.Struct("<" + "".join(code for _, code in pairs))
-    return CellLayout(type_, name, fmt, tuple(n for n, _ in pairs), brief)
+    return CellLayout(type_, name, fmt, tuple(n for n, _ in pairs), brief, bits)
 
 
 _CAN_AXES = " ".join(f"pressureAxis{i}:H" for i in range(5))
+DOORS: Final = range(1, 5)
+"""Номера дверей в ячейках пассажиропотока (1…4)."""
+
+
+def _door_counters(prefix: str) -> str:
+    """``"<prefix>_door_in1:B … <prefix>_door_out4:B"`` — счётчики вошло/вышло по дверям."""
+    return " ".join(f"{prefix}_door_{way}{d}:B" for way in ("in", "out") for d in DOORS)
+
+
+def _door_names(prefix: str, kinds: tuple[str, ...]) -> tuple[str, ...]:
+    return tuple(f"{prefix}_{kind}{d}" for kind in kinds for d in DOORS)
+
+
+IRMA_FLAGS: Final = _door_names("irma", ("present_door", "closed_door"))
+"""Флаги ``G6CellIrma04``: датчик двери есть (биты 0…3), дверь закрыта (биты 4…7)."""
 
 LAYOUTS: dict[int, CellLayout] = {
     lay.type: lay
@@ -87,6 +121,19 @@ LAYOUTS: dict[int, CellLayout] = {
             "di1_counter:H di2_counter:H di3_counter:H odometer:I csq:B gprs_state:B "
             "accel_energy:B ext_volt:b",
             ("odometer", "csq", "ext_volt"),
+        ),
+        _layout(
+            3,
+            "G6CellCrown03",
+            f"odometer:I zone:H {_door_counters('corona')}",
+            _door_names("corona", ("door_in", "door_out")),
+        ),
+        _layout(
+            4,
+            "G6CellIrma04",
+            f"odometer:I zone:H {_door_counters('irma')} door_flags:B",
+            _door_names("irma", ("door_in", "door_out")) + IRMA_FLAGS,
+            bits=IRMA_FLAGS,
         ),
         _layout(
             8,
@@ -182,19 +229,37 @@ def encode_nav(nav: NavCell) -> bytes:
 def decode_cell(type_: int, number: int, payload: bytes) -> Cell:
     """Разбирает известную ячейку ``type_`` (кроме навигации)."""
     lay = LAYOUTS[type_]
-    return Cell(type_, number, lay.name, dict(zip(lay.names, lay.fmt.unpack(payload), strict=True)))
+    values = lay.fmt.unpack(payload)
+    fields: dict[str, int | float | bool] = dict(zip(lay.names, values, strict=True))
+    if lay.bits:
+        packed = values[-1]
+        flags = {name: bool(packed >> i & 1) for i, name in enumerate(lay.bits)}
+        fields = {k: v for k, v in fields.items() if k != lay.names[-1]} | flags
+    return Cell(type_, number, lay.name, fields)
+
+
+def _pack_bits(lay: CellLayout, fields: dict[str, int | float | bool]) -> int:
+    """Собирает байт флагов из bool-полей ``lay.bits`` (младший бит — первый флаг)."""
+    return sum(1 << i for i, name in enumerate(lay.bits) if fields.get(name))
 
 
 def encode_cell(cell: Cell) -> bytes:
     """Кодирует ячейку вместе с заголовком ``[type][number]``; недостающие поля — нули."""
     lay = LAYOUTS[cell.type]
     values = [int(cell.fields.get(name, 0)) for name in lay.names]
+    if lay.bits:
+        values[-1] = _pack_bits(lay, cell.fields)
     return bytes((cell.type, cell.number)) + lay.fmt.pack(*values)
 
 
-def make_cell(name: str, number: int = 0, **fields: int) -> Cell:
-    """Удобный конструктор ячейки по имени класса (``"G6CellUsi08"`` и т.п.)."""
+def make_cell(name: str, number: int = 0, **fields: int | bool) -> Cell:
+    """Удобный конструктор ячейки по имени класса (``"G6CellUsi08"`` и т.п.).
+
+    Флаги (``irma_closed_door1`` и т.п.) по умолчанию ``False``, числа — ``0``.
+    """
     for lay in LAYOUTS.values():
         if lay.name == name:
-            return Cell(lay.type, number, name, {n: fields.get(n, 0) for n in lay.names})
+            values = {n: fields.get(n, 0) for n in lay.fields}
+            values |= {n: bool(fields.get(n, False)) for n in lay.bits}
+            return Cell(lay.type, number, name, values)
     raise KeyError(f"неизвестная ячейка {name}")
