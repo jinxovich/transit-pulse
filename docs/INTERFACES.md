@@ -128,10 +128,17 @@ POST /predict
             "q10": 20.0, "q90": 180.0, "p_late": 0.41, "expected_abs_error_s": 48.0,
             "contributions": [{"feature": "cur_dev", "contribution_s": 30.2}, ...]}]}  # топ-5 по |вкладу|
 GET /health → {"status": "ok", "model_version": ..., "models": [...]}
-GET /model/info → {"features": [...], "metrics": {...из models/metrics.json}}
+GET /model/info → {"features": [...], "metrics": {...из models/metrics.json},
+                   "calibration": {"stream": {...} | null, "submission": {...} | null}}
 ```
 
 `p_late` — вероятность `delay > 120 c` по интерполяции квантилей. Недостающие признаки → NaN.
+Если рядом с моделью лежит `models/calibration_{mode}.json` (`services.ml.app.calibration`,
+пишется `train`): отступы q10/q90 от медианы растягиваются масштабом корзины признака `lead`
+(split-conformal на OOF, покрытие 80% в каждой корзине), `p_late` проходит изотоническую
+калибровку, `expected_abs_error_s = err_k · (q90 − q10)/2` по уже калиброванной ширине. Без файла —
+общий `interval_scale` из `metrics.json` и сырой `p_late`. Brier/ECE/reliability до→после —
+в `metrics.json → {mode}.calibration` и в сводке `calibration` у `/model/info`.
 
 ## 5. Backend (ветка `feat/backend`, `services/backend`, порт 8000 + NDTP 9201)
 

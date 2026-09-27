@@ -61,7 +61,8 @@ class Prediction(BaseModel):
     delay_s: float = Field(..., description="Прогноз задержки (медиана), с; + — опоздание")
     q10: float = Field(..., description="10-й перцентиль задержки, с")
     q90: float = Field(..., description="90-й перцентиль задержки, с")
-    p_late: float = Field(..., description="Вероятность задержки > 120 с")
+    p_late: float = Field(..., description="Вероятность задержки > 120 с (изотоническая "
+                                           "калибровка по OOF, если есть файл калибровки)")
     expected_abs_error_s: float = Field(..., description="Ожидаемая абсолютная ошибка, с "
                                                          "(полуширина q10–q90 × калибровка)")
     contributions: list[Contribution] = Field(..., description="Топ-5 вкладов по модулю")
@@ -133,11 +134,15 @@ def health() -> dict:
             "models": sorted(m.version for m in reg.models.values())}
 
 
-@app.get("/model/info", summary="Признаки и метрики модели")
+@app.get("/model/info", summary="Признаки, метрики и калибровка модели")
 def model_info() -> dict:
-    """Порядок признаков и метрики CV из ``models/metrics.json``."""
+    """Порядок признаков, метрики CV из ``models/metrics.json`` и сводка калибровки по режимам
+    (масштабы интервала по корзинам lead, узлы изотоники p_late, Brier/ECE до→после);
+    ``null`` — у режима нет ``calibration_{mode}.json``, работает общий ``interval_scale``."""
     reg = _registry()
-    return {"features": reg.features, "metrics": reg.metrics}
+    cal = {mode: lm.calibration.summary if lm.calibration else None
+           for mode, lm in reg.models.items()}
+    return {"features": reg.features, "metrics": reg.metrics, "calibration": cal}
 
 
 @app.get("/metrics", summary="Метрики Prometheus")

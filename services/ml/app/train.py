@@ -5,8 +5,10 @@
     uv run python -m services.ml.app.train
 
 Артефакты в ``models/``: ``catboost_submission.cbm``, ``catboost_stream.cbm``,
-``feature_list.json``, ``metrics.json``, ``oof_catboost_honest.csv``, ``cv_folds.csv``
-(OOF для ансамбля на фолдах GRU — ``services.ml.app.ensemble`` → ``oof_catboost.csv``).
+``feature_list.json``, ``metrics.json``, ``calibration_{mode}.json`` (калибровка p_late и
+интервалов по lead, :mod:`services.ml.app.calibration`), ``oof_catboost_honest.csv``,
+``cv_folds.csv`` (OOF для ансамбля на фолдах GRU — ``services.ml.app.ensemble`` →
+``oof_catboost.csv``).
 """
 
 from __future__ import annotations
@@ -18,9 +20,9 @@ import sys
 import numpy as np
 import pandas as pd
 
-from services.ml.app import cv
+from services.ml.app import calibration, cv
 from services.ml.app import models as M
-from services.ml.app.dataset import ROOT, clone_sources, labeled, with_cur_dev
+from services.ml.app.dataset import CACHE, ROOT, clone_sources, labeled, with_cur_dev
 from services.ml.app.v1_compare import v1_cv
 from transit_core.features import FEATURES
 
@@ -94,6 +96,18 @@ def _calibration(q: np.ndarray, base: np.ndarray, y: np.ndarray) -> dict:
             "coverage_q10_q90_scaled": cover(scale)}
 
 
+def _calibrate(mode, q, base, y, lead, folds) -> dict:
+    """Старая калибровка + отчёт :mod:`calibration` (до/после); пишет ``calibration_{mode}.json``.
+
+    OOF кешируется в ``data/cache/oof_{mode}.npz`` для пересчёта без переобучения.
+    """
+    save_oof_cache(mode, q, base, y, lead, folds)
+    old = _calibration(q, base, y)
+    art, report = calibration.evaluate(q, base, y, lead, folds, old["interval_scale"])
+    calibration.write_artifact(mode, art, MODELS)
+    return {**old, **report}
+
+
 def _blend(q50_cb, pred_lgb, base, y) -> dict:
     """Лучший вес CatBoost в бленде с LightGBM по OOF (сетка 0..1)."""
     grid = np.linspace(0, 1, 11)
@@ -127,10 +141,19 @@ def evaluate_mode(mode, table, sources, weights=SYN_WEIGHTS,
         "catboost_synthetic_naive_cv_mae": naive_mae,
         "lgbm_new_features_mae": cv.oof_mae(lgb_oof, base[real], y_all[real]),
         "blend": _blend(q[..., 1], lgb_oof, base[real], y_all[real]),
-        "calibration": _calibration(q, base[real], y_all[real]),
+        "calibration": _calibrate(mode, q, base[real], y_all[real],
+                                  x["lead"].to_numpy(dtype=float)[real],
+                                  np.stack(cv.make_folds(table.meta))),
         "final_iterations": int(round(FINAL_ITER_FACTOR * runs[best_w]["iters_fold_mean"])),
     })
     return res, q, lgb_oof
+
+
+def save_oof_cache(mode: str, q: np.ndarray, base: np.ndarray, y: np.ndarray,
+                   lead: np.ndarray, folds: np.ndarray) -> None:
+    """OOF-квантили остатка на реальных точках → ``data/cache/oof_{mode}.npz`` (калибровка)."""
+    CACHE.mkdir(parents=True, exist_ok=True)
+    np.savez(CACHE / f"oof_{mode}.npz", q=q, base=base, y=y, lead=lead, folds=folds)
 
 
 def fit_final(mode, table, weight, iterations) -> M.CatBoostRegressor:
@@ -183,9 +206,19 @@ def main() -> int:
         fit_final(mode, table, res["best_synthetic_weight"], res["final_iterations"])
         log.info("%s: %s", mode, {k: v for k, v in res.items() if k != "catboost"})
     (MODELS / "feature_list.json").write_text(json.dumps(FEATURES, indent=2), "utf-8")
-    (MODELS / "metrics.json").write_text(
-        json.dumps(metrics, ensure_ascii=False, indent=2, default=float), "utf-8")
+    write_metrics(metrics)
     return 0
+
+
+def write_metrics(metrics: dict) -> None:
+    """``metrics.json``: разделы обучения заменяются, чужие (``ensemble`` и т.п.) сохраняются."""
+    path = MODELS / "metrics.json"
+    try:
+        old = json.loads(path.read_text("utf-8"))
+    except (OSError, ValueError):
+        old = {}
+    merged = {**(old if isinstance(old, dict) else {}), **metrics}
+    path.write_text(json.dumps(merged, ensure_ascii=False, indent=2, default=float), "utf-8")
 
 
 if __name__ == "__main__":
