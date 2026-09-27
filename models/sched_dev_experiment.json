@@ -1,0 +1,77 @@
+{
+  "coverage": {
+    "all": 0.6447,
+    "real": 0.6325,
+    "real_where_online_nan": 0.2537,
+    "n_real_online_nan": 134,
+    "real_mae_vs_target_where_both": {
+      "n": 911,
+      "sched_dev_gps": 92.93,
+      "cur_dev_online": 108.74
+    },
+    "progress_to_target_coverage_real": 0.5736
+  },
+  "coverage_validate": 0.6291,
+  "leak_check": {
+    "split": "test",
+    "n_points": 40,
+    "n_with_value": 28,
+    "n_changed": 0
+  },
+  "cv": {
+    "base": {
+      "baseline_mae": 114.08663017954053,
+      "w=0.0": {
+        "mae": 81.20290376127144,
+        "iters_common": 1200,
+        "iters_fold_mean": 1160.0
+      },
+      "w=0.5": {
+        "mae": 77.76660561098036,
+        "iters_common": 1700,
+        "iters_fold_mean": 1466.6666666666667
+      }
+    },
+    "feat": {
+      "baseline_mae": 114.08663017954053,
+      "w=0.0": {
+        "mae": 81.04395735260154,
+        "iters_common": 800,
+        "iters_fold_mean": 1126.6666666666667
+      },
+      "w=0.5": {
+        "mae": 76.60246882030309,
+        "iters_common": 1600,
+        "iters_fold_mean": 1313.3333333333333
+      }
+    },
+    "feat_fill": {
+      "baseline_mae": 114.04858521700224,
+      "w=0.0": {
+        "mae": 80.6575484085353,
+        "iters_common": 1700,
+        "iters_fold_mean": 1326.6666666666667
+      },
+      "w=0.5": {
+        "mae": 76.48719068566565,
+        "iters_common": 1900,
+        "iters_fold_mean": 1446.6666666666667
+      }
+    }
+  },
+  "delta_vs_base": {
+    "base": {
+      "w=0.0": 0.0,
+      "w=0.5": 0.0
+    },
+    "feat": {
+      "w=0.0": -0.16,
+      "w=0.5": -1.16
+    },
+    "feat_fill": {
+      "w=0.0": -0.55,
+      "w=0.5": -1.28
+    }
+  },
+  "decision": "проверили — прироста нет: лучший 1.28 с < 2.0 с"
+}
